@@ -1,0 +1,411 @@
+#accordion-section-health_options_more{background-color:red;}
+a{
+text-decoration:none;
+color:#000;
+font-weight:bold;
+}
+a:hover{
+text-decoration:none;
+/* color:#fff; */
+}
+p{
+color:#666;
+}
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+background-color:#0098ff !important;
+color:#fff !important ;
+}
+.btn,
+.post-tags a{
+background-color:transparent;
+border:1px solid #0098ff;
+border-radius:0px;
+color: #000;
+}
+.btn:hover,
+.post-tags a:hover{
+background-color:#0098ff;
+color:#fff !important;
+border:1px solid #0098ff !important;
+}
+i.fa.fa-envelope {
+    padding-left: 20px;
+}
+body{
+   overflow-y: scroll;
+}
+figure.menu-fig {
+    margin: 0;
+    background: #43b02a;
+    padding: 10px;
+    width: 139px;
+    
+    float: right;
+}
+#toggle {
+    width: 28px;
+    height: 30px;
+    margin: 10px auto;
+    float: right;
+    top: 32px;
+    position: relative;
+}
+
+#toggle div {
+    width: 27px;
+    height: 3px;
+    background: #fff;
+    margin: 5px 85px;
+    transition: all 0.3s;
+    backface-visibility: hidden;
+    text-align: right;
+}
+.profile-user {
+    display: inline-flex;
+}
+.logout-user {
+    position: relative;
+    top: 26px;
+}
+.logout-user a{
+  color: #fff!important;
+  font-weight: normal;
+}
+.img-user {
+    width: 60px;
+
+    height: 60px;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-right: 28px;
+    box-shadow: 0 0 10px #777575;
+}
+.content-user p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+.img-user img {
+    width: 65px;
+}
+#toggle.on .one {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+#toggle.on .two {
+  opacity: 0;
+}
+
+#toggle.on .three {
+  transform: rotate(-45deg) translate(7px, -8px);
+}
+div#menu ul li {
+    display: block;
+    width: 100%;
+    margin:0;
+    padding: 0;
+}
+div#menu ul{
+  margin: 0;
+  padding: 0;
+
+}
+div#menu ul li a {
+    padding: 14px 21px!important;
+    color: #fff;
+}
+div#menu ul li:hover {
+   
+    background: #fff;
+    width: 100%;
+}
+div#menu ul li:hover a{
+  color: #37ab1c;
+}
+p.menu-cls {
+    float: left;
+    font-size: 21px;
+    color: #fff;
+    padding-left: 9px;
+    margin:0;
+}
+.menu{
+  box-shadow: 0 1px 8px 0 rgba(2, 3, 3, 0.3)
+}
+#menu {
+    color: white;
+    width: 220px;
+    border-radius: 0;
+    line-height: 100px;
+    margin: auto;
+    display: none;
+    position: absolute;
+    right: 140px;
+    top: 99px;
+    background: #37ab1c;
+    box-shadow: 0 0 15px 1px #f9f9f9;
+}
+.top {
+    color: #fff !important;
+    background-color: #43b02a;
+    line-height: 61px;
+}
+.top-phone a{
+color:#fff !important;
+margin:0 5px;
+font-weight:none !important;
+}
+.text{
+background-color:#333;
+color:#fff;
+}
+.color{
+color:#0098ff;
+background-color:#fff;
+}
+.slider .carousel-caption p{
+color:#fff;
+}
+.services .heart,
+.services .ln2,
+.services .ln3{
+color:#0098ff;;
+}
+.service .icon{
+color: #0098ff;
+}
+.white{
+color:#fff;
+}
+.pics  .img-thumbnail{
+ border: 5px solid #0098ff;
+}
+.news .date a:hover{
+  color:#0098ff;
+  }
+  .news .category a:hover{
+  color:#0098ff;
+  }
+  .news button {
+background-color:#0098ff;
+color:#fff;
+  }
+  .border{
+  border:1px solid #ccc;
+  }
+ 
+  .news .owl-carousel .item  .overlay  a{
+  color:#fff;
+  border:1px solid #fff;
+  }
+   .news .owl-carousel .item  .overlay  a:hover{
+  color:#0098ff;
+  background-color:#eee;
+    border:2px solid #0098ff;
+  }
+  .gallerys   .owl-carousel .item  .overlay  a{
+    color:#fff;
+  border:1px solid #fff;
+  }
+   .gallerys   .owl-carousel .item  .overlay  a:hover{
+  color:#0098ff;
+  background-color:#eee;
+    border:2px solid #0098ff;
+  }
+  .clients .owl-theme .owl-controls .owl-page.active span,
+  .clients .owl-theme .owl-controls.clickable .owl-page:hover span{
+  background-color: #0098ff;
+  }
+  .clients .owl-theme .owl-controls .owl-page span{
+  background:#000;
+  opacity:0.9;
+  }
+  .appoinment{
+  background-color:#0098ff;
+  }
+.footer {
+    background-color: #43b02a;
+    padding-bottom: 0px!important;
+}
+.footer-nav ul li {
+    display: inline-block;
+}
+.footer-nav ul{
+    margin: 0;
+    padding: 0;
+}
+.footer-nav ul li a {
+    color: #fff;
+    padding: 0!important;
+    margin: 0;
+}
+
+.textwidget {
+    float: right;
+}
+.textwidget p a{
+  color: #fff!important;
+}
+.footer img {
+    float: right;
+}
+.footer .widget-footer h3{
+color:#fff;
+}
+.footer .widget-footer h4 a,
+.footer .widget-footer h5 a{
+color:#999c9e;
+}
+.footer .widget-footer h4 a:hover ,
+.footer .widget-footer h5 a:hover{
+color:#fff;
+}
+.footer .widget-footer p {
+    color: #fff;
+    margin:0;
+    padding: 5px 0;
+}
+.footer .widget-footer a{
+color:#fff;
+}
+.footer-bottom, .footer1 {
+    background-color: #43b02a;
+    color: #fff;
+    padding: 10px 0 20px;
+}
+.footer-bottom a, .footer1 a{
+color:#fff;
+}
+.footer-bottom a:hover, .footer1 a:hover {
+    color: #242424!important;
+    background: transparent!important;
+}
+.sidebar-widget .line{
+color:#0098ff;
+}
+.sidebar-widget .nav a:focus,
+	.sidebar-widget .nav a:hover{
+	background-color:transparent;
+	color:#0098ff;
+	border:0px;
+	}
+	.sidebar-widget .img-thumbnail .overlay a:hover{
+	background-color:#eee;
+	color:#0098ff;
+	border:2px solid #0098ff;
+	}
+.rightside a:hover{
+color:#0098ff;;
+}
+.rightside .btn:hover{
+color:#fff;
+}
+.bg{
+background-color:#0098ff;
+color:#fff;
+}
+.bg:hover{
+background-color:#0098ff;
+color:#fff !important;
+}
+.rightside .right-widget .img-thumbnail  .overlay a:hover{
+background-color:#eee;
+color:#0098ff;
+  border:2px solid #0098ff;
+}
+.space .pagination a:hover{
+color:#fff;
+background-color:#0098ff;
+}
+.masanary a:hover{
+color:#0098ff;
+}
+.post{
+margin:20px 0px;
+}
+.blogs .post  .owl-theme .owl-controls .owl-buttons div{
+font-size:24px;
+border-radius:0px;
+background-color:#0098ff;
+opacity:0.8;
+}
+.blogs .post .owl-pagination{
+display:none;
+}
+.services .line{
+color:#0098ff;
+}
+.service-icon a{
+color:#0098ff;
+}
+.services .service  a{
+color:#0098ff;
+}
+.services .service a .icon{
+border:2px solid #0098ff;
+padding:1px 8px !important;
+}
+.services .service a:hover .icon{
+background-color:#0098ff;
+color:#fff;
+}
+.service4 .col-xs-3 .icon{
+color:#0098ff;
+}
+.services .service4  a{
+color:#0098ff;
+}
+.services .service4 a .icon{
+border:2px solid #0098ff;
+padding:1px 8px !important;
+}
+.services .service4 a:hover .icon{
+background-color:#0098ff;
+color:#fff;
+}
+.carousel-indicators li{
+border: 1px solid #0098ff !important;
+}
+.carousel-indicators .active{
+	background-color:#0098ff !important;
+}
+.widget-footer .tagcloud a
+{
+color:#fff;
+border:1px solid #fff;
+}
+.sidebar-widget .tagcloud a{
+border: 1px solid #0098ff;
+}
+.widget-footer .tagcloud a:hover,
+.sidebar-widget .tagcloud a:hover{
+background-color:#0098ff;
+color:#fff;
+border:1px solid #0098ff;
+}
+@media(min-width:768px){
+.navbar-right li:hover >.dropdown-menu{
+display:block;
+}
+}
+
+
+/*new css start*/
+.label-align {
+    min-width: 115px;
+}
+
+.label-align1 {
+    min-width: 135px;
+}
+.post-content h6 {
+    font-size: 15px;
+}
+i.fa.fa-sort-desc {
+   
+    position: relative;
+}
+.right-link{
+  float:right;
+}
+/*end new css*/
