@@ -13,6 +13,7 @@
  * @subpackage healthcare
 */
 
+
 if(!empty($_SESSION['emailaddress'])){
 	$email = $_SESSION['emailaddress'];
 if(!empty($_POST)){
@@ -56,7 +57,7 @@ if(!empty($_POST)){
 }else{
 	wp_redirect( site_url()."/verify/", 301 );
 }
-
+ 
 get_header(); 
 //get_template_part('cover');
 
@@ -90,6 +91,7 @@ get_header();
 <div class="col-xs-10"><input id="inputPassword" name="password" class="form-control" type="password" placeholder="Password" required /></div>
 </div>
 
+
 <?php 
 //echo "<pre>";
 //print_r($_SESSION['two_factor_enabled']); die; 
@@ -105,8 +107,30 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
  <div class="col-xs-offset-2 col-xs-10"><label><input type="checkbox" checked="checked" name="remember"> Remember me</label></div></div>
 
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" type="submit">Login</button></div>
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" id="login_details" type="submit">Login</button></div>
 </div>
+
+
+<div class="form-group">
+
+<iframe name="adminAccess" id="frame1" src="https://dev7.resourcestack.com" width="1000" height="400" style="display: none;"></iframe>
+
+
+</div>
+<script type="text/javascript">
+	//document.getElementById("#frame1").style.display = "none";
+	jQuery(document).ready(function($){
+		$("#login_details").click(function() {
+			//const email = $("#inputEmail").val();
+	   		//alert(email);
+	   		//const pass = $("#inputPassword").val();
+	   		const frame = $("#frame1");
+	   		console.log("the frame is " , frame.get(0).contentWindow);
+	   		frame.get(0).contentWindow.postMessage("Login success","https://dev7.resourcestack.com");
+	   		return console.log("Message was sent from login");
+		});
+	});
+</script>
 
 <div class="form-group">
 <div class="col-xs-offset-2 col-xs-10"><a href="javascript:void(0)">Forgot Password</a></div>
