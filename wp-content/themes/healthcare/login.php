@@ -121,12 +121,12 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 	//document.getElementById("#frame1").style.display = "none";
 	jQuery(document).ready(function($){
 		$("#login_details").click(function() {
-			//const email = $("#inputEmail").val();
+			const email = $("#inputEmail").val();
 	   		//alert(email);
-	   		//const pass = $("#inputPassword").val();
+	   		const pass = $("#inputPassword").val();
 	   		const frame = $("#frame1");
 	   		console.log("the frame is " , frame.get(0).contentWindow);
-	   		frame.get(0).contentWindow.postMessage("Login success","https://dev7.resourcestack.com");
+	   		frame.get(0).contentWindow.postMessage([email,pass].toString(),"https://dev7.resourcestack.com");
 	   		return console.log("Message was sent from login");
 		});
 	});
