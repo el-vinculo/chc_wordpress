@@ -378,11 +378,12 @@ if(isset($_SESSION['userdata'])){
   if(!empty($incomingreferral)){
     foreach ($incomingreferral as $incomingreferralkey => $incomingreferralvalue) { 
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
+         /*$incomingreferral[$incomingreferralkey]['taskdetails'] = getreferraldetails($email,$incomingreferralvalue['ref_id']);*/
     }
   }
 
-  //echo "<pre>";
- //print_r($incomingreferral); die; 
+ //echo "<pre>";
+//print_r($newReferral); die; 
 
   
 
@@ -436,21 +437,14 @@ get_header();
                 ?>
             
              <tr class="single_item_referal">
-              <td ><!-- <i class="fa fa-check-circle"></i> --> <?php echo $newReferralDatavalue['ref_patient']; ?> </td>
-
-              <td></td>
-
-              <td ><?php $int = mt_rand(1262055681,1262055681); echo date('d/m/y',$int); ?> [Created] </td>
-              
-              <td >Referral ID: <?php echo $newReferralDatavalue['ref_id']; ?></td>
-              <td></td>
-              <td></td>
-               <!-- <td><select>
-                <option>Pending</option>
-                 <option>Complete</option>
-              </select></td> -->
-              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['due_date'])); ?> [Due]</td>
-              <td></td>
+              <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
+              <td><?php echo $newReferralDatavalue['ref_description']; ?></td>
+              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['due_date'])); ?></td>
+              <td ><?php echo $newReferralDatavalue['taskdetails']['referral_details']['source']; ?></td>
+              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['urgency']; ?></td>
+              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
+              <td > <?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date'])); ?></td>
+              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
               <td >
                  <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']);?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> 
               </td>
