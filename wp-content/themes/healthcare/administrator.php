@@ -73,12 +73,12 @@ color: #43b02a!important;
 				                    <?php if($error == 0){ ?>
 
 										
-										<form action="https://dev7.resourcestack.com" method="get" target="adminAccess" id="formId">
+										<form action="https://dev11.resourcestack.com/backend/" method="get" target="adminAccess" id="formId">
 											<input type="hidden" name="email" value="<?php echo $email; ?>">
 											<input type="hidden" name="user-token" value="<?php echo $authToken; ?>">
 										</form>
 
-										<iframe name="adminAccess" id="frame1" src="https://dev7.resourcestack.com" width="1000" height="400"></iframe> 
+										<iframe name="adminAccess" id="frame1" src="https://dev11.resourcestack.com/backend" width="1000" height="400"></iframe> 
 
 										<script type="text/javascript">document.getElementById("formId").submit();
 </script>

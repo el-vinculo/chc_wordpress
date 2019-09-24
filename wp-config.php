@@ -23,13 +23,35 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'testsite');
+#define('DB_NAME', 'testsite');
 
 /** MySQL database username */
-define('DB_USER', 'root');
+#define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
+#define('DB_PASSWORD', '');
+
+/** MySQL hostname */
+#define('DB_HOST', 'localhost');
+#define('DB_NAME', 'wp_development');
+/** Database Charset to use in creating database tables. */
+#define('DB_CHARSET', 'utf8');
+#define('DB_USER', 'wp_user');
+
+/** The Database Collate type. Don't change this if in doubt. */
+#define('DB_COLLATE', '');
+#define('DB_PASSWORD', 'rsi1111');
+
+###
+##
+##
+define('DB_NAME', 'wp_development');
+
+/** MySQL database username */
+define('DB_USER', 'wp_user');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'rsi1111');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -39,7 +61,6 @@ define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
-
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -70,6 +91,7 @@ $table_prefix  = 'wp_';
 
 define('IMAGE_PATH', 'https://dev7.resourcestack.com');
 define('API_URL', 'https://dev7.resourcestack.com/api/');
+
 #define('IMAGE_PATH', 'http://localhost/testsite/');
 #define('API_URL', 'http://localhost/testsite/');
 session_start();
