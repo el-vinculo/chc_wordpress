@@ -113,13 +113,14 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 
 <div class="form-group">
 
-<iframe name="adminAccess" id="frame1" src="https://dev11.resourcestack.com/backend/" width="1000" height="400" style="display: none;"</iframe>
+<iframe name="adminAccess" id="frame1" src="https://dev11.resourcestack.com/backend/" width="1000" height="400" style="display: none;"></iframe>
 
 
 </div>
 <script type="text/javascript">
 	//document.getElementById("#frame1").style.display = "none";
 	jQuery(document).ready(function($){
+	
 		$("#login_details").click(function() {
 			const email = $("#inputEmail").val();
 	   		//alert(email);
