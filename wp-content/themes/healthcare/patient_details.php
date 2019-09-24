@@ -478,7 +478,7 @@ get_header();
                                     <th>Task Count</th>
                                     <th>Status</th>
                                     <th>Follow Up Date</th>
-                                    <th>AGREEMENT</th>
+                                    <th>AGREEMENT </th>
                                 <th class="tabledit-toolbar-column"></th></tr>
                             </thead>
                             <tbody id="refbody">

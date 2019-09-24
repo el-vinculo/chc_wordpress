@@ -503,7 +503,7 @@ get_header();
                    
         		  </div>
         		  <div class="col-md-6">
-        		   <label>Referral Name</label>
+        		   <label>Referral Name </label>
                    <input type="text" class="form-control" placeholder="Referral Name" name="ref_name" id="ref_name" value=""/>
         		  </div>
         		</div>

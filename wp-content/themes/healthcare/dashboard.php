@@ -506,47 +506,7 @@ get_header();
 
             
             </div>
-  <!-- <table class="table table-striped">
-  <tbody>
-     
-   <?php
-  if(!empty($incomingreferral)){
-    foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
-       if($requestreffvalue['status'] == 'Pending'){
-      ?>
-    
 
-    <tr>
-      
-      <td>
-     
-            <tr>
-              <td ><?php echo $requestreffvalue['patient_name']; ?></td>
-              <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
-              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
-              <td ><?php echo $requestreffvalue['ref_source']; ?></td>
-              <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
-              <td ><?php echo ""; ?></td>
-              <td ><?php echo ""; ?></td>
-              <td ><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a>
-
-              <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
-              <!--  <td ><input type="text" width="100%"></td>
-            </tr>
-                  <div class="panel">
-             <span><i class="fa fa-check-circle"></i><?php echo $requestreffvalue['task_description']; ?> </span>
-      
-
-      </div>
-         
- 
-
-    </td></tr>
-
-    <?php } }} ?>
-
-  </tbody>
-</table> -->
 </div>
 
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Copied Referrals 
