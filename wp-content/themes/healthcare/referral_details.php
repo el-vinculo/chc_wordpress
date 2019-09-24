@@ -325,6 +325,9 @@ get_header();
                                     <th>Source</th>
                                     <th>Urgency</th>
                                     <th>Task Count</th>
+                                    <th>Status</th>
+                                    <th>Follow Up Date</th>
+                                    <th>AGREEMENT</th>
                                 <th class="tabledit-toolbar-column"></th></tr>
                             </thead>
                             <tbody id="refbody">
@@ -341,6 +344,9 @@ get_header();
 	                                	<td id="source-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['source']; ?></td>
 	                                	<td id="urgency-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['urgency']; ?></td>
 	                                	<td><?php echo $referralList['task_count']; ?></td>
+                                    <td><?php echo $refvalue['status']; ?></td>
+                                    <td><?php echo $refvalue['follow_up_date']; ?></td>
+                                    <td><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php  }else{ ?>

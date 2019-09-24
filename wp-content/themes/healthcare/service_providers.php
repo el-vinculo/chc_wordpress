@@ -118,6 +118,41 @@ color: #43b02a!important;
        color: #949292;
 
 }
+
+/*new start css*/
+.custom-btn{
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 0!important;  
+  box-shadow: none!important; 
+}
+.pt-20{
+    padding: 20px;
+}
+.provider-content {
+    display: inline-block;
+}
+.provider-content h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+span.fa.fa-print {
+    font-size: 33px;
+    color: #3b5999;
+}
+.margin-bt thead tr td {
+    padding-bottom: 8px!important;
+}
+.margin-bt thead tr th{
+  padding: 8px 0!important; 
+}
+.scroll  {
+    height: 219px;
+    overflow-y: scroll;
+}
+i.fa.fa-envelope {
+    padding-left: 0px!important;
+}
 </style>
  <script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI&sensor=false" 
           type="text/javascript"></script>
@@ -164,10 +199,201 @@ get_header();
 //get_template_part('cover');
 ?>
 
-
 <div class="container-fluid space">
 	<div class="container blogs">
-	<div class="col-md-12 rightside">
+    <div class="post_title"><h3>Select Service Providers</h3></div>
+    <table class="table ">
+      <tbody>
+  <form method="post" action="">
+  <thead>
+    <tr>
+      <th scope="col">
+        <label>Search</label>
+        <input type="Search" name="provider name" class="form-control" placeholder="Provider Name.." value="">
+      </th>
+      <th scope="col">
+        <label>Populations</label>
+        <select class="form-control" name="radius">
+          <option value="Citizenship">Citizenship</option>
+          <option value="Disabled">Disabled</option>
+          <option value="Families w/ Children">Families w/ Children</option>
+          <option value="LGBT">LGBT</option>
+          <option value="Very Low-Income">Very Low-Income</option>
+          <option value="Native American">Native American</option>
+          <option value="Other">Other</option>
+          <option value="Senior">Senior</option>
+          <option value="Veteran/Military">Veteran/Military</option>
+        </select>
+      </th>
+     
+      <th scope="col">
+        <label>Services</label>
+        <select class="form-control" name="services_type">
+          <option value="Abuse">Abuse</option>
+          <option value="Addiction">Addiction</option>
+          <option value="BasicNeeds">BasicNeeds</option>
+          <option value="Behavioral">Behavioral</option>
+          <option value="CaseManagement">CaseManagement</option>
+          <option value="Clothing">Clothing</option>
+          <option value="DayCare">DayCare</option>
+          <option value="Disabled">Disabled</option>
+          <option value="Education">Education</option>
+          <option value="Emergency">Emergency</option>
+          <option value="Employment">Employment</option>
+          <option value="Family">Family</option>
+          <option value="Financial">Financial</option>
+          <option value="Food">Food</option>
+          <option value="GeneralSupport">GeneralSupport</option>
+          <option value="Housing">Housing</option>
+          <option value="Identification">Identification</option>
+          <option value="IndependentLiving">IndependentLiving</option>
+          <option value="Legal">Legal</option>
+          <option value="Medical">Medical</option>
+          <option value="Research">Research</option>
+          <option value="Resources">Resources</option>
+          <option value="Respite">Respite</option>
+          <option value="Senior">Senior</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Veteran">Veteran</option>
+          <option value="Victim">Victim</option>
+
+        </select>
+      </th>
+      <th scope="col">
+        <label>Location Name</label>
+        <input type="text" value="" name="provider_name" class="form-control" placeholder="Virginia">
+      </th>
+      <th scope="col">
+        <label>Location Type</label>
+        <select class="form-control" name="services_type">
+          <option value="City">City</option>
+          <option value="State">State</option>
+          <option value="Country">Country</option>
+          <option value="National">National</option>
+        
+        </select>
+      </th>
+      <th scope="col">
+        <button type="search " class="custom-btn btn-success">Search</button>
+      </th>
+    </tr>
+  </thead>
+
+  </form>
+</tbody>
+</table>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+
+    <h4>Search Results</h4>
+    <div class="border row">
+    <div class="col-sm-12">
+      <div class="scroll">
+      <table class="margin-bt">
+       
+          <thead>
+            <tr>
+            <th></th>
+            <th>Provider Name</th>
+            <th>Category</th>
+            <th>Short Descripation</th>
+          </tr>
+         
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-map-marker"></i>
+             <button type="button " class="custom-btn btn-success"> View</button>
+            </td>
+            <td>Aroca Foundation</td>
+            <td>Vetran des..</td>
+            <td>Aroca serve those who</td>
+          </tr>
+         
+        </thead>
+      </table>
+</div>
+    </div>
+    <div class="col-sm-12">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin" width="100%" height="300px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+    </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <h4>Provider Descripation</h4>
+    <div class="border pt-20">
+    <div class="img-logo">
+      <p>
+      <img class="img-responsive" src="https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png" style="height:73px; width:150px;float: left;">
+      <span class="fa fa-print" style="float: right;"></span>
+      </p>
+    </div>
+    <div class="provider-content">
+      <h4>Services Provided </h4>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
+      <h4>Population groups  </h4>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
+      <h4>Mission Statement </h4>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
+
+    </div>
+    <ul class="nav">
+      <li> <a href="tel:800.443.4143"><i class="fa fa-phone"></i> 800.443.4143</a></li>
+      <li><a href="mailto:contact@arcora.org"><i class="fa fa-envelope"></i> contact@arcora.org</a></li>
+    </ul>
+    <div class="text-center">
+      <button type="button " class="custom-btn btn-success"> Add Task</button>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+	<!-- <div class="col-md-12 rightside">
 	    <div class="post-73 page type-page status-publish hentry">	
 			<div class="row post-area">
 	            <div class="post-73 page type-page status-publish hentry">
@@ -363,10 +589,10 @@ get_header();
 	</div>
 	<?php //get_sidebar(); ?>
 	</div>
-</div>
+</div> -->
 
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="overlay">
+<!-- <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="overlay">
 
     <div class="popup container">
         <h2 id="practicsname"></h2>
@@ -383,15 +609,15 @@ get_header();
     
     </div>
     <div class="col-md-5"><img src="https://www.vikramhospital.com/images/doctors/dummy-men.jpg" class="img-responsive" width="170px " ></div></div>
-    <div class="row">
+    <div class="row"> -->
     <!-- <div class="col-md-12 content">
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>   </div> -->
 
-        </div></div>
+       <!--  </div></div>
         <div class=" col-md-6" style="padding-top: 10px;" id="practicsmap" >
             
         </div>
-            
+             -->
           
     </div>
     </div>

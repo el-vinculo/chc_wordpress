@@ -476,6 +476,9 @@ get_header();
                                     <th>Source</th>
                                     <th>Urgency</th>
                                     <th>Task Count</th>
+                                    <th>Status</th>
+                                    <th>Follow Up Date</th>
+                                    <th>AGREEMENT</th>
                                 <th class="tabledit-toolbar-column"></th></tr>
                             </thead>
                             <tbody id="refbody">
@@ -496,6 +499,9 @@ get_header();
 	                                	<td id="source-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['source']; ?></td>
 	                                	<td id="urgency-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['urgency']; ?></td>
 	                                	<td><?php echo $refvalue['task_count']; ?></td>
+	                                	<td><?php echo $refvalue['status']; ?></td>
+	                                	<td><?php echo $refvalue['follow_up_date']; ?></td>
+	                                	<td><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php $r++; } }else{ ?>
@@ -939,9 +945,10 @@ get_header();
                                 <tr>
                                     <th>APPLICATION NAME</th>
                                     <th>SPECIALTY</th>
+                                    <th>AGREEMENT TYPE</th>
+                                    <th>AGREEMENT SIGNED</th>
                                     <th>TRANSFER</th>
-                                </tr> 
-                                  
+                                </tr>       
                             </thead>
                             <tbody id="taskbody">
                             <input type="hidden" id="transfer_task_id" value="">
@@ -952,6 +959,8 @@ get_header();
                             <tr>
                                 <td><?php echo $clientvalue['name']; ?></td>
                                 <td><?php echo $clientvalue['speciality']; ?></td>
+                                <td><?php echo $clientvalue['agreement_type']; ?></td>
+                                <td><?php echo $clientvalue['agreement_signed']; ?></td>
                                 <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
                             </tr> 
                             <?php } } ?>   

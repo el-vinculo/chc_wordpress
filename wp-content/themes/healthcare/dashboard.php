@@ -378,16 +378,10 @@ if(isset($_SESSION['userdata'])){
   if(!empty($incomingreferral)){
     foreach ($incomingreferral as $incomingreferralkey => $incomingreferralvalue) { 
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
-         /*$incomingreferral[$incomingreferralkey]['taskdetails'] = getreferraldetails($email,$incomingreferralvalue['ref_id']);*/
+         
     }
   }
 
- //echo "<pre>";
-//print_r($newReferral); die; 
-
-  
-
-    
 
 }else{
 	$error = 1;
@@ -439,9 +433,9 @@ get_header();
              <tr class="single_item_referal">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
               <td><?php echo $newReferralDatavalue['ref_description']; ?></td>
-              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['due_date'])); ?></td>
-              <td ><?php echo $newReferralDatavalue['taskdetails']['referral_details']['source']; ?></td>
-              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['urgency']; ?></td>
+              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
+              <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
+              <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
               <td > <?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date'])); ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
@@ -466,7 +460,7 @@ get_header();
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Referral Requests
 </h6>
 <div class="panel">
-  <table>
+  <table class="table table-striped"  >
     <tbody>
         <thead class="ref-cls">
            <tr class="green-bg">
@@ -480,10 +474,39 @@ get_header();
               <th>Agreement<br>flag</th>
               <th>Action buttons/<br>icons</th>
             </tr> 
+            <?php
+  if(!empty($incomingreferral)){
+    foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
+       if($requestreffvalue['status'] == 'Pending'){
+      ?>
+    
+            <tr class="accordion" data-toggle="collapse" data-target="#collapseExample">
+              <td ><?php echo $requestreffvalue['patient_name']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
+              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
+              <td ><?php echo $requestreffvalue['ref_source']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
+              <td ><?php echo $requestreffvalue['status']; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a>
+
+              <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+              <!--  <td ><input type="text" width="100%"></td> -->
+            </tr>
+           
+           
+             <?php } }} ?>
       </thead>
     </tbody>
   </table>
-  <table class="table table-striped">
+   <div class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
+            
+                          <?php echo $requestreffvalue['task_description']; ?> 
+
+            
+            </div>
+  <!-- <table class="table table-striped">
   <tbody>
      
    <?php
@@ -496,31 +519,34 @@ get_header();
     <tr>
       
       <td>
-      <span><i class="fa fa-check-circle"></i>Requests From : <?php echo $requestreffvalue['referred_from']; ?> </span>
-      
-      <span class="accordion upcoming-right"><span class="green-text" ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></span><i class="fa fa-angle-right" aria-hidden="true"></i></span> 
-      <div class="panel">
-        <table>
-          <tbody>
+     
             <tr>
-              <td ><?php echo $requestreffvalue['taskdetails']['task_details']['task_type']; ?></td>
-              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?> </td>
-              <td >11/30/18</td>
-              <td ><?php echo $requestreffvalue['taskdetails']['task_details']['task_owner']; ?></td>
+              <td ><?php echo $requestreffvalue['patient_name']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
+              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
+              <td ><?php echo $requestreffvalue['ref_source']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><?php echo ""; ?></td>
               <td ><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a>
 
               <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
-              <!--  <td ><input type="text" width="100%"></td> -->
+              <!--  <td ><input type="text" width="100%"></td>
             </tr>
-          </tbody>
-        </table>
+                  <div class="panel">
+             <span><i class="fa fa-check-circle"></i><?php echo $requestreffvalue['task_description']; ?> </span>
+      
+
       </div>
+         
+ 
+
     </td></tr>
 
     <?php } }} ?>
 
   </tbody>
-</table>
+</table> -->
 </div>
 
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Copied Referrals 
