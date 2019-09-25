@@ -344,9 +344,9 @@ get_header();
 	                                	<td id="source-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['source']; ?></td>
 	                                	<td id="urgency-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['urgency']; ?></td>
 	                                	<td><?php echo $referralList['task_count']; ?></td>
-                                    <td><?php echo $refvalue['status']; ?></td>
-                                    <td><?php echo $refvalue['follow_up_date']; ?></td>
-                                    <td><?php echo $refvalue['agreement_notification_flag']; ?></td>
+                                    <td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
+                                    <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
+                                    <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php  }else{ ?>
@@ -534,8 +534,22 @@ get_header();
         		<br/>
         	    <div class="row">
         		  <div class="col-md-12">
-        		   <label>Description</label>
+        		   
+                  <div class="col-md-6">
+                  <label>Description</label>
                    <textarea name="description" id="ref_desc" class="form-control" rows="7"  placeholder="Description..."></textarea>
+                  </div>
+
+                   <div class="col-md-6">
+               <label>Follow Up Date</label>
+               <div  >
+                    <input type="text" class="form-control datepicker" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                   
+              </div>
         		  </div>
         		</div>
         		<br/>
@@ -669,8 +683,10 @@ get_header();
         <table class="table table-striped table-bordered" id="example">
                             <thead>
                                 <tr>
-                                    <th>APPLICATION NAME</th>
+                                   <th>APPLICATION NAME</th>
                                     <th>SPECIALTY</th>
+                                    <th>AGREEMENT TYPE</th>
+                                    <th>AGREEMENT SIGNED</th>
                                     <th>TRANSFER</th>
                                 </tr> 
                                   
@@ -684,6 +700,8 @@ get_header();
                             <tr>
                                 <td><?php echo $clientvalue['name']; ?></td>
                                 <td><?php echo $clientvalue['speciality']; ?></td>
+                                <td><?php echo $clientvalue['agreement_type']; ?></td>
+                                <td><?php echo $clientvalue['agreement_signed']; ?></td>
                                 <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
                             </tr> 
                             <?php } } ?>   
@@ -1135,10 +1153,11 @@ function updatereferal(){
          var ref_urgency  = document.getElementById("ref_urgency").value;
          var ref_source  = document.getElementById("ref_source").value;
          var ref_desc  = document.getElementById("ref_desc").value;
+         var followup_date  = document.getElementById("ref_followup_date").value;
           jQuery.ajax({
             type: 'post',
             url: ajax_url,
-            data: {ref_id:ref_id,ref_name:ref_name,ref_due_date:ref_due_date,ref_urgency:ref_urgency,ref_source:ref_source,ref_desc:ref_desc,funtion:action},
+            data: {ref_id:ref_id,ref_name:ref_name,ref_due_date:ref_due_date,ref_urgency:ref_urgency,ref_source:ref_source,ref_desc:ref_desc,follow_up_date:followup_date,funtion:action},
             success: function (res) {
             	var trimStr = $.trim(res);
             	//alert(trimStr);
@@ -1232,6 +1251,7 @@ function showReferral(refid){
 	document.getElementById("ref_source").value = document.getElementById ( 'source-'+refid ).textContent;
 
 	document.getElementById("ref_desc").value = document.getElementById ( 'refdesc-'+refid ).textContent;
+  document.getElementById("ref_followup_date").value = document.getElementById ( 'reffolllowup-'+refid ).textContent;
 
 }
 

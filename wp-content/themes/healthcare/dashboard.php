@@ -430,7 +430,7 @@ get_header();
               foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
                 ?>
             
-             <tr class="single_item_referal">
+             <tr class="accordion single_item_referal" data-toggle="collapse" data-target="#collapseExample">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
               <td><?php echo $newReferralDatavalue['ref_description']; ?></td>
               <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
@@ -444,6 +444,9 @@ get_header();
               </td>
               
             </tr>
+             <tr class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
+               <td colspan="8"><?php echo $newReferralDatavalue['ref_description']; ?> </td>
+             </tr>
 
             <?php }}?>
            <!--  <tr >
@@ -494,18 +497,18 @@ get_header();
               <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
+             <tr class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
+               <td colspan="8"><?php echo $requestreffvalue['task_description']; ?> </td>
+             </tr>
            
            
              <?php } }} ?>
       </thead>
     </tbody>
   </table>
-   <div class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
-            
-                          <?php echo $requestreffvalue['task_description']; ?> 
-
-            
-            </div>
+    <!-- <div class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
+      <?php echo $requestreffvalue['task_description']; ?> 
+    </div> -->
 
 </div>
 

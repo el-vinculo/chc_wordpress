@@ -376,6 +376,7 @@ function updateReferral($referraldata,$referral_id,$email)
        $urgency       = $referraldata['ref_urgency'];
        $source        = $referraldata['ref_source'];
        $referral_description     = $referraldata['ref_desc'];
+       $follow_up_date     = $referraldata['follow_up_date'];
        
 
 	   //$headers = array();
@@ -383,7 +384,7 @@ function updateReferral($referraldata,$referral_id,$email)
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
        
-	   $post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description); 
+	   $post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'follow_up_date'=>$follow_up_date); 
 	   $curl_handle=curl_init();
 
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'rfl_update');
@@ -661,19 +662,19 @@ function serviceproviderslist($search){
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
-	   if(!empty($search['zipcode']) || !empty($search['provider_name']) || !empty($search['services_type']) || !empty($search['radius'])){
+	   if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){
 	   	    $postsearch = array();
-	   	    if(!empty($search['zipcode'])){
-	   	    	$zipcodearray = array('type' => 'zipcode','value' => $search['zipcode']);
-	   	    	$postsearch['Billing_Zip/Postal_Code']  = $zipcodearray;
+	   	    if(!empty($search['population'])){
+	   	    	$populationarray = array('conditional' => 'OR','value' => array($search['population']));
+	   	    	$postsearch['population']  = $populationarray;
 	   	    }   
 
-	   	    if(!empty($search['provider_name'])){
-                $providerarray = array('type' => 'Input','value' => $search['provider_name']);
-                $postsearch['Name']  = $providerarray;
+	   	    if(!empty($search['services_type'])){
+                $providerarray = array("type" => "group", "conditional" => "OR",'value' => array($search['services_type']));
+                $postsearch['services_type']  = $providerarray;
 	   	    }
 
-	   	    if(!empty($search['services_type'])){
+	   	    /*if(!empty($search['services_type'])){
 	   	    	if($search['services_type'] == 'Extractions'){
 	   	    		$extractnsarray = array('type' => 'Dropdown','value' => 'Limited Extractions');
 	   	    		$postsearch['Extractions']  = $extractnsarray;
@@ -685,11 +686,11 @@ function serviceproviderslist($search){
 	   	    		$postsearch['Dentures']  = $denturesarray;
 	   	    	}
 
-	   	    }
+	   	    }*/
 
-	   	    if(!empty($search['radius'])){
-	   	    	$radiusarray = array('type' => 'radius','value' => $search['radius']);
-                $postsearch['radius']  = $radiusarray;
+	   	    if(!empty($search['location'])){
+	   	    	$radiusarray = array('conditional' => 'OR','value' => $search['location']);
+                $postsearch['GeoScope']  = $radiusarray;
 	   	    }
 
 
@@ -713,7 +714,7 @@ function serviceproviderslist($search){
 	    $datastring = json_encode($post);*/
 	   }
 	   
-	   //echo $datastring;  
+	   //echo $datastring;  die;
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);

@@ -182,11 +182,15 @@ if(isset($_SESSION['userdata'])){
 	  $email = $_SESSION['userdata']['email'];
     if(!empty($_POST['search']) && $_POST['search'] == 'Search'){
       $serachData = $_POST;
+     /* echo "<pre>";
+      print_r($_POST); die; */
     }
 
 	  $practicesdata = serviceproviderslist($serachData);
 	  if(!empty($practicesdata['status'] == 'ok')){
 	  	 $practices = $practicesdata['provider_list'];
+      // echo "<pre>";
+       //print_r($practices); die; 
 	  }else{
 	  	$error = 0;
 	    $msg   = 'Error ! Some thing went wrong';
@@ -209,72 +213,77 @@ get_header();
     <tr>
       <th scope="col">
         <label>Search</label>
-        <input type="Search" name="provider name" class="form-control" placeholder="Provider Name.." value="">
+        <input type="Search" name="provider_name" class="form-control" placeholder="Provider Name.." value="<?php if(!empty($_POST['provider_name'])){ echo $_POST['provider_name']; } ?>">
       </th>
       <th scope="col">
         <label>Populations</label>
-        <select class="form-control" name="radius">
-          <option value="Citizenship">Citizenship</option>
-          <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT">LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
-          <option value="Other">Other</option>
-          <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+        <select class="form-control" name="population">
+          <option value="">Please Select </option>
+          <option value="Citizenship" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Citizenship')){ echo "selected"; } ?>>Citizenship</option>
+          <option value="Disabled" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Disabled')){ echo "selected"; } ?>>Disabled</option>
+          <option value="Families w/ Children" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Families w/ Children')){ echo "selected"; } ?>>Families w/ Children</option>
+          <option value="LGBT" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'LGBT')){ echo "selected"; } ?>>LGBT</option>
+          <option value="Very Low-Income" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Very Low-Income')){ echo "selected"; } ?>>Very Low-Income</option>
+          <option value="Native American" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Native American')){ echo "selected"; } ?>>Native American</option>
+          <option value="Other" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Other')){ echo "selected"; } ?>>Other</option>
+          <option value="Senior" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Senior')){ echo "selected"; } ?>>Senior</option>
+          <option value="Veteran/Military" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Veteran/Military')){ echo "selected"; } ?>>Veteran/Military</option>
         </select>
       </th>
      
       <th scope="col">
         <label>Services</label>
         <select class="form-control" name="services_type">
-          <option value="Abuse">Abuse</option>
-          <option value="Addiction">Addiction</option>
-          <option value="BasicNeeds">BasicNeeds</option>
-          <option value="Behavioral">Behavioral</option>
-          <option value="CaseManagement">CaseManagement</option>
-          <option value="Clothing">Clothing</option>
-          <option value="DayCare">DayCare</option>
-          <option value="Disabled">Disabled</option>
-          <option value="Education">Education</option>
-          <option value="Emergency">Emergency</option>
-          <option value="Employment">Employment</option>
-          <option value="Family">Family</option>
-          <option value="Financial">Financial</option>
-          <option value="Food">Food</option>
-          <option value="GeneralSupport">GeneralSupport</option>
-          <option value="Housing">Housing</option>
-          <option value="Identification">Identification</option>
-          <option value="IndependentLiving">IndependentLiving</option>
-          <option value="Legal">Legal</option>
-          <option value="Medical">Medical</option>
-          <option value="Research">Research</option>
-          <option value="Resources">Resources</option>
-          <option value="Respite">Respite</option>
-          <option value="Senior">Senior</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Veteran">Veteran</option>
-          <option value="Victim">Victim</option>
+        <option value="">Please Select </option>
+          <option value="Abuse" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Abuse')){ echo "selected"; } ?>>Abuse</option>
+          <option value="Addiction" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Addiction')){ echo "selected"; } ?>>Addiction</option>
+          <option value="BasicNeeds" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'BasicNeeds')){ echo "selected"; } ?>>BasicNeeds</option>
+          <option value="Behavioral" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Behavioral')){ echo "selected"; } ?>>Behavioral</option>
+          <option value="CaseManagement" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'CaseManagement')){ echo "selected"; } ?>>CaseManagement</option>
+          <option value="Clothing" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Clothing')){ echo "selected"; } ?>>Clothing</option>
+          <option value="DayCare" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'DayCare')){ echo "selected"; } ?>>DayCare</option>
+          <option value="Disabled" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Disabled')){ echo "selected"; } ?>>Disabled</option>
+          <option value="Education" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Education')){ echo "selected"; } ?>>Education</option>
+          <option value="Emergency" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Emergency')){ echo "selected"; } ?>>Emergency</option>
+          <option value="Employment" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Employment')){ echo "selected"; } ?>>Employment</option>
+          <option value="Family" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Family')){ echo "selected"; } ?>>Family</option>
+          <option value="Financial" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Financial')){ echo "selected"; } ?>>Financial</option>
+          <option value="Food" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Food')){ echo "selected"; } ?>>Food</option>
+          <option value="GeneralSupport" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'GeneralSupport')){ echo "selected"; } ?>>GeneralSupport</option>
+          <option value="Housing" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Housing')){ echo "selected"; } ?>>Housing</option>
+          <option value="Identification" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Identification')){ echo "selected"; } ?>>Identification</option>
+          <option value="IndependentLiving" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'IndependentLiving')){ echo "selected"; } ?>>IndependentLiving</option>
+          <option value="Legal" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Legal')){ echo "selected"; } ?>>Legal</option>
+          <option value="Medical" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Medical')){ echo "selected"; } ?>>Medical</option>
+          <option value="Research" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Research')){ echo "selected"; } ?>>Research</option>
+          <option value="Resources" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Resources')){ echo "selected"; } ?>>Resources</option>
+          <option value="Respite" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Respite')){ echo "selected"; } ?>>Respite</option>
+          <option value="Senior" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Senior')){ echo "selected"; } ?>>Senior</option>
+          <option value="Transportation" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Transportation')){ echo "selected"; } ?>>Transportation</option>
+          <option value="Veteran" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Veteran')){ echo "selected"; } ?>>Veteran</option>
+          <option value="Victim" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Victim')){ echo "selected"; } ?>>Victim</option>
 
         </select>
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="" name="provider_name" class="form-control" placeholder="Virginia">
+        <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; } ?>" name="location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
-        <select class="form-control" name="services_type">
-          <option value="City">City</option>
-          <option value="State">State</option>
-          <option value="Country">Country</option>
-          <option value="National">National</option>
+        
+        <select class="form-control" name="location_type">
+        <option value="">Please Select </option>
+          <option value="City" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'City')){ echo "selected"; } ?>>City</option>
+          <option value="State" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'State')){ echo "selected"; } ?>>State</option>
+          <option value="Country" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'Country')){ echo "selected"; } ?>>Country</option>
+          <option value="National" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'National')){ echo "selected"; } ?>>National</option>
         
         </select>
       </th>
       <th scope="col">
-        <button type="search " class="custom-btn btn-success">Search</button>
+        <!-- <button type="search " class="custom-btn btn-success">Search</button> -->
+        <input type="submit" name="search" class="custom-btn btn-success" value="Search">
       </th>
     </tr>
   </thead>
@@ -282,6 +291,9 @@ get_header();
   </form>
 </tbody>
 </table>
+
+<?php
+if(!empty($practices)){ ?>
 <div class="row">
   <div class="col-md-6 col-sm-12">
 
@@ -298,61 +310,21 @@ get_header();
             <th>Category</th>
             <th>Short Descripation</th>
           </tr>
-         
+
+          <?php 
+          if(!empty($practices)){
+         foreach ($practices as $practiceskey => $practicesvalue) { ?>
+          
           <tr>
             <td>
               <i class="fa fa-map-marker"></i>
              <button type="button " class="custom-btn btn-success"> View</button>
             </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
+            <td><?php echo $practicesvalue['organizationName']["organizationName_Text"]["0"]["text"]; ?></td>
+            <td><?php echo ""; ?></td>
+            <td><?php echo $practicesvalue['organizationName']["OrgDescription"]; ?></td>
           </tr>
-          <tr>
-            <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
-            </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
-            </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
-            </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
-            </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
-          </tr>
-          <tr>
-            <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
-            </td>
-            <td>Aroca Foundation</td>
-            <td>Vetran des..</td>
-            <td>Aroca serve those who</td>
-          </tr>
+          <?php } } ?>
          
         </thead>
       </table>
@@ -392,6 +364,12 @@ get_header();
     </div>
   </div>
 </div>
+
+<?php }else{ ?>
+<div class="row">
+<div class="col-md-12"><span><center><strong><p style="color: red">No Record found for this search</p></strong></center></span></div>
+</div>
+<?php } ?>
 
 	<!-- <div class="col-md-12 rightside">
 	    <div class="post-73 page type-page status-publish hentry">	
