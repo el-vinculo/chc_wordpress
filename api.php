@@ -689,7 +689,7 @@ function serviceproviderslist($search){
 	   	    }*/
 
 	   	    if(!empty($search['location'])){
-	   	    	$radiusarray = array('conditional' => 'OR','value' => $search['location']);
+	   	    	$radiusarray = array('conditional' => 'OR','value' => 20170);
                 $postsearch['GeoScope']  = $radiusarray;
 	   	    }
 

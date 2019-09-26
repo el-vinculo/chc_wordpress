@@ -318,7 +318,7 @@ get_header();
         <div class="col-md-9 panel-group" id="accordion">
             <div class="panel ">
                 <div class="post_title post_tilte-inter">
-                  <h3 class="pull-left"><a id="intervirefiels"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#" ><i class="fa fa-plus" aria-hidden="true"></i></a> Interviews</h3>
+                  <h3 class="pull-left"><a id="intervirefiels"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#panel1" href="#" ><i class="fa fa-plus" aria-hidden="true"></i></a> Interviews</h3>
                   <ul class="pull-right  nav navbar-nav">
                     <li><a href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>

@@ -410,8 +410,8 @@ get_header();
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Active Referrals 
 </h6>
 <div class="panel ">
-        <table class="table table-striped">
-          <tbody>
+        <table class="table table-striped" id="myTable">
+          
             <thead>
             <tr class="green-bg">
               <th>Patient<br> Last, First</th>
@@ -425,14 +425,15 @@ get_header();
               <th>Lead<br> Navigator</th>
             </tr> 
             </thead>
+            <tbody >
             <?php
             if(!empty($newReferral)){
               foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
                 ?>
             
-             <tr class="accordion single_item_referal" data-toggle="collapse" data-target="#collapseExample">
+             <tr class=" single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
-              <td><?php echo $newReferralDatavalue['ref_description']; ?></td>
+              <td><?php echo if(strlen($newReferralDatavalue['ref_description']) > 160) {echo substr($newReferralDatavalue['ref_description'], 0, 160);}else{ echo $newReferralDatavalue['ref_description']; }  ?></td>
               <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
               <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
@@ -444,8 +445,11 @@ get_header();
               </td>
               
             </tr>
-             <tr class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
-               <td colspan="8"><?php echo $newReferralDatavalue['ref_description']; ?> </td>
+
+             <tr  id="newref-<?php echo $newReferralDatakey; ?>" class="collapse">
+               <td colspan="9" ><div>
+              <?php echo $newReferralDatavalue['ref_description']; ?></div> </td>
+               
              </tr>
 
             <?php }}?>
@@ -483,7 +487,7 @@ get_header();
        if($requestreffvalue['status'] == 'Pending'){
       ?>
     
-            <tr class="accordion" data-toggle="collapse" data-target="#collapseExample">
+            <tr class="accordion" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
               <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
@@ -497,8 +501,8 @@ get_header();
               <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
-             <tr class="collapse" id="collapseExample" style="margin: 0;padding: 10px;">
-               <td colspan="8"><?php echo $requestreffvalue['task_description']; ?> </td>
+             <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
+               <td colspan="9"><?php echo $requestreffvalue['task_description']; ?> </td>
              </tr>
            
            
