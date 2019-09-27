@@ -41,6 +41,7 @@ get_header();
 								<div class="post-tags">				</div>
 				
 	<div class="post_content">
+		
        	
 	</div>
 							</div>
