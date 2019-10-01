@@ -110,5 +110,6 @@ if($logodata['status']!='unauthorized'){
 	jQuery("#menu-item-78").css("display", "none");
 	jQuery("#menu-item-173").css("display", "none");
 	jQuery("#menu-item-176").css("display", "none");
+        jQuery("#menu-item-186").css("display", "none");
 </script>
 	<?php } ?>
