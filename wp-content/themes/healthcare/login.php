@@ -43,6 +43,7 @@ if(!empty($_POST)){
 				$error = 2;
 				
 				$_SESSION['userdata'] = $authdata;
+                               
 				wp_redirect( site_url()."/dashboard/", 301 );
 
 
@@ -98,7 +99,7 @@ get_header();
 
 if(!empty($_SESSION['two_factor_enabled'])){ ?>
 <div class="form-group"><label class="control-label col-xs-2" for="inputPassword">Authentication Code</label>
-<div class="col-xs-10"><input id="inputPassword" name="otp_attempt" class="form-control" type="password" placeholder="Two Factor Authentication Code" required /></div>
+<div class="col-xs-10"><input id="step-2-otp" name="otp_attempt" class="form-control" type="password" placeholder="Two Factor Authentication Code" required /></div>
 </div>
 
 <?php } ?>
@@ -123,11 +124,16 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 	
 		$("#login_details").click(function() {
 			const email = $("#inputEmail").val();
-	   		//alert(email);
 	   		const pass = $("#inputPassword").val();
+			const otp = $("#step-B-otp").val();
 	   		const frame = $("#frame1");
 	   		console.log("the frame is " , frame.get(0).contentWindow);
-	   		frame.get(0).contentWindow.postMessage([email,pass].toString(),"https://dev11.resourcestack.com/backend/");
+			//if ($("#step-2-otp").val()!= '')
+			//frame.get(0).contentWindow.postMessage("logout","https://dev11.resourcestack.com/backend/");
+	   		frame.get(0).contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev11.resourcestack.com/backend/");
+			//lse
+			//frame.get(0).contentWindow.postMessage([email,pass].toString(),"https://dev11.resourcestack.com/backend/");
+	   		//alert("sdkjfhalfasifjhlafaijsef");
 	   		return console.log("Message was sent from login");
 		});
 	});
