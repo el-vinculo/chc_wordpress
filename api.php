@@ -663,7 +663,11 @@ function serviceproviderslist($search){
 	   $headers['Authorization'] = 'user-token: '.$userauth;
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
 	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
-	   if(!empty($search['location'])){
+	    if(empty($search)){
+            $radiusarray = array('conditional' => '','value' => "20170");
+            $postsearch['GeoScope']  = $radiusarray;
+            $datastring = json_encode($postsearch);
+	    }else if(!empty($search['location'])){
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
 	   	    	$populationarray = array('conditional' => 'OR','value' => array($search['population']));

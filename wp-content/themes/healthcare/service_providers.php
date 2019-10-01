@@ -315,16 +315,23 @@ if(!empty($practices)){ ?>
 
           <?php 
           if(!empty($practices)){
-         foreach ($practices as $practiceskey => $practicesvalue) { ?>
-          
+         foreach ($practices as $practiceskey => $practicesvalue) { 
+         $name =  $practicesvalue['organizationName']["organizationName_Text"]["0"]["text"];
+         if(is_array($practicesvalue['organizationName']["OrgDescription"])){
+          $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
+         }else{
+          $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
+         }
+
+          ?>
           <tr>
             <td>
               <i class="fa fa-map-marker"></i>
-             <button type="button " class="custom-btn btn-success"> View</button>
+             <button type="button" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success"> View</button>
             </td>
-            <td><?php echo $practicesvalue['organizationName']["organizationName_Text"]["0"]["text"]; ?></td>
+            <td><?php echo $name; ?></td>
             <td><?php echo ""; ?></td>
-            <td><?php echo $practicesvalue['organizationName']["OrgDescription"]; ?></td>
+            <td><?php  echo $shortdesc; ?></td>
           </tr>
           <?php } } ?>
          
@@ -347,10 +354,16 @@ if(!empty($practices)){ ?>
       </p>
     </div>
     <div class="provider-content">
-      <h4>Services Provided </h4>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
-      <h4>Population groups  </h4>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
+    <?php $providername =  $practices["0"]['organizationName']["organizationName_Text"]["0"]["text"];
+         if(is_array($practices["0"]['organizationName']["OrgDescription"])){
+          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
+         }else{
+          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
+         } ?>
+      <h4>Provider Name</h4>
+      <p id='providernamefill'><?php echo $providername; ?></p>
+      <h4>Short Descripation</h4>
+      <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
       <h4>Mission Statement </h4>
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
 
@@ -606,6 +619,11 @@ if(!empty($practices)){ ?>
 
 
 <script type="text/javascript">
+
+function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
 	
 function getpracticsdetails(practicesname,maplink,officehours,address1,city,zipcode,state,officeemail,Services){
     

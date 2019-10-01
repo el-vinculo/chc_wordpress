@@ -41,6 +41,25 @@ get_header();
 								<div class="post-tags">				</div>
 				
 	<div class="post_content">
+	<form action="/action_page.php">
+  <div class="form-group">
+    <label for="email">First Name:</label>
+    <input type="fname" class="form-control" id="fname">
+  </div>
+<div class="form-group">
+    <label for="email">Last Name:</label>
+    <input type="lname" class="form-control" id="lname">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Confirm Password:</label>
+    <input type="cpassword" class="form-control" id="cpwd">
+  </div>
+  <button type="submit" class="btn-success">Save</button>
+</form>
 		
        	
 	</div>
