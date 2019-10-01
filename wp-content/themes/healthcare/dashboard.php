@@ -433,7 +433,7 @@ get_header();
             
              <tr class=" single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
-              <td><?php echo if(strlen($newReferralDatavalue['ref_description']) > 160) {echo substr($newReferralDatavalue['ref_description'], 0, 160);}else{ echo $newReferralDatavalue['ref_description']; }  ?></td>
+              <td><?php  if(strlen($newReferralDatavalue['ref_description']) > 160) {echo substr($newReferralDatavalue['ref_description'], 0, 160);}else{ echo $newReferralDatavalue['ref_description']; }  ?></td>
               <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
               <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>

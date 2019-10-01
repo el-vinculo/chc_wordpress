@@ -662,7 +662,8 @@ function serviceproviderslist($search){
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
-	   if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){
+	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
+	   if(!empty($search['location'])){
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
 	   	    	$populationarray = array('conditional' => 'OR','value' => array($search['population']));
@@ -688,10 +689,10 @@ function serviceproviderslist($search){
 
 	   	    }*/
 
-	   	    if(!empty($search['location'])){
-	   	    	$radiusarray = array('conditional' => 'OR','value' => 20170);
+	   	    //if(!empty($search['location'])){
+	   	    	$radiusarray = array('conditional' => '','value' => "20170");
                 $postsearch['GeoScope']  = $radiusarray;
-	   	    }
+	   	   // }
 
 
 	   	    
@@ -705,7 +706,9 @@ function serviceproviderslist($search){
              
 	   }else{
 
-	   	
+	   /*	$radiusarray = array('conditional' => '','value' => "20170");
+        $postsearch['GeoScope']  = $radiusarray;
+        $datastring = json_encode($postsearch);*/
         $datastring = '{}';
 	   /* $post =  array (
                    'Billing_Zip/Postal_Code' => array ('type' => 'zipcode','value' => '99203' ),
@@ -730,6 +733,8 @@ function serviceproviderslist($search){
 	   else{
 	  	  if(!empty($buffer)){
 	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	//echo "<pre>";
+	  	  	//print_r($result); die; 
             return $result;
 	  	  }
 	   }

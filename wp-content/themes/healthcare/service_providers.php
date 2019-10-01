@@ -267,7 +267,9 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; } ?>" name="location" class="form-control" placeholder="Virginia">
+        <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
+          echo "20170"; 
+          } ?>" name="location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
