@@ -46,8 +46,16 @@ get_header();
     <label for="email">First Name:</label>
     <input type="fname" class="form-control" id="fname">
   </div>
-<div class="form-group">
+  <div class="form-group">
     <label for="email">Last Name:</label>
+    <input type="fname" class="form-control" id="fname">
+  </div>
+<div class="form-group">
+    <label for="email">Email:</label>
+    <input type="fname" class="form-control" id="fname">
+  </div>
+<div class="form-group">
+    <label for="email">Phone Number:</label>
     <input type="lname" class="form-control" id="lname">
   </div>
   <div class="form-group">
@@ -56,8 +64,12 @@ get_header();
   </div>
   <div class="form-group">
     <label for="pwd">Confirm Password:</label>
-    <input type="cpassword" class="form-control" id="cpwd">
+    <input type="password" class="form-control" id="cpwd">
   </div>
+
+
+
+
   <button type="submit" class="btn-success">Save</button>
 </form>
 		
@@ -71,4 +83,5 @@ get_header();
 	<?php //get_sidebar(); ?>
 	</div>
 </div>
+
 <?php get_footer(); ?>
