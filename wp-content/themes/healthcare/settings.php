@@ -46,9 +46,10 @@ if(isset($_SESSION['userdata'])){
   }
 
   if(!empty($_POST['update'])){
-      	$postprofiledata = $_POST; 
+      $postprofiledata = $_POST; 
+      
         
-	  	$updateuser = updateuserprofile($postPatientData);
+	  	$updateuser = updateuserprofile($postprofiledata);
 	  	if(!empty($updateuser)){
 	  		if($updateuser['status'] == 'ok'){
 	  			$error = 0;
@@ -118,7 +119,7 @@ get_header();
         <?php }?>		
   <div class="form-group">
     <label for="email">Name:</label>
-    <input type="text" name="name" class="form-control" id="fname" value="<?php if(!empty($userprofiledata['name'])){ echo $userprofiledata['name']; } ?>">
+    <input type="text" name="fname" class="form-control" id="fname" value="<?php if(!empty($userprofiledata['name'])){ echo $userprofiledata['name']; } ?>">
   </div>
 
 <div class="form-group">
@@ -128,7 +129,7 @@ get_header();
   </div>
   <div class="form-group">
     <label for="email">Phonenumber:</label>
-    <input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber" value="<?php if(!empty($userprofiledata['phonenumber'])){ echo $userprofiledata['phonenumber']; } ?>">
+    <input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber" value="<?php if(!empty($userprofiledata['phone_number'])){ echo $userprofiledata['phone_number']; } ?>">
   </div>
   <div class="form-group">
 

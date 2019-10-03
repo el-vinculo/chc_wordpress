@@ -1353,8 +1353,7 @@ window.addEventListener('popstate', function(event) {
     </script>
 
 
-<script type="text/javascript">
-	
+<script type="text/javascript">	
 	$(document).ready(function() {
     $('#example').DataTable( {
         deferRender:    true,
@@ -1742,7 +1741,7 @@ function referralsend(transfertaskid,clientid){
 				  url: ajax_url,
 				  type:'POST',
 				  cache: false,
-				  data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':'provider_name','iid':iid,funtion:'selectserviceprovider'},
+				  data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
 				  beforeSend: function() {
 	                  jQuery('.loader').show();
 	              },

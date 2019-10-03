@@ -599,14 +599,16 @@ function savePatinets($patientData,$email){
 
 function updateuserprofile($profiledata){
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
-	   $headers['Content-length'] = '0';
+       $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;       
+	   $post = array('name'=>$profiledata['fname'],'email'=>$profiledata['email'],'phone_number'=>$profiledata['phonenumber'],'admin'=>$profiledata['admin'],'active'=>$profiledata['active'],'otp_required_for_login'=>$profiledata['otp_required_for_login']);
+
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'edit_profile');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
 	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
-	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $profiledata);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
 	   $buffer = curl_exec($curl_handle); 
 	   curl_close($curl_handle);
@@ -616,6 +618,7 @@ function updateuserprofile($profiledata){
 	   else{
 	  	  if(!empty($buffer)){
 	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  
 	  	  	return $result;
 	  	  }
 	   }

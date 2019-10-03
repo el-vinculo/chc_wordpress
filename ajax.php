@@ -469,6 +469,8 @@ function selectserviceprovider(){
         $practicesdata = serviceproviderslist($serachData);
         if(!empty($practicesdata['status'] == 'ok')){
              $practices = $practicesdata['provider_list'];
+             echo "<pre>";
+             print_r($practices); die;
         }else{
             $practices = array();
         }
