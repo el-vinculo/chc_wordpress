@@ -71,6 +71,33 @@ function logo($email, $authToken)
 	   }
 }
 
+function userprofiledetails($email)
+{
+	   $post = ['email' => $email];
+	   $userauth = $_SESSION['userdata']['authentication_token'];
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;   
+	   $url = API_URL.'user_profile'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
 function terms($email)
 {
 	   $post = ['email' => $email];
@@ -556,6 +583,30 @@ function savePatinets($patientData,$email){
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
 	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
 	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle); 
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+function updateuserprofile($profiledata){
+	   $userauth      = $_SESSION['userdata']['authentication_token'];
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;       
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'edit_profile');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $profiledata);
 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
 	   $buffer = curl_exec($curl_handle); 
 	   curl_close($curl_handle);

@@ -455,12 +455,7 @@ get_header();
              </tr>
 
             <?php }}?>
-           <!--  <tr >
-              <td>
-              <div class="collapse" id="collapseExample">
-                   <h6 class=" blue-font"><b><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Clients Task</b></h6>
-                  </div>
-            </td></tr> -->
+          
  <tr><td colspan="10"> <a href="javascript:void(0)" id="viewmore_referal">View More</a></td></tr>
 
           </tbody>
