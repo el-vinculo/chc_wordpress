@@ -120,15 +120,18 @@ get_header();
     <label for="email">Name:</label>
     <input type="text" name="name" class="form-control" id="fname" value="<?php if(!empty($userprofiledata['name'])){ echo $userprofiledata['name']; } ?>">
   </div>
+
 <div class="form-group">
     <label for="email">Email:</label>
     <input type="email" class="form-control" name="email" id="email" value="<?php if(!empty($userprofiledata['email'])){ echo $userprofiledata['email']; } ?>">
+
   </div>
   <div class="form-group">
     <label for="email">Phonenumber:</label>
     <input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber" value="<?php if(!empty($userprofiledata['phonenumber'])){ echo $userprofiledata['phonenumber']; } ?>">
   </div>
   <div class="form-group">
+
     <label for="pwd">Active:</label>
     <input type="radio"  name="active" value="ture" <?php if(!empty($userprofiledata['active']) && ($userprofiledata['active'] == "true")){ echo "checked"; } ?>>Yes
     <input type="radio"  name="active" value="false" <?php if(!empty($userprofiledata['active']) && ($userprofiledata['active'] == "false")){ echo "checked"; } ?>>No
@@ -145,6 +148,9 @@ get_header();
   </div>
 
   <input type="submit" class="btn-success" name="update" value="Update">
+
+
+
 </form>
 		
        	
@@ -165,4 +171,5 @@ get_header();
 	<?php //get_sidebar(); ?>
 	</div>
 </div>
+
 <?php get_footer(); ?>
