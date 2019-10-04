@@ -75,6 +75,14 @@ if($logodata['status']!='unauthorized'){
 					  </figure>
 					</div>
 				</div>
+
+				<div id="sign_up">
+					 
+					  <figure class="menu-fig">
+					  	 <a class="menu-fig" href="http://demo-server-01-560550406.us-west-2.elb.amazonaws.com/registration_requests/new" style="color: white;font-style: normal;" target="_blank">Sign Up</a>
+					  </figure>
+					</div>
+				</div>
 			
 			<div id="menu">
            <!--  <div class="collapse navbar-collapse" id="navbar-collapse-1">      -->          
@@ -96,6 +104,7 @@ if($logodata['status']!='unauthorized'){
 	jQuery("#menu-item-65").css("display", "none");
 	jQuery("#menu-item-16").css("display", "none");
 	jQuery("#menu-item-156").css("display", "none");
+	jQuery("#sign_up").css("display", "none");
 
 </script>
 <?php } else{?>
