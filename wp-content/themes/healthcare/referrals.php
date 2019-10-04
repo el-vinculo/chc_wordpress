@@ -19,16 +19,17 @@
 
 <style type="text/css">
   .green-bg{
-    background: #43b02a;
+    background: #43b02a!important;
   }
   .ref-cls .green-bg{
 background: #43b02a!important;
   }
  .green-bg th {
     padding: 5px 10px;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #ddd;
     font-size: 15px;
     color: #fff;
+     background: #43b02a!important;
 }
   .margin_left {
     margin-left: 17px;
@@ -142,8 +143,8 @@ get_header();
           
             <thead>
             <tr class="green-bg">
-              <th>Patient<br> Last, First</th>
-              <th>160 char. of summary</th>
+              <th class="green-bg">Patient<br> Last, First</th>
+              <th class="green-bg">summary</th>
               <th>Submission date </th>
               <th>Source</th>
               <th>Urgency</th>
@@ -162,7 +163,7 @@ get_header();
              <tr class=" single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
 
-              <td><?php if(strlen($newReferralDatavalue['ref_description']) > 160) {echo substr($newReferralDatavalue['ref_description'], 0, 160);}else{ echo $newReferralDatavalue['ref_description']; }  ?></td>
+              <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
 
               <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
@@ -176,11 +177,11 @@ get_header();
               
             </tr>
 
-             <tr  id="newref-<?php echo $newReferralDatakey; ?>" class="collapse">
+           <!--   <tr  id="newref-<?php echo $newReferralDatakey; ?>" class="collapse">
                <td colspan="9" ><div>
               <?php echo $newReferralDatavalue['ref_description']; ?></div> </td>
                
-             </tr>
+             </tr> -->
 
             <?php }}?>
           
@@ -217,41 +218,24 @@ get_header();
 	<?php //get_sidebar(); ?>
 	</div>
 </div>
+<style>
+  table.dataTable thead th div.DataTables_sort_wrapper {
+    position: relative;
+    
+    width: 100px;
+}
+table.dataTable thead th div.DataTables_sort_wrapper span {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    right: -5px;
+   
+}
 
-
-
-
-
-
-<!-- Modal -->
-
-
-<!-- myTaskModal-->
-
-
-
-
-<!-- myTaskModal-->
-
-
-
-<!-- myTaskModal-->
-
-
-
-
-
-
-
-
-
+</style>
 
 <?php get_footer(); ?>
     
-
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -268,9 +252,9 @@ get_header();
 	$(document).ready(function() {
     $('#example').DataTable( {
         deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true
+        //scrollY:        200,
+        //scrollCollapse: true,
+        //scroller:       true
     } );
 } );
 </script>

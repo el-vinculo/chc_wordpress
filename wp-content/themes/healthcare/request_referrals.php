@@ -136,18 +136,18 @@ get_header();
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
 
-         <table class="table table-striped"  >
+         <table class="table table-striped"  id="example">
     <tbody>
         <thead class="ref-cls">
            <tr class="green-bg">
-              <th>Patient<br> Last, First</th>
+              <th>Patient</th>
               <th>Request Title </th>
               <th>Submission date </th>
               <th>Source</th>
               <th>Urgency</th>
               <th>Status </th>
               <th>Follow-up date</th>
-              <th>Agreement<br>flag</th>
+              <th>Agreement</th>
               <th>Action buttons/<br>icons</th>
             </tr> 
             <?php
@@ -165,14 +165,15 @@ get_header();
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
-              <td ><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a>
+              <td ><a href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
+             <!--  <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> -->
 
-              <button class=" btn-danger btn-request">Reject</button> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+              <!-- <button class=" btn-danger btn-request">Reject</button> --> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
-             <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
+           <!--   <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
                <td colspan="9"><?php echo $requestreffvalue['task_description']; ?> </td>
-             </tr>
+             </tr> -->
            
            
              <?php } }} ?>
@@ -210,24 +211,21 @@ get_header();
   </div>
 </div>
 
+<style>
+  table.dataTable thead th div.DataTables_sort_wrapper {
+    position: relative;
+    
+    width: 100px;
+}
+table.dataTable thead th div.DataTables_sort_wrapper span {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    right: -5px;
+   
+}
 
-
-
-
-
-<!-- Modal -->
-
-
-<!-- myTaskModal-->
-
-
-
-
-<!-- myTaskModal-->
-
-
-
-<!-- myTaskModal-->
+</style>
 
 
 
@@ -260,9 +258,9 @@ get_header();
   $(document).ready(function() {
     $('#example').DataTable( {
         deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true
+       // scrollY:        200,
+       // scrollCollapse: true,
+       // scroller:       true
     } );
 } );
 </script>
