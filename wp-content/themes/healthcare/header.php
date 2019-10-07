@@ -65,6 +65,8 @@ if($logodata['status']!='unauthorized'){
 
 				</div>
 
+				
+
 				<div id="toggle">
 					 
 					  <figure class="menu-fig">
@@ -96,7 +98,7 @@ if($logodata['status']!='unauthorized'){
 	jQuery("#menu-item-65").css("display", "none");
 	jQuery("#menu-item-16").css("display", "none");
 	jQuery("#menu-item-156").css("display", "none");
-	jQuery("#sign_up").css("display", "none");
+	jQuery("#menu-item-203").css("display", "none");
 
 </script>
 <?php } else{?>
