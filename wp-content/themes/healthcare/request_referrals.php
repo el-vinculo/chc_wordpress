@@ -89,6 +89,9 @@ if(isset($_SESSION['userdata'])){
     $incomingreferral  =  $incomingreferraldata['incoming_referrals'];
   }
 
+ // echo "<pre>";
+ // print_r($incomingreferral); die; 
+
   if(!empty($incomingreferral)){
     foreach ($incomingreferral as $incomingreferralkey => $incomingreferralvalue) { 
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
@@ -165,7 +168,7 @@ get_header();
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
-              <td ><a href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
+              <td ><a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
              <!--  <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> -->
 
               <!-- <button class=" btn-danger btn-request">Reject</button> --> <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
