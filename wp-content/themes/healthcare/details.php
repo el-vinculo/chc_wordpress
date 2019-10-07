@@ -245,6 +245,10 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
           return false;
       }
     }
+
+    function testt(){
+      console.log();
+    }
 </script>
 
 
