@@ -139,25 +139,25 @@ get_header();
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
 
-         <table class="table table-striped"  id="example">
+         <table class="table table-striped"  id="example1">
     <tbody>
         <thead class="ref-cls">
            <tr class="green-bg">
-              <th>Patient</th>
-              <th>Request Title </th>
-              <th>Submission date </th>
-              <th>Source</th>
-              <th>Urgency</th>
-              <th>Status </th>
-              <th>Follow-up date</th>
-              <th>Agreement</th>
-              <th>Action buttons/<br>icons</th>
+              <th class="green-bg">Patient</th>
+              <th class="green-bg">Request Title </th>
+              <th class="green-bg">Submission date </th>
+              <th class="green-bg">Source</th>
+              <th class="green-bg">Urgency</th>
+              <th class="green-bg">Status </th>
+              <th class="green-bg">Follow-up date</th>
+              <th class="green-bg">Agreement</th>
+              <th class="green-bg">Action </th>
             </tr> 
             <?php
-  if(!empty($incomingreferral)){
-    foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
-       if($requestreffvalue['status'] == 'Pending'){
-      ?>
+            if(!empty($incomingreferral)){
+            foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
+            if($requestreffvalue['status'] == 'Pending'){
+            ?>
     
             <tr class="accordion" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
@@ -230,21 +230,8 @@ table.dataTable thead th div.DataTables_sort_wrapper span {
 
 </style>
 
-
-
-
-
-
-
-
-
-
 <?php get_footer(); ?>
     
-
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -259,8 +246,8 @@ table.dataTable thead th div.DataTables_sort_wrapper span {
 <script type="text/javascript">
   
   $(document).ready(function() {
-    $('#example').DataTable( {
-        deferRender:    true,
+    $('#example1').DataTable( {
+        deferRender:    true
        // scrollY:        200,
        // scrollCollapse: true,
        // scroller:       true

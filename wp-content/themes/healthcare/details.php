@@ -57,6 +57,17 @@ color: #43b02a!important;
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css">
 
+<style>
+  .set-btn {
+    background: #0fc537!important;
+    border-radius: 10px;
+    padding: 5px 25px;
+    /* background: #000; */
+    border: #0fc537 solid 2px!important;
+    font-weight: bold;
+  }
+</style>
+
 
 <?php
 
@@ -107,6 +118,7 @@ get_header();
 								
 
 							</h3></div>
+
 				            <div class="post-tags"></div>
 				            <div class="post_content">
 							  <div class="panel-group" id="accordion">
@@ -132,20 +144,31 @@ get_header();
         </div>
         </div>
         <?php } ?>
+        
+
         <table class="table table-striped table-bordered" id="example-116">
                            
+                                 <tr>
+                                      <td>Patient : Jane Doe</td>
+                                      <td>Source : Partner</td>
+                                      <td>Request Date</td>
+                                      <td>Assignee:</td>
+                                    </tr>
                             <tbody id="refbody">
+
                                 <?php
                                 if(!empty($desc)){
                                 	$r = 1;
                                 	 ?>
+
                                      
                                 	<tr>
-	                                	<td ><?php echo $desc; ?></td>
+	                                	<td colspan="4" style="height: 100px;"><?php echo $desc; ?></td>
 	                                	
                                     </tr>
+                                    
                                     <tr>
-                                        <td ><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')"><button class="btn-primary btn-request">Accept</button></a>&nbsp;&nbsp;<button class=" btn-danger btn-request">Reject</button></td>
+                                        <td colspan="4"><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')"><button class="btn-primary btn-request set-btn">Accept</button></a>&nbsp;&nbsp;<button class=" btn-danger btn-request set-btn">Reject</button></td>
                                         
                                     </tr>
 	                                <?php  }else{ ?>

@@ -465,12 +465,16 @@ function updatePatientReferralTask(){
 function selectserviceprovider(){
     if(!empty($_POST)){ 
         $serachData = $_POST;
+        if(!empty($serachData['zipcode'])){
+          $serachData = array();
+        }else{
+          $serachData = $_POST;
+        }
+       
         $id = $_POST['iid'];
         $practicesdata = serviceproviderslist($serachData);
         if(!empty($practicesdata['status'] == 'ok')){
              $practices = $practicesdata['provider_list'];
-             echo "<pre>";
-             print_r($practices); die;
         }else{
             $practices = array();
         }
@@ -514,99 +518,33 @@ function acceptreferralbyclient()
 
 function providerListHtml($practices,$id){ 
 
-    $html = "<div id='listview' ><table class='table table-striped'><thead><tr><th>PRACTICE NAME</th><th>DISTANCE</th><th>HOURS</th><th>EMAIL</th><th>WEBSITE</th><th>SELECT</th></tr></thead><tbody id='commlistbody'>";
-            if(!empty($practices)){ 
-                foreach ($practices as $key => $value) { 
-                    $distance = '';
-                    if(!empty($value['distance'])){
-                        $distance = $value['distance'];
-                    }else{
-                        $distance = '--';
-                    } 
-
-                    $hours = '';
-                    if(strlen($value['Office_Hours']) > 50){
-                        $string2 = substr($value['Office_Hours'], 0, 50);
-                        $hours   = $string2.'...';
-                    }else{
-                        $hours = $value['Office_Hours'];
-                    }
-
-    $html.= "<tr><td>".$value['Name']."</td>
-                 <td>".$distance."</td>
-                 <td>".$hours."</td>
-                 <td>".$value['Office_Email']."</td>
-                 <td><i class='fa fa-globe' aria-hidden='true'></i></td>
-                 <td><button class='btn-primary' id='".$value['Name']."' value='".$id."' onclick='assignprovider(this.id,this.value)' >Add</td></tr>";
-            } }else { 
-
-    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No record found</p></center></td></tr>";                        
-    } 
-                                
-    $html.= "</tbody></table></div><div class='row' id='mapview' style='display:none' ><div class='col-md-12'><div class='col-md-8'><div id='map' style='width: 705px; height: 100%;''></div></div><div class='col-md-4'><table class='table table-striped'><thead><tr><th>PRACTICE NAME</th><th>DISTANCE</th><th>SELECT</th></tr></thead><tbody>";
     if(!empty($practices)){ 
-        $locarray = array();
-                foreach ($practices as $key => $value) {
-
-                     if(!empty($value['Latitude']) && !empty($value['Longitude'])) { 
-                                                       
-                                $locarray[$key] = array(
-                                          'name'=> $value['Name'],
-                                          'lat'=>$value['Latitude'],
-                                          'lng'=>$value['Longitude'],
-                                          'key'=>$key,
-
-                                        );
-
-                                } 
-                    $distance = '';
-                    if(!empty($value['distance'])){
-                        $distance = $value['distance'];
-                    }else{
-                        $distance = '--';
-                    } 
-    $html.= "<tr><td>".$value['Name']."</td>
-                 <td>".$distance."</td>
-                 <td><button class='btn-primary' id='".$value['Name']."' value='".$id."' onclick='assignprovider(this.id,this.value)' >Add</td></tr>";
-            } }else { 
-    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No record found</p></center></td></tr>";                        
-    }  
-    $html.= "</tbody></table></div>";  
-    ?>
-    <script>
-          var locations = [];
-   <?php foreach ($locarray as $item) : ?>
-   locations.push(['<?php echo $item['loc_name']?>', <?php echo $item['lat']?>,<?php echo $item['lng']?>,<?php echo $item['key']?>]);
-   <?php endforeach; ?>
-
-    //alert(locations); 
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 7,
-      center: new google.maps.LatLng(47.642039, -117.417213),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
-
-    for (i = 0; i < locations.length; i++) {  
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-         // infowindow.setContent(locations[i][0]);
-         // infowindow.open(map, marker);
-        }
-      })(marker, i));
+    $html = "<div class='row'><div class='col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div class='scroll'><table class='margin-bt'><thead><tr><th></th><th>Provider Name</th><th>Category</th><th>Short Descripation</th></tr>";
+    if(!empty($practices)){
+     foreach ($practices as $practiceskey => $practicesvalue) { 
+     $name =  $practicesvalue['organizationName']["organizationName_Text"]["0"]["text"];
+     if(is_array($practicesvalue['organizationName']["OrgDescription"])){
+      $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
+     }else{
+      $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
     }
-        </script>
+    $html.= "<tr><td><i class='fa fa-map-marker'<button type='button' id='".$name."' value='".$shortdesc."' onclick='showdetails(this.id,this.value)' class='custom-btn btn-success'> View</button></td><td>".$name."</td><td></td><td>".$shortdesc."</td></tr>";
+    }}
+    $html.= "</thead></table></div></div><div class='col-sm-12'>   <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin' width='100%' height='300px' frameborder='0' style='border:0;' allowfullscreen=''></iframe></div></div></div><div class='col-md-6 col-sm-12'><h4>Provider Descripation</h4><div class='border pt-20'><div class='img-logo'><p><img class='img-responsive' src='https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png' style='height:73px; width:150px;float: left;'>
+      <span class='fa fa-print' style='float: right;'></span></p></div><div class='provider-content'>";
+       $providername =  $practices["0"]['organizationName']["organizationName_Text"]["0"]["text"];
+         if(is_array($practices["0"]['organizationName']["OrgDescription"])){
+          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
+         }else{
+          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
+         }
+    $html.= "<h4>Provider Name</h4><p id='".$providernamefill."'>'".$providername."'</p><h4>Short Descripation</h4><p id='providershortdescfill'>'".$providershortdesc."'</p><h4>Mission Statement </h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p></div><ul class='nav'><li> <a href='tel:800.443.4143'><i class='fa fa-phone'></i> 800.443.4143</a></li>
+      <li><a href='mailto:contact@arcora.org'><i class='fa fa-envelope'></i> contact@arcora.org</a></li></ul><div class='text-center'><button type='button' class='custom-btn btn-success'> Add Task</button></div></div></div></div>";    
+    }else{ 
+      $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
+    }
 
-    <?php return   $html;
+    return   $html;
 }
 
 function updateInterviewData(){
