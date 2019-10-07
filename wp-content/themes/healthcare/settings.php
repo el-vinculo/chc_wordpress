@@ -124,7 +124,7 @@ get_header();
 
 <div class="form-group">
     <label for="email">Email:</label>
-    <input type="email" class="form-control" name="email" id="email" value="<?php if(!empty($userprofiledata['email'])){ echo $userprofiledata['email']; } ?>">
+    <input type="email" class="form-control" name="email" id="email" value="<?php if(!empty($userprofiledata['email'])){ echo $userprofiledata['email']; } ?>" readonly="readonly">
 
   </div>
   <div class="form-group">
@@ -134,16 +134,16 @@ get_header();
   <div class="form-group">
 
     <label for="pwd">Active:</label>
-    <input type="radio"  name="active" value="ture" <?php if(!empty($userprofiledata['active']) && ($userprofiledata['active'] == "true")){ echo "checked"; } ?>>Yes
-    <input type="radio"  name="active" value="false" <?php if(!empty($userprofiledata['active']) && ($userprofiledata['active'] == "false")){ echo "checked"; } ?>>No
+     <?php if(!empty($userprofiledata['active']) && ($userprofiledata['active'] == "true")){ echo "Yes"; }else{ echo "No";} ?>
+
   </div>
   <div class="form-group">
     <label for="pwd">Admin:</label>
-    <input type="radio"  name="admin" value="ture" <?php if(!empty($userprofiledata['admin']) && ($userprofiledata['admin'] == "true")){ echo "checked"; } ?>>Yes
-    <input type="radio"  name="admin" value="false" <?php if(!empty($userprofiledata['admin']) && ($userprofiledata['admin'] == "false")){ echo "checked"; } ?>>No
+  <?php if(!empty($userprofiledata['admin']) && ($userprofiledata['admin'] == "true")){ echo "Yes"; }else{ echo "No"; } ?>
+
   </div>
    <div class="form-group">
-    <label for="pwd">OPT Required:</label>
+    <label for="pwd">OTP Required:</label>
     <input type="radio"  name="otp_required_for_login" value="ture" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>Yes
     <input type="radio"  name="otp_required_for_login" value="false" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>No
   </div>
