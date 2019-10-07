@@ -262,7 +262,7 @@ if(isset($_SESSION['userdata'])){
    // $mytasksdata = mytasks($email);
     $inboxdata = inbox($email);
     $notificationdata = notification($email);
-  //  $referraldata = referralDasboard($email);
+   $referraldata = referralDasboard($email);
     //$referraldata = referralList($email);
   	if(!empty($mytasksdata['status'] == 'ok')){
   	  	$todayTasks = $mytasksdata['today_array'];
@@ -298,14 +298,14 @@ if(isset($_SESSION['userdata'])){
     /* ------------------------------------------ */
 
 
-/*    if(!empty($referraldata['status'] == 'ok')){
+    if(!empty($referraldata['status'] == 'ok')){
         $newReferral = $referraldata['new_referral_array'];
         $activeReferral = $referraldata['active_referral_array'];
         $pendingReferral = $referraldata['pending_referral_array'];
     }else{
         $error = 0;
         $msg   = $referraldata['status']. ' ! '. $referraldata['message'];
-    }*/
+    }
 
 
 
@@ -369,7 +369,7 @@ if(isset($_SESSION['userdata'])){
     }
   }*/
 
-/*  if(!empty($newReferral)){
+  if(!empty($newReferral)){
     foreach ($newReferral as $newReferralkey => $newReferralvalue) { 
         $newReferral[$newReferralkey]['taskdetails'] = getreferraldetails($email,$newReferralvalue['ref_id']);
     }
@@ -380,7 +380,7 @@ if(isset($_SESSION['userdata'])){
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
          
     }
-  }*/
+  }
 
 
 }else{
@@ -407,6 +407,125 @@ get_header();
                       <h5 class="accordion blue-font"><i class="fa fa-sort-desc" aria-hidden="true"></i><b>&nbsp;My Works</b></h5>
 <div class="panel collapse in">
    <div class="margin_left">
+   <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Active Referrals 
+</h6>
+<div class="panel">
+
+        <table class="table table-striped" id="examplerefferal">
+          
+            <thead>
+            <tr class="green-bg">
+              <th class="green-bg">Patient<br> Last, First</th>
+              <th class="green-bg">summary</th>
+              <th>Submission date </th>
+              <th>Source</th>
+              <th>Urgency</th>
+              <th>Status </th>
+              <th>Follow-up date</th>
+              <th>Agreement/<br>Notif.flag</th>
+              <th>Lead<br> Navigator</th>
+            </tr> 
+            </thead>
+            <tbody >
+            <?php
+            if(!empty($newReferral)){
+              foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
+                ?>
+            
+             <tr class="single_item_pendingreferal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
+              <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
+
+              <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
+
+              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
+              <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
+              <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
+              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
+              <td > <?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date'])); ?></td>
+              <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
+              <td >
+                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']);?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> 
+              </td>
+              
+            </tr>
+
+            <tr  id="newref-<?php echo $newReferralDatakey; ?>" class="collapse">
+               <td colspan="9" ><div>
+              <?php echo $newReferralDatavalue['ref_description']; ?></div> </td>
+               
+             </tr> 
+
+            <?php }}?>
+            <tr><td colspan="10"><span><a href="javascript:void(0)" id="viewmore_referal">View More</a></span></td></tr>
+            
+          
+
+          </tbody>
+        </table>
+
+    
+    
+     
+
+        
+      </div>
+      <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Pending Referrals 
+</h6>
+<div class="panel">
+
+         <table class="table table-striped"  id="example1acceptt">
+    <tbody>
+        <thead class="ref-cls">
+           <tr class="green-bg">
+              <th class="green-bg">Patient</th>
+              <th class="green-bg">Request Title </th>
+              <th class="green-bg">Submission date </th>
+              <th class="green-bg">Source</th>
+              <th class="green-bg">Urgency</th>
+              <th class="green-bg">Status </th>
+              <th class="green-bg">Follow-up date</th>
+              <th class="green-bg">Agreement</th>
+              <th class="green-bg">Action </th>
+            </tr> 
+            <?php
+            if(!empty($incomingreferral)){
+            foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
+            if($requestreffvalue['status'] == 'Pending'){
+            ?>
+    
+            <tr class="accordion" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
+              <td ><?php echo $requestreffvalue['patient_name']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
+              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
+              <td ><?php echo $requestreffvalue['ref_source']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
+              <td ><?php echo $requestreffvalue['status']; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><!-- <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a> -->
+              <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> 
+
+             <button class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+              <!--  <td ><input type="text" width="100%"></td> -->
+            </tr>
+       <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
+               <td colspan="9"><?php echo $requestreffvalue['task_description']; ?> </td>
+             </tr> 
+           
+           
+             <?php } }} ?>
+             <tr><td colspan="10"><span><a href="javascript:void(0)" id="viewmorepending">View More</a></span></td></tr>
+             
+      </thead>
+    </tbody>
+  </table>
+
+    
+    
+     
+
+        
+      </div>
 
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Copied Referrals 
 </h6>
@@ -911,12 +1030,12 @@ z-index: 9;">
  <script type="text/javascript">
 
  jQuery(document).ready(function(){
-    jQuery(".single_gallery_item").slice(0, 5).toggle();
-   jQuery("#viewmore").click(function(){ 
-            jQuery(".single_gallery_item").append(jQuery(".single_gallery_item").slice(0, 5).toggle());
-      jQuery(".single_gallery_item").toggle(); 
+    jQuery(".single_item_pendingreferal").slice(0, 5).toggle();
+   jQuery("#viewmorepending").click(function(){ 
+            jQuery(".single_item_pendingreferal").append(jQuery(".single_item_pendingreferal").slice(0, 5).toggle());
+      jQuery(".single_item_pendingreferal").toggle(); 
          $(this).text($(this).text() == 'View More' ? 'View Less' : 'View More');
-        if(jQuery(".single_gallery_item").length == 0){ 
+        if(jQuery(".single_item_pendingreferal").length == 0){ 
            
       }
 
