@@ -246,7 +246,7 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
       }
     }
 
-    function testting(){
+    function ressstestting(){
       console.log();
     }
 </script>
