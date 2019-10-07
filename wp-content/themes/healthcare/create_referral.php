@@ -256,51 +256,93 @@ get_header();
 
       </div>
       <div class="modal-body" style="height: 450px; overflow-y:auto;"> 
-      <div class="pull-right"><h3><a id="listprac" class="view-active" href="javascript:void(0)" onclick="showview('list')"><i class="fa fa-bars " aria-hidden="true"></i></a>|<a href="javascript:void(0)" class="" id="mapprac" onclick="showview('map')"><i class="fa fa-map" aria-hidden="true"></i></a></h3></div>
-        	    <table class="table table-bordered">
-                               
-    				  <thead>
-    					<tr>
-    					   <th scope="col">
-    						    <label>Zipcode</label>
-    							<input type="text" name="zipcode" id="ptn_zipcode" class="form-control" placeholder="Zipcode" value="<?php echo $patinetZip; ?>">
-    						</th>
-    						<th scope="col">
-                                <label>Radius</label>
-    							<select class="form-control" name="radius" id="ptn_radius">
-                                  <option value="">Select</option>
-                                  <option value="5">5 Miles</option>
-                                  <option value="10">10 Miles</option>
-                                  <option value="15">15 Miles</option>
-                                  <option value="20">20 Miles</option>
-                                  <option value="25">25 Miles</option>
-                                  <option value="30">30 Miles</option>
-                               </select>
-                            </th>
-    						<th scope="col">
-                                <label>Service Type</label>
-                                <select class="form-control" name="services_type" id="ptn_servicetype">
-                                <option value=''>-Select-</option>
-                                <option value='Extractions'>Extractions</option>
-                                <option value='Orthodontics'>Orthodontics</option>
-                                <option value='Dentures'>Dentures</option>
-                                </select>
-    						</th>
 
-    						<th scope="col">
-                                <label>Provider Name</label>
-    								<input type="text" value="" name="provider_name" class="form-control" id="ptn_provider" placeholder="Provider Name">
-    						</th>
-                            <th scope="col">
-                                <label>&nbsp;&nbsp;</label>
-                                <input name="search" type="button" class="btn-success" value="Search" onclick="getserachserviceprovider();" >
+<table class="table ">
+      <tbody>
+  <form method="post" action="">
+  <thead>
+    <tr>
+      <th scope="col">
+        <label>Search</label>
+        <input type="Search" name="provider_name" id="ptn_provider" class="form-control" placeholder="Provider Name..">
+      </th>
+      <th scope="col">
+        <label>Populations</label>
+        <select class="form-control" name="population" id="ptn_population">
+          <option value="">Please Select </option>
+          <option value="Citizenship">Citizenship</option>
+          <option value="Disabled">Disabled</option>
+          <option value="Families w/ Children">Families w/ Children</option>
+          <option value="LGBT" >LGBT</option>
+          <option value="Very Low-Income">Very Low-Income</option>
+          <option value="Native American">Native American</option>
+          <option value="Other">Other</option>
+          <option value="Senior">Senior</option>
+          <option value="Veteran/Military">Veteran/Military</option>
+        </select>
+      </th>
+     
+      <th scope="col">
+        <label>Services</label>
+        <select class="form-control" name="service_type" id="ptn_servicetype">
+        <option value="">Please Select </option>
+          <option value="Abuse">Abuse</option>
+          <option value="Addiction">Addiction</option>
+          <option value="BasicNeeds" >BasicNeeds</option>
+          <option value="Behavioral" >Behavioral</option>
+          <option value="CaseManagement" >CaseManagement</option>
+          <option value="Clothing" >Clothing</option>
+          <option value="DayCare" >DayCare</option>
+          <option value="Disabled" >Disabled</option>
+          <option value="Education">Education</option>
+          <option value="Emergency" >Emergency</option>
+          <option value="Employment" >Employment</option>
+          <option value="Family" >Family</option>
+          <option value="Financial" >Financial</option>
+          <option value="Food">Food</option>
+          <option value="GeneralSupport" >GeneralSupport</option>
+          <option value="Housing" >Housing</option>
+          <option value="Identification">Identification</option>
+          <option value="IndependentLiving">IndependentLiving</option>
+          <option value="Legal" >Legal</option>
+          <option value="Medical" >Medical</option>
+          <option value="Research" >Research</option>
+          <option value="Resources" >Resources</option>
+          <option value="Respite" >Respite</option>
+          <option value="Senior" >Senior</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Veteran" >Veteran</option>
+          <option value="Victim" >Victim</option>
 
-                                <input type="hidden" id="assignprovidertab" value=""/>
-                            </th>				      
-    					</tr>
-    					</thead>
-                   
-				</table>
+        </select>
+      </th>
+      <th scope="col">
+        <label>Location Name</label>
+        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+      </th>
+      <th scope="col">
+        <label>Location Type</label>
+        
+        <select class="form-control" name="location_type" id="ptn_locationtype">
+        <option value="">Please Select </option>
+          <option value="City" >City</option>
+          <option value="State" >State</option>
+          <option value="Country" >Country</option>
+          <option value="National" >National</option>
+        
+        </select>
+      </th>
+      <th scope="col">
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <input type="hidden" id="assignprovidertab" value=""/>
+        <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
+      </th>
+    </tr>
+  </thead>
+
+  </form>
+</tbody>
+</table>
 				<div class="loader" style="position: fixed;
 background: rgba(255,255,255,0.8);
 width: 100%;
@@ -384,6 +426,12 @@ function searchprovider(iid){
 	getserviceprovide(zipcode);
 	//alert(zipcode);
 }
+
+function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
+	
 
 function getserviceprovide(zipcode){
     jQuery("#providerdiv").html('');

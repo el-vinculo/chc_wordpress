@@ -6,7 +6,7 @@
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
  * and that other 'pages' on your WordPress site may use a
- * different template.
+ * different template.get
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -47,6 +47,163 @@
 
 .view-active{
 color: #43b02a!important;
+}
+</style>
+
+<style >
+h1 {
+  text-align: center;
+ font-family: 'Montserrat', sans-serif;
+  color: #06D85F;
+  margin: 80px 0;
+}
+.rightside a.icon1 i {
+    color: #43b02a !important;
+}
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    border: 4px solid rgba(3, 169, 244, 0.69);
+    width: 80%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+}
+.popup h2 {
+  margin-top: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: rgba(3, 169, 244, 0.69);
+font-family: 'Montserrat', sans-serif;}
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: none;
+    width: 40px;
+    text-align: center;
+    height: 40px;
+    padding: 6px;
+    border-radius: 100%;
+    box-shadow: none;
+    background: rgba(3, 169, 244, 0.69)!important;
+    text-decoration: none;
+    color: #fff;
+}
+.popup .close:hover {
+  color: #fff!important;
+}
+.popup .content {
+  max-height: 80%;
+  overflow: auto;
+}
+.content ul li {
+    padding: 12px 0;
+    font-size: 16px;
+}
+.content ul li span{
+   font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.view-active{
+color: #43b02a!important;
+}
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+.content p{
+  font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 17px;
+       color: #949292;
+
+}
+
+/*new start css*/
+.custom-btn{
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 0!important;  
+  box-shadow: none!important; 
+}
+.pt-20{
+    padding: 20px;
+}
+.provider-content {
+    display: inline-block;
+}
+.provider-content h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+span.fa.fa-print {
+    font-size: 33px;
+    color: #3b5999;
+}
+.margin-bt thead tr td {
+    padding-bottom: 8px!important;
+}
+.margin-bt thead tr th{
+  padding: 8px 0!important; 
+}
+.scroll  {
+    height: 219px;
+    overflow-y: scroll;
+}
+i.fa.fa-envelope {
+    padding-left: 0px!important;
 }
 </style>
 
@@ -1260,6 +1417,7 @@ get_header();
       </th>
       <th scope="col">
         <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
     </tr>
@@ -1364,7 +1522,7 @@ window.addEventListener('popstate', function(event) {
 } );
 </script>
 <script type="text/javascript">
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
 var upload_ajax_url = "<?php echo '/upload_ajax_url.php'; ?>";
 
 function closereplybox(){
@@ -1687,6 +1845,12 @@ function referralsend(transfertaskid,clientid){
 	}
 }
 
+function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
+	
+
 
 
 
@@ -1700,7 +1864,7 @@ function referralsend(transfertaskid,clientid){
 	}
 
 	function searchprovider(iid){
-		var zipcode = '<?php echo $patinetZip; ?>';
+		var zipcode = '20170';
 		//alert(zipcode);
 		document.getElementById("assignprovidertab").value = iid;
 		getserviceprovide(zipcode);
@@ -1709,8 +1873,8 @@ function referralsend(transfertaskid,clientid){
 
     function getserviceprovide(zipcode){
 	    jQuery("#providerdiv").html('');
-	    document.getElementById("listprac").classList.add("view-active");
-	    document.getElementById("mapprac").classList.remove("view-active");
+	  //  document.getElementById("listprac").classList.add("view-active");
+	  //  document.getElementById("mapprac").classList.remove("view-active");
 	    var iid = jQuery("#assignprovidertab").val();
 	    jQuery.ajax({
 				  url: ajax_url,
