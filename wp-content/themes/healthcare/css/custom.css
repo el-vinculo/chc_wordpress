@@ -141,9 +141,28 @@ p.menu-cls {
     display: none;
     position: absolute;
     right: 140px;
-    top: 99px;
+    top: 100px;
     background: #37ab1c;
     box-shadow: 0 0 15px 1px #f9f9f9;
+}
+.signup-link {
+    position: absolute;
+    right: 166px;
+    top: 59px;
+}
+.signup-link a {
+    border: 1px solid #42af2a;
+    padding: 10px 19px;
+    border-radius: 100px;
+    color: #42af2a;
+}
+.signup-link a:hover{
+background:#42af2a;
+color:#fff;
+border: 1px solid #42af2a;
+}
+.top-nav-netx {
+    position: relative;
 }
 .top {
     color: #fff !important;

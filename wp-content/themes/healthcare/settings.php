@@ -44,6 +44,9 @@ if(isset($_SESSION['userdata'])){
         $error = 0;
         $msg   = $userdata['status']. ' ! '. $userdata['message'];
   }
+  
+  //echo "<pre>";
+  //print_r($userprofiledata); 
 
   if(!empty($_POST['update'])){
       $postprofiledata = $_POST; 
@@ -144,8 +147,8 @@ get_header();
   </div>
    <div class="form-group">
     <label for="pwd">OTP Required:</label>
-    <input type="radio"  name="otp_required_for_login" value="ture" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>Yes
-    <input type="radio"  name="otp_required_for_login" value="false" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>No
+    <input type="radio"  name="otp_required_for_login" value="true" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>Yes
+    <input type="radio"  name="otp_required_for_login" value="false" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "false")){ echo "checked"; } ?>>No
   </div>
 
   <input type="submit" class="btn-success" name="update" value="Update">

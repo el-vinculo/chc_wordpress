@@ -14,6 +14,7 @@
 if($_SESSION['userdata']!=''){
 	$email = $_SESSION['userdata']['email'];
 	$authToken= $_SESSION['userdata']['authentication_token'];
+	$userdata = userprofiledetails($email); 
 } 
 $logodata = logo($email, $authToken);
 if($logodata['status']!='unauthorized'){
@@ -21,6 +22,10 @@ if($logodata['status']!='unauthorized'){
 }else{
 	$img_src = esc_url($health_data['upload_image_logo']);
 }
+
+$adminuser = $userdata['profile']['admin'];
+
+
 
 ?>
 <!-- Start Header-->
@@ -64,7 +69,13 @@ if($logodata['status']!='unauthorized'){
 				 <p> <?php bloginfo( 'description' ); ?> </p>
 
 				</div>
+<div class="top-nav-netx">
 
+				<?php if($_SESSION['userdata']==''){?>	
+                <div class="signup-link">
+					<a href="<?=site_url()?>/backend/registration_requests/new" target="_blank">Sign up</a>
+				</div>
+              <?php } ?>
 				
 
 				<div id="toggle">
@@ -112,9 +123,11 @@ if($logodata['status']!='unauthorized'){
 	jQuery("#menu-item-13").css("display", "none");
 	jQuery("#menu-item-78").css("display", "none");
 	jQuery("#menu-item-173").css("display", "none");
-	jQuery("#menu-item-176").css("display", "none");
-        jQuery("#menu-item-186").css("display", "none");
-        jQuery("#menu-item-201").css("display", "none");
-        jQuery("#menu-item-202").css("display", "none");
+	<?php if($adminuser){ ?>
+    jQuery("#menu-item-176").css("display", "none");
+    <?php } ?>
+    jQuery("#menu-item-186").css("display", "none");
+    jQuery("#menu-item-201").css("display", "none");
+    jQuery("#menu-item-202").css("display", "none");
 </script>
 	<?php } ?>

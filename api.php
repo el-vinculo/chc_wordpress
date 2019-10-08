@@ -603,6 +603,8 @@ function updateuserprofile($profiledata){
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;       
 	   $post = array('name'=>$profiledata['fname'],'email'=>$profiledata['email'],'phone_number'=>$profiledata['phonenumber'],'admin'=>$profiledata['admin'],'active'=>$profiledata['active'],'otp_required_for_login'=>$profiledata['otp_required_for_login']);
+	  // echo "<pre>";
+	  // print_r($post); die; 
 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'edit_profile');
