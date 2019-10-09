@@ -1928,7 +1928,7 @@ function showdetails(providername,providershortdesc) {
     function assignprovider(id){
 
       //providernamefill
-      alert(jQuery('#providernamefill').text());
+      //alert(jQuery('#providernamefill').text());
 	    document.getElementById(id).value = jQuery('#providernamefill').text();
 	    jQuery("#closeserviceprovider").click();
     }

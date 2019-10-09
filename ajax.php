@@ -543,6 +543,7 @@ function providerListHtml($practices,$id){
     }else{ 
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }
+    //html changes
 
     return   $html;
 }
