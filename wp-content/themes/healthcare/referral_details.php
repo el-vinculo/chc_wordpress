@@ -542,7 +542,11 @@ get_header();
                                    <td id="reftaskprovider-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['provider'];?></td>
                                    <td id="reftaskowner-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_owner'];?></td>
                                    <td id="reftaskdesc-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_description'];?></td>
-                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php echo date('Y-m-d',strtotime($taskvalue['task_deadline']));?></td>
+                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php 
+                                    if(date('Y-m-d',strtotime($taskvalue['task_deadline'])) == '1970-01-01'){ echo "--";
+                                    }else{ echo date('Y-m-d',strtotime($taskvalue['task_deadline']));
+                                    }
+                                   ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button></td>
@@ -858,7 +862,7 @@ get_header();
                                 <td><?php echo $clientvalue['name']; ?></td>
                                 <td><?php echo $clientvalue['speciality']; ?></td>
                                 <td><?php echo $clientvalue['agreement_type']; ?></td>
-                                <td><?php echo $clientvalue['agreement_signed']; ?></td>
+                                <td><?php  if($clientvalue['agreement_signed'] == 1){ echo "Ture";}else{ echo ""; }; ?></td>
                                 <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
                             </tr> 
                             <?php } } ?>   
@@ -1637,11 +1641,18 @@ function referralsend(transfertaskid,clientid){
 	    });
     }
 
-    function assignprovider(name,id){
-	    document.getElementById(id).value = name;
-	    jQuery("#closeserviceprovider").click();
+    function assignprovider(id){
+
+      //providernamefill
+      //alert(jQuery('#providernamefill').text());
+      document.getElementById(id).value = jQuery('#providernamefill').text();
+      jQuery("#closeserviceprovider").click();
     }
 
+    function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
     function showview(type){
 		    if(type == 'map'){
 			     jQuery('#mapview').show();

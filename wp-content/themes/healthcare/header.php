@@ -23,7 +23,7 @@ if($logodata['status']!='unauthorized'){
 	$img_src = esc_url($health_data['upload_image_logo']);
 }
 
-$adminuser = $userdata['profile']['admin'];
+
 
 
 
@@ -104,7 +104,17 @@ $adminuser = $userdata['profile']['admin'];
     </nav> 
     
 <!-- End Header -->
-<?php if($_SESSION['userdata']!=''){?>
+<?php 
+//echo "<pre>";
+//print_r($_SESSION['userdata']);
+
+ if($userdata['profile']['admin'] == 'false'){ ?>
+ 	<script>
+    jQuery("#menu-item-176").css("display", "none");
+    </script>
+    <?php } ?>
+
+<?php if(!empty($_SESSION['userdata'])){?>
 <script>
 	jQuery("#menu-item-65").css("display", "none");
 	jQuery("#menu-item-16").css("display", "none");
@@ -123,9 +133,7 @@ $adminuser = $userdata['profile']['admin'];
 	jQuery("#menu-item-13").css("display", "none");
 	jQuery("#menu-item-78").css("display", "none");
 	jQuery("#menu-item-173").css("display", "none");
-	<?php if($adminuser){ ?>
     jQuery("#menu-item-176").css("display", "none");
-    <?php } ?>
     jQuery("#menu-item-186").css("display", "none");
     jQuery("#menu-item-201").css("display", "none");
     jQuery("#menu-item-202").css("display", "none");
