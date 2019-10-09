@@ -1,11 +1,33 @@
+
 # BEGIN WordPress
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /testsite/
+#RewriteRule ^index\.php$ - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /testsite/index.php [L]
+#</IfModule>
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /chc/chc_wordpress/
+
+RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /chc/chc_wordpress/index.php [L]
+RewriteRule . /index.php [L]
+
+RewriteCond %{REQUEST_URI} ^/backend/
+RewriteRule ^(.*)$ http://dev11.resourcestack.com.com/$1 [R,P]
+
+#RewriteBase /chc/chc_wordpress/
+#RewriteRule ^index\.php$ - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /chc/chc_wordpress/index.php [L]
+
 </IfModule>
 
 # END WordPress
+
