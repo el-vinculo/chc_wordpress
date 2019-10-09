@@ -1925,10 +1925,18 @@ function showdetails(providername,providershortdesc) {
 	    });
     }
 
-    function assignprovider(name,id){
-	    document.getElementById(id).value = name;
+    function assignprovider(id){
+
+      //providernamefill
+      alert(jQuery('#providernamefill').text());
+	    document.getElementById(id).value = jQuery('#providernamefill').text();
 	    jQuery("#closeserviceprovider").click();
     }
+
+    function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
 
     function showview(type){
 		    if(type == 'map'){

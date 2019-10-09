@@ -30,4 +30,3 @@ RewriteRule ^(.*)$ http://dev11.resourcestack.com.com/$1 [R,P]
 </IfModule>
 
 # END WordPress
-

@@ -538,8 +538,8 @@ function providerListHtml($practices,$id){
          }else{
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
          }
-    $html.= "<h4>Provider Name</h4><p id='".$providernamefill."'>'".$providername."'</p><h4>Short Descripation</h4><p id='providershortdescfill'>'".$providershortdesc."'</p><h4>Mission Statement </h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p></div><ul class='nav'><li> <a href='tel:800.443.4143'><i class='fa fa-phone'></i> 800.443.4143</a></li>
-      <li><a href='mailto:contact@arcora.org'><i class='fa fa-envelope'></i> contact@arcora.org</a></li></ul><div class='text-center'><button type='button' class='custom-btn btn-success'> Add Task</button></div></div></div></div>";    
+    $html.= "<h4>Provider Name</h4><p id='providernamefill'>".$providername."</p><h4>Short Descripation</h4><p id='providershortdescfill'>'".$providershortdesc."'</p><h4>Mission Statement </h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p></div><ul class='nav'><li> <a href='tel:800.443.4143'><i class='fa fa-phone'></i> 800.443.4143</a></li>
+      <li><a href='mailto:contact@arcora.org'><i class='fa fa-envelope'></i> contact@arcora.org</a></li></ul><div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success' onclick='assignprovider(this.id)'> Add </button></div></div></div></div>";    
     }else{ 
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }

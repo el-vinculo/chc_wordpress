@@ -66,7 +66,7 @@ color: #43b02a!important;
 </style>
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.jqueryui.min.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
   
 
 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -169,7 +169,7 @@ get_header();
             </tr>
             
            
-             <?php //} ?>
+            
              <?php  }} ?>
       </thead>
     </tbody>
@@ -217,14 +217,18 @@ table.dataTable thead th div.DataTables_sort_wrapper span {
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
+ <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
-
-
+ -->
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('#requestreferraltable').DataTable();
+} );
+</script>
 <?php get_footer(); ?>
 
 
@@ -233,8 +237,8 @@ jQuery(document).ready(function($) {
     jQuery("a[rel^='prettyPhoto']").prettyPhoto();
 });
 
-  jQuery(document).ready(function() {
-    jQuery('#requestreferraltable').DataTable();
-  } );
+  // jQuery(document).ready(function() {
+  //    jQuery('#requestreferraltable').DataTable();
+  //  } );"
 
 </script>
