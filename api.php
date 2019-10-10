@@ -720,18 +720,19 @@ function serviceproviderslist($search){
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
 	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
 	    if(empty($search)){
-            $radiusarray = array('conditional' => '','value' => "20170");
+            $radiusarray = array('conditional' => '','value' => "98168");
             $postsearch['GeoScope']  = $radiusarray;
+            $postsearch['application_name']  = "default";
             $datastring = json_encode($postsearch);
 	    }else if(!empty($search['location'])){
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
-	   	    	$populationarray = array('conditional' => 'OR','value' => array($search['population']));
+	   	    	$populationarray = array('conditional' => 'OR','value' => array("P_".$search['population']));
 	   	    	$postsearch['population']  = $populationarray;
 	   	    }   
 
 	   	    if(!empty($search['services_type'])){
-                $providerarray = array("type" => "group", "conditional" => "OR",'value' => array($search['services_type']));
+                $providerarray = array("type" => "group", "conditional" => "OR",'value' => array("S_".$search['services_type']));
                 $postsearch['services_type']  = $providerarray;
 	   	    }
 
@@ -751,7 +752,7 @@ function serviceproviderslist($search){
 
 	   	    //if(!empty($search['location'])){
 	   	   
-	   	    	$radiusarray = array('conditional' => '','value' => "20170");
+	   	    	$radiusarray = array('conditional' => '','value' => "98168");
                 $postsearch['GeoScope']  = $radiusarray;
                 $postsearch['application_name']  = "default";
 	   	   // }
