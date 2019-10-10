@@ -80,6 +80,9 @@ if(isset($_SESSION['userdata'])){
 	$email = $_SESSION['userdata']['email']; 
 	$referral_id = base64_decode($_GET['refid']);
     $patient_id = base64_decode($_GET['refid']);
+    $patient_name = base64_decode($_GET['ptn']);
+    $ref_name = base64_decode($_GET['refnma']);
+    $source = base64_decode($_GET['refsr']);
     $documents = array();
 
     
@@ -149,10 +152,10 @@ get_header();
         <table class="table table-striped table-bordered" id="example-116">
                            
                                  <tr>
-                                      <td>Patient : Jane Doe</td>
-                                      <td>Source : Partner</td>
-                                      <td>Request Date</td>
-                                      <td>Assignee:</td>
+                                      <td>Patient : <?php echo $patient_name; ?></td>
+                                      <td>Referral : <?php echo $ref_name; ?></td>
+                                      <td>Source : <?php echo $source; ?></td>
+                                      
                                     </tr>
                             <tbody id="refbody">
 
@@ -174,7 +177,7 @@ get_header();
 	                                <?php  }else{ ?>
 
 	                                <tr>
-	                                	<td colspan="8" style="color: red"><center><p>No Referral Added</p></center></td>
+	                                	<td colspan="8" style="color: red"><center><p>Details not found</p></center></td>
 	                                </tr>
 
 	                                <?php } ?>
