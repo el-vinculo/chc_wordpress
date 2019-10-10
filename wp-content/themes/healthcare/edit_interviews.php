@@ -685,63 +685,105 @@ get_header();
 
       </div>
       <div class="modal-body" style="height: 450px; overflow-y:auto;"> 
-      <div class="pull-right"><h3><a id="listprac" class="view-active" href="javascript:void(0)" onclick="showview('list')"><i class="fa fa-bars " aria-hidden="true"></i></a>|<a href="javascript:void(0)" class="" id="mapprac" onclick="showview('map')"><i class="fa fa-map" aria-hidden="true"></i></a></h3></div>
-                <table class="table table-bordered">           
-                      <thead>
-                        <tr>
-                           <th scope="col">
-                                <label>Zipcode</label>
-                                <input type="text" name="zipcode" id="ptn_zipcode" class="form-control" placeholder="Zipcode" value="<?php echo $patinetZip; ?>">
-                            </th>
-                            <th scope="col">
-                                <label>Radius</label>
-                                <select class="form-control" name="radius" id="ptn_radius">
-                                  <option value="">Select</option>
-                                  <option value="5">5 Miles</option>
-                                  <option value="10">10 Miles</option>
-                                  <option value="15">15 Miles</option>
-                                  <option value="20">20 Miles</option>
-                                  <option value="25">25 Miles</option>
-                                  <option value="30">30 Miles</option>
-                               </select>
-                            </th>
-                            <th scope="col">
-                                <label>Service Type</label>
-                                <select class="form-control" name="services_type" id="ptn_servicetype">
-                                <option value=''>-Select-</option>
-                                <option value='Extractions'>Extractions</option>
-                                <option value='Orthodontics'>Orthodontics</option>
-                                <option value='Dentures'>Dentures</option>
-                                </select>
-                            </th>
 
-                            <th scope="col">
-                                <label>Provider Name</label>
-                                    <input type="text" value="" name="provider_name" class="form-control" id="ptn_provider" placeholder="Provider Name">
-                            </th>
-                            <th scope="col">
-                                <label>&nbsp;&nbsp;</label>
-                                <input name="search" type="button" class="btn-success" value="Search" onclick="getserachserviceprovider();" >
+<table class="table ">
+      <tbody>
+  <form method="post" action="">
+  <thead>
+    <tr>
+      <th scope="col">
+        <label>Search</label>
+        <input type="Search" name="provider_name" id="ptn_provider" class="form-control" placeholder="Provider Name..">
+      </th>
+      <th scope="col">
+        <label>Populations</label>
+        <select class="form-control" name="population" id="ptn_population">
+          <option value="">Please Select </option>
+          <option value="Citizenship">Citizenship</option>
+          <option value="Disabled">Disabled</option>
+          <option value="Families w/ Children">Families w/ Children</option>
+          <option value="LGBT" >LGBT</option>
+          <option value="Very Low-Income">Very Low-Income</option>
+          <option value="Native American">Native American</option>
+          <option value="Other">Other</option>
+          <option value="Senior">Senior</option>
+          <option value="Veteran/Military">Veteran/Military</option>
+        </select>
+      </th>
+     
+      <th scope="col">
+        <label>Services</label>
+        <select class="form-control" name="service_type" id="ptn_servicetype">
+        <option value="">Please Select </option>
+          <option value="Abuse">Abuse</option>
+          <option value="Addiction">Addiction</option>
+          <option value="BasicNeeds" >BasicNeeds</option>
+          <option value="Behavioral" >Behavioral</option>
+          <option value="CaseManagement" >CaseManagement</option>
+          <option value="Clothing" >Clothing</option>
+          <option value="DayCare" >DayCare</option>
+          <option value="Disabled" >Disabled</option>
+          <option value="Education">Education</option>
+          <option value="Emergency" >Emergency</option>
+          <option value="Employment" >Employment</option>
+          <option value="Family" >Family</option>
+          <option value="Financial" >Financial</option>
+          <option value="Food">Food</option>
+          <option value="GeneralSupport" >GeneralSupport</option>
+          <option value="Housing" >Housing</option>
+          <option value="Identification">Identification</option>
+          <option value="IndependentLiving">IndependentLiving</option>
+          <option value="Legal" >Legal</option>
+          <option value="Medical" >Medical</option>
+          <option value="Research" >Research</option>
+          <option value="Resources" >Resources</option>
+          <option value="Respite" >Respite</option>
+          <option value="Senior" >Senior</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Veteran" >Veteran</option>
+          <option value="Victim" >Victim</option>
 
-                                <input type="hidden" id="assignprovidertab" value=""/>
-                            </th>                     
-                        </tr>
-                        </thead>
-                   
-                </table>
-                <div class="loader" style="
-                      position: fixed;
-                      background: rgba(255,255,255,0.8);
-                      width: 100%;
-                      height: 100%;
-                      top: 0;
-                      left: 0;
-                      z-index: 9;">
+        </select>
+      </th>
+      <th scope="col">
+        <label>Location Name</label>
+        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+      </th>
+      <th scope="col">
+        <label>Location Type</label>
+        
+        <select class="form-control" name="location_type" id="ptn_locationtype">
+        <option value="">Please Select </option>
+          <option value="City" >City</option>
+          <option value="State" >State</option>
+          <option value="Country" >Country</option>
+          <option value="National" >National</option>
+        
+        </select>
+      </th>
+      <th scope="col">
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <input type="hidden" id="assignprovidertab" value=""/>
+        <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
+      </th>
+    </tr>
+  </thead>
+
+  </form>
+</tbody>
+</table>
+        <div class="loader" style="position: fixed;
+background: rgba(255,255,255,0.8);
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 9;">
                           <img src="<?php echo get_template_directory_uri(); ?>/images/loader-new.gif" alt="loader" style="position: fixed;top: 50%;left: 0;right: 0;margin: auto;width:170px;z-index: 9; transform: translateY(-50%); -webkit-transform: translateY(-50%); -mstransform: translateY(-50%);">
                         </div>
                 <div id="providerdiv"></div>
-                
-            
+        
+          
         
 
       </div>
@@ -785,7 +827,11 @@ get_header();
 
 <script>
 
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+  if (window.location.href.indexOf("localhost") > -1) {
+      var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
+    }else{
+       var ajax_url = "<?php echo '/ajax.php'; ?>";
+    }
 
 var urgencyoption = "<option value=''>Select</option><option value='Critical'>Critical</option><option value='High'>High</option><option value='Modrate'>Modrate</option><option value='Low'>Low</option>";
 
@@ -1314,39 +1360,61 @@ function updateInterviewSolutiondeatils(iid) {
 }
 
   function searchprovider(iid){
-      var arr = iid.split('-');
-      var arr1 = arr[1];
-      var newiid = 'solution_provider_'+arr1;
-      document.getElementById("assignprovidertab").value = newiid;
-      getserviceprovide();
-  }
-
-
-  function getserachserviceprovider(){
-      jQuery("#providerdiv").html('');
-      document.getElementById("listprac").classList.add("view-active");
-      document.getElementById("mapprac").classList.remove("view-active");
-      var zipcode = jQuery("#ptn_zipcode").val();
-      var radius = jQuery("#ptn_radius").val();
-      var services_type = jQuery("#ptn_servicetype").val();
-      var provider_name = jQuery("#ptn_provider").val();
-      var iid = jQuery("#assignprovidertab").val();
-      jQuery.ajax({
-            url: ajax_url,
-            type:'POST',
-            cache: false,
-            data : {'zipcode':zipcode,'radius':radius,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
-            beforeSend: function() {
-                      jQuery('.loader').show();
-                  },
-            success: function(html){
-              jQuery('.loader').hide();
-              jQuery("#providerdiv").html(html);
-            }
-        });
+    var zipcode = '20170';
+    //alert(zipcode);
+    document.getElementById("assignprovidertab").value = iid;
+    getserviceprovide(zipcode);
+    //alert(zipcode);
     }
 
-    function getserviceprovide(){
+
+     function getserachserviceprovider(){
+    jQuery("#providerdiv").html('');
+    var location_type = jQuery("#ptn_locationtype").val();
+    var population = jQuery("#ptn_population").val();
+    var location = jQuery("#ptn_location").val();
+    var services_type = jQuery("#ptn_servicetype").val();
+    var provider_name = jQuery("#ptn_provider").val();
+    var iid = jQuery("#assignprovidertab").val();
+    jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+          beforeSend: function() {
+                    jQuery('.loader').show();
+                },
+          success: function(html){
+            jQuery('.loader').hide();
+            //alert(html);
+            //console.log(html);
+            jQuery("#providerdiv").html(html);
+          }
+      });
+    }
+
+
+function getserviceprovide(zipcode){
+      jQuery("#providerdiv").html('');
+    //  document.getElementById("listprac").classList.add("view-active");
+    //  document.getElementById("mapprac").classList.remove("view-active");
+      var iid = jQuery("#assignprovidertab").val();
+      jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'zipcode':zipcode,'iid':iid,funtion:'selectserviceprovider'},
+          beforeSend: function() {
+                    jQuery('.loader').show();
+                },
+          success: function(html){
+            jQuery('.loader').hide();
+            jQuery("#providerdiv").html(html);
+          }
+      });
+    }
+
+   /* function getserviceprovide(){
         var zipcode = '';
         jQuery("#providerdiv").html('');
         document.getElementById("listprac").classList.add("view-active");
@@ -1365,17 +1433,19 @@ function updateInterviewSolutiondeatils(iid) {
                     jQuery("#providerdiv").html(html);
                   }
         });
-    }
+    }*/
 
-    function assignprovider(name,id){
-        //alert(id);
-        //solution_provider_
-        document.getElementById(id).value = name;
-        $( "#"+id ).trigger( "click" );
-        jQuery("#closeserviceprovider").click();
-    }
+function assignprovider(id){
+  document.getElementById(id).value = jQuery('#providernamefill').text();
+  jQuery("#closeserviceprovider").click();
+}
 
-    function showview(type){
+function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
+
+    /*function showview(type){
       if(type == 'map'){
          jQuery('#mapview').show();
          jQuery('#listview').hide();
@@ -1388,7 +1458,7 @@ function updateInterviewSolutiondeatils(iid) {
          document.getElementById("listprac").classList.add("view-active");
          document.getElementById("mapprac").classList.remove("view-active");
       }
-    }
+    }*/
 
   </script>
 

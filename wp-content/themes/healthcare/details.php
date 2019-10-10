@@ -168,7 +168,7 @@ get_header();
                                     </tr>
                                     
                                     <tr>
-                                        <td colspan="4"><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')"><button class="btn-primary btn-request set-btn">Accept</button></a>&nbsp;&nbsp;<button class=" btn-danger btn-request set-btn">Reject</button></td>
+                                        <td colspan="4"><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')"><button class="btn-primary btn-request set-btn">Accept</button></a>&nbsp;&nbsp;<button data-toggle="modal"  data-target="#myModal" onclick="showReferralReject('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')" class=" btn-danger btn-request set-btn">Reject</button></td>
                                         
                                     </tr>
 	                                <?php  }else{ ?>
@@ -208,6 +208,47 @@ get_header();
 	</div>
 </div>
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Reject Referral Request</h4>
+      </div>
+      <div class="modal-body">
+        <form id="referralform">
+              
+       
+             <div class="row">
+              <div class="col-md-12">
+               
+                  
+                  <label>Reason</label>
+                   <textarea name="description" id="reason_request" class="form-control" rows="7"  placeholder="Reason..."></textarea>
+                 
+
+    
+              </div>
+            </div>
+            <br/>
+                <input type="hidden" class="form-control"  name="reject_external_id" id="reject_external_id" value=""/>
+                <input type="hidden" class="form-control"  name="reject_task_id" id="reject_task_id" value=""/>
+            <input name="ref-update" onclick="rejectreferaalpolicy()" type="button" class="btn-primary" value="Reject" > 
+          
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <?php get_footer(); ?>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -219,13 +260,22 @@ get_header();
 <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
 
 <script type="text/javascript">
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+
+   
+    if (window.location.href.indexOf("localhost") > -1) {
+      var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
+    }else{
+       var ajax_url = "<?php echo '/ajax.php'; ?>";
+    }
+
+    var return_url = "<?php echo site_url().'/request-referral'; ?>";
+
+
+
 
     function acceptreferralopolicy(application_id,task_id) {
 
       if (confirm('Are you sure to Accept this Referral ?')) {
-         // alert('application_id :'+application_id);
-         // alert('task_id :'+task_id);
         jQuery.ajax({
           url: ajax_url,
           type:'POST',
@@ -246,9 +296,49 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
       }
     }
 
-    function ressstestting(){
-      console.log();
+    function showReferralReject(application_id,task_id){
+      jQuery('#reject_external_id').val(application_id);
+      jQuery('#reject_task_id').val(task_id);
     }
+
+    function rejectreferaalpolicy(){
+      //alert(window.location.href.indexOf("localhost"));
+      //alert(ajax_url);
+
+      if (confirm('Are you sure to Reject this Referral ?')) {
+        var reason = jQuery('textarea#reason_request').val();
+        var application_id = jQuery('#reject_external_id').val();
+        var task_id = jQuery('#reject_task_id').val();
+        if(reason != ''){
+
+       
+        
+       jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'external_application_id':application_id,'task_id':task_id,'request_reject_reason':reason,funtion:'rejectreferralbyclient'},
+          success: function(res){
+            console.log(res);
+            if(res == 11){
+              alert('Request Rejected');
+              window.location.href = return_url;
+            }else{
+              alert('Something error');
+            }
+          }
+        });
+
+     }else{
+      alert('Please fill reason for reject !!');
+     }
+      } else {
+          return false;
+      }
+    }
+
+   
+    
 </script>
 
 

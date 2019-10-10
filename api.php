@@ -750,8 +750,10 @@ function serviceproviderslist($search){
 	   	    }*/
 
 	   	    //if(!empty($search['location'])){
+	   	   
 	   	    	$radiusarray = array('conditional' => '','value' => "20170");
                 $postsearch['GeoScope']  = $radiusarray;
+                $postsearch['application_name']  = "default";
 	   	   // }
 
 
@@ -1249,6 +1251,41 @@ function acceptreferral($referral,$email)
   	  }
     }
 }
+
+function rejectionferral($referral,$email)
+{
+	$userauth = $_SESSION['userdata']['authentication_token'];
+    $task_id     = $referral['task_id'];
+    $external_application_id     = $referral['external_application_id'];
+    $request_reject_reason     = $referral['request_reject_reason'];
+    
+	//$headers = array();
+	$headers['Content-length'] = '0';
+	$headers['Content-type'] = 'application/json';
+	$headers['Authorization'] = 'user-token: '.$userauth;
+	   
+	$post = array('task_id'=>$task_id,'email'=>$email,'external_application_id'=>$external_application_id,'request_reject_reason'=>$request_reject_reason); 
+	    //  echo "<pre>";
+        //print_r($post); die;
+    $curl_handle=curl_init();
+    curl_setopt($curl_handle,CURLOPT_URL,API_URL.'reject_request');
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+    curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+    curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+    $buffer = curl_exec($curl_handle);
+    curl_close($curl_handle);
+    if (empty($buffer)){
+      return false;
+    }
+    else{
+  	  if(!empty($buffer)){
+  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+  	  	return $result;
+  	  }
+    }
+}
+
 
 
 function interviewslist($email)

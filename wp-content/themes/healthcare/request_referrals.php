@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Name: Request_referral
+ * Template Name: Referrals
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
@@ -19,16 +19,17 @@
 
 <style type="text/css">
   .green-bg{
-    background: #43b02a;
+    background: #43b02a!important;
   }
   .ref-cls .green-bg{
 background: #43b02a!important;
   }
  .green-bg th {
     padding: 5px 10px;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #ddd;
     font-size: 15px;
     color: #fff;
+     background: #43b02a!important;
 }
   .margin_left {
     margin-left: 17px;
@@ -66,14 +67,11 @@ color: #43b02a!important;
 </style>
 
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
-  
 
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css"> -->
-
+<link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css">
 
 <?php
 
@@ -121,24 +119,30 @@ get_header();
 
 <div class="container-fluid space">
   <div class="container blogs">
-    <div class="col-md-12 rightside">
+  <div class="col-md-12 rightside">
       <div class="post-73 page type-page status-publish hentry">  
-        <div class="row post-area">
-          <div class="post-73 page type-page status-publish hentry">
-            <div class="col-md-12 border">
-              <div class="line"></div>
-              <?php if($error == 0){ ?>
-                <div class="post_title"><h3>Request Referral</h3></div>
-                <div class="post-tags"></div>
-                <div class="post_content">
-                  <div class="panel-group" id="accordion">
-                    <div class="row">
-  
+      <div class="row post-area">
+              <div class="post-73 page type-page status-publish hentry">
+          <div class="col-md-12 border">
+                <div class="line"></div>
+                <?php if($error == 0){ ?>
+              <div class="post_title"><h3>Request Referral
+                
 
-        <table class="table table-striped"  id="requestreferraltable">
-    <tbody>
-        <thead class="ref-cls">
-           <tr class="green-bg">
+              </h3></div>
+                    <div class="post-tags"></div>
+                    <div class="post_content">
+                <div class="panel-group" id="accordion">
+              
+  <div class="row">
+  
+    <div id="collapseTwo" class="panel-collapse collapse in">
+      <div class="panel-body">
+
+        <table class="table table-striped" id="example">
+          
+           <thead>
+             <tr class="green-bg">
               <th class="green-bg">Patient</th>
               <th class="green-bg">Request Title </th>
               <th class="green-bg">Submission date </th>
@@ -148,8 +152,10 @@ get_header();
               <th class="green-bg">Follow-up date</th>
               <th class="green-bg">Agreement</th>
               <th class="green-bg">Action </th>
-            </tr> 
-            <?php
+            </tr>
+            </thead>
+            <tbody >
+          <?php
             if(!empty($incomingreferral)){
             foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
             //if($requestreffvalue['status'] == 'Pending'){
@@ -164,18 +170,25 @@ get_header();
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
-              <td ><a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
+              <td ><a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['task_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
               </td> 
             </tr>
             
            
             
              <?php  }} ?>
-      </thead>
-    </tbody>
-  </table>
+          
 
-   
+          </tbody>
+        </table>
+
+    
+    
+     
+
+        
+      </div>
+    </div>
   </div>
 
   
@@ -198,7 +211,6 @@ get_header();
   <?php //get_sidebar(); ?>
   </div>
 </div>
-
 <style>
   table.dataTable thead th div.DataTables_sort_wrapper {
     position: relative;
@@ -215,30 +227,30 @@ table.dataTable thead th div.DataTables_sort_wrapper span {
 
 </style>
 
-
+<?php get_footer(); ?>
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
- -->
+
+
+
+
 <script type="text/javascript">
-  $(document).ready( function () {
-    $('#requestreferraltable').DataTable();
+  
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        deferRender:    true,
+        //scrollY:        200,
+        //scrollCollapse: true,
+        //scroller:       true
+    } );
 } );
 </script>
-<?php get_footer(); ?>
 
 
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    jQuery("a[rel^='prettyPhoto']").prettyPhoto();
-});
 
-  // jQuery(document).ready(function() {
-  //    jQuery('#requestreferraltable').DataTable();
-  //  } );"
-
-</script>

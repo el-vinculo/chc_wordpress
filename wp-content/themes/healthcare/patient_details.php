@@ -1900,8 +1900,6 @@ function showdetails(providername,providershortdesc) {
 
     function getserachserviceprovider(){
 		jQuery("#providerdiv").html('');
-	   // document.getElementById("listprac").classList.add("view-active");
-	   // document.getElementById("mapprac").classList.remove("view-active");
 		var location_type = jQuery("#ptn_locationtype").val();
 		var population = jQuery("#ptn_population").val();
 		var location = jQuery("#ptn_location").val();
@@ -1927,8 +1925,7 @@ function showdetails(providername,providershortdesc) {
 
     function assignprovider(id){
 
-      //providernamefill
-      //alert(jQuery('#providernamefill').text());
+      
 	    document.getElementById(id).value = jQuery('#providernamefill').text();
 	    jQuery("#closeserviceprovider").click();
     }

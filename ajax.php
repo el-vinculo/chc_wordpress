@@ -513,6 +513,32 @@ function acceptreferralbyclient()
     return $error;
 }
 
+function rejectreferralbyclient()
+{
+  $error = 0;
+  if(!empty($_POST)){
+        $referrals = $_POST;
+
+        $email   = $_SESSION['userdata']['email'];
+        $accept = rejectionferral($referrals,$email);
+        if(!empty($accept)){
+            if($accept['status'] == 'ok'){
+                $error = 11;
+            }else{
+                $error = 1;
+            }
+        }else{
+            $error = 3;
+        }
+    }else{
+
+        $error = 2;
+    }
+
+    return $error;
+}
+
+
 
 
 
