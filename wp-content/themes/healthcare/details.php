@@ -148,7 +148,8 @@ get_header();
         </div>
         <?php } ?>
         
-
+        <span style="color:red; display:none;" id="accept-error-msg">Something Error</span>
+        <span style="color:green; display:none;" id="accept-success-msg">Patient and Task were transferred successfully</span>
         <table class="table table-striped table-bordered" id="example-116">
                            
                                  <tr>
@@ -159,28 +160,28 @@ get_header();
                                     </tr>
                             <tbody id="refbody">
 
-                                <?php
-                                if(!empty($desc)){
-                                	$r = 1;
-                                	 ?>
+                                
+                                
+                                	
 
-                                     
+                                  <?php if(!empty($desc)){   ?>
                                 	<tr>
 	                                	<td colspan="4" style="height: 100px;"><?php echo $desc; ?></td>
 	                                	
                                     </tr>
+                                     <?php  }else{ ?>
+
+                                  <tr>
+                                    <td colspan="8" style="color: red"><center><p>Details not found</p></center></td>
+                                  </tr>
+
+                                  <?php } ?>
                                     
                                     <tr>
                                         <td colspan="4"><a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')"><button class="btn-primary btn-request set-btn">Accept</button></a>&nbsp;&nbsp;<button data-toggle="modal"  data-target="#myModal" onclick="showReferralReject('<?php echo $external_application_id; ?>','<?php echo $task_id; ?>')" class=" btn-danger btn-request set-btn">Reject</button></td>
                                         
                                     </tr>
-	                                <?php  }else{ ?>
-
-	                                <tr>
-	                                	<td colspan="8" style="color: red"><center><p>Details not found</p></center></td>
-	                                </tr>
-
-	                                <?php } ?>
+	                               
                                 
                                 
                             </tbody>
@@ -226,11 +227,14 @@ get_header();
               
        
              <div class="row">
+             <span style="color:red; display:none;" id="error-msg">Something Error</span>
+                  <span style="color:green; display:none;" id="success-msg">Request Rejected</span>
               <div class="col-md-12">
                
                   
                   <label>Reason</label>
                    <textarea name="description" id="reason_request" class="form-control" rows="7"  placeholder="Reason..."></textarea>
+                   <p id="reason-error" style="display: none; color: red" >Please fill reason for reject !!</p>
                  
 
     
@@ -278,7 +282,7 @@ get_header();
 
     function acceptreferralopolicy(application_id,task_id) {
 
-      if (confirm('Are you sure to Accept this Referral ?')) {
+      //if (confirm('Are you sure to Accept this Referral ?')) {
         jQuery.ajax({
           url: ajax_url,
           type:'POST',
@@ -287,16 +291,18 @@ get_header();
           success: function(res){
            // console.log(res);
             if(res == 11){
-              alert('Patient and Task were transferred successfully');
+              jQuery("#accept-success-msg").show();
+              //alert('Patient and Task were transferred successfully');
               location.reload();
             }else{
-              alert('Something error');
+              jQuery("#accept-error-msg").show();
+              //alert('Something error');
             }
           }
         });
-      } else {
+     /* } else {
           return false;
-      }
+      }*/
     }
 
     function showReferralReject(application_id,task_id){
@@ -308,14 +314,14 @@ get_header();
       //alert(window.location.href.indexOf("localhost"));
       //alert(ajax_url);
 
-      if (confirm('Are you sure to Reject this Referral ?')) {
+      
         var reason = jQuery('textarea#reason_request').val();
         var application_id = jQuery('#reject_external_id').val();
         var task_id = jQuery('#reject_task_id').val();
         if(reason != ''){
-
+        jQuery("#reason-error").hide();
        
-        
+      // if (confirm('Are you sure to Reject this Referral ?')) { 
        jQuery.ajax({
           url: ajax_url,
           type:'POST',
@@ -323,21 +329,25 @@ get_header();
           data : {'external_application_id':application_id,'task_id':task_id,'request_reject_reason':reason,funtion:'rejectreferralbyclient'},
           success: function(res){
             console.log(res);
-            if(res == 11){
-              alert('Request Rejected');
+            if(res == '11'){
+              jQuery("#success-msg").show();
+              // alert('Request Rejected');
               window.location.href = return_url;
             }else{
-              alert('Something error');
+              jQuery("#error-msg").show();
+              //alert('Something error');
             }
           }
         });
+     /*  } else {
+          return false;
+      }*/
 
      }else{
-      alert('Please fill reason for reject !!');
+       jQuery("#reason-error").show();
+       //alert('Please fill reason for reject !!');
      }
-      } else {
-          return false;
-      }
+      
     }
 
    

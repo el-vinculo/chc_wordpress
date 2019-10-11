@@ -171,6 +171,17 @@ color: #43b02a!important;
 
 }
 
+.view-button {
+       margin-top: 13px;
+    position: relative;
+    display: block;
+    
+    margin-right: 5px;
+}
+.border {
+    border: 1px solid #ccc;
+}
+
 /*new start css*/
 .custom-btn{
   border-radius: 5px;
@@ -1408,7 +1419,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -1871,7 +1882,7 @@ function showdetails(providername,providershortdesc) {
 	}
 
 	function searchprovider(iid){
-		var zipcode = '20170';
+		var zipcode = '98168';
 		//alert(zipcode);
 		document.getElementById("assignprovidertab").value = iid;
 		getserviceprovide(zipcode);

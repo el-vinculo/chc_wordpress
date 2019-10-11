@@ -118,6 +118,17 @@ color: #43b02a!important;
        color: #949292;
 
 }
+.view-button {
+       margin-top: 13px;
+    position: relative;
+    display: block;
+    
+    margin-right: 5px;
+}
+.border {
+    border: 1px solid #ccc;
+    height: 800px;
+}
 
 /*new start css*/
 .custom-btn{
@@ -147,7 +158,7 @@ span.fa.fa-print {
   padding: 8px 0!important; 
 }
 .scroll  {
-    height: 219px;
+    height: 370px;
     overflow-y: scroll;
 }
 i.fa.fa-envelope {
@@ -268,7 +279,7 @@ get_header();
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
-          echo "20170"; 
+          echo "98168"; 
           } ?>" name="location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
@@ -327,21 +338,24 @@ if(!empty($practices)){ ?>
           <tr>
             <td>
               <i class="fa fa-map-marker"></i>
-             <button type="button" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success"> View</button>
+             <button type="button" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success view-button"> View</button>
             </td>
             <td><?php echo $name; ?></td>
             <td><?php echo ""; ?></td>
             <td><?php  echo $shortdesc; ?></td>
+
           </tr>
           <?php } } ?>
          
         </thead>
       </table>
+       
 </div>
+  <div class="col-sm-12">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
     </div>
-    <div class="col-sm-12">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin" width="100%" height="300px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
     </div>
+ 
     </div>
   </div>
   <div class="col-md-6 col-sm-12">

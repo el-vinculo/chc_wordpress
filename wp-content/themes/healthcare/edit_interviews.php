@@ -747,7 +747,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -1360,7 +1360,7 @@ function updateInterviewSolutiondeatils(iid) {
 }
 
   function searchprovider(iid){
-    var zipcode = '20170';
+    var zipcode = '98168';
     //alert(zipcode);
     document.getElementById("assignprovidertab").value = iid;
     getserviceprovide(zipcode);
@@ -1435,7 +1435,11 @@ function getserviceprovide(zipcode){
         });
     }*/
 
-function assignprovider(id){
+function assignprovider(iid){
+  
+  var id = iid.replace("search-", "solution_provider_");
+  //alert(id);
+  //solution_provider_
   document.getElementById(id).value = jQuery('#providernamefill').text();
   jQuery("#closeserviceprovider").click();
 }

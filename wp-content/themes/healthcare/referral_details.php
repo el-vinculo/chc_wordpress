@@ -1132,7 +1132,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -1587,64 +1587,62 @@ function referralsend(transfertaskid,clientid){
 	    }
 	}
 
-	function searchprovider(iid){
-		var zipcode = '<?php echo $patinetZip; ?>';
-		//alert(zipcode);
-		document.getElementById("assignprovidertab").value = iid;
-		getserviceprovide(zipcode);
-		//alert(zipcode);
+function searchprovider(iid){
+    var zipcode = '98168';
+    //alert(zipcode);
+    document.getElementById("assignprovidertab").value = iid;
+    getserviceprovide(zipcode);
+    //alert(zipcode);
     }
 
     function getserviceprovide(zipcode){
-	    jQuery("#providerdiv").html('');
-	    document.getElementById("listprac").classList.add("view-active");
-	    document.getElementById("mapprac").classList.remove("view-active");
-	    var iid = jQuery("#assignprovidertab").val();
-	    jQuery.ajax({
-				  url: ajax_url,
-				  type:'POST',
-				  cache: false,
-				  data : {'zipcode':zipcode,'iid':iid,funtion:'selectserviceprovider'},
-				  beforeSend: function() {
-	                  jQuery('.loader').show();
-	              },
-				  success: function(html){
-				  	jQuery('.loader').hide();
-				    jQuery("#providerdiv").html(html);
-				  }
-	    });
+      jQuery("#providerdiv").html('');
+    //  document.getElementById("listprac").classList.add("view-active");
+    //  document.getElementById("mapprac").classList.remove("view-active");
+      var iid = jQuery("#assignprovidertab").val();
+      jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'zipcode':zipcode,'iid':iid,funtion:'selectserviceprovider'},
+          beforeSend: function() {
+                    jQuery('.loader').show();
+                },
+          success: function(html){
+            jQuery('.loader').hide();
+            jQuery("#providerdiv").html(html);
+          }
+      });
     }
 
     function getserachserviceprovider(){
-		jQuery("#providerdiv").html('');
-	    document.getElementById("listprac").classList.add("view-active");
-	    document.getElementById("mapprac").classList.remove("view-active");
-		var zipcode = jQuery("#ptn_zipcode").val();
-		var radius = jQuery("#ptn_radius").val();
-		var services_type = jQuery("#ptn_servicetype").val();
-		var provider_name = jQuery("#ptn_provider").val();
-		var iid = jQuery("#assignprovidertab").val();
-		jQuery.ajax({
-				  url: ajax_url,
-				  type:'POST',
-				  cache: false,
-				  data : {'zipcode':zipcode,'radius':radius,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
-				  beforeSend: function() {
-	                  jQuery('.loader').show();
-	              },
-				  success: function(html){
-				  	jQuery('.loader').hide();
-				  	//alert(html);
-				  	//console.log(html);
-				    jQuery("#providerdiv").html(html);
-				  }
-	    });
+    jQuery("#providerdiv").html('');
+    var location_type = jQuery("#ptn_locationtype").val();
+    var population = jQuery("#ptn_population").val();
+    var location = jQuery("#ptn_location").val();
+    var services_type = jQuery("#ptn_servicetype").val();
+    var provider_name = jQuery("#ptn_provider").val();
+    var iid = jQuery("#assignprovidertab").val();
+    jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+          beforeSend: function() {
+                    jQuery('.loader').show();
+                },
+          success: function(html){
+            jQuery('.loader').hide();
+            //alert(html);
+            //console.log(html);
+            jQuery("#providerdiv").html(html);
+          }
+      });
     }
 
     function assignprovider(id){
 
-      //providernamefill
-      //alert(jQuery('#providernamefill').text());
+      
       document.getElementById(id).value = jQuery('#providernamefill').text();
       jQuery("#closeserviceprovider").click();
     }
@@ -1653,26 +1651,8 @@ function referralsend(transfertaskid,clientid){
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
 }
-    function showview(type){
-		    if(type == 'map'){
-			     jQuery('#mapview').show();
-			     jQuery('#listview').hide();
-			     //localStorage.setItem('viewtype', type);
-			     document.getElementById("mapprac").classList.add("view-active");
-			     document.getElementById("listprac").classList.remove("view-active");
-		    
-		    }else{
-		     jQuery('#listview').show();
-		     jQuery('#mapview').hide();
-		     //localStorage.setItem('viewtype', type);
 
-		     document.getElementById("listprac").classList.add("view-active");
-		     document.getElementById("mapprac").classList.remove("view-active");
-		    }
-
-  
-  
-    }
+   
 
     
 </script>

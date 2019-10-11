@@ -639,7 +639,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="20170" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -712,11 +712,7 @@ z-index: 9;">
 
 <script>
 
-  /*if (window.location.href.indexOf("localhost") > -1) {
-      var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
-    }else{
-       var ajax_url = "<?php echo '/ajax.php'; ?>";
-    }*/
+
 
     var ajax_url = "<?php echo '/ajax.php'; ?>";
 
@@ -902,7 +898,7 @@ jQuery(document).ready(function() {
 
 
   function searchprovider(iid){
-    var zipcode = '20170';
+    var zipcode = '98168';
     //alert(zipcode);
     document.getElementById("assignprovidertab").value = iid;
     getserviceprovide(zipcode);
@@ -929,7 +925,8 @@ function getserviceprovide(zipcode){
       });
     }
 
-function assignprovider(id){
+function assignprovider(iid){
+  var id = iid.replace("search-", "solution_provider_");
   document.getElementById(id).value = jQuery('#providernamefill').text();
   jQuery("#closeserviceprovider").click();
 }
