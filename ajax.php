@@ -218,8 +218,8 @@ function ledgertaskdeatillist(){
         if(!empty($ledgers)) {
            if($ledgers['status'] == 'ok'){ 
            	  $ledgerslist = $ledgers['ledger_details'];
-             //echo "<pre>";
-             //print_r($ledgerslist); die; 
+             echo "<pre>";
+             print_r($ledgerslist); die; 
                //$messagelist  = array_reverse($messages['comm_data']);
                //rsort($messagelist);
            }

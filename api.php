@@ -1092,6 +1092,7 @@ function gettaskledgerdetails($email,$task_id){
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;   
+	   $task_id = '5c1d203c5fd8db2471ba0dcd';
 	   $post = array('email'=>$email,'task_id'=>$task_id); 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'ledg_details');
