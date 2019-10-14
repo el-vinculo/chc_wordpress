@@ -108,6 +108,11 @@ if($logodata['status']!='unauthorized'){
 //echo "<pre>";
 //print_r($_SESSION['userdata']);
 
+ if($userdata['profile']['admin'] == 'true'){ ?>
+ 	<script>
+    jQuery("#menu-item-186").css("display", "none");
+    </script>
+    <?php } 
  if($userdata['profile']['admin'] == 'false'){ ?>
  	<script>
     jQuery("#menu-item-176").css("display", "none");

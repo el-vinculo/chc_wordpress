@@ -1087,6 +1087,32 @@ function gettaskdetails($email,$task_id){
 	   }
 }
 
+function gettaskledgerdetails($email,$task_id){ 
+	   $userauth = $_SESSION['userdata']['authentication_token'];
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;   
+	   $post = array('email'=>$email,'task_id'=>$task_id); 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'ledg_details');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	
+	  	  	return $result;
+	  	  }
+	   }
+}
+
 
 function getreferraldetails($email,$ref_id){ 
 	   $userauth = $_SESSION['userdata']['authentication_token'];

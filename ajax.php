@@ -207,6 +207,70 @@ function CommunicationMsgList(){
     }   
 }
 
+
+
+function ledgertaskdeatillist(){
+    if(!empty($_POST)){ 
+        //$patient_id = $_POST['patient_id'];
+        $task_id = $_POST['task_id'];
+        $email       = $_POST['email'];
+        $ledgers = gettaskledgerdetails($email,$task_id);
+        if(!empty($ledgers)) {
+           if($ledgers['status'] == 'ok'){ 
+           	  $ledgerslist = $ledgers['ledger_details'];
+             //echo "<pre>";
+             //print_r($ledgerslist); die; 
+               //$messagelist  = array_reverse($messages['comm_data']);
+               //rsort($messagelist);
+           }
+         
+        }else{
+            $ledgerslist = array();
+        }
+        
+        $msgHtml = ledgerHtml($ledgerslist);
+        echo  $msgHtml;
+    }   
+}
+
+
+function ledgerHtml($ledgerslist){
+  
+   if(!empty($ledgerslist)){ 
+
+   $html = "<thead><tr><td colspan='4'>Internal</td></tr></thead>
+           <thead><tr><th>Changes</th><th>Created Date</th></tr></thead> 
+           <tbody id='internaltaskbody'>";
+    if(!empty($ledgerslist['internal_record_array'])){ 
+        foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {  
+    $html.= "<tr><td>".$internalledvalue['changes']."</td><td>".$internalledvalue['created_at']."</td></tr>"     ;       
+    } }else { 
+    $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
+    } 
+                                
+    $html.= "<thead><tr><td colspan='4'>External</td></tr></thead>
+           <thead><tr><th>Changes</th><th>Created Date</th></tr></thead> 
+           <tbody id='externaltaskbody'>";
+
+    if(!empty($ledgerslist['external_record_array'])){ 
+        foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  
+    $html.= "<tr><td>".$externalledvalue['changes']."</td><td>".$externalledvalue['created_at']."</td></tr>"     ;       
+    } }else { 
+    $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
+    } 
+
+    }else{
+    	$html.=  "
+    	<thead><tr><td colspan='4'>
+   
+       <p style='font-size: 16px;'>No detail found </p></td></tr></thead>
+   ";                        
+    } 
+    
+
+    return   $html;
+}
+
 function commmsgHtml($messagelist){
 
    $html = "<div class='col-md-6'><ul>";
