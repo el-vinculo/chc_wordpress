@@ -77,7 +77,8 @@ function taskHtmlTable($taskList,$referral_id)
                  <td id='reftaskdeadline-".$taskvalue['task_id']."'>".date('d-m-Y',strtotime($taskvalue['task_deadline']))."</td>
                  <td id='reftaskstatus-".$taskvalue['task_id']."'>".$taskvalue['task_status']."</td>
                  <td><button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
-                 <td><button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  >Transfer</button></td>
+                 <td><button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  >Transfer</button>
+                 <button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  >Ledger</button></td>
 
             </tr>";
             } }else { 
@@ -218,8 +219,8 @@ function ledgertaskdeatillist(){
         if(!empty($ledgers)) {
            if($ledgers['status'] == 'ok'){ 
            	  $ledgerslist = $ledgers['ledger_details'];
-             echo "<pre>";
-             print_r($ledgerslist); die; 
+            // echo "<pre>";
+            // print_r($ledgerslist); die; 
                //$messagelist  = array_reverse($messages['comm_data']);
                //rsort($messagelist);
            }
@@ -253,9 +254,12 @@ function ledgerHtml($ledgerslist){
            <tbody id='externaltaskbody'>";
 
     if(!empty($ledgerslist['external_record_array'])){ 
-        foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  
-    $html.= "<tr><td>".$externalledvalue['changes']."</td><td>".$externalledvalue['created_at']."</td></tr>"     ;       
-    } }else { 
+        foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  if(!empty($externalledvalue['changes'])){
+              foreach ($externalledvalue['changes'] as $extchangeskey => $extchangesvalue) {
+            
+    $html.= "<tr>
+             <td><p><b>Task Type :</b>".$extchangesvalue['task_type']."</p><p><b>Task Status :</b>".$extchangesvalue['task_status']."</p><p><b>Task Owner :</b>".$extchangesvalue['task_owner']."</p><p><b>Provider :</b>".$extchangesvalue['provider']."</p><p><b>Task Deadline :</b>".$extchangesvalue['task_deadline']."</p><p><b>Task Descripation :</b>".$extchangesvalue['task_description']."</p><p><b>Patient Document :</b>".$extchangesvalue['patient_document']."</p><td>".$externalledvalue['created_at']."</td></tr>"     ;       
+   }} } }else { 
     $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
     } 
 

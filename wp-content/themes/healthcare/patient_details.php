@@ -718,7 +718,9 @@ get_header();
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button></td>
+                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
+
+                                   </td>
                                    
                                    
                                 </tr>
@@ -1220,6 +1222,31 @@ get_header();
 </div>
 
 
+<div id="myLedgerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ledger Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered" id="ledgertabledata">
+
+                            
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <div id="myDocumentModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -1573,6 +1600,25 @@ function sendmessage(){
               
             }
           });
+}
+
+function getledgerdetails(taskid) {
+  //alert(taskid);
+  //document.getElementById("msg_task_id").value = taskid;
+  //alert(taskid);
+  var email = "<?php echo $email; ?>";
+ // var patient_id = "<?php echo base64_decode($_GET['pid']); ?>";
+  jQuery.ajax({
+        url: ajax_url,
+        type:'POST',
+        cache: false,
+        data : {'task_id':taskid,'email':email,funtion:'ledgertaskdeatillist'},
+        success: function(html){
+          //alert(html);
+         // console.log(html);
+          jQuery("#ledgertabledata").html(html);
+        }
+    });
 }
 
 function getReferralTask(iid){

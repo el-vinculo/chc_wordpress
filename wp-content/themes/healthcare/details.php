@@ -268,7 +268,7 @@ get_header();
 
 <script type="text/javascript">
 
-   
+  // var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
     if (window.location.href.indexOf("localhost") > -1) {
       var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
     }else{

@@ -147,8 +147,13 @@ get_header();
   </div>
    <div class="form-group">
     <label for="pwd">OTP Required:</label>
+    <?php if(!empty($userprofiledata['admin']) && ($userprofiledata['admin'] == "true")){ 
+          if($userprofiledata['otp_required_for_login'] == "true"){ echo "Yes";}else{ echo "No";} ?>
+
+    <?php }else{  ?>
     <input type="radio"  name="otp_required_for_login" value="true" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "true")){ echo "checked"; } ?>>Yes
     <input type="radio"  name="otp_required_for_login" value="false" <?php if(!empty($userprofiledata['otp_required_for_login']) && ($userprofiledata['otp_required_for_login'] == "false")){ echo "checked"; } ?>>No
+    <?php } ?>
   </div>
 
   <input type="submit" class="btn-success" name="update" value="Update">

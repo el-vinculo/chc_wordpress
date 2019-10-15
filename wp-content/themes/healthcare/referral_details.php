@@ -1230,7 +1230,11 @@ window.addEventListener('popstate', function(event) {
 } );
 </script>
 <script type="text/javascript">
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+    if (window.location.href.indexOf("localhost") > -1) {
+      var ajax_url = "<?php echo '/chc/chc_wordpress/ajax.php'; ?>";
+    }else{
+       var ajax_url = "<?php echo '/ajax.php'; ?>";
+    }
 var upload_ajax_url = "<?php echo '/upload_ajax_url.php'; ?>";
 
 

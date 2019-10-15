@@ -104,16 +104,14 @@ if($logodata['status']!='unauthorized'){
     </nav> 
     
 <!-- End Header -->
-<?php 
-//echo "<pre>";
-//print_r($_SESSION['userdata']);
+<!-- <?php 
 
  if($userdata['profile']['admin'] == 'true'){ ?>
  	<script>
     jQuery("#menu-item-186").css("display", "none");
     </script>
-    <?php } 
- if($userdata['profile']['admin'] == 'false'){ ?>
+    <?php }  ?> -->
+ <?php if($userdata['profile']['admin'] == 'false'){ ?>
  	<script>
     jQuery("#menu-item-176").css("display", "none");
     </script>
@@ -142,5 +140,6 @@ if($logodata['status']!='unauthorized'){
     jQuery("#menu-item-186").css("display", "none");
     jQuery("#menu-item-201").css("display", "none");
     jQuery("#menu-item-202").css("display", "none");
+    jQuery("#menu-item-212").css("display", "none");
 </script>
 	<?php } ?>
