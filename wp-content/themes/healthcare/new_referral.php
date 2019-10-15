@@ -607,7 +607,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary" data-dismiss="modal">Close1</button>
       </div>
     </div>
 

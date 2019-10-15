@@ -1169,57 +1169,6 @@ get_header();
 </div>
 
 
-<!-- myTaskModal-->
-<div id="myLedgerModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Ledger Status Table</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-striped table-bordered" id="example612Q">
-                            <thead>
-                                <tr>
-                                    <th>DESCRIPTION</th>
-                                    <th>STATUS</th>
-                                    <th>&nbsp;&nbsp;</th>
-                                </tr> 
-                                  
-                            </thead>
-                            <tbody id="taskbody">
-                            <input type="hidden" id="transfer_task_id" value="">
-                            
-                            <tr>
-                                <td>Toney's second task</td>
-                                <td>Pending </td>
-                                <td><a href="javascript:void(0)">Accept Reffral </a></td>
-                            </tr> 
-                            <tr>
-                                <td>Toney's second 3</td>
-                                <td>Pending </td>
-                                <td><a href="javascript:void(0)">Accept Reffral </a></td>
-                            </tr> 
-                            <tr>
-                                <td>New Task for Bruce</td>
-                                <td>Accepted </td>
-                                <td>Accepted</td>
-                            </tr> 
-                            
-                            </tbody>
-                            
-        </table>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 <div id="myLedgerModal" class="modal fade" role="dialog">
