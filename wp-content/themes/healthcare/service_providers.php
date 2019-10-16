@@ -326,19 +326,23 @@ if(!empty($practices)){ ?>
 
           <?php 
           if(!empty($practices)){
+           // echo "<pre>";
+           // print_r($practices); die; 
          foreach ($practices as $practiceskey => $practicesvalue) { 
-         $name =  $practicesvalue['organizationName']["organizationName_Text"]["0"]["text"];
-         if(is_array($practicesvalue['organizationName']["OrgDescription"])){
+         $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
+         /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
          }else{
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
-         }
+         }*/
+
+         $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
 
           ?>
           <tr>
             <td>
               <i class="fa fa-map-marker"></i>
-             <button type="button" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success view-button"> View</button>
+             <button type="button" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success"> View</button>
             </td>
             <td><?php echo $name; ?></td>
             <td><?php echo ""; ?></td>
@@ -368,12 +372,14 @@ if(!empty($practices)){ ?>
       </p>
     </div>
     <div class="provider-content">
-    <?php $providername =  $practices["0"]['organizationName']["organizationName_Text"]["0"]["text"];
-         if(is_array($practices["0"]['organizationName']["OrgDescription"])){
+    <?php $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
+         /*if(is_array($practices["0"]['organizationName']["OrgDescription"])){
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
          }else{
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
-         } ?>
+         }*/ 
+         $providershortdesc= $practices['Programs']["0"]["ProgramDescription"]["0"]["Text"];
+         ?>
       <h4>Provider Name</h4>
       <p id='providernamefill'><?php echo $providername; ?></p>
       <h4>Short Descripation</h4>

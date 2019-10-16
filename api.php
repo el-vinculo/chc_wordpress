@@ -720,7 +720,8 @@ function serviceproviderslist($search){
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
 	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
 	    if(empty($search)){
-            $radiusarray = array('conditional' => '','value' => "98168");
+	    	$radiusarray = array('value' => 'WA', 'type' => 'State');
+            //$radiusarray = array('conditional' => '','value' => "98168");
             $postsearch['GeoScope']  = $radiusarray;
             $postsearch['application_name']  = "default";
             $datastring = json_encode($postsearch);
