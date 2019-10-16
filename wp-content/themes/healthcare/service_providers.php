@@ -279,7 +279,7 @@ get_header();
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
-          echo "98168"; 
+         // echo "98168"; 
           } ?>" name="location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
@@ -289,7 +289,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'City')){ echo "selected"; } ?>>City</option>
           <option value="State" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'State')){ echo "selected"; } ?>>State</option>
-          <option value="Country" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'Country')){ echo "selected"; } ?>>Country</option>
+          <option value="County" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'County')){ echo "selected"; } ?>>County</option>
           <option value="National" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'National')){ echo "selected"; } ?>>National</option>
         
         </select>
