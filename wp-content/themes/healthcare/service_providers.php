@@ -342,7 +342,9 @@ if(!empty($practices)){ ?>
           <tr>
             <td>
               <i class="fa fa-map-marker"></i>
-             <button type="button" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails('<?php echo $name; ?>','<?php echo $shortdesc; ?>')" class="custom-btn btn-success"> View</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> View</button6
+
+             >
             </td>
             <td><?php echo $name; ?></td>
             <td><?php echo ""; ?></td>
@@ -640,7 +642,9 @@ if(!empty($practices)){ ?>
 
 <script type="text/javascript">
 
-function showdetails(providername,providershortdesc) {
+function showdetails(details) {
+  var providername = jQuery(details).attr('data-name');
+  var providershortdesc = jQuery(details).attr('data-shortdesc');
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
 }
