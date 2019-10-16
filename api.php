@@ -719,13 +719,17 @@ function serviceproviderslist($search){
 	   $headers['Authorization'] = 'user-token: '.$userauth;
 	   //$post = array('patient_id'=>$patient_id,'email'=>$email);
 	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
-	    if(empty($search)){
+	    	//echo "<pre>";
+	    	//print_r($search);
+	    if(empty($search['location']) && empty($search['population']) &&  empty($search['services_type'])){
+	    	echo "iffcondition";
 	    	$radiusarray = array('value' => 'WA', 'type' => 'State');
             //$radiusarray = array('conditional' => '','value' => "98168");
             $postsearch['GeoScope']  = $radiusarray;
             $postsearch['application_name']  = "default";
             $datastring = json_encode($postsearch);
-	    }else if(!empty($search['location'])){
+	    }else if(!empty($search['location']) || !empty($search['population']) ||  !empty($search['services_type'])){
+	    	echo "elsecondition";
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
 	   	    	$populationarray = array('conditional' => 'OR','value' => array("P_".$search['population']));
@@ -753,7 +757,7 @@ function serviceproviderslist($search){
 
 	   	    //if(!empty($search['location'])){
 	   	   
-	   	    	$radiusarray = array('conditional' => '','value' => "98168");
+	   	    	$radiusarray = array('value' => 'WA', 'type' => 'State');
                 $postsearch['GeoScope']  = $radiusarray;
                 $postsearch['application_name']  = "default";
 	   	   // }
@@ -781,7 +785,7 @@ function serviceproviderslist($search){
 	    $datastring = json_encode($post);*/
 	   }
 	   
-	   //echo $datastring;  die;
+	 // echo $datastring;  
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);
