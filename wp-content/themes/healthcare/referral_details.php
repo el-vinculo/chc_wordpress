@@ -895,7 +895,7 @@ get_header();
         <h4 class="modal-title">Ledger Details</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-striped table-bordered" id="ledgertabledata">
+        <table class="table table-striped table-bordered" id="ledgertabledatadummy">
 
                             
         </table>
@@ -1384,7 +1384,7 @@ function getledgerdetails(taskid) {
         success: function(html){
           //alert(html);
          // console.log(html);
-          jQuery("#ledgertabledata").html(html);
+          jQuery("#ledgertabledatadummy").html(html);
         }
     });
 }
