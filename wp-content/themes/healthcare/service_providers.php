@@ -380,7 +380,7 @@ if(!empty($practices)){ ?>
          }else{
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
          }*/ 
-         $providershortdesc= $practices['Programs']["0"]["ProgramDescription"]["0"]["Text"];
+         $providershortdesc= $practices["0"]['Programs']["0"]["ProgramDescription"]["0"]["Text"];
          ?>
       <h4>Provider Name</h4>
       <p id='providernamefill'><?php echo $providername; ?></p>

@@ -736,9 +736,9 @@ function serviceproviderslist($search){
 	   	    	$postsearch['population']  = $populationarray;
 	   	    }   
 
-	   	    if(!empty($search['services'])){
+	   	    if(!empty($search['services_type'])){
                 $providerarray = array("type" => "group", "conditional" => "OR",'value' => array("S_".$search['services_type']));
-                $postsearch['services_type']  = $providerarray;
+                $postsearch['services']  = $providerarray;
 	   	    }
 
 	   	    /*if(!empty($search['services_type'])){
@@ -757,7 +757,7 @@ function serviceproviderslist($search){
 
 	   	    //if(!empty($search['location'])){
 	   	   
-	   	    	$radiusarray = array('value' => 'WA', 'type' => 'State');
+	   	    	$radiusarray = array('value' => $search['location'], 'type' => 'State');
                 $postsearch['GeoScope']  = $radiusarray;
                 $postsearch['application_name']  = "default";
 	   	   // }
@@ -785,7 +785,7 @@ function serviceproviderslist($search){
 	    $datastring = json_encode($post);*/
 	   }
 	   
-	  echo $datastring;  
+	 // echo $datastring;  
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);
