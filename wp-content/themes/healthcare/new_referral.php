@@ -30,7 +30,179 @@
 color: #43b02a!important;
 }
 </style>
+
+<style >
+h1 {
+  text-align: center;
+ font-family: 'Montserrat', sans-serif;
+  color: #06D85F;
+  margin: 80px 0;
+}
+.rightside a.icon1 i {
+    color: #43b02a !important;
+}
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    border: 4px solid rgba(3, 169, 244, 0.69);
+    width: 80%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+}
+.popup h2 {
+  margin-top: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: rgba(3, 169, 244, 0.69);
+font-family: 'Montserrat', sans-serif;}
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: none;
+    width: 40px;
+    text-align: center;
+    height: 40px;
+    padding: 6px;
+    border-radius: 100%;
+    box-shadow: none;
+    background: rgba(3, 169, 244, 0.69)!important;
+    text-decoration: none;
+    color: #fff;
+}
+.popup .close:hover {
+  color: #fff!important;
+}
+.popup .content {
+  max-height: 80%;
+  overflow: auto;
+}
+.content ul li {
+    padding: 12px 0;
+    font-size: 16px;
+}
+.content ul li span{
+   font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.view-active{
+color: #43b02a!important;
+}
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+.content p{
+  font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 17px;
+       color: #949292;
+
+}
+
+.view-button {
+       margin-top: 13px;
+    position: relative;
+    display: block;
+    
+    margin-right: 5px;
+}
+.border {
+    border: 1px solid #ccc;
+}
+
+/*new start css*/
+.custom-btn{
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 0!important;  
+  box-shadow: none!important; 
+}
+.pt-20{
+    padding: 20px;
+}
+.provider-content {
+    display: inline-block;
+}
+.provider-content h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+span.fa.fa-print {
+    font-size: 33px;
+    color: #3b5999;
+}
+.margin-bt thead tr td {
+    padding-bottom: 8px!important;
+}
+.margin-bt thead tr th{
+  padding: 8px 0!important; 
+}
+.scroll  {
+    height: 219px;
+    overflow-y: scroll;
+}
+i.fa.fa-envelope {
+    padding-left: 0px!important;
+}
+</style>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css">
 
 
 <?php
@@ -57,9 +229,11 @@ if(isset($_SESSION['userdata'])){
     
 
     /*--------Add Tasks--------------------------------*/
-    /* if(!empty($_POST) && !empty($_POST['addTask'])){
+    if(!empty($_POST) && !empty($_POST['addTask'])){
+    	$patient_id = base64_decode($_GET['pid']);
 	  	$postTaskData = $_POST; 
-	  	$saveTask = saveReferralTask($postTaskData,$patient_id,$email);
+	  	$documents="";
+	  	$saveTask = saveReferralTask($postTaskData,$patient_id,$email,$documents);
 	  	if(!empty($saveTask)){
 	  		if($saveTask['status'] == 'ok'){
 	  			$error = 0;
@@ -70,12 +244,13 @@ if(isset($_SESSION['userdata'])){
 	  			$msg   = 'Please try again !! Something went wrong';
 	  		}
 	  	}
-	  }*/
+	  }
 
     /*--------------------------------------------------*/
 
     /* ------------ Add Referral --------------------- */
-    /*if(!empty($_POST) && !empty($_POST['save2'])){
+    if(!empty($_POST) && !empty($_POST['save2'])){
+    	$patient_id = base64_decode($_GET['pid']);
 	  	$postReferralData = $_POST; 
 	  	$save = savePatientReferral($postReferralData,$patient_id,$email);
 	  	if(!empty($save)){
@@ -88,16 +263,35 @@ if(isset($_SESSION['userdata'])){
 	  			$msg   = 'Please try again !! Something went wrong';
 	  		}
 	  	}
-	  }*/
+	  }
 	  /* -------------------------------------------------*/
+
+	 /* ------------ Update Patient Details --------------------- */
+	if(!empty($_POST['update'])){
+		$patient_id = base64_decode($_GET['pid']);
+       $dataArray = $_POST;
+       $updateDeatils = updatePatientDetails($dataArray,$patient_id,$email);
+       if($updateDeatils['status'] == 'ok'){
+       	  $error = '0';
+       	  $success = 21;
+       	  $msg   = $updateDeatils['message'];
+       }else{
+       	  $error = 0;
+       	  $success = 11;
+       	  $msg   = $updateDeatils['message'];
+       }
+	}
+	/* -------------------------------------------------*/
     
-    /* ------------ Update Patient Details --------------------- */
+    /* ------------ Save Patient Details --------------------- */
 	if(!empty($_POST['submit'])){
        $dataArray = $_POST;
        $updateDeatils = savePatinets($dataArray,$email);
        if($updateDeatils['status'] == 'ok'){
-       	 // echo "<pre>";
-       	  //print_r($updateDeatils); die; 
+       	 $patient_id = base64_encode($updateDeatils['patient_id']);
+       	 $redirecturl =  site_url().'/new-referral?pid='.base64_encode($updateDeatils['patient_id']);
+       	 header("Location: $redirecturl");
+       	  
        	  $error = '0';
        	  $success = 21;
        	  $msg   = $updateDeatils['message'];
@@ -113,12 +307,15 @@ if(isset($_SESSION['userdata'])){
 		 $success = 41;
 		 $msg   = 'Referral Updated';
 	}*/
-
-    /* ------------ Referral List --------------------- */
-   /* $referraldata = referralList($patient_id,$email);
-    if(!empty($referraldata['status'] == 'ok')){
-    	$referralList  = $referraldata['referral_list'];
-    }*/
+    
+    if(!empty($_GET['pid'])){
+    	$patient_id = base64_decode($_GET['pid']);
+    	$referraldata = referralList($patient_id,$email);
+	    if(!empty($referraldata['status'] == 'ok')){
+	    	$referralList  = $referraldata['referral_list'];
+	    }
+    }
+   
     /* -------------------------------------------------*/
 
     /* ------------ Communcation List --------------------- */
@@ -129,7 +326,7 @@ if(isset($_SESSION['userdata'])){
     /* -------------------------------------------------*/
 
     /*---------------Task List --------------------------*/
-  /*  if(!empty($referralList)){
+   if(!empty($referralList)){
         if(!empty($_POST['addTask']) && (!empty($_POST['referral_id']))){
             $referralid = $_POST['referral_id'];
         }else{
@@ -141,20 +338,24 @@ if(isset($_SESSION['userdata'])){
     	  $taskList  = $taskData['task_list'];
        }
 
-    }*/
+    }
     
     /*--------------------------------------------------*/
 
 
     /* ------------ Patient Details --------------------- */
-/*	$patientdata = patientDetails($patient_id,$email);
-	if(!empty($patientdata['status'] == 'ok')){
-	  	$patientsDeatils = $patientdata['patients_details'];
-	  	$patinetZip  = $patientsDeatils['patient_zipcode'];
-	}else{
-	  	$error = 1;
-	    $msg   = $patientdata['status']. ' ! '. $patientdata['message'];
-	}*/
+    if(isset($_GET['pid'])){
+    	$patient_id = base64_decode($_GET['pid']);
+    	$patientdata = patientDetails($patient_id,$email);
+		if(!empty($patientdata['status'] == 'ok')){
+		  	$patientsDeatils = $patientdata['patients_details'];
+		  	$patinetZip  = $patientsDeatils['patient_zipcode'];
+		}else{
+		  	$error = 1;
+		    $msg   = $patientdata['status']. ' ! '. $patientdata['message'];
+		}
+    }
+	
 
 	/* -------------------------------------------------*/
     
@@ -185,6 +386,15 @@ if(isset($_SESSION['userdata'])){
 
     }
 */
+
+
+    /* ------------ Clients Lists --------------------- */
+	    $clientdata = clientsList();
+	    if(!empty($clientdata['status'] == 'ok')){
+	    	$clientList  = $clientdata['client_list'];
+	    }
+
+    /* -------------------------------------------------*/
     /* -------------------------------------------------*/
 
 	 
@@ -225,10 +435,10 @@ get_header();
 							  <div class="panel-group" id="accordion">
 							  <div class="panel panel-default">
 							    <div class="panel-heading">
-							    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
 							      <h4 class="panel-title"><b>Patient Details</b></h4></a>
 							    </div>
-    <div id="collapseOne" class="panel-collapse collapse <?php if(($success == '21') || ($success == '11')){ echo "in"; } ?>">
+    <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
 
         <?php if($success == '21'){ ?>
@@ -345,13 +555,18 @@ get_header();
 
 				
 			 </div>
-		</div>        
+		</div>
+		<?php if(isset($_GET['pid'])){ ?>
+<input name="update" type="submit" class="btn-primary" value="Update" > 
+		<?php }else{ ?>    
 	   <input name="submit" type="submit" class="btn-primary" value="Save" > 
+	   <?php } ?>
 	  
 	</form>
       </div>
     </div>
   </div>
+  <?php if(!empty($_GET['pid'])){ ?>
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><h4 class="panel-title"><b>Referrals</b></h4></a></div>
@@ -373,7 +588,7 @@ get_header();
         </div>
         </div>
         <?php } ?>
-        <table class="table table-striped table-bordered" id="example-116">
+                <table class="table table-striped table-bordered" id="example-116">
                             <thead>
                                 <tr>
                                     <th>&nbsp;&nbsp;</th>
@@ -383,6 +598,9 @@ get_header();
                                     <th>Source</th>
                                     <th>Urgency</th>
                                     <th>Task Count</th>
+                                    <th>Status</th>
+                                    <th>Follow Up Date</th>
+                                    <th>AGREEMENT </th>
                                 <th class="tabledit-toolbar-column"></th></tr>
                             </thead>
                             <tbody id="refbody">
@@ -403,6 +621,9 @@ get_header();
 	                                	<td id="source-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['source']; ?></td>
 	                                	<td id="urgency-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['urgency']; ?></td>
 	                                	<td><?php echo $refvalue['task_count']; ?></td>
+	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
+                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
+                                        <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php $r++; } }else{ ?>
@@ -416,11 +637,11 @@ get_header();
                                 
                             </tbody>
                         </table>
-            <a href="<?php echo site_url().'/patients/patient-details/create-referral?pid='.base64_encode(base64_decode($_GET['pid']));?>" >+ Add Referral</a>            
+            <a href="<?php echo site_url().'/new-referral-create?pid='.base64_encode(base64_decode($_GET['pid']));?>" >+ Add Referral</a>            
 
     <h4>Tasks</h4> 
     
-     <table class="table table-striped table-bordered" id="example612Q">
+    <table class="table table-striped table-bordered" id="example612Q">
                             <thead>
                                 <tr>
                                     <th>Task Type</th>
@@ -429,7 +650,8 @@ get_header();
                                     <th>Description</th>
                                     <th>Deadline</th>
                                     <th>Task Status</th>
-                                    <th>&nbsp;&nbsp;</th>
+                                    <th colspan="3">Action</th>
+                                  
                             </thead>
                             <tbody id="taskbody">
                             <input type="hidden" id="taskrefiid" value="<?php echo $referralList['0']['referral_id']; ?>">
@@ -440,9 +662,20 @@ get_header();
                                    <td id="reftaskprovider-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['provider'];?></td>
                                    <td id="reftaskowner-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_owner'];?></td>
                                    <td id="reftaskdesc-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_description'];?></td>
-                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php echo date('Y-m-d',strtotime($taskvalue['task_deadline']));?></td>
+                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php 
+                                  if(date('Y-m-d',strtotime($taskvalue['task_deadline'])) == '1970-01-01'){
+                                    echo "--";
+                                    
+                                   }else{
+                                     echo date('Y-m-d',strtotime($taskvalue['task_deadline']));
+                                   }
+                                   ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
+                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
+
+                                   </td>
+                                   
                                    
                                 </tr>
                                 <?php } }else { ?>
@@ -459,6 +692,8 @@ get_header();
       </div>
     </div>
   </div>
+
+  <?php } ?>
 <!--   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><h4 class="panel-title"><b>Notes</b></h4></a></div>  
@@ -850,6 +1085,82 @@ get_header();
   </div>
 </div>
 
+<!-- myTaskModal-->
+<div id="myTransferModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tranfer Task</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered" id="example">
+                            <thead>
+                                <tr>
+                                    <th>APPLICATION NAME</th>
+                                    <th>SPECIALTY</th>
+                                    <th>AGREEMENT TYPE</th>
+                                    <th>AGREEMENT SIGNED</th>
+                                    <th>TRANSFER</th>
+                                </tr>       
+                            </thead>
+                            <tbody id="taskbody">
+                            <input type="hidden" id="transfer_task_id" value="">
+                            <?php
+                              if(!empty($clientList)){
+                            	foreach ($clientList as $clientkey => $clientvalue) {
+                            ?>	
+                            <tr>
+                                <td><?php echo $clientvalue['name']; ?></td>
+                                <td><?php echo $clientvalue['speciality']; ?></td>
+                                <td><?php echo $clientvalue['agreement_type']; ?></td>
+                                <td><?php  if($clientvalue['agreement_signed'] == 1){ echo "Ture";}else{ echo ""; }; ?></td>
+                                <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
+                            </tr> 
+                            <?php } } ?>   
+                            </tbody>
+                            
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div id="myLedgerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ledger Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered" id="ledgertabledata">
+
+                            
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 
 
 <div id="myProviderModal" class="modal fade" role="dialog">
@@ -932,8 +1243,13 @@ z-index: 9;">
   </div>
 </div>
 <?php get_footer(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
+<script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
 <script>
 /*jQuery(document).ready(function(){
         function updatePatientData(){
@@ -982,10 +1298,32 @@ window.addEventListener('popstate', function(event) {
     window.location.assign(loadurl);
 });
     </script>
+    <script type="text/javascript">	
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        deferRender:    true,
+        scrollY:        200,
+        scrollCollapse: true,
+        scroller:       true
+    } );
+} );
+</script>
+
+    <script type="text/javascript">	
+	$(document).ready(function() {
+    $('#externaltabledata').DataTable( {
+        deferRender:    true
+    } );
+} );
+</script>
 <script type="text/javascript">
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
+var upload_ajax_url = "<?php echo '/upload_ajax_url.php'; ?>";
 
-
+function closereplybox(){
+	jQuery("#communication_msg").val('');
+	jQuery("#commmsgdiv").html('');
+}
 function sendmessage(){
 	var action = 'sendmeassagetosender';
 	var comm_message = document.getElementById("communication_msg").value;
@@ -998,8 +1336,10 @@ function sendmessage(){
             url: ajax_url,
             data: {task_id:comm_task_id,recipient_id:recipient_id,recipient_type:recipient_type,comm_subject:comm_subject,comm_message:comm_message,funtion:action},
             success: function (res) {
-            	document.getElementById("communication_msg").value = '';
-            	if(res == '11'){
+            	var trimStr  = $.trim(res);
+            	if(trimStr == '11'){
+            		jQuery("#communication_msg").val('');
+
             		//alert('message send successfully');
             		getcommicationmessage(comm_task_id);
             		getcommicationlist(recipient_id);
@@ -1010,6 +1350,25 @@ function sendmessage(){
               
             }
           });
+}
+
+function getledgerdetails(taskid) {
+  //alert(taskid);
+  //document.getElementById("msg_task_id").value = taskid;
+  //alert(taskid);
+  var email = "<?php echo $email; ?>";
+ // var patient_id = "<?php echo base64_decode($_GET['pid']); ?>";
+  jQuery.ajax({
+        url: ajax_url,
+        type:'POST',
+        cache: false,
+        data : {'task_id':taskid,'email':email,funtion:'ledgertaskdeatillist'},
+        success: function(html){
+          //alert(html);
+         // console.log(html);
+          jQuery("#ledgertabledata").html(html);
+        }
+    });
 }
 
 function getReferralTask(iid){
@@ -1034,6 +1393,7 @@ function getReferralTask(iid){
 }
 
 function updatereftaskdetails(){
+	    //e.preventDefault();
 		var action  = 'updatePatientReferralTask';
 		var task_id  = document.getElementById("edit_task_id").value;
 		var task_type  = document.getElementById("edit_task_type").value;
@@ -1044,12 +1404,21 @@ function updatereftaskdetails(){
 		var task_deadline  = document.getElementById("edit_task_deadline").value;
 		var referralid  = document.getElementById("taskrefiid").value;
 		//alert(referralid);
+        //var fileupload = document.getElementById("edit_patient_document");
+		//var formdata = jQuery('#referraltaskform').serialize();
+		var formdata = new FormData(document.getElementById("referraltaskform"));
+		//var fileupload = $("#edit_patient_document");
+		//alert(formdata);
 		jQuery.ajax({
             type: 'post',
-            url: ajax_url,
-            data: {task_id:task_id,task_type:task_type,task_description:task_description,task_status:task_status,task_provider:task_provider,task_owner:task_owner,task_deadline:task_deadline,funtion:action},
+            url: upload_ajax_url,
+            processData: false, // important
+            contentType: false,
+            data: formdata,
             success: function (res) {
             	//alert(res);
+            	//exit;
+            	//console.log(res);exit;
             	var trimStr = jQuery.trim(res);
             	if(trimStr == '11'){
             		alert('Task Updated');
@@ -1074,13 +1443,15 @@ function updatereferal(){
          var ref_urgency  = document.getElementById("ref_urgency").value;
          var ref_source  = document.getElementById("ref_source").value;
          var ref_desc  = document.getElementById("ref_desc").value;
+         var followup_date  = document.getElementById("ref_followup_date").value;
           jQuery.ajax({
             type: 'post',
             url: ajax_url,
-            data: {ref_id:ref_id,ref_name:ref_name,ref_due_date:ref_due_date,ref_urgency:ref_urgency,ref_source:ref_source,ref_desc:ref_desc,funtion:action},
+            data: {ref_id:ref_id,ref_name:ref_name,ref_due_date:ref_due_date,ref_urgency:ref_urgency,ref_source:ref_source,ref_desc:ref_desc,follow_up_date:followup_date,funtion:action},
             success: function (res) {
-            	//alert(res);
-            	if(res == '11'){
+            	var trimStr = $.trim(res);
+            	//alert(trimStr);
+            	if(trimStr == '11'){
             		//getRefList();
             		//var currentLocation = window.location;
             		//alert(currentLocation);
@@ -1170,7 +1541,16 @@ function showReferral(refid){
 	document.getElementById("ref_source").value = document.getElementById ( 'source-'+refid ).textContent;
 
 	document.getElementById("ref_desc").value = document.getElementById ( 'refdesc-'+refid ).textContent;
+	document.getElementById("ref_followup_date").value = document.getElementById ( 'reffolllowup-'+refid ).textContent;
 
+}
+
+function getPatientDocuments(filepath){
+	//alert(filepath);
+}
+
+function getTransferTaskdetails(taskid) {
+	document.getElementById("transfer_task_id").value = taskid;
 }
 
 
@@ -1244,7 +1624,46 @@ jQuery('.show-form').on('click', function (event){
 
 //editable: [[1, 'username'], [2, 'email'], [3, 'avatar', '{"1": "Black Widow", "2": "Captain America", "3": "Iron Man"}'],[4,'Urgency'],[5,'task_count']]
 
+function transferclient(clientname) {
+	var clientid = $('#'+clientname).data('title');
+	var transfertaskid = $('#transfer_task_id').val();
+	if(confirm("Are you sure you want to transfer Task ID to Application Name "+clientname+" ?")){
+		//alert('api is not working');
+        referralsend(transfertaskid,clientid);
+    }
+    else{
+        return false;
+    }
+	
+}
 
+function referralsend(transfertaskid,clientid){
+	if((transfertaskid != '') &&  (clientid != '')){
+		var email = "<?php echo $email; ?>";
+		$.ajax({
+				  url: ajax_url,
+				  type:'POST',
+				  cache: false,
+				  data : {"task_id":transfertaskid,"email":email,"referred_application_id":clientid,funtion:'sendtaskapp'},
+				  success: function(res){
+				  	//alert(res);
+				  	 if(res == 11){
+				  	 	alert('Task send successfully');
+				  	 }else{
+				  	 	alert('This tasks already send or may be some error');
+				  	 }
+				  }
+            });
+	}else{
+		alert('This is empty value');
+	}
+}
+
+function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
+	
 
 
 
@@ -1259,8 +1678,8 @@ jQuery('.show-form').on('click', function (event){
 	}
 
 	function searchprovider(iid){
-		var zipcode = '<?php echo $patinetZip; ?>';
-		alert(zipcode);
+		var zipcode = '98168';
+		//alert(zipcode);
 		document.getElementById("assignprovidertab").value = iid;
 		getserviceprovide(zipcode);
 		//alert(zipcode);
@@ -1268,8 +1687,8 @@ jQuery('.show-form').on('click', function (event){
 
     function getserviceprovide(zipcode){
 	    jQuery("#providerdiv").html('');
-	    document.getElementById("listprac").classList.add("view-active");
-	    document.getElementById("mapprac").classList.remove("view-active");
+	  //  document.getElementById("listprac").classList.add("view-active");
+	  //  document.getElementById("mapprac").classList.remove("view-active");
 	    var iid = jQuery("#assignprovidertab").val();
 	    jQuery.ajax({
 				  url: ajax_url,
@@ -1288,10 +1707,9 @@ jQuery('.show-form').on('click', function (event){
 
     function getserachserviceprovider(){
 		jQuery("#providerdiv").html('');
-	    document.getElementById("listprac").classList.add("view-active");
-	    document.getElementById("mapprac").classList.remove("view-active");
-		var zipcode = jQuery("#ptn_zipcode").val();
-		var radius = jQuery("#ptn_radius").val();
+		var location_type = jQuery("#ptn_locationtype").val();
+		var population = jQuery("#ptn_population").val();
+		var location = jQuery("#ptn_location").val();
 		var services_type = jQuery("#ptn_servicetype").val();
 		var provider_name = jQuery("#ptn_provider").val();
 		var iid = jQuery("#assignprovidertab").val();
@@ -1299,7 +1717,7 @@ jQuery('.show-form').on('click', function (event){
 				  url: ajax_url,
 				  type:'POST',
 				  cache: false,
-				  data : {'zipcode':zipcode,'radius':radius,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+				  data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
 				  beforeSend: function() {
 	                  jQuery('.loader').show();
 	              },
@@ -1312,10 +1730,17 @@ jQuery('.show-form').on('click', function (event){
 	    });
     }
 
-    function assignprovider(name,id){
-	    document.getElementById(id).value = name;
+    function assignprovider(id){
+
+      
+	    document.getElementById(id).value = jQuery('#providernamefill').text();
 	    jQuery("#closeserviceprovider").click();
     }
+
+    function showdetails(providername,providershortdesc) {
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+}
 
     function showview(type){
 		    if(type == 'map'){
@@ -1336,5 +1761,7 @@ jQuery('.show-form').on('click', function (event){
 
   
   
-}
+    }
+
+    
 </script>

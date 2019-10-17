@@ -722,21 +722,21 @@ function serviceproviderslist($search){
 	    	//echo "<pre>";
 	    	//print_r($search);
 	    if(empty($search['location']) && empty($search['population']) &&  empty($search['services_type'])){
-	    	echo "iffcondition";
-	    	$radiusarray = array('value' => 'WA', 'type' => 'State');
+	    	//echo "iffcondition";
+	    	//$radiusarray = array('value' => 'WA', 'type' => 'State');
             //$radiusarray = array('conditional' => '','value' => "98168");
-            $postsearch['GeoScope']  = $radiusarray;
+           // $postsearch['GeoScope']  = $radiusarray;
             $postsearch['application_name']  = "default";
             $datastring = json_encode($postsearch);
 	    }else if(!empty($search['location']) || !empty($search['population']) ||  !empty($search['services_type'])){
-	    	echo "elsecondition";
+	    	//echo "elsecondition";
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
 	   	    	$populationarray = array('conditional' => 'OR','value' => array("P_".$search['population']));
 	   	    	$postsearch['population']  = $populationarray;
 	   	    }   
 
-	   	    if(!empty($search['services_type'])){
+	   	    if(!empty($search['services'])){
                 $providerarray = array("type" => "group", "conditional" => "OR",'value' => array("S_".$search['services_type']));
                 $postsearch['services_type']  = $providerarray;
 	   	    }
@@ -785,7 +785,7 @@ function serviceproviderslist($search){
 	    $datastring = json_encode($post);*/
 	   }
 	   
-	 // echo $datastring;  
+	  echo $datastring;  
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);

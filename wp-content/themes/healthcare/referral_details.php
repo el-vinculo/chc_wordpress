@@ -225,8 +225,9 @@ $success = 0;
 if(isset($_SESSION['userdata'])){
 	$email = $_SESSION['userdata']['email']; 
 	$referral_id = base64_decode($_GET['refid']);
-    $patient_id = base64_decode($_GET['refid']);
+    $patient_name = base64_decode($_GET['ptn']);
     $documents = array();
+
 
     
 
@@ -443,7 +444,7 @@ get_header();
 					<div class="col-md-12 border">
 				        <div class="line"></div>
 				        <?php if($error == 0){ ?>
-							<div class="post_title"><h3>Refferral Details
+							<div class="post_title"><h3><?php echo $patient_name; ?>
 								
 
 							</h3></div>

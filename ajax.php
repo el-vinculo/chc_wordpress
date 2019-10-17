@@ -230,7 +230,7 @@ function ledgertaskdeatillist(){
         }
         
         $msgHtml = ledgerHtml($ledgerslist);
-        echo  $msgHtml;
+       echo  $msgHtml;
     }   
 }
 
@@ -249,17 +249,23 @@ function ledgerHtml($ledgerslist){
     $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
     } 
                                 
-    $html.= "<thead><tr><td colspan='4'>External</td></tr></thead>
-           <thead><tr><th>Changes</th><th>Created Date</th></tr></thead> 
-           <tbody id='externaltaskbody'>";
+    
 
     if(!empty($ledgerslist['external_record_array'])){ 
         foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  if(!empty($externalledvalue['changes'])){
-              foreach ($externalledvalue['changes'] as $extchangeskey => $extchangesvalue) {
-            
-    $html.= "<tr>
-             <td><p><b>Task Type :</b>".$extchangesvalue['task_type']."</p><p><b>Task Status :</b>".$extchangesvalue['task_status']."</p><p><b>Task Owner :</b>".$extchangesvalue['task_owner']."</p><p><b>Provider :</b>".$extchangesvalue['provider']."</p><p><b>Task Deadline :</b>".$extchangesvalue['task_deadline']."</p><p><b>Task Descripation :</b>".$extchangesvalue['task_description']."</p><p><b>Patient Document :</b>".$extchangesvalue['patient_document']."</p><td>".$externalledvalue['created_at']."</td></tr>"     ;       
-   }} } }else { 
+
+    $html.= "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
+            <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
+            <th>Old Value</th><th>New Value</th></tr><tbody>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Task Type</td><td>".$externalledvalue['changes']['1']['task_type']."</td><td>".$externalledvalue['changes']['0']['task_type']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Task Status</td><td>".$externalledvalue['changes']['1']['task_status']."</td><td>".$externalledvalue['changes']['0']['task_status']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Task Owner</td><td>".$externalledvalue['changes']['1']['task_owner']."</td><td>".$externalledvalue['changes']['0']['task_owner']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Provider</td>".$externalledvalue['changes']['1']['provider']."<td></td><td>".$externalledvalue['changes']['0']['provider']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Task Deadline</td><td>".$externalledvalue['changes']['1']['task_deadline']."</td><td>".$externalledvalue['changes']['0']['task_deadline']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Task Description</td><td>".$externalledvalue['changes']['1']['task_description']."</td><td>".$externalledvalue['changes']['0']['task_description']."</td></tr>
+            <tr><td>".$externalledvalue['created_at']."</td><td>Patient Document</td><td>".$externalledvalue['changes']['1']['patient_document']."</td><td>".$externalledvalue['changes']['0']['patient_document']."</td></tr>
+          </tbody></thead></table>";    
+   } } }else { 
     $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
     } 
 
