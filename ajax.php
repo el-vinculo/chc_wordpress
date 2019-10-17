@@ -230,7 +230,7 @@ function ledgertaskdeatillist(){
         }
         
         $msgHtml = ledgerHtml($ledgerslist);
-       echo  $msgHtml;
+        echo  $msgHtml;
     }   
 }
 
