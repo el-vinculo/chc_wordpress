@@ -290,10 +290,14 @@ if(isset($_SESSION['userdata'])){
        $updateDeatils = savePatinets($dataArray,$email);
        if($updateDeatils['status'] == 'ok'){
        	 $patient_id = base64_encode($updateDeatils['patient_id']);
-       	 $redirecturl =  site_url().'/new-referral?pid='.base64_encode($updateDeatils['patient_id']);
-       	 header("Location: $redirecturl");
-       	  
-       	  $error = '0';
+       	 $redirecturl =  site_url().'/new-referral?pid='.base64_encode($updateDeatils['patient_id']); 
+         ?>
+         <script type="text/javascript">
+           window.location.replace("<?php echo $redirecturl; ?>");
+         </script>
+
+         <?php
+          $error = '0';
        	  $success = 21;
        	  $msg   = $updateDeatils['message'];
        }else{
