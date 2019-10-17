@@ -239,7 +239,7 @@ function ledgerHtml($ledgerslist){
   
    if(!empty($ledgerslist)){ 
 
-   $html = "<thead><tr><td colspan='4'>Internal</td></tr></thead>
+   $html = "<table class='table table-striped table-bordered' ><thead><tr><td colspan='4'>Internal</td></tr></thead>
            <thead><tr><th>Changes</th><th>Created Date</th></tr></thead> 
            <tbody id='internaltaskbody'>";
     if(!empty($ledgerslist['internal_record_array'])){ 
@@ -273,7 +273,7 @@ function ledgerHtml($ledgerslist){
     	$html.=  "
     	<thead><tr><td colspan='4'>
    
-       <p style='font-size: 16px;'>No detail found </p></td></tr></thead>
+       <p style='font-size: 16px;'>No detail found </p></td></tr></thead></table>
    ";                        
     } 
     

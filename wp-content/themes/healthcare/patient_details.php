@@ -1181,10 +1181,7 @@ get_header();
         <h4 class="modal-title">Ledger Details</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-striped table-bordered" id="ledgertabledatadummy">
-
-                            
-        </table>
+        <div id="ledgertabledatadummy"></div>
 
       </div>
       <div class="modal-footer">

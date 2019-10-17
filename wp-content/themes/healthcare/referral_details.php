@@ -895,10 +895,9 @@ get_header();
         <h4 class="modal-title">Ledger Details</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-striped table-bordered" id="ledgertabledatadummy">
-
-                            
-        </table>
+        <div id="ledgertabledatadummy"></div>
+        
+        
 
       </div>
       <div class="modal-footer">
@@ -1384,7 +1383,8 @@ function getledgerdetails(taskid) {
         success: function(html){
           //alert(html);
          // console.log(html);
-          jQuery("#ledgertabledatadummy").html(html);
+          jQuery("#ledgertabledatadummy").append(html);
+         // jQuery("#ledgertabledatadummy").html(html);
         }
     });
 }
@@ -1547,7 +1547,7 @@ function transferclient(clientname) {
 	var clientid = $('#'+clientname).data('title');
 	var transfertaskid = $('#transfer_task_id').val();
 	if(confirm("Are you sure you want to transfer Task ID to Application Name "+clientname+" ?")){
-		//alert('api is not working');
+		    //alert('api is not working');
         referralsend(transfertaskid,clientid);
     }
     else{
