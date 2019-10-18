@@ -381,13 +381,14 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 jQuery(document).ready(function() {
     var max_fields      = 40; 
-    var wrapper         = jQuery(".input_fields_wrap_obstcles"); 
+    var wrapper         = jQuery(".input_fields_wrap"); 
     //var add_button      = $("#addmore"); 
    
     var x = 20; 
     var option= $("#coountry").html();
     var taskstatusoption = $("#tskstatus").html();
     jQuery("#addmore").click(function(e){ 
+      //alert('testt');
         
         e.preventDefault();
         if(x < max_fields){ 
@@ -435,8 +436,8 @@ function showdetails(providername,providershortdesc) {
 
 function getserviceprovide(zipcode){
     jQuery("#providerdiv").html('');
-    document.getElementById("listprac").classList.add("view-active");
-    document.getElementById("mapprac").classList.remove("view-active");
+   // document.getElementById("listprac").classList.add("view-active");
+    //document.getElementById("mapprac").classList.remove("view-active");
     var iid = jQuery("#assignprovidertab").val();
     jQuery.ajax({
 			  url: ajax_url,

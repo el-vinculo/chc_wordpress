@@ -381,7 +381,7 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 jQuery(document).ready(function() {
     var max_fields      = 40; 
-    var wrapper         = jQuery(".input_fields_wrap_obstcles"); 
+    var wrapper         = jQuery(".input_fields_wrap"); 
     //var add_button      = $("#addmore"); 
    
     var x = 20; 

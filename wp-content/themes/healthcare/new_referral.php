@@ -479,18 +479,18 @@ get_header();
 				    </div>
 				  </div>
 				</div>
-				<div class="col-md-4">
-				  <div class="form-group">
-				    <label for="pwd">Date of Birth:<span style="color: red">*</span></label>
-				    <div class='input-group date' >
-                    <input type='text' name="date_of_birth" class="form-control datepicker" id="datepicker1"    placeholder="Date of Birth"  value="<?php echo date('Y-m-d',strtotime($patientsDeatils['date_of_birth'])); ?>" required="required"/>
+<div class="col-md-4">
+            <div class="form-group">
+              <label for="pwd">Date of Birth: <span style="color: red">*</span></label>
+              <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' name="date_of_birth" autocomplete="off" class="form-control" id="datedatepicker"    placeholder="Date of Birth" required="required" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-				    
-				  </div>
-				</div>
+              
+            </div>
+          </div>   
 			 </div>
 		</div>
 		<br/>
@@ -1277,9 +1277,13 @@ z-index: 9;">
  
     jQuery(function () {
                 jQuery( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-               // jQuery( "#edit_task_deadline" ).datepicker({ dateFormat: "yy-mm-dd" });
-               
-            });
+    });
+
+     jQuery(function () {
+                jQuery( "#datedatepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+    });
+
+    
 
     
     /*jQuery('.datepicker').each(function(){    jQuery(this).datepicker({ dateFormat: "yy-mm-dd" });});*/

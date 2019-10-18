@@ -755,12 +755,12 @@ function serviceproviderslist($search){
 
 	   	    }*/
 
-	   	    //if(!empty($search['location'])){
+	   	    if(!empty($search['location']) || !empty($search['location_type'])){
 	   	   
-	   	    	$radiusarray = array('value' => $search['location'], 'type' => 'State');
+	   	    	$radiusarray = array('value' => '', 'type' => 'State');
                 $postsearch['GeoScope']  = $radiusarray;
                 $postsearch['application_name']  = "default";
-	   	   // }
+	   	    }
 
 
 	   	    
