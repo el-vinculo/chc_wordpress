@@ -53,8 +53,9 @@
 				<div class="ln white"></div>
 				<span class="fa fa-heart"></span>
 					<div class="ln1 white"></div>
-					<h1 class="wow zoomInUp" data-animation="animated bounceInRight">Our Healthcare</h1>
-					<p class="wow fadeIn" data-animation="animated bounceInLeft">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+					<h1 class="wow zoomInUp" data-animation="animated bounceInRight">Common Health Core</h1>
+   <!--					<p class="wow fadeIn" data-animation="animated bounceInLeft">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> -->
+					<p class="wow fadeIn" data-animation="animated bounceInLeft">Infrastructure to connect healthy communities Doctors, Shelters, Social Workers, Dentists, Counselors, Public Servants, Volunteers, Educators, Hospitals, Lawyers, Nurses, Firefighters, Optometrist, Trainers, and more Working together to improve access and care through collaboration </p>
 					<button class="btn btn-primary" data-animation="animated zoomInUp" type="button" name="tour">LEARN MORE +</button>
 				</div>
 			</div>

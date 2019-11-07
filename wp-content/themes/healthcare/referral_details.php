@@ -267,7 +267,13 @@ if(isset($_SESSION['userdata'])){
 	  $taskData = taskList($referral_id,$email);
        if(!empty($taskData['status'] == 'ok')){
     	  $taskList  = $taskData['task_list'];
-       }
+    }
+
+    $assessmentData = assessmentlist($referralid,$email);
+       if(!empty($assessmentData['status'] == 'ok')){
+        $assessmentList  = $assessmentData['needs_array'];
+    }
+
 
     /*--------------------------------------------------*/
 
@@ -568,6 +574,38 @@ get_header();
                         </table> 
 
         <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
+
+         <h4>Assessments</h4> 
+
+        <table class="table table-striped table-bordered" id="example_Assessment">
+                            <thead>
+                                <tr>
+                                    <th>Need Title</th>
+                                    <th>Need Description</th>
+                                    <th>Need Urgency</th>
+                                    <th>Need Status</th>
+                                   <!--  <th colspan="3">Action</th> -->
+                                  
+                            </thead>
+                            <tbody id="assessmentbody">
+                            <input type="hidden" id="assessmentrefiid" value="<?php echo $referralList['0']['referral_id']; ?>">
+                                <?php if(!empty($assessmentList)){ 
+                                    foreach ($assessmentList as $assessmentkey => $assessmentvalue) { ?>    
+                                <tr>
+                                   <td id="refassesstitle-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_title'];?></td>
+                                   <td id="refassessdescription-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_description'];?></td>
+                                   <td id="refassessurgency-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_urgency'];?></td>
+                                   <td id="refassessstatus-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_status'];?></td>
+                                </tr>
+                                <?php } }else { ?>
+                                <tr>
+                                  <td colspan="7" style="color: red"><center><p>No Needs Added</p></center></td>
+                              </tr>
+
+                              <?php } ?>
+                                
+                            </tbody>
+                        </table> 
       </div>
     </div>
   </div>
@@ -1049,7 +1087,7 @@ get_header();
 
 <table class="table ">
       <tbody>
-  <form method="post" action="">
+  
   <thead>
     <tr>
       <th scope="col">
@@ -1058,23 +1096,23 @@ get_header();
       </th>
       <th scope="col">
         <label>Populations</label>
-        <select class="form-control" name="population" id="ptn_population">
-          <option value="">Please Select </option>
+        <select class="form-control" name="population[]"  id='testSelect1' multiple>
+          <option value="Any">Any</option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT" >LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
+          <option value="Family">Families w/ Children</option>
+          <option value="LGBTQ" >LGBTQ</option>
+          <option value="LowIncome">Very Low-Income</option>
+          <option value="Native">Native American</option>
           <option value="Other">Other</option>
           <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+          <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
      
       <th scope="col">
         <label>Services</label>
-        <select class="form-control" name="service_type" id="ptn_servicetype">
+        <select class="form-control" name="services_type[]"  id='services-test' multiple>
         <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
@@ -1107,8 +1145,12 @@ get_header();
         </select>
       </th>
       <th scope="col">
+        <label>Tags</label>
+        <input type="text"  name="tags" id="ptn_tags" class="form-control" placeholder="Tags">
+      </th>
+      <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -1117,7 +1159,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
-          <option value="Country" >Country</option>
+          <option value="County" >County</option>
           <option value="National" >National</option>
         
         </select>
@@ -1130,7 +1172,7 @@ get_header();
     </tr>
   </thead>
 
-  </form>
+  
 </tbody>
 </table>
         <div class="loader" style="position: fixed;
@@ -1619,18 +1661,21 @@ function searchprovider(iid){
     }
 
     function getserachserviceprovider(){
-    jQuery("#providerdiv").html('');
+   jQuery("#providerdiv").html('');
     var location_type = jQuery("#ptn_locationtype").val();
-    var population = jQuery("#ptn_population").val();
+  //  var population = jQuery("#ptn_population").val();
+    var population = jQuery("#testSelect1").val();
     var location = jQuery("#ptn_location").val();
-    var services_type = jQuery("#ptn_servicetype").val();
+   // var services_type = jQuery("#ptn_servicetype").val();
+    var tagss = jQuery("#ptn_tags").val();
+    var services_type = jQuery("#services-test").val();
     var provider_name = jQuery("#ptn_provider").val();
     var iid = jQuery("#assignprovidertab").val();
     jQuery.ajax({
           url: ajax_url,
           type:'POST',
           cache: false,
-          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,'tags':tagss,funtion:'selectserviceprovider'},
           beforeSend: function() {
                     jQuery('.loader').show();
                 },

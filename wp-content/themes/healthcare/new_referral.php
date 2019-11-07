@@ -441,7 +441,7 @@ get_header();
 							  <div class="panel panel-default">
 							    <div class="panel-heading">
 							    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
-							      <h4 class="panel-title"><b>Patient Details</b></h4></a>
+							      <h4 class="panel-title"><b>Client Details</b></h4></a>
 							    </div>
     <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
@@ -504,8 +504,8 @@ get_header();
 				</div>  
 				<div class="col-md-4">
 				  <div class="form-group">
-				    <label for="pwd">Email:<span style="color: red">*</span></label>
-				    <input type="email" name="patient_email" class="form-control" id="email" placeholder="Email" value="<?php echo $patientsDeatils['patient_email']; ?>" required>
+				    <label for="pwd">Email</label>
+				    <input type="email" name="patient_email" class="form-control" id="email" placeholder="Email" value="<?php echo $patientsDeatils['patient_email']; ?>">
 				  </div>
 				</div>
 				<div class="col-md-4">
@@ -693,7 +693,7 @@ get_header();
                             </tbody>
                         </table> 
 
-        <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
+        <a href="javascript:void(0)" id="add-task" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
       </div>
     </div>
   </div>
@@ -1572,11 +1572,13 @@ function getPatientRefTask(taskid){
 
 function getReferralId(){
 	var radioValue = jQuery("input[name='viewtask']:checked").val();
-    if(radioValue){
+    if(radioValue){ 
                 document.getElementById("referral_id").value = radioValue;
+                jQuery('#add-task').attr('data-target','#myAddTaskModal');
     }else{
     	alert('Please select any referral to add task');
-    	jQuery('#myAddTaskModal').modal('hide');
+    	jQuery('#add-task').attr('data-target',' ');
+
     	
     }
 }

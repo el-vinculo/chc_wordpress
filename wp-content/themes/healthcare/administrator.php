@@ -67,7 +67,7 @@ color: #43b02a!important;
 					<div class="col-md-12 border">
 				        <div class="line"></div>
 				            
-							<div class="post_title"><h3>Administator</h3></div>
+							<div class="post_title"><h3>Administrator</h3></div>
 				            <div class="post-tags"></div>
 				            <div class="post_content">
 				                    <?php if($error == 0){ ?>

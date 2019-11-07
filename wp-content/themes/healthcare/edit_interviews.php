@@ -353,7 +353,7 @@ get_header();
                            
                            <div class="panel">
                             <div class="post_title post_tilte-inter">
-                                <h3 class="pull-left"> <a id="intervirefiels" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#" ></a> Interviews</h3>
+                                <h3 class="pull-left"> <a id="intervirefiels" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#" ></a> Assessments</h3>
                             </div>
                             </div>
 
@@ -363,7 +363,7 @@ get_header();
 
     <div class="alert alert-success alert-dismissible"  id="interview-msg" style="display: none" >
        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-       <strong>Success!</strong> Interview detail successfully added.
+       <strong>Success!</strong> Assessment detail successfully added.
     </div>
   
    
@@ -688,7 +688,7 @@ get_header();
 
 <table class="table ">
       <tbody>
-  <form method="post" action="">
+  
   <thead>
     <tr>
       <th scope="col">
@@ -697,23 +697,23 @@ get_header();
       </th>
       <th scope="col">
         <label>Populations</label>
-        <select class="form-control" name="population" id="ptn_population">
-          <option value="">Please Select </option>
+        <select class="form-control" name="population[]"  id='testSelect1' multiple>
+          <option value="Any">Any</option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT" >LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
+          <option value="Familiy">Families w/ Children</option>
+          <option value="LGBTQ" >LGBTQ</option>
+          <option value="LowIncome">Very Low-Income</option>
+          <option value="Native">Native American</option>
           <option value="Other">Other</option>
           <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+          <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
      
       <th scope="col">
         <label>Services</label>
-        <select class="form-control" name="service_type" id="ptn_servicetype">
+        <select class="form-control" name="services_type[]"  id='services-test' multiple>
         <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
@@ -745,6 +745,10 @@ get_header();
 
         </select>
       </th>
+       <th scope="col">
+        <label>Tags</label>
+        <input type="text"  name="tags" id="ptn_tags" class="form-control" placeholder="Tags">
+      </th>
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
@@ -756,7 +760,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
-          <option value="Country" >Country</option>
+          <option value="County" >County</option>
           <option value="National" >National</option>
         
         </select>
@@ -769,7 +773,7 @@ get_header();
     </tr>
   </thead>
 
-  </form>
+  
 </tbody>
 </table>
         <div class="loader" style="position: fixed;
@@ -1368,19 +1372,22 @@ function updateInterviewSolutiondeatils(iid) {
     }
 
 
-     function getserachserviceprovider(){
-    jQuery("#providerdiv").html('');
+    function getserachserviceprovider(){
+   jQuery("#providerdiv").html('');
     var location_type = jQuery("#ptn_locationtype").val();
-    var population = jQuery("#ptn_population").val();
+  //  var population = jQuery("#ptn_population").val();
+    var population = jQuery("#testSelect1").val();
     var location = jQuery("#ptn_location").val();
-    var services_type = jQuery("#ptn_servicetype").val();
+   // var services_type = jQuery("#ptn_servicetype").val();
+    var tagss = jQuery("#ptn_tags").val();
+    var services_type = jQuery("#services-test").val();
     var provider_name = jQuery("#ptn_provider").val();
     var iid = jQuery("#assignprovidertab").val();
     jQuery.ajax({
           url: ajax_url,
           type:'POST',
           cache: false,
-          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,'tags':tagss,funtion:'selectserviceprovider'},
           beforeSend: function() {
                     jQuery('.loader').show();
                 },

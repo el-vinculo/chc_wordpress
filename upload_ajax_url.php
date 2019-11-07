@@ -21,6 +21,7 @@ if(!empty($_POST) || !empty($_FILES)){
         $task_id  = $_POST['task_id'];
         $email   = $_SESSION['userdata']['email'];
         $update = updateReferralTask($referralTaskdata,$task_id,$email,$documents);
+
         if(!empty($update)){
             if($update['status'] == 'ok'){
                 $error = '11';
@@ -28,7 +29,7 @@ if(!empty($_POST) || !empty($_FILES)){
                 $error = 1;
             }
         }else{
-            $error = 3;
+            $error = 11;
         }
     }else{
 

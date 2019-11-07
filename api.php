@@ -23,6 +23,7 @@ function adminLogin($email,$authToken)
 	  	  }
 	   }
 }
+
 function aboutUs($email,$authToken)
 {
 	   $post = ['email' => $email];
@@ -321,6 +322,66 @@ function communicationList($pid,$email){
 
 }
 
+// function assessmentlist($refid,$email){
+
+// 	   $userauth = $_SESSION['userdata']['authentication_token'];
+// 	   //$headers = array();
+// 	   $headers['Content-length'] = '0';
+//        $headers['Content-type'] = 'application/json';
+// 	   $headers['Authorization'] = 'user-token: '.$userauth;
+//        //$refid = '5db204ca5fd8db12b6474c62';
+//        $refid = $refid;
+// 	   $post = array('referral_id'=>$refid,'email'=>$email); 
+// 	   $curl_handle=curl_init();
+// 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'rfl_assessments');
+// 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+// 	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+// 	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+// 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+// 	   $buffer = curl_exec($curl_handle);
+// 	   curl_close($curl_handle);
+// 	   if (empty($buffer)){
+// 	      print "Nothing returned from url.<p>";
+// 	   }
+// 	   else{
+// 	  	  if(!empty($buffer)){
+// 	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+//             return $result;
+// 	  	  }
+// 	   }
+
+// }
+
+function assessmentlist($refid,$email){
+
+	   $userauth = $_SESSION['userdata']['authentication_token'];
+	   //$headers = array();
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;
+       //$refid = '5db204ca5fd8db12b6474c62';
+       $refid = $refid;
+	   $post = array('referral_id'=>$refid,'email'=>$email); 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'rfl_assessments');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+            return $result;
+	  	  }
+	   }
+
+}
+
 function taskList($refid,$email){
        
 	   $userauth = $_SESSION['userdata']['authentication_token'];
@@ -364,7 +425,12 @@ function updatePatientDetails($detaildata,$patient_id,$email)
        $patientemail = $detaildata['patient_email'];
        $policyid = $detaildata['patient_coverage_id'];
        $healthcare_coverage = $detaildata['healthcare_coverage'];
-
+       $client_consent = $detaildata['client_consent'];
+       $emergency_contact_fName = $detaildata['emergency_contact_fName'];
+       $emergency_contact_email = $detaildata['emergency_contact_email'];
+       $emergency_contact_phone = $detaildata['emergency_contact_phone'];
+       $primary_care_physician = $detaildata['primary_care_physician'];
+      
        //echo $dob; 
        //echo "vikk"; die;
 
@@ -373,7 +439,11 @@ function updatePatientDetails($detaildata,$patient_id,$email)
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
        
-	   $post = array('patient_id'=>$patient_id,'email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'date_of_birth'=>$dob,'gender'=>$gender,'patient_phone'=>$mobile,'patient_email'=>$patientemail,'patient_zipcode'=>$zipcode,'healthcare_coverage'=>$healthcare_coverage,'patient_coverage_id'=>$policyid,'mode_of_contact'=>$contacttype); 
+	   $post = array('patient_id'=>$patient_id,'email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'date_of_birth'=>$dob,'gender'=>$gender,'patient_phone'=>$mobile,'patient_email'=>$patientemail,'patient_zipcode'=>$zipcode,'healthcare_coverage'=>$healthcare_coverage,'patient_coverage_id'=>$policyid,'mode_of_contact'=>$contacttype,'client_consent'=>$client_consent,'emergency_contact_fName'=>$emergency_contact_fName,'emergency_contact_email'=>$emergency_contact_email,'emergency_contact_phone'=>$emergency_contact_phone,'primary_care_physician'=>$primary_care_physician); 
+
+	   //echo "<pre>";
+      // print_r($post); die;
+
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'update_patient');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -488,6 +558,7 @@ function savePatientReferral($postData,$patient_id,$patient_email)
 function saveReferralTask($postData,$patient_id,$patient_email,$documents)
 {
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
+       $solution_id = $postData['solution_id'];
        $referral_id = $postData['referral_id'];
        $task_type       = $postData['task_type']; 
        $task_status        = $postData['task_status'];
@@ -512,7 +583,7 @@ function saveReferralTask($postData,$patient_id,$patient_email,$documents)
        }
 	  
        
-	   $post = array('referral_id'=>$referral_id,'email'=>$patient_email,'task_type'=>$task_type,'task_status'=>$task_status,'task_owner'=>$task_owner,'provider'=>$provider,'task_description'=>$task_description,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument); 
+	   $post = array('solution_id'=>$solution_id,'referral_id'=>$referral_id,'email'=>$patient_email,'task_type'=>$task_type,'task_status'=>$task_status,'task_owner'=>$task_owner,'provider'=>$provider,'task_description'=>$task_description,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument); 
 	   //$datastring =  json_encode($post); die;
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'tsk_create');
@@ -721,23 +792,36 @@ function serviceproviderslist($search){
 	    /* if(!empty($search['population']) || !empty($search['location']) || !empty($search['services_type']) || !empty($search['location_type'])){*/
 	    	//echo "<pre>";
 	    	//print_r($search);
-	    if(empty($search['location']) && empty($search['population']) &&  empty($search['services_type'])){
+
+	    	if(!empty($search['tags'])){
+	   	   
+                $postsearch['tags']  = explode(",",$search['tags']);
+                
+	   	    }
+	    if(empty($search['location']) && empty($search['population']) &&  empty($search['services_type']) && empty($search['provider_name'])){
 	    	//echo "iffcondition";
 	    	//$radiusarray = array('value' => 'WA', 'type' => 'State');
             //$radiusarray = array('conditional' => '','value' => "98168");
            // $postsearch['GeoScope']  = $radiusarray;
             $postsearch['application_name']  = "default";
             $datastring = json_encode($postsearch);
-	    }else if(!empty($search['location']) || !empty($search['population']) ||  !empty($search['services_type'])){
+	    }else if(!empty($search['location']) || !empty($search['population']) ||  !empty($search['services_type']) || !empty($search['provider_name'])){
 	    	//echo "elsecondition";
 	   	    $postsearch = array();
 	   	    if(!empty($search['population'])){
-	   	    	$populationarray = array('conditional' => 'OR','value' => array("P_".$search['population']));
+	   	    	foreach ($search['population'] as $populatioarraykey => $populatioarraykevalue) {
+	   	    		$newpopulatioaaray[] = "P_".$populatioarraykevalue;
+	   	    	}
+	   	    	$populationarray = array('conditional' => 'OR','value' => $newpopulatioaaray);
 	   	    	$postsearch['population']  = $populationarray;
 	   	    }   
 
 	   	    if(!empty($search['services_type'])){
-                $providerarray = array("type" => "group", "conditional" => "OR",'value' => array("S_".$search['services_type']));
+	   	    	foreach ($search['services_type'] as $servicearraykey => $servicearraykevalue) {
+	   	    		$newserviceaaray[] = "S_".$servicearraykevalue;
+	   	    	}
+
+                $providerarray = array("type" => "group", "conditional" => "OR",'value' => $newserviceaaray);
                 $postsearch['services']  = $providerarray;
 	   	    }
 
@@ -755,15 +839,30 @@ function serviceproviderslist($search){
 
 	   	    }*/
 
+
+
 	   	    if(!empty($search['location']) || !empty($search['location_type'])){
 	   	   
-	   	    	$radiusarray = array('value' => '', 'type' => 'State');
+	   	    	$radiusarray = array('value' => $search['location'], 'type' => $search['location_type']);
                 $postsearch['GeoScope']  = $radiusarray;
-                $postsearch['application_name']  = "default";
+                
+	   	    }
+
+	   	    
+
+	   	     if(!empty($search['provider_name']) ){
+	   	   
+	   	    	//$radiusarray = array('value' => $search['location'], 'type' => 'State');
+                $postsearch['name']  = $search['provider_name'];
+                
+	   	    }
+		    
+	    	    if(!empty($search['tags'])){
+                	$postsearch['tags']  = explode(",",$search['tags']);
 	   	    }
 
 
-	   	    
+	   	    $postsearch['application_name']  = "default";
             $post = $postsearch;
             $datastring = json_encode($post);
 	   	    /*$post =  array (
@@ -784,8 +883,10 @@ function serviceproviderslist($search){
                 );
 	    $datastring = json_encode($post);*/
 	   }
+
 	   
-	 // echo $datastring;  
+	   
+	   //echo $datastring;
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);
@@ -1097,7 +1198,7 @@ function gettaskledgerdetails($email,$task_id){
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;   
-	   $task_id = '5c1d203c5fd8db2471ba0dcd';
+	  // $task_id = '5c1d203c5fd8db2471ba0dcd';
 	   $post = array('email'=>$email,'task_id'=>$task_id); 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'ledg_details');
@@ -1357,6 +1458,8 @@ function saveinterviewdetails($interviewdata,$email)
 	$headers['Content-type'] =   'application/json';
 	$headers['Authorization'] =  'user-token: '.$userauth;      
 	$post = array('email'=>$email,'caller_first_name'=>$caller_firstname,'caller_last_name'=>$caller_lastname,'caller_dob'=>$caller_dob); 
+	
+
 	$curl_handle=curl_init();
 	curl_setopt($curl_handle,CURLOPT_URL,API_URL.'int_create');
 	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -1381,11 +1484,15 @@ function saveinterviewneedsdata($needdata,$email)
 {
 	$userauth         =          $_SESSION['userdata']['authentication_token'];
 	$need_title     =      $needdata['need_title'];
+	$need_description     =      $needdata['need_description'];
 	$interview_id     =      $needdata['interview_id'];
+	$referral_id     =      $needdata['referral_id'];
 	$headers['Content-length'] = '0';
 	$headers['Content-type'] =   'application/json';
 	$headers['Authorization'] =  'user-token: '.$userauth;      
-	$post = array('email'=>$email,'need_title'=>$need_title,'interview_id'=>$interview_id); 
+	$post = array('email'=>$email,'need_title'=>$need_title,'need_description'=>$need_description,'interview_id'=>$interview_id,'referral_id'=>$referral_id); 
+	//echo "<pre>";
+	//print_r($post); die;
 	$curl_handle=curl_init();
 	curl_setopt($curl_handle,CURLOPT_URL,API_URL.'need_create');
 	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -1399,6 +1506,7 @@ function saveinterviewneedsdata($needdata,$email)
 	}
 	else{
 		if(!empty($buffer)){
+                        //print_r("Hello" + $buffer);
 			$result = json_decode(json_encode(json_decode($buffer)), true); 
 			return $result;
 		}
@@ -1459,6 +1567,7 @@ function saveinterviewsolutiondata($solutiondata,$email)
 	else{
 		if(!empty($buffer)){
 			$result = json_decode(json_encode(json_decode($buffer)), true); 
+			
 			return $result;
 		}
 	}
@@ -1472,7 +1581,7 @@ function interviewDetails($iid,$email){
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
        
-	   $post = array('interview_id'=>$iid,'email'=>$email); 
+	   $post = array('interview_id'=>$iid,'referral_id'=>$iid,'email'=>$email); 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'int_details');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -1493,6 +1602,36 @@ function interviewDetails($iid,$email){
 
 }
 
+// BEGIN SAMEER 10292019
+function interviewDetailsTest($iid,$email){
+
+	   $userauth = $_SESSION['userdata']['authentication_token'];
+	   //$headers = array();
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;
+       
+	   $post = array('interview_id'=>$iid,'referral_id'=>$iid,'email'=>$email); 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'int_details_test');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+            return $result;
+	  	  }
+	   }
+
+}
+// END SAMEER
 
 function updateInterviewDetails($interviewdata,$interview_id,$email)
 {

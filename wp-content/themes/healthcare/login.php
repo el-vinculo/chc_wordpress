@@ -108,7 +108,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
  <div class="col-xs-offset-2 col-xs-10"><label><input type="checkbox" checked="checked" name="remember"> Remember me</label></div></div>
 
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" id="login_details" type="submit">Login</button></div>
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" id="login_details" onclick="login_clicked();" type="submit">Login</button></div>
 </div>
 
 
@@ -119,9 +119,18 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 
 </div>
 <script type="text/javascript">
-	//document.getElementById("#frame1").style.display = "none";
+        function login_clicked() {
+	  const email = document.getElementById("inputEmail").value;
+          console.log("email is " + email);
+	  const pass = document.getElementById("inputPassword").value;
+          console.log("pass is " + pass);
+	  //const otp = document.getElementById("step-2-otp").value;
+	  const otp = false;
+          //console.log("otp is " + otp);
+	  const frame = document.getElementById("frame1");
+	  frame.contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev11.resourcestack.com/backend/");
+        }
 	jQuery(document).ready(function($){
-	
 		$("#login_details").click(function() {
 			const email = $("#inputEmail").val();
 	   		const pass = $("#inputPassword").val();

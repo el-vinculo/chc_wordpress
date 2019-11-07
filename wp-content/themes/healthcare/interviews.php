@@ -55,7 +55,7 @@ get_header();
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                          <a  href="<?php echo site_url().'/interviews/create-interview';?>"><button class="btn-success">New Interviews</button></a>
+                          <a  href="<?php echo site_url().'/interviews/create-interview';?>"><button class="btn-success">New Assessments</button></a>
                           </div>
                       
                           </div>
@@ -66,7 +66,7 @@ get_header();
                     <br/><br/><br/>
     <div class="col-md-12 border">
       <div class="line"></div>
-        <div class="post_title pull left"><h3>Interviews</h3></div>
+        <div class="post_title pull left"><h3>Assessments</h3></div>
           <div class="post-tags"></div>
       <?php if(isset($_GET['msg'])){ ?>
         <div class="row">

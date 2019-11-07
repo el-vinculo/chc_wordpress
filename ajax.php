@@ -16,11 +16,42 @@ function sendtaskapp(){
     $error = 0;
     if(!empty($_POST)){
         $communicationdata = $_POST;
+       /* echo "<pre>";
+        print_r($communicationdata);die;*/
 
         $email   = $_SESSION['userdata']['email'];
         $task_id = $communicationdata['task_id'];
         $referred_application_id = $communicationdata['referred_application_id'];
         $save = sendrfltask($communicationdata,$email);
+        if(!empty($save)){
+            if($save['status'] == 'ok'){
+                $error = '11';
+            }else{
+                $error = 1;
+            }
+        }else{
+            $error = 3;
+        }
+    }else{
+
+        $error = 2;
+    }
+
+    return $error;
+}
+
+function saveRefSolTask(){
+    $error = 0;
+    if(!empty($_POST)){
+        $documents = '';
+        $postData = $_POST;
+        $postData['task_type'] =  '';
+        $postData['task_status'] =  '';
+        $postData['task_owner'] =  '';
+        $postData['task_deadline'] =  '';        
+        $patient_id = $postData['patient_id'];
+        $patient_email   = $_SESSION['userdata']['email'];
+        $save = saveReferralTask($postData,$patient_id,$patient_email,$documents);
         if(!empty($save)){
             if($save['status'] == 'ok'){
                 $error = '11';
@@ -60,7 +91,38 @@ function referraltasks(){
 		echo  $taskHtml;
 	}
 
+}
 
+
+
+function referralAssessments() {
+	if(!empty($_POST)) {
+		$referral_id 	= $_POST['referral_id'];
+		$email		= $_POST['email'];
+
+                $assessments = array();//assessmentList($referral_id, $email);
+	}
+	if (!empty($assessments)) {
+           if($assessments['status'] == 'ok'){
+		$assessmentList = $assessments['interview_list'];
+	   }
+	}else{
+	   $taskList = array();
+	}
+        
+	$assessmentHtml = assessmentsHtmlTable($referral_id);
+		echo  $taskHtml;
+}
+
+function assessmentsHtmlTable($assessmentList, $referral_id)
+{
+	$html = "<table><tbody id='taskbody'><input type='hidden' id='taskrefiid' value='".$referral_id."'>";
+        if(!empty($assessmentList)){ 
+            foreach ($assessmentList as $assessmentkey => $assessmentvalue) { 
+
+	    }
+	}
+	
 }
 
 function taskHtmlTable($taskList,$referral_id)
@@ -236,27 +298,41 @@ function ledgertaskdeatillist(){
 
 
 function ledgerHtml($ledgerslist){
+
+
   
    if(!empty($ledgerslist)){ 
+   	//echo "<pre>";
+   	//print_r($ledgerslist['internal_record_array']); 
 
-   $html = "<table class='table table-striped table-bordered' ><thead><tr><td colspan='4'>Internal</td></tr></thead>
-           <thead><tr><th>Changes</th><th>Created Date</th></tr></thead> 
-           <tbody id='internaltaskbody'>";
     if(!empty($ledgerslist['internal_record_array'])){ 
         foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {  
-    $html.= "<tr><td>".$internalledvalue['changes']."</td><td>".$internalledvalue['created_at']."</td></tr>"     ;       
+    if(!empty($internalledvalue['changes']) && (!empty($internalledvalue['created_at']))){
+
+    $html.= "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
+            <tr><th colspan='4'>Internal</th></tr><tr><th>Date of Change</th><th>Field Name</th>
+            <th>New Value</th><th>Old Value</th></tr><tbody>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Task Type</td><td>".$internalledvalue['changes']['1']['task_type']."</td><td>".$internalledvalue['changes']['0']['task_type']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Task Status</td><td>".$internalledvalue['changes']['1']['task_status']."</td><td>".$internalledvalue['changes']['0']['task_status']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Task Owner</td><td>".$internalledvalue['changes']['1']['task_owner']."</td><td>".$internalledvalue['changes']['0']['task_owner']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Provider</td>".$internalledvalue['changes']['1']['provider']."<td></td><td>".$internalledvalue['changes']['0']['provider']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Task Deadline</td><td>".$internalledvalue['changes']['1']['task_deadline']."</td><td>".$internalledvalue['changes']['0']['task_deadline']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Task Description</td><td>".$internalledvalue['changes']['1']['task_description']."</td><td>".$internalledvalue['changes']['0']['task_description']."</td></tr>
+            <tr><td>".$internalledvalue['created_at']."</td><td>Patient Document</td><td>".$internalledvalue['changes']['1']['patient_document']."</td><td>".$internalledvalue['changes']['0']['patient_document']."</td></tr>
+          </tbody></thead></table>";    
+    }     
     } }else { 
-    $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
+    $html.=  "<table><tr><td colspan='4'>no record found </td></tr></table>";                        
     } 
                                 
-    
+
 
     if(!empty($ledgerslist['external_record_array'])){ 
         foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  if(!empty($externalledvalue['changes'])){
 
-    $html.= "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
+    $html.= "<table class='table table-striped table-bordered' id='11externaltabledata'><thead>
             <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
-            <th>Old Value</th><th>New Value</th></tr><tbody>
+            <th>New Value</th><th>Old Value</th></tr><tbody>
             <tr><td>".$externalledvalue['created_at']."</td><td>Task Type</td><td>".$externalledvalue['changes']['1']['task_type']."</td><td>".$externalledvalue['changes']['0']['task_type']."</td></tr>
             <tr><td>".$externalledvalue['created_at']."</td><td>Task Status</td><td>".$externalledvalue['changes']['1']['task_status']."</td><td>".$externalledvalue['changes']['0']['task_status']."</td></tr>
             <tr><td>".$externalledvalue['created_at']."</td><td>Task Owner</td><td>".$externalledvalue['changes']['1']['task_owner']."</td><td>".$externalledvalue['changes']['0']['task_owner']."</td></tr>
@@ -379,29 +455,36 @@ function saveinterview(){
     $response = array();
     if(!empty($_POST)){
         $interviewdata = $_POST;
+        //echo "<pre>";
+
         $email   = $_SESSION['userdata']['email'];
         $save = saveinterviewdetails($interviewdata,$email);
         if(!empty($save)){
             if($save['status'] == 'ok'){
                 $error = '11';
                 $interview_id = $save['interview_id'];
+                $referral_id = $save['referral_id'];
 
             }else{
                 $error = 1;
                 $interview_id = '';
+                $referral_id = '';
             }
         }else{
             $error = 3;
             $interview_id = '';
+            $referral_id = '';
         }
     }else{
 
         $error = 2;
         $interview_id = '';
+        $referral_id = '';
     }
     
     $response['error'] = $error;
     $response['interview_id'] = $interview_id;
+    $response['referral_id'] = $referral_id;
     
     $responsejson = json_encode($response);
     return $responsejson;
@@ -416,6 +499,8 @@ function saveinterviewneeds()
     $email   = $_SESSION['userdata']['email'];
     $save = saveinterviewneedsdata($needsdata,$email);
     if(!empty($save)){ 
+    	//echo "<pre>";
+    	//print_r($save); die; 
       if($save['status'] == 'ok'){
         $error = '11';
         $need_id  = $save['need_id'];
@@ -479,6 +564,7 @@ function saveinterviewsolution()
   if(!empty($_POST)){
     $solutionsdata = $_POST;
     $email   = $_SESSION['userdata']['email'];
+    
     $save = saveinterviewsolutiondata($solutionsdata,$email);
     if(!empty($save)){ 
       if($save['status'] == 'ok'){
@@ -505,9 +591,9 @@ function saveinterviewsolution()
 }
 
 function updatePatientReferralTask(){
-    echo "<pre>";
+/*    echo "<pre>";
     print_r($_POST); 
-     print_r($_FILES); die;
+     print_r($_FILES); die;*/
     $error = 0;
     if(!empty($_POST)){
       //echo "<pre>";
@@ -539,11 +625,11 @@ function updatePatientReferralTask(){
 function selectserviceprovider(){
     if(!empty($_POST)){ 
         $serachData = $_POST;
-        if(!empty($serachData['zipcode'])){
+       /* if(!empty($serachData['zipcode'])){
           $serachData = array();
         }else{
           $serachData = $_POST;
-        }
+        }*/
        
         $id = $_POST['iid'];
         $practicesdata = serviceproviderslist($serachData);
@@ -636,9 +722,9 @@ function providerListHtml($practices,$id){
        $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
 
 
-       $providershortdesc= $practices['Programs']["0"]["ProgramDescription"]["0"]["Text"];
+       $providershortdesc= $practices["0"]['Programs']["0"]["ProgramDescription"]["0"]["Text"];
        //$providershortdesc= trim($providershortdesc,"");
-       $providershortdesc= str_replace(array('\'', '"'), '', $providershortdesc); 
+      // $providershortdesc= str_replace(array('\'', '"'), '', $providershortdesc); 
       /* if(strpos($providershortdesc,"")){
         $providershortdesc= trim($providershortdesc,"");
        }else{

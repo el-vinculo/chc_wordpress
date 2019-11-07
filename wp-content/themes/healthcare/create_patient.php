@@ -176,7 +176,22 @@ get_header();
 				 </div>
 			</div>
 	   </div>
-	
+	 <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="email":>Client Consent</label>
+                                <?php echo $patientsDeatils['client_consent']; ?>
+<label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'yes')) { echo "checked"; } ?>>yes</label>
+<label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'no')) { echo "checked"; } ?>>no</label>
+
+                                  </div>
+                                </div>
+
+
+                         </div>
+         </div>
+
 	     <input type="submit" name="savepatient" value="Save" class="btn-primary"/>
 	</form>
 
