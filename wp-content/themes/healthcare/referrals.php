@@ -143,7 +143,7 @@ get_header();
           
             <thead>
             <tr class="green-bg">
-              <th class="green-bg">Patient<br> Last, First</th>
+              <th class="green-bg">Client Name<br> Last, First</th>
               <th class="green-bg">summary</th>
               <th>Submission date </th>
               <th>Source</th>
@@ -171,8 +171,10 @@ get_header();
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
               <td > <?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date'])); ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
-              <td >
-                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['ref_patient']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> 
+              <td>
+
+              	<?php if($newReferralDatavalue['client_consent']=='1') {?>
+                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['ref_patient']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> <?php } ?>
               </td>
               
             </tr>

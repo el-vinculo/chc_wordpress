@@ -143,7 +143,7 @@ get_header();
           
            <thead>
              <tr class="green-bg">
-              <th class="green-bg">Patient</th>
+              <th class="green-bg">Client</th>
               <th class="green-bg">Request Title </th>
               <th class="green-bg">Submission date </th>
               <th class="green-bg">Source</th>

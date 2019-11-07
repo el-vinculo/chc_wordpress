@@ -293,7 +293,8 @@ get_header();
             if(res == 11){
               jQuery("#accept-success-msg").show();
               //alert('Patient and Task were transferred successfully');
-              location.reload();
+              //location.reload();
+              window.location.href = return_url;
             }else{
               jQuery("#accept-error-msg").show();
               //alert('Something error');
@@ -328,12 +329,11 @@ get_header();
           cache: false,
           data : {'external_application_id':application_id,'task_id':task_id,'request_reject_reason':reason,funtion:'rejectreferralbyclient'},
           success: function(res){
-            console.log(res);
-            if(res == '11'){
+            if(res==11){
               jQuery("#success-msg").show();
               // alert('Request Rejected');
               window.location.href = return_url;
-            }else{
+            } else{
               jQuery("#error-msg").show();
               //alert('Something error');
             }
