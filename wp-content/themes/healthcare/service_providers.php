@@ -1,4 +1,129 @@
+ 
+
+
 <style >
+:root
+{
+  --text: "Select values";
+}
+.multiple_select
+{
+  height: 34px!important;
+  -webkit-appearance: menulist;
+  position: relative;
+}
+.multiple_select::before
+{
+  content: var(--text);
+  display: block;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+.multiple_select_active
+{
+  overflow: visible !important;
+}
+.multiple_select option
+{
+  display: none;
+    height: 18px;
+  background-color: white;
+}
+.multiple_select_active option
+{
+  display: block;
+}
+
+.multiple_select option::before{
+  content: "\2610";
+}
+.multiple_select option:checked::before {
+  content: "\2611";
+}
+
+
+.multiple_services
+{
+  height: 34px!important;
+  -webkit-appearance: menulist;
+  position: relative;
+}
+ .multiple_services::before
+{
+  content: var(--text);
+  display: block;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+ .multiple_services_active
+{
+  overflow: visible !important;
+}
+ .multiple_services option
+{
+  display: none;
+    height: 18px;
+  background-color: white;
+}
+ .multiple_services_active option
+{
+  display: block;
+}
+
+ .multiple_services option::before {
+  content: "\2610";
+}
+.multiple_services option:checked::before {
+  content: "\2611";
+}
+
+  .caret {
+      color: #000;
+  }
+  .btn-default {
+       border: none!important;
+    border-radius: 5px;
+  }
+  .btn, .post-tags a {
+    border: 1px solid #b7bdb5 !important;
+    border-radius: 5px!important;
+}
+ .btn-group>.btn:first-child {
+    margin-left: 0!important;
+    width: 100%!important;
+}
+.btn-group, .btn-group-vertical {
+    position: relative;
+    display: inline-block;
+    width: middle;
+    width: 100%!important;
+}
+ .sec .multiselect-container>li {
+    padding: 0;
+    display: inline-block;
+    width: 170px;
+}
+.sec .open>.dropdown-menu {
+    display: block;
+    width: 400px;
+    display: inline-block;
+}
+  
+  .multiselect-container>li>a>label {
+    margin: 0;
+    height: 100%;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 0px 0px 0px 10px!important;
+}
+  span.multiselect-native-select button:hover span {
+    color: #fff!important;
+}
+  span.multiselect-selected-text {
+    color: #838586;
+}
+  
+
 h1 {
   text-align: center;
  font-family: 'Montserrat', sans-serif;
@@ -188,15 +313,13 @@ i.fa.fa-envelope {
 
 $error = 0;
 $serachData = array();
-
 if(isset($_SESSION['userdata'])){
 	  $email = $_SESSION['userdata']['email'];
     if(!empty($_POST['search']) && $_POST['search'] == 'Search'){
       $serachData = $_POST;
-     /* echo "<pre>";
-      print_r($_POST); die; */
+      //echo "<pre>";
+      //print_r($_POST); 
     }
-
 	  $practicesdata = serviceproviderslist($serachData);
 	  if(!empty($practicesdata['status'] == 'ok')){
 	  	 $practices = $practicesdata['provider_list'];
@@ -219,68 +342,74 @@ get_header();
     <div class="post_title"><h3>Select Service Providers</h3></div>
     <table class="table ">
       <tbody>
-  <form method="post" action="">
+  <form method="post" action="" >
   <thead>
     <tr>
       <th scope="col">
         <label>Search</label>
-        <input type="Search" name="provider_name" class="form-control" placeholder="Provider Name.." value="<?php if(!empty($_POST['provider_name'])){ echo $_POST['provider_name']; } ?>">
+        <input type="Search" name="provider_name" id="provider_name" class="form-control" placeholder="Provider Name.." value="<?php if(!empty($_POST['provider_name'])){ echo $_POST['provider_name']; } ?>">
       </th>
       <th scope="col">
-        <label>Populations</label>
-        <select class="form-control" name="population">
-          <option value="">Please Select </option>
-          <option value="Citizenship" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Citizenship')){ echo "selected"; } ?>>Citizenship</option>
-          <option value="Disabled" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Disabled')){ echo "selected"; } ?>>Disabled</option>
-          <option value="Families w/ Children" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Families w/ Children')){ echo "selected"; } ?>>Families w/ Children</option>
-          <option value="LGBT" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'LGBT')){ echo "selected"; } ?>>LGBT</option>
-          <option value="Very Low-Income" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Very Low-Income')){ echo "selected"; } ?>>Very Low-Income</option>
-          <option value="Native American" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Native American')){ echo "selected"; } ?>>Native American</option>
-          <option value="Other" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Other')){ echo "selected"; } ?>>Other</option>
-          <option value="Senior" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Senior')){ echo "selected"; } ?>>Senior</option>
-          <option value="Veteran/Military" <?php if(!empty($_POST['population']) && ($_POST['population'] == 'Veteran/Military')){ echo "selected"; } ?>>Veteran/Military</option>
+        <label>Populations Groups</label>
+        <select class="form-control " name="population[]" id='testSelect1' multiple>
+         <!--  <option value="">Please Select </option> -->
+          <option value="Any" <?php if(!empty($_POST['population']) && (in_array('Any', $_POST['population']))){ echo "selected"; } ?>>Any</option>
+          <option value="Citizenship" <?php if(!empty($_POST['population']) && (in_array('Citizenship', $_POST['population']))){ echo "selected"; } ?>>Citizenship</option>
+          <option value="Disabled" <?php if(!empty($_POST['population']) && (in_array('Disabled', $_POST['population']))){ echo "selected"; } ?>>Disabled</option>
+          <option value="Family" <?php if(!empty($_POST['population']) && (in_array('Family',$_POST['population']))){ echo "selected"; } ?>>Families w/ Children</option>
+          <option value="LGBTQ" <?php if(!empty($_POST['population']) && (in_array('LGBTQ',$_POST['population']))){ echo "selected"; } ?>>LGBT</option>
+          <option value="LowIncome" <?php if(!empty($_POST['population']) && (in_array('LowIncome',$_POST['population']))){ echo "selected"; } ?>>Very Low-Income</option>
+          <option value="Native" <?php if(!empty($_POST['population']) && (in_array('Native',$_POST['population']))){ echo "selected"; } ?>>Native American</option>
+          <option value="Other" <?php if(!empty($_POST['population']) && (in_array('Other', $_POST['population']))){ echo "selected"; } ?>>Other</option>
+          <option value="Senior" <?php if(!empty($_POST['population']) && (in_array('Senior',$_POST['population']))){ echo "selected"; } ?>>Senior</option>
+          <option value="Veteran" <?php if(!empty($_POST['population']) && (in_array('Veteran',$_POST['population']))){ echo "selected"; } ?>>Veteran/Military</option>
         </select>
       </th>
-     
-      <th scope="col">
-        <label>Services</label>
-        <select class="form-control" name="services_type">
-        <option value="">Please Select </option>
-          <option value="Abuse" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Abuse')){ echo "selected"; } ?>>Abuse</option>
-          <option value="Addiction" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Addiction')){ echo "selected"; } ?>>Addiction</option>
-          <option value="BasicNeeds" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'BasicNeeds')){ echo "selected"; } ?>>BasicNeeds</option>
-          <option value="Behavioral" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Behavioral')){ echo "selected"; } ?>>Behavioral</option>
-          <option value="CaseManagement" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'CaseManagement')){ echo "selected"; } ?>>CaseManagement</option>
-          <option value="Clothing" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Clothing')){ echo "selected"; } ?>>Clothing</option>
-          <option value="DayCare" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'DayCare')){ echo "selected"; } ?>>DayCare</option>
-          <option value="Disabled" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Disabled')){ echo "selected"; } ?>>Disabled</option>
-          <option value="Education" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Education')){ echo "selected"; } ?>>Education</option>
-          <option value="Emergency" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Emergency')){ echo "selected"; } ?>>Emergency</option>
-          <option value="Employment" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Employment')){ echo "selected"; } ?>>Employment</option>
-          <option value="Family" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Family')){ echo "selected"; } ?>>Family</option>
-          <option value="Financial" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Financial')){ echo "selected"; } ?>>Financial</option>
-          <option value="Food" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Food')){ echo "selected"; } ?>>Food</option>
-          <option value="GeneralSupport" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'GeneralSupport')){ echo "selected"; } ?>>GeneralSupport</option>
-          <option value="Housing" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Housing')){ echo "selected"; } ?>>Housing</option>
-          <option value="Identification" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Identification')){ echo "selected"; } ?>>Identification</option>
-          <option value="IndependentLiving" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'IndependentLiving')){ echo "selected"; } ?>>IndependentLiving</option>
-          <option value="Legal" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Legal')){ echo "selected"; } ?>>Legal</option>
-          <option value="Medical" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Medical')){ echo "selected"; } ?>>Medical</option>
-          <option value="Research" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Research')){ echo "selected"; } ?>>Research</option>
-          <option value="Resources" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Resources')){ echo "selected"; } ?>>Resources</option>
-          <option value="Respite" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Respite')){ echo "selected"; } ?>>Respite</option>
-          <option value="Senior" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Senior')){ echo "selected"; } ?>>Senior</option>
-          <option value="Transportation" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Transportation')){ echo "selected"; } ?>>Transportation</option>
-          <option value="Veteran" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Veteran')){ echo "selected"; } ?>>Veteran</option>
-          <option value="Victim" <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Victim')){ echo "selected"; } ?>>Victim</option>
+      <th scope="col" class="sec">
+        <label>Services Groups</label>
+        <select class="form-control" name="services_type[]" id='services-test' multiple>
+<!--         <option value="">Please Select </option>
+ -->          <option value="Abuse" <?php if(!empty($_POST['services_type']) && (in_array('Abuse',$_POST['services_type']))){ echo "selected"; } ?>>Abuse</option>
+          <option value="Addiction" <?php if(!empty($_POST['services_type']) && (in_array('Addiction',$_POST['services_type']))){ echo "selected"; } ?>>Addiction</option>
+          <option value="BasicNeeds" <?php if(!empty($_POST['services_type']) && (in_array('BasicNeeds', $_POST['services_type']))){ echo "selected"; } ?>>BasicNeeds</option>
+          <option value="Behavioral" <?php if(!empty($_POST['services_type']) && (in_array('Behavioral', $_POST['services_type']))){ echo "selected"; } ?>>Behavioral</option>
+          <option value="CaseManagement" <?php if(!empty($_POST['services_type']) && (in_array('CaseManagement',$_POST['services_type']))){ echo "selected"; } ?>>CaseManagement</option>
+          <option value="Clothing" <?php if(!empty($_POST['services_type']) && (in_array('Clothing',$_POST['services_type']))){ echo "selected"; } ?>>Clothing</option>
+          <option value="DayCare" <?php if(!empty($_POST['services_type']) && (in_array('DayCare',$_POST['services_type']))){ echo "selected"; } ?>>DayCare</option>
+          <option value="Disabled" <?php if(!empty($_POST['services_type']) && (in_array('Disabled',$_POST['services_type']))){ echo "selected"; } ?>>Disabled</option>
+          <option value="Education" <?php if(!empty($_POST['services_type']) && (in_array('Education',$_POST['services_type']))){ echo "selected"; } ?>>Education</option>
+          <option value="Emergency" <?php if(!empty($_POST['services_type']) && (in_array('Emergency',$_POST['services_type']))){ echo "selected"; } ?>>Emergency</option>
+          <option value="Employment" <?php if(!empty($_POST['services_type']) && (in_array('Employment', $_POST['services_type']))){ echo "selected"; } ?>>Employment</option>
+          <option value="Family" <?php if(!empty($_POST['services_type']) && (in_array('Family',$_POST['services_type']))){ echo "selected"; } ?>>Family</option>
+          <option value="Financial" <?php if(!empty($_POST['services_type']) && (in_array('Financial', $_POST['services_type']))){ echo "selected"; } ?>>Financial</option>
+          <option value="Food" <?php if(!empty($_POST['services_type']) && (in_array('Food',$_POST['services_type']))){ echo "selected"; } ?>>Food</option>
+          <option value="GeneralSupport" <?php if(!empty($_POST['services_type']) && (in_array('GeneralSupport', $_POST['services_type']))){ echo "selected"; } ?>>GeneralSupport</option>
+          <option value="Housing" <?php if(!empty($_POST['services_type']) && (in_array('Housing', $_POST['services_type']))){ echo "selected"; } ?>>Housing</option>
+          <option value="Identification" <?php if(!empty($_POST['services_type']) && (in_array('Identification', $_POST['services_type']))){ echo "selected"; } ?>>Identification</option>
+          <option value="IndependentLiving" <?php if(!empty($_POST['services_type']) && (in_array('IndependentLiving', $_POST['services_type']))){ echo "selected"; } ?>>IndependentLiving</option>
+          <option value="Legal" <?php if(!empty($_POST['services_type']) && (in_array('Legal', $_POST['services_type']))){ echo "selected"; } ?>>Legal</option>
+          <option value="Medical" <?php if(!empty($_POST['services_type']) && (in_array('Medical', $_POST['services_type']))){ echo "selected"; } ?>>Medical</option>
+          <option value="Research" <?php if(!empty($_POST['services_type']) && (in_array('Research', $_POST['services_type']))){ echo "selected"; } ?>>Research</option>
+          <option value="Resources" <?php if(!empty($_POST['services_type']) && (in_array('Resources', $_POST['services_type']))){ echo "selected"; } ?>>Resources</option>
+          <option value="Respite" <?php if(!empty($_POST['services_type']) && (in_array('Respite', $_POST['services_type']))){ echo "selected"; } ?>>Respite</option>
+          <option value="Senior" <?php if(!empty($_POST['services_type']) && (in_array('Senior', $_POST['services_type']))){ echo "selected"; } ?>>Senior</option>
+          <option value="Transportation" <?php if(!empty($_POST['services_type']) && (in_array('Transportation', $_POST['services_type']))){ echo "selected"; } ?>>Transportation</option>
+          <option value="Veteran" <?php if(!empty($_POST['services_type']) && (in_array('Veteran', $_POST['services_type']))){ echo "selected"; } ?>>Veteran</option>
+          <option value="Victim" <?php if(!empty($_POST['services_type']) && (in_array('Victim', $_POST['services_type']))){ echo "selected"; } ?>>Victim</option>
 
         </select>
+      </th>
+      <th scope="col">
+        <label>Tags</label>
+        <input type="text" value="<?php if(!empty($_POST['tags'])){ echo $_POST['tags']; }else{
+         // echo "98168"; 
+          } ?>" name="tags" id="tags" class="form-control" placeholder="Tags">
       </th>
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
          // echo "98168"; 
-          } ?>" name="location" class="form-control" placeholder="Virginia">
+          } ?>" name="location" id="location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -295,8 +424,8 @@ get_header();
         </select>
       </th>
       <th scope="col">
-        <!-- <button type="search " class="custom-btn btn-success">Search</button> -->
-        <input type="submit" name="search" class="custom-btn btn-success" value="Search">
+    <!--   <button type="button" onclick="getformdata();" class="custom-btn btn-success">Search</button>  -->
+        <input type="submit" name="search" class="custom-btn btn-success" value="Search"> 
       </th>
     </tr>
   </thead>
@@ -321,7 +450,7 @@ if(!empty($practices)){ ?>
             <th></th>
             <th>Provider Name</th>
             <th>Category</th>
-            <th>Short Descripation</th>
+            <th>Short Description</th>
           </tr>
 
           <?php 
@@ -365,7 +494,7 @@ if(!empty($practices)){ ?>
     </div>
   </div>
   <div class="col-md-6 col-sm-12">
-    <h4>Provider Descripation</h4>
+    <h4>Provider Description</h4>
     <div class="border pt-20">
     <div class="img-logo">
       <p>
@@ -384,7 +513,7 @@ if(!empty($practices)){ ?>
          ?>
       <h4>Provider Name</h4>
       <p id='providernamefill'><?php echo $providername; ?></p>
-      <h4>Short Descripation</h4>
+      <h4>Short Description</h4>
       <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
       <h4>Mission Statement </h4>
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
@@ -636,11 +765,11 @@ if(!empty($practices)){ ?>
           
     </div>
     </div>
-            
+
 <?php get_footer(); ?>
 
-
 <script type="text/javascript">
+var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 function showdetails(details) {
   var providername = jQuery(details).attr('data-name');
@@ -733,4 +862,27 @@ jQuery(window).load(function() {
         }
       })(marker, i));
     }
+
+
+   /* function getformdata(){
+      var populationdata = jQuery("#example-getting-started").val();
+      var servicetypes = jQuery("#example-getting-started1").val();
+      var provider_name = jQuery("#provider_name").val();
+      var location = jQuery("#location").val();
+      var location_type = jQuery("#location_type").val();
+      jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'zipcode':zipcode,'iid':iid,funtion:'selectserviceprovider'},
+          beforeSend: function() {
+                    jQuery('.loader').show();
+                },
+          success: function(html){
+            jQuery('.loader').hide();
+            jQuery("#providerdiv").html(html);
+          }
+      });
+
+    }*/
         </script>

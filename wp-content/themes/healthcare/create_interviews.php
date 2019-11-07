@@ -260,6 +260,7 @@ get_header();
                                     <form action="">
                                         <div class="form-group">
                                         <input type="hidden" id="saved_interview_id" value=""/>
+                                        <input type="hidden" id="saved_referral_id" value=""/>
                                             <label for="first">First name <em style="color:red">*</em></label>
                                             <input type="text" class="form-control" id="caller_first_name" value=""  autocomplete="off">
                                         </div>
@@ -318,7 +319,7 @@ get_header();
         <div class="col-md-9 panel-group" id="accordion">
             <div class="panel ">
                 <div class="post_title post_tilte-inter">
-                  <h3 class="pull-left"><a id="intervirefiels"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#panel1" href="#" ><i class="fa fa-plus" aria-hidden="true"></i></a> Interviews</h3>
+                  <h3 class="pull-left"><a id="intervirefiels"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#panel1" href="#" ><i class="fa fa-plus" aria-hidden="true"></i></a> Assessments</h3>
                   <ul class="pull-right  nav navbar-nav">
                     <li><a href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -329,7 +330,7 @@ get_header();
                 
             <div class="alert alert-success alert-dismissible"  id="interview-msg" style="display: none" >
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-               <strong>Success!</strong> Interview detail successfully added.
+               <strong>Success!</strong> Assessment detail successfully added.
             </div>
   
             <div id="panel1" class="panel-collapse collapse">
@@ -567,6 +568,7 @@ get_header();
 
 <div id="myProviderModal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:1190px;">
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/jquery.multiselect.css">
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI" 
           type="text/javascript"></script>
     <!-- Modal content-->
@@ -580,7 +582,7 @@ get_header();
 
 <table class="table ">
       <tbody>
-  <form method="post" action="">
+ 
   <thead>
     <tr>
       <th scope="col">
@@ -589,23 +591,23 @@ get_header();
       </th>
       <th scope="col">
         <label>Populations</label>
-        <select class="form-control" name="population" id="ptn_population">
-          <option value="">Please Select </option>
+        <select class="form-control" name="population[]"  id='testSelect1' multiple>
+          <option value="Any">Citizenship</option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT" >LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
+          <option value="Family">Families w/ Children</option>
+          <option value="LGBTQ" >LGBTQ</option>
+          <option value="LowIncome">Very Low-Income</option>
+          <option value="Native">Native American</option>
           <option value="Other">Other</option>
           <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+          <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
      
       <th scope="col">
         <label>Services</label>
-        <select class="form-control" name="service_type" id="ptn_servicetype">
+        <select class="form-control" name="services_type[]"  id='services-test' multiple>
         <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
@@ -638,8 +640,12 @@ get_header();
         </select>
       </th>
       <th scope="col">
+        <label>Tags</label>
+        <input type="text"  name="tags" id="ptn_tags" class="form-control" placeholder="Tags">
+      </th>
+      <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -648,7 +654,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
-          <option value="Country" >Country</option>
+          <option value="County" >County</option>
           <option value="National" >National</option>
         
         </select>
@@ -661,7 +667,7 @@ get_header();
     </tr>
   </thead>
 
-  </form>
+ 
 </tbody>
 </table>
         <div class="loader" style="position: fixed;
@@ -714,7 +720,7 @@ z-index: 9;">
 
 
 
-    var ajax_url = "<?php echo '/ajax.php'; ?>";
+var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 var urgencyoption = "<option value=''>Select</option><option value='Critical'>Critical</option><option value='High'>High</option><option value='Modrate'>Modrate</option><option value='Low'>Low</option>";
 
@@ -937,19 +943,22 @@ function showdetails(providername,providershortdesc) {
 }
 
 
- function getserachserviceprovider(){
-    jQuery("#providerdiv").html('');
+  function getserachserviceprovider(){
+   jQuery("#providerdiv").html('');
     var location_type = jQuery("#ptn_locationtype").val();
-    var population = jQuery("#ptn_population").val();
+  //  var population = jQuery("#ptn_population").val();
+    var population = jQuery("#testSelect1").val();
     var location = jQuery("#ptn_location").val();
-    var services_type = jQuery("#ptn_servicetype").val();
+   // var services_type = jQuery("#ptn_servicetype").val();
+    var tagss = jQuery("#ptn_tags").val();
+    var services_type = jQuery("#services-test").val();
     var provider_name = jQuery("#ptn_provider").val();
     var iid = jQuery("#assignprovidertab").val();
     jQuery.ajax({
           url: ajax_url,
           type:'POST',
           cache: false,
-          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,funtion:'selectserviceprovider'},
+          data : {'location_type':location_type,'population':population,'location':location,'services_type':services_type,'provider_name':provider_name,'iid':iid,'tags':tagss,funtion:'selectserviceprovider'},
           beforeSend: function() {
                     jQuery('.loader').show();
                 },
@@ -1120,7 +1129,7 @@ function updateinterviewfield(){
             url: ajax_url,
             data: {'interview_id':interview_iid,'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,'caller_address':caller_address,'caller_state':caller_state,'caller_zipcode':caller_zipcode,'caller_additional_fields':caller_additional_fields,'caller_additional_keys':caller_additional_keys,funtion:'updateInterviewData'},
             success: function (res) {
-              //console.log(res);
+              console.log(" updateInterviewData in create_interviews.php - " + res);
                 if(res == '11'){          
                     return true;
                 }else{
@@ -1167,12 +1176,14 @@ function checkinterviewfield(){
             url: ajax_url,
             data: {'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,funtion:'saveinterview'},
             success: function (res) {
+                console.log(res);
                 var obj = JSON.parse(res);
                 var result = obj.error;
                 var saved_interviewid = obj.interview_id
                 var trimStr  = $.trim(result);
                 if(trimStr == '11'){          
-                    jQuery("#saved_interview_id").val(obj.interview_id);
+                       jQuery("#saved_interview_id").val(obj.interview_id);
+                       jQuery("#saved_referral_id").val(obj.referral_id);
                        var oldUrl = $("#intervirefiels").attr("href"); // Get current url
                        var newUrl = oldUrl.replace("#", "#panel1"); 
                        $("#intervirefiels").attr("href", newUrl);
@@ -1201,7 +1212,8 @@ function checkinterviewneeddeatils(iid) {
     var moreiid = $(iid).attr('data-check');
     var checking = jQuery("#saved_needid_"+moreiid).val();
     var interview_iid = $("#saved_interview_id").val();
-    //alert(moreiid);
+    var referral_id = $("#saved_referral_id").val();
+   // alert(referral_id);
     var email = "<?php echo $email; ?>";
     var need_title = $("#need_title_"+moreiid).val();
     var need_desc = $("#need_desc_"+moreiid).val();
@@ -1219,8 +1231,9 @@ function checkinterviewneeddeatils(iid) {
         jQuery.ajax({
             type: 'post',
             url: ajax_url,
-            data: {'email':email,'interview_id':interview_iid,'need_title':need_title,'need_description':need_desc,funtion:'saveinterviewneeds'},
+            data: {'email':email,'interview_id':interview_iid,'need_title':need_title,'need_description':need_desc,'referral_id':referral_id,funtion:'saveinterviewneeds'},
             success: function (res) {
+                console.log ("saveinterviewneeds result is " + res);
                 var obj = JSON.parse(res);
                 var result = obj.error;
                 var saved_needid = obj.need_id

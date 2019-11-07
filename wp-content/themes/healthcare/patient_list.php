@@ -98,7 +98,7 @@ get_header();
                                         if(!empty($patients)){
                                         	foreach ($patients as $key => $value) { ?>	
 									    <tr>
-									      <th scope="row"><?php echo $value['first_name']." ".$value['last_name']; ?></th>
+									      <th scope="row"><?php echo $value['last_name']." ".$value['first_name']; ?></th>
 									      <td><?php echo $value['email']; ?></td>
 									      <td><?php echo $value['ph_number'] ?></td>
 									      <td><?php echo $value['p_age'] ?></td>

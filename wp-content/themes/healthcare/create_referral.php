@@ -162,7 +162,7 @@ get_header();
 			</div>
 	   </div>
 
-	    <p>-------------------------------------------------------------------------------------------------------------</p>
+	    <!-- <p>-------------------------------------------------------------------------------------------------------------</p>
 	    <h4>Task ></h4>
 	    </br></br>
 	    </div>
@@ -193,7 +193,7 @@ get_header();
 									    </tr>
                                     </tbody>
                                     </table>
-
+-->
        <div class="container" style="max-width:600px;margin:60px auto;">
         <div class="form-group">
 	    
@@ -269,23 +269,22 @@ get_header();
       <th scope="col">
         <label>Populations</label>
         <select class="form-control" name="population" id="ptn_population">
-          <option value="">Please Select </option>
+          <option value="Any">Any</option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT" >LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
+          <option value="Family">Families w/ Children</option>
+          <option value="LGBTQ" >LGBTQ</option>
+          <option value="LowIncome">Very Low-Income</option>
+          <option value="Native">Native American</option>
           <option value="Other">Other</option>
           <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+          <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
      
       <th scope="col">
         <label>Services</label>
         <select class="form-control" name="service_type" id="ptn_servicetype">
-        <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
           <option value="BasicNeeds" >BasicNeeds</option>
@@ -327,7 +326,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
-          <option value="Country" >Country</option>
+          <option value="County" >County</option>
           <option value="National" >National</option>
         
         </select>

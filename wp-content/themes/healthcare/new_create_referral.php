@@ -161,6 +161,18 @@ get_header();
 				 </div>
 			</div>
 	   </div>
+       	   <div class="container" style="max-width:600px;margin:60px auto;">
+             <div class="form-group">
+		<div class="row">
+		    <div class="col-md-12">
+			<div class="form-group">
+			    <label for="email">Referral Description:</label>
+			    <textarea name="referral_description" placeholder="Write a referral description..." class="form-control" rows="5" cols="75"></textarea>
+			</div>
+		    </div>
+		</div>
+	     </div>                            
+	   </div> 
 
 	    <p>-------------------------------------------------------------------------------------------------------------</p>
 	    <h4>Task ></h4>
@@ -194,22 +206,6 @@ get_header();
                                     </tbody>
                                     </table>
 
-       <div class="container" style="max-width:600px;margin:60px auto;">
-        <div class="form-group">
-	    
-			<div class="row">
-			    <div class="col-md-12">
-			        
-					  <div class="form-group">
-					    <label for="email">Referral Description:</label>
-					    <textarea name="referral_description" placeholder="Write a referral description..." class="form-control" rows="5" cols="75"></textarea>
-					  </div>
-					
-				
-				 </div>
-			</div>
-	   </div>                            
-	   </div> 
 	   <div style="display:none" id="coountry">
                 <?php foreach ($owners as $value) { ?>
                  <option value='<?php echo ucfirst($value); ?>'><?php echo ucfirst($value); ?></option> 
@@ -269,16 +265,16 @@ get_header();
       <th scope="col">
         <label>Populations</label>
         <select class="form-control" name="population" id="ptn_population">
-          <option value="">Please Select </option>
+          <option value="Any">Any </option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
-          <option value="Families w/ Children">Families w/ Children</option>
-          <option value="LGBT" >LGBT</option>
-          <option value="Very Low-Income">Very Low-Income</option>
-          <option value="Native American">Native American</option>
+          <option value="Family">Families w/ Children</option>
+          <option value="LGBTQ" >LGBTQ</option>
+          <option value="LowIncome">Very Low-Income</option>
+          <option value="Native">Native American</option>
           <option value="Other">Other</option>
           <option value="Senior">Senior</option>
-          <option value="Veteran/Military">Veteran/Military</option>
+          <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
      
@@ -327,7 +323,7 @@ get_header();
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
-          <option value="Country" >Country</option>
+          <option value="County" >County</option>
           <option value="National" >National</option>
         
         </select>

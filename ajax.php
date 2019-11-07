@@ -95,35 +95,10 @@ function referraltasks(){
 
 
 
-function referralAssessments() {
-	if(!empty($_POST)) {
-		$referral_id 	= $_POST['referral_id'];
-		$email		= $_POST['email'];
 
-                $assessments = array();//assessmentList($referral_id, $email);
-	}
-	if (!empty($assessments)) {
-           if($assessments['status'] == 'ok'){
-		$assessmentList = $assessments['interview_list'];
-	   }
-	}else{
-	   $taskList = array();
-	}
-        
-	$assessmentHtml = assessmentsHtmlTable($referral_id);
-		echo  $taskHtml;
-}
 
-function assessmentsHtmlTable($assessmentList, $referral_id)
-{
-	$html = "<table><tbody id='taskbody'><input type='hidden' id='taskrefiid' value='".$referral_id."'>";
-        if(!empty($assessmentList)){ 
-            foreach ($assessmentList as $assessmentkey => $assessmentvalue) { 
 
-	    }
-	}
-	
-}
+
 
 function taskHtmlTable($taskList,$referral_id)
 {  
