@@ -84,9 +84,7 @@ if($logodata['status']!='unauthorized'){
 					  <div class="three"></div>
 					  </figure>
 					</div>
-				</div>
-			
-			<div id="menu">
+					<div id="menu">
            <!--  <div class="collapse navbar-collapse" id="navbar-collapse-1">      -->          
 						<?php  wp_nav_menu( array(
 						'theme_location' => 'primary',
@@ -97,6 +95,9 @@ if($logodata['status']!='unauthorized'){
 						);	 ?>
 						 
             </div><!-- /.navbar-collapse -->
+				</div>
+			
+			
 		</div>
     </nav> 
     

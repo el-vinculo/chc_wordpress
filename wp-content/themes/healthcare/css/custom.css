@@ -140,8 +140,8 @@ p.menu-cls {
     margin: auto;
     display: none;
     position: absolute;
-    right: 140px;
-    top: 100px;
+    right: 0;
+    top: 90px;
     background: #37ab1c;
     box-shadow: 0 0 15px 1px #f9f9f9;
 }

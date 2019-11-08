@@ -1892,6 +1892,33 @@ function deleteInterviewNeed($need_id,$email)
 }
 
 
+function applicationVersion($email, $authToken)
+{
+       $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+       $headers['Authorization'] = 'user-token: '.$authToken;   
+	   $post = array('email'=>$email); 
+	   $url = API_URL.'app_version'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+
 
 
 

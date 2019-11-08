@@ -26,13 +26,17 @@ $health_data= health_care_get_options(); ?>
 	the_widget('WP_Widget_Archives', null, $footer_default);
 	the_widget('WP_Widget_Calendar', null, $footer_default);	
 	} ?>
+
+
 	</div>
 </div>
 <div class="container-fluid footer-bottom1 footer1">
 	<div class="container">
 		<div class="row">
+
 			<div class="col-md-6 col-sm-6">
 				<div class="footer-nav">
+
 					 <?php
                     $args = array( 'menu' => 'footer Menu', 'container' => '', 'container_class' => '', 'container_id' => '', 'menu_class' => 'nav', 'menu_id' => 'nav',
                     'echo' => true, 'fallback_cb' => 'wp_page_menu', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>', 'item_spacing' => 'preserve',
@@ -51,6 +55,10 @@ $health_data= health_care_get_options(); ?>
 			</div>
 			<div class="col-md-6 col-sm-6">
 				<div class="footer_copyright">
+          <?php $email = $_SESSION['userdata']['email'];
+               $authToken = $_SESSION['userdata']['authentication_token'];
+                ?>
+         <p class="text-right">Application Version: <?php $appVersion= applicationVersion($email, $authToken); echo $appVersion['version'];?></p>
 					<p class="text-right"><?php echo esc_attr($health_data['footer_copyright']); ?> 
 						<!-- <a href="<?php echo esc_url($health_data['footer_developed_by_link']); ?>" target="_blank">
 							<?php echo esc_attr($health_data['footer_developed_by']); ?>
