@@ -21,6 +21,7 @@ $health_data= health_care_get_options(); ?>
 		'before_title'  => '<h3>',
 		'after_title'   => '</h3><div class="ln white"></div><span class="fa fa-heart white hrt"></span>' );
 	
+  //the_widget('WP_Widget_Categories', null, $footer_default);
 	the_widget('WP_Widget_Categories', null, $footer_default);
 	the_widget('WP_Widget_Pages', null, $footer_default);
 	the_widget('WP_Widget_Archives', null, $footer_default);

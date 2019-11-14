@@ -12,6 +12,7 @@
 <?php //print_r($_SESSION); 
 
 //echo $_SESSION['userdata']['email'];
+//echo $_SESSION['userdata']['email'];
 if($_SESSION['userdata']!=''){
 	$email = $_SESSION['userdata']['email'];
 	$authToken= $_SESSION['userdata']['authentication_token'];
