@@ -228,7 +228,7 @@ p {
     color: #000;
 }
 i.fa.fa-sort-desc {
-    top: -1px;
+  top: -1px;
     position: relative;
     transform: rotateZ(-90deg);
     padding-right: 5px;
@@ -236,7 +236,7 @@ i.fa.fa-sort-desc {
 }
 .accordion.active i {
     transform: rotateZ(-359deg)!important;
-    top: -3px!important;
+    top: -3px;
 }
 .panel table tbody tr td{
   padding: 10px;
@@ -244,6 +244,8 @@ i.fa.fa-sort-desc {
 .gray-text {
     color: #848282;
 }
+
+
 </style>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -404,12 +406,12 @@ get_header();
 			            <div class="post-tags"></div>
                     <div class="post-content">
 
-                      <h5 class="accordion blue-font"><i class="fa fa-sort-desc" aria-hidden="true"></i><b>&nbsp;My Works</b></h5>
+                      <h5 class="accordion blue-font "><i class="fa fa-sort-desc " aria-hidden="true"></i><b>&nbsp;My Works</b></h5>
 <div class="panel collapse in">
    <div class="margin_left">
-   <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Active Referrals 
+   <h6 class="accordion black-font "><i class="fa fa-sort-desc " aria-hidden="true"></i>&nbsp;Active Referrals 
 </h6>
-<div class="panel">
+<div class="panel collapse in">
 
         <table class="table table-striped" id="examplerefferal">
           
@@ -437,11 +439,11 @@ get_header();
 
               <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
 
-              <td ><?php echo date('d/m/y',strtotime($newReferralDatavalue['date'])); ?></td>
+              <td ><?php if($newReferralDatavalue['date']!=''){ echo date('d/m/y',strtotime($newReferralDatavalue['date']));} else{ echo '--';} ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
               <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
-              <td > <?php echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date'])); ?></td>
+              <td > <?php if($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date']!=''){echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date']));} else{ echo '--';} ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
               <td >
 
@@ -498,7 +500,7 @@ get_header();
             <tr class="accordion" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
-              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
+              <td ><?php if($requestreffvalue['taskdetails']['task_details']['task_deadline']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline']));} else{ echo '--';} ?></td>
               <td ><?php echo $requestreffvalue['ref_source']; ?></td>
               <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
               <td ><?php echo $requestreffvalue['status']; ?></td>
@@ -529,37 +531,9 @@ get_header();
         
       </div>
 
-<h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Copied Referrals 
-</h6>
-<div class="panel">
-<span style="color: red;"><center>No Copied Referrals  found</center></span>
-        <!-- <table>
-          <tbody>
-            <tr>
-              <td ><i class="fa fa-check-circle"></i> Joy Givvens </td>
-              <td >10/27/2018 [Created] </td>
-              <td >11/30/18 [Due]</td>
-              <td >Referral ID: 667-123 </td>
-              <td><select>
-                <option>Pending</option>
-                 <option>Complete</option>
-              </select></td>
-              <td>Subreferral: Dentrix </td>
-              <td >
-                 <a data-toggle="collapse" href="#collapseExample1"><span class="blue-text" >See More&nbsp;&nbsp; </span><i class="fa fa-angle-double-right" aria-hidden="true"></i></a> 
-              </td>
-            </tr>
-            <tr >
-              <td>
-              <div class="collapse" id="collapseExample1">
-                   <h6 class=" blue-font"><b><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Clients Task</b></h6>
-                  </div>
-            </td></tr>
-          </tbody>
-        </table> -->
-       </div>
 
-</div></div><br>
+</div></div>
+ <br>
                     <h5 class=" blue-font accordion"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;<b>My Communications</b></h5>
                     <div class="panel collapse in">
                       <div class="margin_left">
@@ -590,21 +564,6 @@ get_header();
 
       &nbsp;&nbsp;&nbsp;<span class="upcoming-right"><a target="_blank" href="<?php echo site_url().'/patients/patient-details?pid='.base64_encode($patient_id);?>"  title="Patients-details"><?php echo date('m/d/Y h:i:s', strtotime($messagevalue['created_at'])); ?></a><i class="fa fa-angle-right  " aria-hidden="true"></i></span> </td>
 
-
-     <!--  <div class="panel">
-        <table>
-          <tbody>
-            <tr>
-              <td class="equal-width">Eric Hummel</td>
-              <td class="equal-width">01/01/1970</td>
-              <td class="equal-width1">Appointment</td>
-              <td class="equal-width1">pending</td>
-              <td ><a class="right-link" href="javascript:void(0)" data-toggle="modal"  data-target="#myTaskModal"  >See More &nbsp;&nbsp; <i class="fa fa-angle-double-right " aria-hidden="true"></i></a> </td>
-
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
    </tr>
 
     <?php } } ?>
@@ -619,86 +578,14 @@ get_header();
 <div class="panel">
   <table class="table table-striped">
   <tbody>
-    <!-- <tr><td>
-      <span><i class="fa fa-check-circle"></i>Dental Link is no longer accepting BCBS, please update this info in your system</span>
-
-      <span class="accordion upcoming-right"><span class="green-text" >Today</span><i class="fa fa-angle-right  " aria-hidden="true"></i></span> 
-      <div class="panel">
-        <table>
-          <tbody>
-            <tr>
-              <td class="equal-width">Eric Hummel</td>
-              <td class="equal-width">01/01/1970</td>
-              <td class="equal-width1">Appointment</td>
-              <td class="equal-width1">pending</td>
-              <td ><a class="right-link" href="javascript:void(0)" data-toggle="modal"  data-target="#myTaskModal"  >See More &nbsp;&nbsp; <i class="fa fa-angle-double-right " aria-hidden="true"></i></a> </td>
-            </tr>
-          </tbody>
-        </table>
-       </div>
-</td>
-</tr> 
-<tr><td>
-      <span><i class="fa fa-check-circle"></i>Dental Link is no longer accepting BCBS, please update this info in your system</span>
-
-      <span class="accordion upcoming-right"><span class="blue-text">Service Provider</span><span class="green-text">Read </span><i class="fa fa-angle-right  " aria-hidden="true"></i></span> 
-      <div class="panel">
-        <table>
-          <tbody>
-            <tr>
-              <td class="equal-width">Eric Hummel</td>
-              <td class="equal-width">01/01/1970</td>
-              <td class="equal-width1">Appointment</td>
-              <td class="equal-width1">pending</td>
-              <td ><a class="right-link" href="javascript:void(0)" data-toggle="modal"  data-target="#myTaskModal"  >See More &nbsp;&nbsp; <i class="fa fa-angle-double-right " aria-hidden="true"></i></a> </td>
-            </tr>
-          </tbody>
-        </table>
-       </div>
-</td>
-</tr>-->
+ 
  <tr>
   <span style="color: red;"><center>No Provider Messages</center></span>
   </tr>
   </tbody>
 </table>
 </div>
-<!-- <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Referral Requests
-</h6> -->
-<div class="panel">
-  <table class="table table-striped">
-  <tbody>
- <!--  <?php
-  if(!empty($incomingreferral)){
-    foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { ?>
-    
 
-    <tr><td>
-      <span><i class="fa fa-check-circle"></i>Requests From : <?php echo $requestreffvalue['referred_from']; ?> </span>
-      
-      <span class="accordion upcoming-right"><span class="green-text" >Yesterday</span><i class="fa fa-angle-right" aria-hidden="true"></i></span> 
-      <div class="panel">
-        <table>
-          <tbody>
-            <tr>
-              <td ><?php echo $requestreffvalue['taskdetails']['task_details']['task_type']; ?></td>
-              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?> </td>
-              <td >11/30/18</td>
-              <td ><?php echo $requestreffvalue['taskdetails']['task_details']['task_owner']; ?></td>
-              <td ><button class="btn-primary btn-request">Accept</button><button class=" btn-danger btn-request">Reject</button> <button class=" btn-success btn-request">Transfer</button> </td>
-               <td ><input type="text" width="100%"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </td></tr>
-
-    <?php }} ?> -->
-
-
-  </tbody>
-</table>
-</div>
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Notifications
 </h6>
 <div class="panel">
@@ -719,19 +606,7 @@ get_header();
       <span><i class="fa fa-check-circle"></i><?php if(strlen($notificationvalue['notificaiton_message']) > 70){ $small = substr($notificationvalue['notificaiton_message'], 0, 70); echo $small."......."; }else{ echo $notificationvalue['notificaiton_message']; } ?></span>
 
       <span class="accordion upcoming-right"><span class="<?php echo $spanclass; ?>"><?php echo $spantext; ?>  </span><i class="fa fa-angle-right  " aria-hidden="true"></i></span> 
-      <!-- <div class="panel">
-        <table>
-          <tbody>
-            <tr>
-              <td class="equal-width">Eric Hummel</td>
-              <td class="equal-width">01/01/1970</td>
-              <td class="equal-width1">Appointment</td>
-              <td class="equal-width1">pending</td>
-              <td ><a class="right-link" href="javascript:void(0)" data-toggle="modal"  data-target="#myTaskModal"  >See More &nbsp;&nbsp; <i class="fa fa-angle-double-right " aria-hidden="true"></i></a> </td>
-            </tr>
-          </tbody>
-        </table>
-       </div> -->
+   
 </td>
 </tr> 
 <?php }}else{ ?>
@@ -741,11 +616,10 @@ get_header();
 </table>
 </div>
 </div>
-</div>
+</div> 
 
-<br>
-<!-- <p><b><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;My Clients</b></p>
- --><h5 class="accordion blue-font"><i class="fa fa-sort-desc" aria-hidden="true"></i><b>&nbsp;My Clients</b></h5>
+<!-- <br>
+<h5 class="accordion blue-font"><i class="fa fa-sort-desc" aria-hidden="true"></i><b>&nbsp;My Clients</b></h5>
 
 <div class="panel collapse in">
    <div class="margin_left">
@@ -757,7 +631,6 @@ get_header();
              
             <tr class="single_item_client">
               <td class="equal-width3"><i class="fa fa-check-circle"></i> Patient: <?php echo $patientvalue['first_name']." ".$patientvalue['last_name']; ?></td>
-             <!--  <td class="equal-width gray-text">Nov. 19 (Start Date)  </td> -->
               <td class="blue-fonts equal-width1 right-text"><a target="_blank" href="<?php echo site_url().'/patients/patient-details?pid='.base64_encode($patientvalue['patient_id']);?>"  title="Patients-details">Client Page</a></td>
               </tr>
        <?php   } } ?>
@@ -766,7 +639,7 @@ get_header();
           </tbody>
         </table>
       </div>
-       </div>
+       </div> -->
 
 
 
@@ -1438,7 +1311,7 @@ function updatereftaskdetails(){
 
 
   </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   (function() {
   
   $(".panel").on("show.bs.collapse hide.bs.collapse", function(e) {
@@ -1450,6 +1323,6 @@ function updatereftaskdetails(){
   });  
 
 }).call(this);
-</script>
+</script> -->
 
 

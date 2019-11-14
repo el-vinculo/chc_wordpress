@@ -161,14 +161,14 @@ get_header();
             <tr>
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
-              <td ><?php echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline'])); ?></td>
+              <td ><?php if($requestreffvalue['taskdetails']['task_details']['task_deadline']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline']));}  else{ echo '--';} ?></td>
               <td ><?php echo $requestreffvalue['ref_source']; ?></td>
               <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
               <td >
-                <?php if($requestreffvalue['status']!="Accepted") {?>
+                <?php if($requestreffvalue['status']!="Accepted" && $requestreffvalue['status']!="Rejected") {?>
                 <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['task_id']).'&ptn='.base64_encode($requestreffvalue['patient_name']).'&refsr='.base64_encode($requestreffvalue['ref_source']).'&refnma='.base64_encode($requestreffvalue['ref_name']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
               <?php } ?>
 

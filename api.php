@@ -1,29 +1,5 @@
 <?php
 
-function adminLogin($email,$authToken)
-{
-	   $post = ['email' => $email];
-	   $headers['Authorization'] = 'user-token: '.$authToken;  
-	   $url = "https://dev7.resourcestack.com"; 
-	   $curl_handle=curl_init();
-	   curl_setopt($curl_handle,CURLOPT_URL,$url);
-	   curl_setopt($curl_handle, CURLOPT_POST ,true);
-	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
-	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
-	   $buffer = curl_exec($curl_handle);
-	   curl_close($curl_handle);
-	   if (empty($buffer)){
-	      print "Nothing returned from url.<p>";
-	   }
-	   else{
-	  	  if(!empty($buffer)){
-	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
-	  	  	return $result;
-	  	  }
-	   }
-}
-
 function aboutUs($email,$authToken)
 {
 	   $post = ['email' => $email];
@@ -1918,6 +1894,52 @@ function applicationVersion($email, $authToken)
 	   }
 }
 
+function chcAuth()
+{
+	   $post = ['userEmail' => 'defaultuser@test.com','originURL'=>'dev11.resourcestack.com'];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL."chcAuthentication"; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+function chcAuthNextStep($email)
+{
+	   $post = ['googleOauthLogin' => 'true','email'=> $email];  
+	   $url = API_URL."sessions"; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
 
 
 

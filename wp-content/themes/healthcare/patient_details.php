@@ -99,6 +99,12 @@ color: #43b02a!important;
 </style>
 
 <style >
+  tbody#taskbody tr td button {
+    margin-right: 6px;
+}
+tbody#refbody tr td button {
+    margin-bottom: 6px;
+}
 h1 {
   text-align: center;
  font-family: 'Montserrat', sans-serif;
@@ -821,7 +827,7 @@ get_header();
 	                                	<td id="urgency-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['urgency']; ?></td>
 	                                	<td><?php echo $refvalue['task_count']; ?></td>
 	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
-                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
+                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($refvalue['follow_up_date']!='') {echo $refvalue['follow_up_date'];} else{ echo '--';} ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button><button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button></td>
                                     </tr>
