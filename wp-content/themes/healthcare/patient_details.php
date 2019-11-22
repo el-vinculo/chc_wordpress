@@ -877,7 +877,7 @@ get_header();
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
+                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button><button class="btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
 
                                    </td>
                                    
@@ -1362,6 +1362,69 @@ get_header();
 
   </div>
 </div>
+
+
+<!-- Invite Modal-->
+<div id="inviteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="inviteClose" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Invite Organization</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="response"></div>
+
+        <form id="inviteOrgForm">
+              
+              <div class="row">
+              <div class="col-md-6">
+               <label>Name</label>
+               <div>
+                   <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value=""/>
+                </div>
+                   
+              </div>
+             
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-6">
+               <label>Application URL</label>
+                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value=""/>
+              </div>
+            
+            </div>
+
+            <br/> 
+             <div class="row">
+              <div class="col-md-6">
+               <label>Email</label>
+                
+                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value=""/>
+              </div>
+             
+            </div>
+            <br/>
+          
+            <br/>
+                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value=""/>
+            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary" value="Submit" > 
+          
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="transfermdelclosebutton" class="btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- End of invite modal -->
 
 
 
@@ -1862,7 +1925,7 @@ function updateInterviewObstacle(iid) {
             url: ajax_url,
             data: {'email':email,'obstacle_id':obstacle_iid,'obstacle_title':obstacle_title,'obstacle_description':obstacle_desc,'obstacle_notes':obstacle_notes,'obstacle_urgency':obstacle_urgency,'obstacle_status':obstacle_status,funtion:'updateInterviewObstacles'},
             success: function (res) {
-              alert(res);
+              //alert(res);
                 if(res == '11'){ 
                   getAssesment(assementrefid);         
                  // return true;
@@ -2215,7 +2278,11 @@ function getledgerdetails(taskid) {
         success: function(html){
           //alert(html);
          // console.log(html);
-          jQuery("#ledgertabledatadummy").html(html);
+         jQuery("#ledgertabledatadummy div").html(' ');
+         jQuery('#ledgertabledatadummy').html('');
+
+         document.getElementById("ledgertabledatadummy").innerHTML = html;
+
         }
     });
 }
@@ -2277,6 +2344,37 @@ function updatereftaskdetails(){
             	}else{
             		alert('Error ! Please try again ');
             	}
+              
+            }
+          });
+
+}
+
+
+function inviteOrg(){
+
+    var task_id  = document.getElementById("task_id_for_invite").value;
+    var name  = document.getElementById("org_name").value;
+    var email  = document.getElementById("org_email").value;
+    var application_url   = document.getElementById("application_url").value;
+
+       jQuery.ajax({
+            type: 'post',
+            url: ajax_url,        
+            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url, funtion:'inviteOrg'},
+            success: function (res) {
+              //alert(res);
+              //exit;
+              //console.log(res);exit;
+              var trimStr = jQuery.trim(res);
+              if(trimStr == '11'){
+                jQuery('.response').html('<div class="alert-success">Successfully Invited</div>');
+                $('#inviteOrgForm' ).each(function(){
+                    this.reset();
+                 });        
+              }else{
+                jQuery('.response').html('<div class="alert-danger">Error ! Please try again</div>');
+              }
               
             }
           });
@@ -2401,6 +2499,11 @@ function getPatientDocuments(filepath){
 function getTransferTaskdetails(taskid) {
 
 	document.getElementById("transfer_task_id").value = taskid;
+}
+
+function getTaskId(taskid) {
+
+  document.getElementById("task_id_for_invite").value = taskid;
 }
 
 
@@ -2536,6 +2639,7 @@ function referralsend(transfertaskid,clientid){
 		alert('This is empty value');
 	}
 }
+
 
 function showdetails(providername,providershortdesc) {
   jQuery('#providernamefill').text(providername);

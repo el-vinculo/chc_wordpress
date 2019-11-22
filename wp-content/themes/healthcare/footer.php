@@ -74,8 +74,8 @@ $health_data= health_care_get_options(); ?>
 		</div>
 	</div>
 </div>
-<a href="#top" class="scrol enigma_scrollup"><span class="fa fa-angle-up"></span></a>
-<!-- End Footer -->
+<!-- <a href="#top" class="scrol enigma_scrollup"><span class="fa fa-angle-up"></span></a>
+ --><!-- End Footer -->
 <?php get_template_part('bg', 'css') ;?>
 <?php wp_footer(); ?>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

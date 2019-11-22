@@ -21,7 +21,8 @@ if(!empty($_POST)){
 		$msg = 'The email should not empty.';
 	} if($_POST['email']!='' && $_POST['googleAuth']!=''){
 
-	$authResponse = chcAuth(); ?> 
+		$originUrl= site_url();
+	    $authResponse = chcAuth($_POST['email'], $originUrl); ?> 
 
 	<script type="text/javascript">
 		window.location.href= "<?php echo $authResponse['redirect_url'] ?>";
@@ -61,14 +62,6 @@ if(!empty($_POST)){
 
 get_header(); 
 //get_template_part('cover');
-
-if($_GET['type']=='chcauth'){ $authResponse = chcAuth();?>
-
-	<script type="text/javascript">
-		window.location.href= "<?php echo $authResponse['redirect_url'] ?>";
-	</script>
-	<?php 
-}
 ?>
 <div class="container-fluid space">
 	<div class="container blogs">

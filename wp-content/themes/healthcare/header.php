@@ -26,35 +26,7 @@ if($logodata['status']!='unauthorized'){
 }
 
 ?>
-<!-- Start Header-->
-	<!-- <div class="container-fluid top">
-		<div class="container">
-			<div class="col-md-8 col-sm-6 top-phone">
-			   <div class="social_details">
-				<?php if($health_data['social_phone']!=''){ ?>			
-				<i class="fa fa-phone"> </i> <?php echo esc_attr($health_data['social_phone']);  ?><?php } ?>
-				<?php if($health_data['social_email']!=''){ ?>  
-				<i class="fa fa-envelope"> </i> <a href="mailto:<?php echo esc_url($health_data['social_email']); ?>" ><?php echo esc_attr($health_data['social_email']); ?></a> <?php } ?>
-			    </div>
-			</div>
-			<div class="col-md-4 col-sm-6">
-				<div class="profile-user">
-					<div class="img-user">
-						<img src="<?php echo get_template_directory_uri();?>/images/avatar.jpg">
-					</div>
-					<div class="content-user">
-						<p>J.S. Care Coordinator</p>
-					</div>
-					<div class="logout-user">
-						<a href="#">Logout</a>
-					</div>
-				</div>
-			     <div class="timing_details">
-				<?php if($health_data['social_timing']!='') echo 'Opening Hours:'.esc_attr($health_data['social_timing']);?>
-			     </div> 
-			</div>
-		</div>
-	</div> -->
+
 
 	<nav class="navbar  navbar-static-top marginBottom-0 menu" <?php if ( has_header_image() ) { ?> style='background-image: url("<?php header_image(); ?>")' <?php  } ?>>
 		<div class="container">
@@ -73,9 +45,62 @@ if($logodata['status']!='unauthorized'){
                 <div class="signup-link">
 					<a href="<?=site_url()?>/backend/registration_requests/new" target="_blank">Sign up</a>
 				</div>
-              <?php } ?>
-				
+              <?php } else{?>
 
+               <div style="position: absolute;right: 187px;top: 46px;width: auto;">
+<style type="text/css">
+	#menu-usermenu{
+		margin: 10px 0 0; margin-top: 84px;
+    margin-left: -34px!important;
+	}
+</style>
+    <?php 
+       $userdata = userprofiledetails($email); 
+     ?>
+               	<div class="dropdown">
+					<a href="#" class=" dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
+					
+			<!-- 		<ul class="dropdown-menu" style="margin: 10px 0 0; margin-top: 84px;
+    margin-left: -34px!important;">
+    <li><a href="#">Report</a></li>
+    <li><a href="#">Setting</a></li>
+
+    <li><a href="<?=site_url()?>/logout">Logout</a></li>
+    
+  </ul> -->
+
+  <?php  wp_nav_menu(array(
+        'menu'            => 'usermenu',
+        'container'       => '',
+        'container_class' => '',
+        'container_id'    => '',
+        'menu_class'      => 'dropdown-menu',
+        'menu_id'         => '',
+        'echo'            => true,
+        'fallback_cb'     => 'wp_page_menu',
+        'before'          => '',
+        'after'           => '',
+        'link_before'     => '',
+        'link_after'      => '',
+        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        'item_spacing'    => 'preserve',
+        'depth'           => 0,
+        'walker'          => '',
+        'theme_location'  => '',
+    ));	 ?>
+
+
+				</div>
+					<div class="set-question" style="float: right;">
+						<a href="<?=site_url()?>/faq"><i class="fa fa-question question" aria-hidden="true"></i></a>
+					</div>
+				</div>
+
+
+
+				 <?php } ?>
+				
+                  
 				<div id="toggle">
 					 
 					  <figure class="menu-fig">
@@ -140,5 +165,14 @@ if($logodata['status']!='unauthorized'){
     jQuery("#menu-item-201").css("display", "none");
     jQuery("#menu-item-202").css("display", "none");
     jQuery("#menu-item-212").css("display", "none");
+    jQuery("#menu-item-235").css("display", "none");
 </script>
 	<?php } ?>
+
+	<script type="text/javascript">
+		$('ul.nav li.dropdown').hover(function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+}, function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+});
+	</script>

@@ -406,10 +406,10 @@ get_header();
 			            <div class="post-tags"></div>
                     <div class="post-content">
 
-                      <h5 class="accordion blue-font "><i class="fa fa-sort-desc " aria-hidden="true"></i><b>&nbsp;My Works</b></h5>
+                      <h5 class="accordion blue-font active"><i class="fa fa-sort-desc " aria-hidden="true"></i><b>&nbsp;My Works</b></h5>
 <div class="panel collapse in">
    <div class="margin_left">
-   <h6 class="accordion black-font "><i class="fa fa-sort-desc " aria-hidden="true"></i>&nbsp;Active Referrals 
+   <h6 class="accordion black-font active"><i class="fa fa-sort-desc " aria-hidden="true"></i>&nbsp;Active Referrals 
 </h6>
 <div class="panel collapse in">
 
@@ -434,7 +434,7 @@ get_header();
               foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
                 ?>
             
-             <tr class="single_item_pendingreferal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
+             <tr class="single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
 
               <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
@@ -473,9 +473,9 @@ get_header();
 
         
       </div>
-      <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Pending Referrals 
+      <h6 class="accordion black-font active"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Pending Referrals 
 </h6>
-<div class="panel">
+<div class="panel collapse in">
 
          <table class="table table-striped"  id="example1acceptt">
     <tbody>
@@ -535,7 +535,7 @@ get_header();
 </div></div>
  <br>
                     <h5 class=" blue-font accordion"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;<b>My Communications</b></h5>
-                    <div class="panel collapse in">
+                    <div class="panel" style="display: none;">
                       <div class="margin_left">
                     <h6 class="accordion black-font" ><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Client Messages</h6>
  
@@ -1033,10 +1033,10 @@ for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
     this.classList.toggle("active");
     var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
+    if (panel.style.display == "none") {
       panel.style.display = "block";
+    } else {
+      panel.style.display = "none";
     }
   });
 }

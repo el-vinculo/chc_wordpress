@@ -69,7 +69,7 @@ color: #43b02a!important;
 											<input type="hidden" name="user-token" value="<?php echo $authToken; ?>">
 										</form>
 
-										<iframe name="adminAccess" id="frame1" src="<?=site_url()?>/backend" width="1000" height="400"></iframe> 
+										<iframe name="adminAccess" id="frame1" src="<?=site_url()?>/backend/" width="1000" height="400"></iframe> 
 
 										<script type="text/javascript">document.getElementById("formId").submit();
 </script>

@@ -77,7 +77,6 @@ color: #43b02a!important;
 <?php
 
 
-
 $error = 0;
 $success = 0;
 
@@ -93,7 +92,7 @@ if(isset($_SESSION['userdata'])){
         $msg   = $referraldata['status']. ' ! '. $referraldata['message'];
   }
 
-  // print_r($newReferral);
+   //print_r($newReferral);
 
   // if(!empty($newReferral)){
   //   foreach ($newReferral as $newReferralkey => $newReferralvalue) { 
@@ -117,13 +116,26 @@ get_header();
 ?>
 
 
-
-
 <div class="container-fluid space">
 	<div class="container blogs">
 	<div class="col-md-12 rightside">
 	    <div class="post-73 page type-page status-publish hentry">	
 			<div class="row post-area">
+
+        <div class="post-73 page type-page status-publish hentry">
+                                         <div class="row">
+                         <div class="col-md-12">
+                         <div class="col-md-4"></div>
+                         <div class="col-md-2">
+                          <a href="<?=site_url()?>/new-referral/"><button class="btn-success">New Referral</button></a>
+                          </div>
+                       
+                          </div>
+                          
+                         </div>
+                                             </div>
+
+<br><br><br>
 	            <div class="post-73 page type-page status-publish hentry">
 					<div class="col-md-12 border">
 				        <div class="line"></div>
@@ -137,7 +149,7 @@ get_header();
 							  <div class="panel-group" id="accordion">
 							
   <div class="row">
-  
+
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
 
@@ -157,9 +169,11 @@ get_header();
             </tr> 
             </thead>
             <tbody >
-            <?php
+            <?php 
             if(!empty($newReferral)){
               foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
+
+
                 ?>
             
              <tr class=" single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
@@ -176,7 +190,7 @@ get_header();
               <td>
 
               	<?php if($newReferralDatavalue['client_consent']=='1') {?>
-                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['ref_patient']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> <?php } ?>
+                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['patient_id']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> <?php } ?>
               </td>
               
             </tr>
