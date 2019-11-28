@@ -1689,16 +1689,16 @@ div#menu ul li:hover a{
    
     border-radius: 6px;
     color: #fff;
-    font-size: 25px!important;
+    font-size: 20px!important;
     padding: 10px 7px;
     margin-right: 5px;
 }
 .question {
-      font-size: 35px!important;
+      font-size: 24px!important;
     color: #43b02a;
 }
 .set-question {
-      margin-top: -38px;
+      margin-top: -35px;
      /* position: absolute;
     margin-left: 143px;*/
 }
@@ -1718,3 +1718,47 @@ div#menu ul li a {
     padding: 14px 21px!important;
     color: #fff!important;
 }*/
+/*25-11-2019 start date*/
+.nav-tabs>li>a {
+      background-color: #42af2a !important;
+          padding: 8px 5px!important;
+    color: #fff!important;
+    font-size: 15px;
+    font-weight: normal;
+}
+.nav-tabs>li>a:hover {
+    border-color: #42af2a  #42af2a  #42af2a !important; 
+}
+/*.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+     background-color: #42af2a !important;
+}*/
+
+ul.nav.nav-tabs.menu-tabs li {
+    margin: 0px;
+}
+.nav-set li a {
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 12px;
+}
+.nav-set li a:hover {
+    
+    background: none!important;
+}
+.border h4 {
+    font-weight: bold;
+}
+.pt-set {
+            padding: 6px 0 10px 20px;
+}
+.set-question a {
+    color: #43b02a;
+    position: relative;
+    font-size: 24px;
+    z-index: 100;
+}
+
+.set-question a span {
+   font-weight: normal!important;
+}

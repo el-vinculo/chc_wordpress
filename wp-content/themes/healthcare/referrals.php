@@ -166,6 +166,7 @@ get_header();
               <th>Follow-up date</th>
               <th>Agreement/<br>Notif.flag</th>
               <th>Lead<br> Navigator</th>
+              <th>Action</th>
             </tr> 
             </thead>
             <tbody >
@@ -181,12 +182,14 @@ get_header();
 
               <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
 
-              <td ><?php if($newReferralDatavalue['date']!='') {echo date('d/m/y',strtotime($newReferralDatavalue['date']));} else{echo '--';} ?></td>
+              <td ><?php if($newReferralDatavalue['submission_date']!='') {echo $newReferralDatavalue['submission_date'];} else{echo '--';} ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
               <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
               <td><?php echo $newReferralDatavalue['status']; ?></td>
               <td > <?php if($newReferralDatavalue['follow_up_date']!='') { echo date('d/m/y',strtotime($newReferralDatavalue['follow_up_date']));} else{ echo '--';} ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
+
+              <td></td>
               <td>
 
               	<?php if($newReferralDatavalue['client_consent']=='1') {?>
@@ -240,7 +243,7 @@ get_header();
   table.dataTable thead th div.DataTables_sort_wrapper {
     position: relative;
     
-    width: 100px;
+    width: 87px;
 }
 table.dataTable thead th div.DataTables_sort_wrapper span {
     position: absolute;

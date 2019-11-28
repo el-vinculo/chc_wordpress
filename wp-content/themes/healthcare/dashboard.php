@@ -58,7 +58,7 @@ background: #43b02a!important;
   .complete{
     display:none;
 }
-  .single_gallery_item, .single_item_referal, .single_item_client{
+  .single_gallery_item, .single_item_referal, .single_item_client ,.single_item_referal_outgoing{
     display: none;
   }
 
@@ -341,11 +341,11 @@ if(isset($_SESSION['userdata'])){
 
 
     /* ------------ Outgoing Referral List --------------------- */
-   /* $application_id = '5ae781855fd8db064ba82113';
+    $application_id = '5ae781855fd8db064ba82113';
     $outgoingreferraldata = outgoingReferral($email,$application_id);
     if(!empty($outgoingreferraldata['status'] == 'ok')){
       $outgoingreferral  =  $outgoingreferraldata['outgoing_referrals'];
-    }*/
+    }
 
     //echo "<pre>";
    // print_r($incomingreferral); die; 
@@ -426,10 +426,11 @@ get_header();
               <th>Follow-up date</th>
               <th>Agreement/<br>Notif.flag</th>
               <th>Lead<br> Navigator</th>
+              <th>Action</th>
             </tr> 
             </thead>
             <tbody >
-            <?php
+            <?php //print_r($newReferral);die;
             if(!empty($newReferral)){
               foreach ($newReferral as $newReferralDatakey => $newReferralDatavalue) {
                 ?>
@@ -439,12 +440,14 @@ get_header();
 
               <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
 
-              <td ><?php if($newReferralDatavalue['date']!=''){ echo date('d/m/y',strtotime($newReferralDatavalue['date']));} else{ echo '--';} ?></td>
+              <td ><?php if($newReferralDatavalue['submission_date']!=''){ echo $newReferralDatavalue['submission_date'];} else{ echo '--';} ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>
               <td><?php echo $newReferralDatavalue['ref_urgency']; ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['status']; ?></td>
               <td > <?php if($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date']!=''){echo date('d/m/y',strtotime($newReferralDatavalue['taskdetails']['referral_details']['follow_up_date']));} else{ echo '--';} ?></td>
               <td><?php echo $newReferralDatavalue['taskdetails']['referral_details']['agreement_notification_flag']; ?></td>
+
+              <td></td>
               <td >
 
                 <?php if($newReferralDatavalue['client_consent']=='1') {?>
@@ -497,7 +500,8 @@ get_header();
             if($requestreffvalue['status'] == 'Pending'){
             ?>
     
-            <tr class="accordion" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
+
+            <tr class="single_item_pendingreferal" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
               <td ><?php if($requestreffvalue['taskdetails']['task_details']['task_deadline']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline']));} else{ echo '--';} ?></td>
@@ -530,6 +534,66 @@ get_header();
 
         
       </div>
+
+
+        <h6 class="accordion black-font active"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Outgoing Referrals 
+</h6>
+<div class="panel collapse in">
+
+         <table class="table table-striped"  id="example1acceptt">
+    <tbody>
+        <thead class="ref-cls">
+           <tr class="green-bg">
+              <th class="green-bg">Patient</th>
+              <th class="green-bg">Request Title </th>
+              <th class="green-bg">Submission date </th>
+              <th class="green-bg">Source</th>
+              <th class="green-bg">Urgency</th>
+              <th class="green-bg">Status </th>
+              <th class="green-bg">Follow-up date</th>
+              <th class="green-bg">Agreement</th>
+              <th class="green-bg">Action </th>
+            </tr> 
+            <?php //print_r($outgoingreferral);die;
+            if(!empty($outgoingreferral)){
+            foreach ($outgoingreferral as $requestreffkey => $requestreffvalue) { 
+
+            ?>
+    
+            <tr class="single_item_referal_outgoing" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
+              <td ><?php echo $requestreffvalue['patient_name']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
+              <td ><?php if($requestreffvalue['taskdetails']['task_details']['task_deadline']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline']));} else{ echo '--';} ?></td>
+              <td ><?php echo $requestreffvalue['ref_source']; ?></td>
+              <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
+              <td ><?php echo $requestreffvalue['status']; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><?php echo ""; ?></td>
+              <td ><!-- <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a> -->
+              <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> 
+
+             <button data-toggle="modal"  data-target="#myRejectModal" onclick="showReferralReject('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')" class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+              <!--  <td ><input type="text" width="100%"></td> -->
+            </tr>
+            <!--  <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
+               <td colspan="9"><?php echo $requestreffvalue['task_description']; ?> </td>
+             </tr>  -->
+           
+           
+             <?php  }} ?>
+             <tr><td colspan="10"><span><a href="javascript:void(0)" id="viewmoreoutgoing">View More</a></span></td></tr>
+             
+      </thead>
+    </tbody>
+  </table>
+
+    
+    
+     
+
+        
+      </div>
+
 
 
 </div></div>
@@ -945,7 +1009,20 @@ z-index: 9;">
 
  <script type="text/javascript">
 
- jQuery(document).ready(function(){
+
+jQuery(document).ready(function(){
+
+    jQuery(".single_item_referal").slice(0, 5).toggle();
+   jQuery("#viewmore_referal").click(function(){ 
+        jQuery(".single_item_referal").append(jQuery(".single_item_referal").slice(0, 5).toggle()); 
+
+        jQuery(".single_item_referal").toggle(); 
+         $(this).text($(this).text() == 'View More' ? 'View Less' : 'View More');
+        if(jQuery(".single_item_referal").length == 0){ 
+           
+        }
+    });
+
     jQuery(".single_item_pendingreferal").slice(0, 5).toggle();
    jQuery("#viewmorepending").click(function(){ 
             jQuery(".single_item_pendingreferal").append(jQuery(".single_item_pendingreferal").slice(0, 5).toggle());
@@ -956,17 +1033,16 @@ z-index: 9;">
       }
 
     });
-});
 
 
-jQuery(document).ready(function(){
-    jQuery(".single_item_referal").slice(0, 5).toggle();
-   jQuery("#viewmore_referal").click(function(){ 
-        jQuery(".single_item_referal").append(jQuery(".single_item_referal").slice(0, 5).toggle()); 
+  jQuery(".single_item_referal_outgoing").slice(0, 5).toggle();
 
-        jQuery(".single_item_referal").toggle(); 
+   jQuery("#viewmoreoutgoing").click(function(){ 
+        jQuery(".single_item_referal_outgoing").append(jQuery(".single_item_referal_outgoing").slice(0, 5).toggle()); 
+
+        jQuery(".single_item_referal_outgoing").toggle(); 
          $(this).text($(this).text() == 'View More' ? 'View Less' : 'View More');
-        if(jQuery(".single_item_referal").length == 0){ 
+        if(jQuery(".single_item_referal_outgoing").length == 0){ 
            
         }
     });

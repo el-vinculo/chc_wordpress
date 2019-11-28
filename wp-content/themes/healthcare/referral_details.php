@@ -743,37 +743,6 @@ get_header();
 
         <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
 
-         <h4>Assessments</h4> 
-
-        <table class="table table-striped table-bordered" id="example_Assessment">
-                            <thead>
-                                <tr>
-                                    <th>Need Title</th>
-                                    <th>Need Description</th>
-                                    <th>Need Urgency</th>
-                                    <th>Need Status</th>
-                                   <!--  <th colspan="3">Action</th> -->
-                                  
-                            </thead>
-                            <tbody id="assessmentbody">
-                            <input type="hidden" id="assessmentrefiid" value="<?php echo $referralList['0']['referral_id']; ?>">
-                                <?php if(!empty($assessmentList)){ 
-                                    foreach ($assessmentList as $assessmentkey => $assessmentvalue) { ?>    
-                                <tr>
-                                   <td id="refassesstitle-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_title'];?></td>
-                                   <td id="refassessdescription-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_description'];?></td>
-                                   <td id="refassessurgency-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_urgency'];?></td>
-                                   <td id="refassessstatus-<?php echo $assessmentvalue['need_id']; ?>"><?php echo $assessmentvalue['need_status'];?></td>
-                                </tr>
-                                <?php } }else { ?>
-                                <tr>
-                                  <td colspan="7" style="color: red"><center><p>No Needs Added</p></center></td>
-                              </tr>
-
-                              <?php } ?>
-                                
-                            </tbody>
-                        </table> 
       </div>
     </div>
   </div>

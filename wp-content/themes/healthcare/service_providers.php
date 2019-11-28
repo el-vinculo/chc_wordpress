@@ -252,7 +252,7 @@ color: #43b02a!important;
 }
 .border {
     border: 1px solid #ccc;
-    height: 800px;
+   
 }
 
 /*new start css*/
@@ -283,7 +283,7 @@ span.fa.fa-print {
   padding: 8px 0!important; 
 }
 .scroll  {
-    height: 370px;
+    height: 613px;
     overflow-y: scroll;
 }
 i.fa.fa-envelope {
@@ -447,10 +447,10 @@ if(!empty($practices)){ ?>
        
           <thead>
             <tr>
+           
             <th></th>
-            <th>Provider Name</th>
-            <th>Category</th>
-            <th>Short Description</th>
+            <th></th>
+            <!-- <th>Description</th> -->
           </tr>
 
           <?php 
@@ -465,19 +465,28 @@ if(!empty($practices)){ ?>
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
          }*/
 
-         $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
-
+         $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
+         $programName= $practicesvalue["Programs"]["ProgramName"];
+         $population= $practicesvalue['Programs']["0"]["Population"];
+         $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
+         $servicesTags= $practicesvalue['Programs']["ServiceTags"];
           ?>
           <tr>
+            
             <td>
-              <i class="fa fa-map-marker"></i>
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> View</button6
+             <b>Organization Name: </b> <?php echo $name; ?>
+              <br>
 
-             >
+              <b>Program Name: </b> <?php echo $programName; ?>
+
+              <br><br>
+
             </td>
-            <td><?php echo $name; ?></td>
-            <td><?php echo ""; ?></td>
-            <td><?php  echo $shortdesc; ?></td>
+            <td style="padding-top: 10px;"><?php echo ""; ?></td>
+           <!--  <td><?php  echo $shortdesc; ?></td> -->
+            <td>             
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+            </td>
 
           </tr>
           <?php } } ?>
@@ -486,43 +495,118 @@ if(!empty($practices)){ ?>
       </table>
        
 </div>
-  <div class="col-sm-12">
+<!--   <div class="col-sm-12">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-    </div>
+    </div> -->
     </div>
  
     </div>
   </div>
   <div class="col-md-6 col-sm-12">
+          
+        
+<?php //print_r($practices); die(); ?>
     <h4>Provider Description</h4>
-    <div class="border pt-20">
-    <div class="img-logo">
-      <p>
-      <img class="img-responsive" src="https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png" style="height:73px; width:150px;float: left;">
-      <span class="fa fa-print" style="float: right;"></span>
-      </p>
-    </div>
-    <div class="provider-content">
-    <?php $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
+    <div class="border pt-set">
+    	<h4>Organization Name</h4>
+    	<p id='providernamefill'><?php $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
+         echo $providername;
+       ?></p>
+    	 <div class="tab" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs menu-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Quick Links</a></li>
+                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Program Page</a></li>
+                    <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Home Page</a></li>
+                    <li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab">Contact Page</a></li>
+                    <li role="presentation"><a href="#Section5" aria-controls="messages" role="tab" data-toggle="tab">Other Page</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabs">
+                    <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                         <div class="provider-content">
+    <?php 
          /*if(is_array($practices["0"]['organizationName']["OrgDescription"])){
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
          }else{
           $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
          }*/ 
-         $providershortdesc= $practices["0"]['Programs']["0"]["ProgramDescription"]["0"]["Text"];
-         ?>
-      <h4>Provider Name</h4>
-      <p id='providernamefill'><?php echo $providername; ?></p>
-      <h4>Short Description</h4>
-      <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
-      <h4>Mission Statement </h4>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p>
+         $programName= $practices[0]["Programs"]["ProgramName"];
+         $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+         $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+         $servicesTags= $practices[0]["Programs"]["ServiceTags"];
+         $services="";
+         $populations="";
+         foreach($practices["0"]['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" & $val==TRUE){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P"){
+            $popolations.=$arr[1]." ,";
+          }
 
-    </div>
-    <ul class="nav">
+         }
+         ?>
+      <h4>Program Name</h4>
+      <p id='programName'><?php echo $programName; ?></p>
+      <h4>Program Description</h4>
+      <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
+      <h4>Populations </h4>
+      <p id='population'><?php echo $popolations; ?></p>
+      <h4>Population Description</h4>
+      <p id='populationDesc'><?php echo $populationDesc; ?></p>
+         <h4>Services </h4>
+      <p id=''> <?php echo $services; ?></p>
+        <h4>Tags </h4>
+      <p id="servicesTags"><?php echo $servicesTags; ?></p>
+
+       <h3 style="margin-bottom: 0px;">Main Office</h3>
+    <ul class="nav nav-set">
+    	<li> <a href="#"><i class="fa fa-map-marker"></i> 400 Fairview Ave North, Suite 800
+Seattle, WA 98109</a></li>
+    	 <li> <a href="#"><i class="fa fa-user"></i> ARC King</a></li>
       <li> <a href="tel:800.443.4143"><i class="fa fa-phone"></i> 800.443.4143</a></li>
       <li><a href="mailto:contact@arcora.org"><i class="fa fa-envelope"></i> contact@arcora.org</a></li>
     </ul>
+
+     <h3 style="margin-bottom: 0px;">Branch Office</h3>
+    <ul class="nav nav-set">
+    	<li> <a href="#"><i class="fa fa-map-marker"></i> 400 Fairview Ave North, Suite 800
+Seattle, WA 98109</a></li>
+    	 <li> <a href="#"><i class="fa fa-user"></i> ARC King</a></li>
+      <li> <a href="tel:800.443.4143"><i class="fa fa-phone"></i> 800.443.4143</a></li>
+      <li><a href="mailto:contact@arcora.org"><i class="fa fa-envelope"></i> contact@arcora.org</a></li>
+    </ul>
+
+
+    </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="Section2">
+                        <h3>Section 2</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="Section3">
+                        <h3>Section 3</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                    </div>
+                      <div role="tabpanel" class="tab-pane fade" id="Section4">
+                        <h3>Section 4</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                    </div>
+                      <div role="tabpanel" class="tab-pane fade" id="Section5">
+                        <h3>Section 5</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                    </div>
+                </div>
+            </div>
+   <!--  <div class="img-logo">
+      <p>
+      <img class="img-responsive" src="https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png" style="height:73px; width:150px;float: left;">
+      <span class="fa fa-print" style="float: right;"></span>
+      </p>
+    </div> -->
+    
     <div class="text-center">
       <button type="button " class="custom-btn btn-success"> Add Task</button>
 
@@ -774,8 +858,14 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
 function showdetails(details) {
   var providername = jQuery(details).attr('data-name');
   var providershortdesc = jQuery(details).attr('data-shortdesc');
+  var programName = jQuery(details).attr('data-programName');
+  var populationDesc = jQuery(details).attr('data-populationDesc');
+  var servicesTags = jQuery(details).attr('data-servicesTags');
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
+  jQuery('#programName').html(programName);
+  jQuery('#populationDesc').html(populationDesc);
+  jQuery('#servicesTags').html(servicesTags);
 }
 	
 function getpracticsdetails(practicesname,maplink,officehours,address1,city,zipcode,state,officeemail,Services){
