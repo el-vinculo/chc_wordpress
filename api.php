@@ -1,29 +1,5 @@
 <?php
 
-function adminLogin($email,$authToken)
-{
-	   $post = ['email' => $email];
-	   $headers['Authorization'] = 'user-token: '.$authToken;  
-	   $url = "https://dev7.resourcestack.com"; 
-	   $curl_handle=curl_init();
-	   curl_setopt($curl_handle,CURLOPT_URL,$url);
-	   curl_setopt($curl_handle, CURLOPT_POST ,true);
-	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
-	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
-	   $buffer = curl_exec($curl_handle);
-	   curl_close($curl_handle);
-	   if (empty($buffer)){
-	      print "Nothing returned from url.<p>";
-	   }
-	   else{
-	  	  if(!empty($buffer)){
-	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
-	  	  	return $result;
-	  	  }
-	   }
-}
-
 function aboutUs($email,$authToken)
 {
 	   $post = ['email' => $email];
@@ -127,6 +103,7 @@ function terms($email)
 function faqs($email)
 {
 	   $post = ['email' => $email];
+	   $userauth = $_SESSION['userdata']['authentication_token'];
 	   $headers['Authorization'] = 'user-token: Do98w4b5bHTmpARtK8_V';  
 	   $url = API_URL.'get_faq'; 
 	   $curl_handle=curl_init();
@@ -1891,6 +1868,108 @@ function deleteInterviewNeed($need_id,$email)
     }
 }
 
+
+function applicationVersion($email, $authToken)
+{
+       $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+       $headers['Authorization'] = 'user-token: '.$authToken;   
+	   $post = array('email'=>$email); 
+	   $url = API_URL.'app_version'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+function chcAuth($email, $originURL)
+{
+	   $post = ['userEmail' => $email,'originURL'=>$originURL];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL."chcAuthentication"; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+function chcAuthNextStep($email)
+{
+	   $post = ['googleOauthLogin' => 'true','email'=> $email];  
+	   $url = API_URL."sessions"; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+
+function inviteOrganization($name,$email,$application_url,$task_id)
+{
+
+       $userauth = $_SESSION['userdata']['authentication_token'];
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;
+	   $post = array('task_id'=>$task_id,'user_email'=>$email,'name'=>$name,'application_url'=>$application_url,'email'=>$_SESSION['userdata']['email']); 
+       
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'org_invite');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
 
 
 

@@ -33,16 +33,7 @@ if($_SESSION['userdata']!=''){
     $email = $_SESSION['userdata']['email'];
     $authToken= $_SESSION['userdata']['authentication_token'];
 } 
-//$data = adminLogin($email, $authToken);
 
-// if($data['status']!='unauthorized'){
-//     $data= $data['about_us'][0]['body'];
-// }else{
-//     $post_12 = get_post(23); 
-//     $data = $post_12->post_content;
-// }
- 
-//get_template_part('cover');
 ?>
 <style type="text/css">
 	
@@ -69,16 +60,18 @@ color: #43b02a!important;
 				            
 							<div class="post_title"><h3>Administrator</h3></div>
 				            <div class="post-tags"></div>
+
 				            <div class="post_content">
+				            	<p class="pull-right" style="margin-right:58px"><a href="<?=site_url()?>/backend/" target="_blank">Open this link in a new tab</a></p>
 				                    <?php if($error == 0){ ?>
 
 										
-										<form action="https://dev11.resourcestack.com/backend/" method="get" target="adminAccess" id="formId">
+										<form action="<?=site_url()?>/backend/" method="get" target="adminAccess" id="formId">
 											<input type="hidden" name="email" value="<?php echo $email; ?>">
 											<input type="hidden" name="user-token" value="<?php echo $authToken; ?>">
 										</form>
 
-										<iframe name="adminAccess" id="frame1" src="https://dev11.resourcestack.com/backend" width="1000" height="400"></iframe> 
+										<iframe name="adminAccess" id="frame1" src="<?=site_url()?>/backend/" width="1000" height="400"></iframe> 
 
 										<script type="text/javascript">document.getElementById("formId").submit();
 </script>

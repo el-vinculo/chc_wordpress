@@ -9,23 +9,26 @@
  * @package WordPress
  * @subpackage healthcare
  */ 
-get_header(); 
-$healthcare= health_care_get_options();
+//get_header(); 
+//$healthcare= health_care_get_options();
 if (is_front_page())
-{	get_template_part('home','slider'); 
+{	 
+
+	//get_template_part('home','slider'); 
+     get_template_part('verify');
 	
-	if($healthcare['blog_enable'] == "1") {
-	get_template_part('home','blog');
-	}
+	// if($healthcare['blog_enable'] == "1") {
+	// get_template_part('home','blog');
+	// }
 	
-	get_footer();
+	//get_footer();
 }
 else 
 {	
 	if(is_page()){
 	get_template_part('page');
 	}else{
-		get_template_part('index');
+		get_template_part('verify');
 	}
 }	
 ?>

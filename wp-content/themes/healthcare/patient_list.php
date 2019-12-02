@@ -39,7 +39,66 @@ get_header();
 //get_template_part('cover');
 ?>
 
+<style type="text/css">
+  .green-bg{
+    background: #43b02a!important;
+  }
+  .ref-cls .green-bg{
+background: #43b02a!important;
+  }
+ .green-bg th {
+    padding: 5px 10px;
+    border-right: 1px solid #ddd;
+    font-size: 15px;
+    color: #fff;
+     background: #43b02a!important;
+}
+  .margin_left {
+    margin-left: 17px;
+}
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;
+    position: relative;
+    bottom: 18px;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+.input-group-addon:last-child span {
+    text-align: center;
+    position: relative;
+    right: 5px;
+}
+.input-group-addon:last-child {
+    border-left: 0;
+    position: absolute;
+    top: 25px;
+    text-align: center;
+    padding: 9px 15px;
+    right: 16px;
+}
 
+.view-active{
+color: #43b02a!important;
+}
+
+
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 11px!important;
+}
+</style>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css">
 <div class="container-fluid space">
 	<div class="container blogs">
 	<div class="col-md-12 rightside">
@@ -53,14 +112,7 @@ get_header();
                          <div class="col-md-2">
                          	<a  href="<?php echo site_url().'/patients/create-patient';?>"><button class="btn-success">New Client</button></a>
                          	</div>
-                         	<form  method="post">
-                         	<div class="col-md-4">
-                         	<input type="text" name="searchbox" class="form-control" placeholder="Search by first or last name..." value="<?php if(!empty($_POST['searchbox'])){ echo $_POST['searchbox']; } ?>"></div>
-                         	<div class="col-md-2">
-                        <input name="search" class="btn-success" type="submit" value="Search">
-                           
-                        
-                   </div>  </form>
+                       
                          	</div>
                          	
                          </div>
@@ -81,11 +133,11 @@ get_header();
         <?php } ?>
 				            <div class="post_content">
 				                <?php if($error == 0){ ?>
-				 				<table class="table table-striped">
+				 				<table class="table table-striped" id="example">
 									<thead>
-									    <tr>
-									      <th scope="col">CLIENT NAME</th>
-									      <th scope="col">EMAIL</th>
+									    <tr class="green-bg">
+									      <th scope="col" class="green-bg">CLIENT NAME</th>
+									      <th scope="col" class="width">EMAIL</th>
 									      <th scope="col">MOBILE</th>
 									      <th scope="col">AGE </th>
 									      <th scope="col">ACTIVE</th>
@@ -129,4 +181,43 @@ get_header();
 	<?php //get_sidebar(); ?>
 	</div>
 </div>
+
+<style>
+  table.dataTable thead th div.DataTables_sort_wrapper {
+    position: relative;
+    
+    width: 100px;
+}
+table.dataTable thead th div.DataTables_sort_wrapper span {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    right: -5px;
+   
+}
+
+</style>
 <?php get_footer(); ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
+<script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
+
+
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        deferRender:    true,
+        //scrollY:        200,
+        //scrollCollapse: true,
+        //scroller:       true
+    } );
+} );
+</script>

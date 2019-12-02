@@ -19,7 +19,16 @@ if(!empty($_POST)){
 	if(empty($_POST['email'])){
 		$error = 1;
 		$msg = 'The email should not empty.';
-	}else{
+	} if($_POST['email']!='' && $_POST['googleAuth']!=''){
+
+		$originUrl= site_url();
+	    $authResponse = chcAuth($_POST['email'], $originUrl); ?> 
+
+	<script type="text/javascript">
+		window.location.href= "<?php echo $authResponse['redirect_url'] ?>";
+	</script>
+     
+	<?php } else{
 		$email = $_POST['email'];
 		$authdata = emailverification($email);
 		/*echo "<pre>";
@@ -53,8 +62,6 @@ if(!empty($_POST)){
 
 get_header(); 
 //get_template_part('cover');
-
-
 ?>
 <div class="container-fluid space">
 	<div class="container blogs">
@@ -76,13 +83,31 @@ get_header();
 								<div class="post-tags">				</div>
 				
 	<div class="post_content">
+
+		<form class="form-horizontal" action="" method="post">
+<fieldset>
+<div class="form-group">
+
+<label class="control-label col-xs-2" for="inputEmail">Email</label>
+<div class="col-xs-10"><input id="inputEmail" class="form-control" name="email" required="" type="email" placeholder="Email" /></div>
+</div>
+<div class="form-group">
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" type="submit">Next</button></div>
+</div>
+<div class="form-group">
+<div class="col-xs-offset-2 col-xs-10"><a href="#">Forgot Password</a></div>
+<div class="col-xs-offset-2 col-xs-10" >
+<input type="checkbox" name="googleAuth" value="yes"> Sign in with GoogleOAuth2
+	<!-- <a href="<?=site_url()?>/verify?type=chcauth" class="google-sign">Sign in with GoogleOAuth2</a> --></div>
+</div></fieldset>
+</form>
         <?php if ( have_posts()): 
 			while ( have_posts() ): the_post(); ?>
 				<?php 
-				the_content(); ?>
+				//the_content(); ?>
 			<?php endwhile; 
 			else:
-				get_template_part('post','nocontent');
+				//get_template_part('post','nocontent');
 			endif; 
         ?>		
 	</div>

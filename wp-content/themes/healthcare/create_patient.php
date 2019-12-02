@@ -124,8 +124,8 @@ get_header();
 			    <div class="col-md-12">
 			    <div class="col-md-4">
 				  <div class="form-group">
-				    <label for="email">Email : <span style="color: red">*</span></label>
-				    <input type="email" class="form-control" id="referral_name" name="patient_email" placeholder="Email" required="required">
+				    <label for="email">Email : </label>
+				    <input type="email" class="form-control" id="referral_name" name="patient_email" placeholder="Email" >
 				  </div>
 				</div>
 				<div class="col-md-4">

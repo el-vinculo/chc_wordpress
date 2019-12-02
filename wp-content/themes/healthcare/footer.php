@@ -21,18 +21,23 @@ $health_data= health_care_get_options(); ?>
 		'before_title'  => '<h3>',
 		'after_title'   => '</h3><div class="ln white"></div><span class="fa fa-heart white hrt"></span>' );
 	
+  //the_widget('WP_Widget_Categories', null, $footer_default);
 	the_widget('WP_Widget_Categories', null, $footer_default);
 	the_widget('WP_Widget_Pages', null, $footer_default);
 	the_widget('WP_Widget_Archives', null, $footer_default);
 	the_widget('WP_Widget_Calendar', null, $footer_default);	
 	} ?>
+
+
 	</div>
 </div>
 <div class="container-fluid footer-bottom1 footer1">
 	<div class="container">
 		<div class="row">
+
 			<div class="col-md-6 col-sm-6">
 				<div class="footer-nav">
+
 					 <?php
                     $args = array( 'menu' => 'footer Menu', 'container' => '', 'container_class' => '', 'container_id' => '', 'menu_class' => 'nav', 'menu_id' => 'nav',
                     'echo' => true, 'fallback_cb' => 'wp_page_menu', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>', 'item_spacing' => 'preserve',
@@ -51,6 +56,10 @@ $health_data= health_care_get_options(); ?>
 			</div>
 			<div class="col-md-6 col-sm-6">
 				<div class="footer_copyright">
+          <?php $email = $_SESSION['userdata']['email'];
+               $authToken = $_SESSION['userdata']['authentication_token'];
+                ?>
+         <p class="text-right">Application Version: <?php $appVersion= applicationVersion($email, $authToken); echo $appVersion['version'];?></p>
 					<p class="text-right"><?php echo esc_attr($health_data['footer_copyright']); ?> 
 						<!-- <a href="<?php echo esc_url($health_data['footer_developed_by_link']); ?>" target="_blank">
 							<?php echo esc_attr($health_data['footer_developed_by']); ?>
@@ -65,8 +74,8 @@ $health_data= health_care_get_options(); ?>
 		</div>
 	</div>
 </div>
-<a href="#top" class="scrol enigma_scrollup"><span class="fa fa-angle-up"></span></a>
-<!-- End Footer -->
+<!-- <a href="#top" class="scrol enigma_scrollup"><span class="fa fa-angle-up"></span></a>
+ --><!-- End Footer -->
 <?php get_template_part('bg', 'css') ;?>
 <?php wp_footer(); ?>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

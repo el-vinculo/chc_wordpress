@@ -278,6 +278,8 @@ function ledgertaskdeatillist(){
         $task_id = $_POST['task_id'];
         $email       = $_POST['email'];
         $ledgers = gettaskledgerdetails($email,$task_id);
+
+        //print_r($ledgers);
         if(!empty($ledgers)) {
            if($ledgers['status'] == 'ok'){ 
            	  $ledgerslist = $ledgers['ledger_details'];
@@ -292,56 +294,123 @@ function ledgertaskdeatillist(){
         }
         
         $msgHtml = ledgerHtml($ledgerslist);
-        echo  $msgHtml;
+        return $msgHtml;
     }   
 }
 
 
 function ledgerHtml($ledgerslist){
 
-
+ //echo "<pre>";
+   //print_r($ledgerslist); 
   
    if(!empty($ledgerslist)){ 
-   	//echo "<pre>";
-   	//print_r($ledgerslist['internal_record_array']); 
+  
+     $html = "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
+            <tr><th colspan='4'>Internal</th></tr><tr><th>Date of Change</th><th>Field Name</th>
+            <th>New Value</th><th>Old Value</th></tr><tbody>";
 
     if(!empty($ledgerslist['internal_record_array'])){ 
         foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {  
     if(!empty($internalledvalue['changes']) && (!empty($internalledvalue['created_at']))){
 
-    $html.= "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
-            <tr><th colspan='4'>Internal</th></tr><tr><th>Date of Change</th><th>Field Name</th>
-            <th>New Value</th><th>Old Value</th></tr><tbody>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Task Type</td><td>".$internalledvalue['changes']['1']['task_type']."</td><td>".$internalledvalue['changes']['0']['task_type']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Task Status</td><td>".$internalledvalue['changes']['1']['task_status']."</td><td>".$internalledvalue['changes']['0']['task_status']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Task Owner</td><td>".$internalledvalue['changes']['1']['task_owner']."</td><td>".$internalledvalue['changes']['0']['task_owner']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Provider</td>".$internalledvalue['changes']['1']['provider']."<td></td><td>".$internalledvalue['changes']['0']['provider']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Task Deadline</td><td>".$internalledvalue['changes']['1']['task_deadline']."</td><td>".$internalledvalue['changes']['0']['task_deadline']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Task Description</td><td>".$internalledvalue['changes']['1']['task_description']."</td><td>".$internalledvalue['changes']['0']['task_description']."</td></tr>
-            <tr><td>".$internalledvalue['created_at']."</td><td>Patient Document</td><td>".$internalledvalue['changes']['1']['patient_document']."</td><td>".$internalledvalue['changes']['0']['patient_document']."</td></tr>
-          </tbody></thead></table>";    
+       foreach($internalledvalue['changes'] as $key=>$value) {
+
+            if($internalledvalue['changes'][$key]['task_type']!='') {
+
+           $html.= "<tr><td>".$internalledvalue['created_at']."</td><td>Task Type</td><td>".$internalledvalue['changes'][$key+1]['task_type']."</td><td>".$internalledvalue['changes'][$key]['task_type']."</td></tr>";
+       }
+
+
+           if($internalledvalue['changes'][$key]['task_status']!='') {
+
+           $html.=  "<tr><td>".$internalledvalue['created_at']."</td><td>Task Status</td><td>".$internalledvalue['changes'][$key+1]['task_status']."</td><td>".$internalledvalue['changes'][$key]['task_status']."</td></tr>";
+         }
+            
+            if($internalledvalue['changes'][$key]['task_owner']!='') {
+
+             $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Task Owner</td><td>".$internalledvalue['changes'][$key+1]['task_owner']."</td><td>".$internalledvalue['changes'][$key]['task_owner']."</td></tr>";
+
+          }
+
+          if($internalledvalue['changes'][$key]['provider']!='') {
+
+            $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Provider</td>".$internalledvalue['changes'][$key+1]['provider']."<td></td><td>".$internalledvalue['changes'][$key]['provider']."</td></tr>";
+
+          }
+
+
+            if($internalledvalue['changes'][$key]['task_deadline']!='') {
+            $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Task Deadline</td><td>".$internalledvalue['changes'][$key+1]['task_deadline']."</td><td>".$internalledvalue['changes'][$key]['task_deadline']."</td></tr>";
+          }
+
+          if($internalledvalue['changes'][$key]['task_description']!='') {
+
+            $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Task Description</td><td>".$internalledvalue['changes'][$key+1]['task_description']."</td><td>".$internalledvalue['changes'][$key]['task_description']."</td></tr>";
+
+          }
+
+          if($internalledvalue['changes'][$key]['patient_document']!='') {
+           
+            $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Patient Document</td><td>".$internalledvalue['changes']['1']['patient_document']."</td><td>".$internalledvalue['changes'][$key+1]['patient_document']."</td></tr>";
+
+          }
+
+           $html.="</tbody></thead></table>";
+
+           }    
     }     
-    } }else { 
+    } } else{ 
     $html.=  "<table><tr><td colspan='4'>no record found </td></tr></table>";                        
     } 
                                 
-
+    $html.= "<table class='table table-striped table-bordered' id='11externaltabledata'><thead>
+            <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
+            <th>New Value</th><th>Old Value</th></tr><tbody>";
 
     if(!empty($ledgerslist['external_record_array'])){ 
         foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  if(!empty($externalledvalue['changes'])){
 
-    $html.= "<table class='table table-striped table-bordered' id='11externaltabledata'><thead>
-            <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
-            <th>New Value</th><th>Old Value</th></tr><tbody>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Task Type</td><td>".$externalledvalue['changes']['1']['task_type']."</td><td>".$externalledvalue['changes']['0']['task_type']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Task Status</td><td>".$externalledvalue['changes']['1']['task_status']."</td><td>".$externalledvalue['changes']['0']['task_status']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Task Owner</td><td>".$externalledvalue['changes']['1']['task_owner']."</td><td>".$externalledvalue['changes']['0']['task_owner']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Provider</td>".$externalledvalue['changes']['1']['provider']."<td></td><td>".$externalledvalue['changes']['0']['provider']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Task Deadline</td><td>".$externalledvalue['changes']['1']['task_deadline']."</td><td>".$externalledvalue['changes']['0']['task_deadline']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Task Description</td><td>".$externalledvalue['changes']['1']['task_description']."</td><td>".$externalledvalue['changes']['0']['task_description']."</td></tr>
-            <tr><td>".$externalledvalue['created_at']."</td><td>Patient Document</td><td>".$externalledvalue['changes']['1']['patient_document']."</td><td>".$externalledvalue['changes']['0']['patient_document']."</td></tr>
-          </tbody></thead></table>";    
-   } } }else { 
+         foreach($externalledvalue['changes'] as $key=>$value){
+
+            if($externalledvalue['changes'][$key]['task_type']!='') { 
+
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Type</td><td>".$externalledvalue['changes'][$key+1]['task_type']."</td><td>".$externalledvalue['changes'][$key]['task_type']."</td></tr>";
+
+          }
+           
+           if($externalledvalue['changes'][$key]['task_status']!='') {
+
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Status</td><td>".$externalledvalue['changes'][$key+1]['task_status']."</td><td>".$externalledvalue['changes'][$key]['task_status']."</td></tr>";
+          }
+
+           if($externalledvalue['changes'][$key]['task_owner']!='') {
+
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Owner</td><td>".$externalledvalue['changes'][$key+1]['task_owner']."</td><td>".$externalledvalue['changes'][$key]['task_owner']."</td></tr>";
+
+          }
+
+          if($externalledvalue['changes'][$key]['provider']!='') {
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Provider</td>".$externalledvalue['changes'][$key+1]['provider']."<td></td><td>".$externalledvalue['changes'][$key]['provider']."</td></tr>";
+          }
+
+          if($externalledvalue['changes'][$key]['task_deadline']!='') {
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Deadline</td><td>".$externalledvalue['changes'][$key+1]['task_deadline']."</td><td>".$externalledvalue['changes'][$key]['task_deadline']."</td></tr>";
+          }
+
+         if($externalledvalue['changes'][$key]['task_description']!='') {
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Description</td><td>".$externalledvalue['changes'][$key+1]['task_description']."</td><td>".$externalledvalue['changes'][$key]['task_description']."</td></tr>";
+          }
+
+          if($externalledvalue['changes'][$key]['patient_document']!='') {
+
+            $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Patient Document</td><td>".$externalledvalue['changes'][$key+1]['patient_document']."</td><td>".$externalledvalue['changes'][$key]['patient_document']."</td></tr>";
+
+          }
+          $html.="</tbody></thead></table>"; 
+
+        }   
+   } } } else{ 
     $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
     } 
 
@@ -622,6 +691,32 @@ function updatePatientReferralTask(){
     return $error;
 }
 
+function inviteOrg(){
+    $error = 0;
+    if(!empty($_POST)){
+        $task_id  = $_POST['task_id'];
+        $email   = $_POST['email'];
+        $name   = $_POST['name'];
+        $application_url   = $_POST['application_url'];
+        $invite = inviteOrganization($name,$email,$application_url,$task_id);
+        if(!empty($invite)){
+            if($invite['status'] == 'ok'){
+                $error = '11';
+            }else{
+                $error = 1;
+            }
+        }else{
+            $error = 3;
+        }
+    }else{
+
+        $error = 2;
+        echo "gofalse"; die; 
+    }
+
+    return $error;
+}
+
 function selectserviceprovider(){
     if(!empty($_POST)){ 
         $serachData = $_POST;
@@ -683,7 +778,7 @@ function rejectreferralbyclient()
         $accept = rejectionferral($referrals,$email);
         if(!empty($accept)){
             if($accept['status'] == 'ok'){
-                $error = 11;
+                $error = '11';
             }else{
                 $error = 1;
             }
