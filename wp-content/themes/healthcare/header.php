@@ -60,11 +60,6 @@ if($logodata['status']!='unauthorized'){
                 <div class="signup-link">
 					<a href="<?=site_url()?>/backend/registration_requests/new" target="_blank">Sign up</a>
 				</div>
-
-				<div class="login-link">
-					<a href="<?=site_url()?>/verify">Login</a>
-				</div>
-
               <?php } else{?>
 
                <div style="position: absolute;right: 102px;top: 50px;width: auto;">
@@ -79,7 +74,14 @@ if($logodata['status']!='unauthorized'){
      ?>
                	<div class="dropdown">
 					<a href="#" class=" dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;font-weight: normal;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
-				
+			<!-- 		<ul class="dropdown-menu" style="margin: 10px 0 0; margin-top: 84px;
+    margin-left: -34px!important;">
+    <li><a href="#">Report</a></li>
+    <li><a href="#">Setting</a></li>
+
+    <li><a href="<?=site_url()?>/logout">Logout</a></li>
+    
+  </ul> -->
 
   <?php  wp_nav_menu(array(
         'menu'            => 'usermenu',
@@ -101,14 +103,17 @@ if($logodata['status']!='unauthorized'){
         'theme_location'  => '',
     ));	 ?>
 
-
 				</div>
 					<div class="set-question" style="float: right;">
 						<a href="<?=site_url()?>/faq"><span>?</span> </a>
 					</div>
 				</div>
 
-			<div id="toggle">
+
+				 <?php } ?>
+				
+                  
+				<div id="toggle">
 					 
 					  <figure class="menu-fig">
 					  	 
@@ -118,6 +123,7 @@ if($logodata['status']!='unauthorized'){
 					  </figure>
 					</div>
 					<div id="menu">
+           <!--  <div class="collapse navbar-collapse" id="navbar-collapse-1">      -->          
 						<?php  wp_nav_menu( array(
 						'theme_location' => 'primary',
 						'menu_class' => 'nav navbar-nav navbar-right',
@@ -125,14 +131,8 @@ if($logodata['status']!='unauthorized'){
 						'walker' => new weblizar_nav_walker(),
 						)
 						);	 ?>						 
-                  </div> 	
-
-
-
-				 <?php } ?>
-				
-                  
-				
+						 
+            </div><!-- /.navbar-collapse -->
 				</div>
 			
 			

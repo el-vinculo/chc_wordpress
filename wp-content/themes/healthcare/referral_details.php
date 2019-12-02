@@ -507,7 +507,6 @@ get_header();
 
 <?php   $patientdata = patientDetails($patient_id,$email);
 
-
   if(!empty($patientdata['status'] == 'ok')){
 
       $patientsDeatils = $patientdata['patients_details'];
@@ -660,10 +659,7 @@ get_header();
                                     <td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
                                     <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
                                     <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
-	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button> <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $referralList['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button>
-
-                            
-                                    </td>
+	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button> <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $referralList['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php  }else{ ?>
 
@@ -2314,9 +2310,6 @@ function updateInterviewSolutiondeatils(iid) {
     var solution_title = $("#solution_title_"+neediid+"_"+obsiid+"_"+soliid).val();
     var solution_description = $("#solution_desc_"+neediid+"_"+obsiid+"_"+soliid).val();
     var solution_provider = $("#solution_provider_"+neediid+"_"+obsiid+"_"+soliid).val();
-
-    //alert(solution_iid);
-
     //alert(solution_description);
     //alert(solution_provider);
 
@@ -2497,35 +2490,4 @@ function removeobstr(id){
       }
 
 }
-
-function inviteOrg(){
-
-    var task_id  = document.getElementById("task_id_for_invite").value;
-    var name  = document.getElementById("org_name").value;
-    var email  = document.getElementById("org_email").value;
-    var application_url   = document.getElementById("application_url").value;
-
-       jQuery.ajax({
-            type: 'post',
-            url: ajax_url,        
-            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url, funtion:'inviteOrg'},
-            success: function (res) {
-              //alert(res);
-              //exit;
-              //console.log(res);exit;
-              var trimStr = jQuery.trim(res);
-              if(trimStr == '11'){
-                jQuery('.response').html('<div class="alert-success">Successfully Invited</div>');
-                $('#inviteOrgForm' ).each(function(){
-                    this.reset();
-                 });        
-              }else{
-                jQuery('.response').html('<div class="alert-danger">Error ! Please try again</div>');
-              }
-              
-            }
-          });
-
-}
-    
 </script>

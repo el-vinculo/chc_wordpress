@@ -472,11 +472,6 @@ if(!empty($practices)){ ?>
          $population= $practicesvalue['Programs']["0"]["Population"];
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
-
-         //$siteid =  $practicesvalue["Programs"][ "programSites"];
-
-       //  echo "<pre>";
-        // print_r($siteid); die;
           ?>
           <tr>
             
