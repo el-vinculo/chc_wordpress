@@ -357,12 +357,12 @@ get_header();
           <option value="Citizenship" <?php if(!empty($_POST['population']) && (in_array('Citizenship', $_POST['population']))){ echo "selected"; } ?>>Citizenship</option>
           <option value="Disabled" <?php if(!empty($_POST['population']) && (in_array('Disabled', $_POST['population']))){ echo "selected"; } ?>>Disabled</option>
           <option value="Family" <?php if(!empty($_POST['population']) && (in_array('Family',$_POST['population']))){ echo "selected"; } ?>>Families w/ Children</option>
-          <option value="LGBTQ" <?php if(!empty($_POST['population']) && (in_array('LGBTQ',$_POST['population']))){ echo "selected"; } ?>>LGBT</option>
+          <option value="LGBTQ" <?php if(!empty($_POST['population']) && (in_array('LGBTQ',$_POST['population']))){ echo "selected"; } ?>>LGBTQ</option>
           <option value="LowIncome" <?php if(!empty($_POST['population']) && (in_array('LowIncome',$_POST['population']))){ echo "selected"; } ?>>Very Low-Income</option>
-          <option value="Native" <?php if(!empty($_POST['population']) && (in_array('Native',$_POST['population']))){ echo "selected"; } ?>>Native American</option>
+          <option value="Native" <?php if(!empty($_POST['population']) && (in_array('Native',$_POST['population']))){ echo "selected"; } ?>>Native</option>
           <option value="Other" <?php if(!empty($_POST['population']) && (in_array('Other', $_POST['population']))){ echo "selected"; } ?>>Other</option>
           <option value="Senior" <?php if(!empty($_POST['population']) && (in_array('Senior',$_POST['population']))){ echo "selected"; } ?>>Senior</option>
-          <option value="Veteran" <?php if(!empty($_POST['population']) && (in_array('Veteran',$_POST['population']))){ echo "selected"; } ?>>Veteran/Military</option>
+          <option value="Veteran" <?php if(!empty($_POST['population']) && (in_array('Veteran',$_POST['population']))){ echo "selected"; } ?>>Veteran</option>
         </select>
       </th>
       <th scope="col" class="sec">
