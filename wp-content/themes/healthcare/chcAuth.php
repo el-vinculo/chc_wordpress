@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Template Name: chcAuth
@@ -38,4 +39,6 @@ if($_GET['email']!=''){
 	<?php //get_sidebar(); ?>
 	</div>
 </div>
+
+
 <?php get_footer(); ?>
