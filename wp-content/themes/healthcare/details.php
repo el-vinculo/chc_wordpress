@@ -117,7 +117,7 @@ get_header();
 					<div class="col-md-12 border">
 				        <div class="line"></div>
 				        <?php if($error == 0){ ?>
-							<div class="post_title"><h3>Deatils
+							<div class="post_title"><h3>Details
 								
 
 							</h3></div>

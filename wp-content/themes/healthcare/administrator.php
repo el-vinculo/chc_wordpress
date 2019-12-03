@@ -60,7 +60,9 @@ color: #43b02a!important;
 				            
 							<div class="post_title"><h3>Administrator</h3></div>
 				            <div class="post-tags"></div>
+
 				            <div class="post_content">
+				            	<p class="pull-right" style="margin-right:58px"><a href="<?=site_url()?>/backend/" target="_blank">Open this link in a new tab</a></p>
 				                    <?php if($error == 0){ ?>
 
 										

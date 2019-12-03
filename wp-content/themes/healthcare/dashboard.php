@@ -58,7 +58,9 @@ background: #43b02a!important;
   .complete{
     display:none;
 }
-  .single_gallery_item, .single_item_referal, .single_item_client ,.single_item_referal_outgoing{
+  .single_gallery_item, .single_item_referal, .single_item_client ,.single_item_referal_outgoing,
+  .single_item_pendingreferal 
+ {
     display: none;
   }
 
@@ -239,7 +241,7 @@ i.fa.fa-sort-desc {
     top: -3px;
 }
 .panel table tbody tr td{
-  padding: 10px;
+  padding: 7px;
 }
 .gray-text {
     color: #848282;
@@ -481,7 +483,7 @@ get_header();
 <div class="panel collapse in">
 
          <table class="table table-striped"  id="example1acceptt">
-    <tbody>
+   
         <thead class="ref-cls">
            <tr class="green-bg">
               <th class="green-bg">Patient</th>
@@ -494,13 +496,16 @@ get_header();
               <th class="green-bg">Agreement</th>
               <th class="green-bg">Action </th>
             </tr> 
+             </thead> 
+             <tbody>
             <?php
             if(!empty($incomingreferral)){
+             // echo "<pre>";
+            //  print_r($incomingreferral); 
             foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
             if($requestreffvalue['status'] == 'Pending'){
             ?>
-    
-
+          
             <tr class="single_item_pendingreferal" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
@@ -516,15 +521,16 @@ get_header();
              <button data-toggle="modal"  data-target="#myRejectModal" onclick="showReferralReject('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')" class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
-       <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
-               <td colspan="9"><?php echo $requestreffvalue['task_description']; ?> </td>
+       <tr class="collapse " id="requestref-<?php echo $requestreffkey; ?>" >
+               <td colspan="9"><div><?php echo $requestreffvalue['task_description']; ?></div> </td>
              </tr> 
            
+
            
              <?php } }} ?>
              <tr><td colspan="10"><span><a href="javascript:void(0)" id="viewmorepending">View More</a></span></td></tr>
              
-      </thead>
+     
     </tbody>
   </table>
 
@@ -1025,7 +1031,7 @@ jQuery(document).ready(function(){
 
     jQuery(".single_item_pendingreferal").slice(0, 5).toggle();
    jQuery("#viewmorepending").click(function(){ 
-            jQuery(".single_item_pendingreferal").append(jQuery(".single_item_pendingreferal").slice(0, 5).toggle());
+            jQuery(".single_item_pendingreferal ").append(jQuery(".single_item_pendingreferal").slice(0, 5).toggle());
       jQuery(".single_item_pendingreferal").toggle(); 
          $(this).text($(this).text() == 'View More' ? 'View Less' : 'View More');
         if(jQuery(".single_item_pendingreferal").length == 0){ 

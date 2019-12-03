@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/jquery.multiselect.css">
   <?php wp_head(); ?>
+
+ <style type="text/css">
+ .login-link{
+    position: absolute;
+    right: 65px;
+    top: 59px;
+ 	}
+
+ .login-link a {
+    border: 1px solid #42af2a;
+    padding: 10px 19px;
+    border-radius: 100px;
+    color: #42af2a;
+}
+ </style>
 </head>
 <?php $health_data= health_care_get_options(); ?>
 <body <?php if($health_data['box_layout']==2) { body_class('boxed'); } else body_class(); ?>>
@@ -59,7 +74,6 @@ if($logodata['status']!='unauthorized'){
      ?>
                	<div class="dropdown">
 					<a href="#" class=" dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;font-weight: normal;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
-					
 			<!-- 		<ul class="dropdown-menu" style="margin: 10px 0 0; margin-top: 84px;
     margin-left: -34px!important;">
     <li><a href="#">Report</a></li>
@@ -89,13 +103,11 @@ if($logodata['status']!='unauthorized'){
         'theme_location'  => '',
     ));	 ?>
 
-
 				</div>
 					<div class="set-question" style="float: right;">
 						<a href="<?=site_url()?>/faq"><span>?</span> </a>
 					</div>
 				</div>
-
 
 
 				 <?php } ?>
@@ -118,7 +130,7 @@ if($logodata['status']!='unauthorized'){
 						'fallback_cb' => 'weblizar_fallback_page_menu',
 						'walker' => new weblizar_nav_walker(),
 						)
-						);	 ?>
+						);	 ?>						 
 						 
             </div><!-- /.navbar-collapse -->
 				</div>

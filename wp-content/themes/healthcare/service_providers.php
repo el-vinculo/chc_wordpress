@@ -458,6 +458,8 @@ if(!empty($practices)){ ?>
            // echo "<pre>";
            // print_r($practices); die; 
          foreach ($practices as $practiceskey => $practicesvalue) { 
+           //echo "<pre>";
+           //print_r($practicesvalue); die; 
          $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
          /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
@@ -467,7 +469,21 @@ if(!empty($practices)){ ?>
 
          $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
          $programName= $practicesvalue["Programs"]["ProgramName"];
-         $population= $practicesvalue['Programs']["0"]["Population"];
+         $services="";
+         $popolations="";
+         foreach($practicesvalue['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" && $val=="TRUE"){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P" && $val=="TRUE"){
+            $popolations.=$arr[1]." ,";
+          }
+
+         }
+
+
+
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
           ?>
@@ -485,11 +501,11 @@ if(!empty($practices)){ ?>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
             <td>             
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo $popolations; ?>" data-services="<?php echo $services; ?>"style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
             </td>
 
           </tr>
-          <?php } } ?>
+          <?php $services=""; $popolations="";} } ?>
          
         </thead>
       </table>
@@ -536,13 +552,15 @@ if(!empty($practices)){ ?>
          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
          $servicesTags= $practices[0]["Programs"]["ServiceTags"];
          $services="";
-         $populations="";
+         $popolations="";
+
+
          foreach($practices["0"]['Programs'] as $key=>$val){
           $arr=explode("_",$key);
-          if($arr[0]=="S" & $val==TRUE){
+          if($arr[0]=="S" && $val=="TRUE"){
             $services .= $arr[1]." ,";
           }
-          if($arr[0]=="P"){
+          if($arr[0]=="P" && $val=="TRUE"){
             $popolations.=$arr[1]." ,";
           }
 
@@ -557,7 +575,7 @@ if(!empty($practices)){ ?>
       <h4>Population Description</h4>
       <p id='populationDesc'><?php echo $populationDesc; ?></p>
          <h4>Services </h4>
-      <p id=''> <?php echo $services; ?></p>
+      <p id='services'> <?php echo $services; ?></p>
         <h4>Tags </h4>
       <p id="servicesTags"><?php echo $servicesTags; ?></p>
 
@@ -859,12 +877,16 @@ function showdetails(details) {
   var providername = jQuery(details).attr('data-name');
   var providershortdesc = jQuery(details).attr('data-shortdesc');
   var programName = jQuery(details).attr('data-programName');
+  var population = jQuery(details).attr('data-population');
   var populationDesc = jQuery(details).attr('data-populationDesc');
+  var services = jQuery(details).attr('data-services');
   var servicesTags = jQuery(details).attr('data-servicesTags');
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
   jQuery('#programName').html(programName);
+  jQuery('#population').html(population);
   jQuery('#populationDesc').html(populationDesc);
+  jQuery('#services').html(services);
   jQuery('#servicesTags').html(servicesTags);
 }
 	

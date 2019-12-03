@@ -605,8 +605,8 @@ get_header();
 				</div>  
 				<div class="col-md-4">
 				  <div class="form-group">
-				    <label for="pwd">Email:<span style="color: red">*</span></label>
-				    <input type="email" name="patient_email" class="form-control" id="email" placeholder="Email" value="<?php echo $patientsDeatils['patient_email']; ?>" required>
+				    <label for="pwd">Email:</label>
+				    <input type="email" name="patient_email" class="form-control" id="email" placeholder="Email" value="<?php echo $patientsDeatils['patient_email']; ?>" >
 				  </div>
 				</div>
 				<div class="col-md-4">
