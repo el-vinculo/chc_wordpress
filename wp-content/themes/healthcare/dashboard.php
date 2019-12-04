@@ -354,7 +354,7 @@ if(isset($_SESSION['userdata'])){
     /* -------------------------------------------------*/
     
     /* ------------ Client List --------------------- */
-    $patientdata = patientlist($email,$search);
+  /*  $patientdata = patientlist($email,$search);
     if(!empty($patientdata['status'] == 'ok')){
        $patients = $patientdata['patients_details'];
       // $patients = array_slice($patients_output, 0, 5);
@@ -362,7 +362,7 @@ if(isset($_SESSION['userdata'])){
     }else{
       $error = 1;
       $patients = array();
-    }
+    } */
 
    
     /* -------------------------------------------------*/
@@ -373,6 +373,8 @@ if(isset($_SESSION['userdata'])){
     }
   }*/
 
+
+/*
   if(!empty($newReferral)){
     foreach ($newReferral as $newReferralkey => $newReferralvalue) { 
         $newReferral[$newReferralkey]['taskdetails'] = getreferraldetails($email,$newReferralvalue['ref_id']);
@@ -384,7 +386,7 @@ if(isset($_SESSION['userdata'])){
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
          
     }
-  }
+  } */
 
 
 }else{

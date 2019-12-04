@@ -357,12 +357,12 @@ get_header();
           <option value="Citizenship" <?php if(!empty($_POST['population']) && (in_array('Citizenship', $_POST['population']))){ echo "selected"; } ?>>Citizenship</option>
           <option value="Disabled" <?php if(!empty($_POST['population']) && (in_array('Disabled', $_POST['population']))){ echo "selected"; } ?>>Disabled</option>
           <option value="Family" <?php if(!empty($_POST['population']) && (in_array('Family',$_POST['population']))){ echo "selected"; } ?>>Families w/ Children</option>
-          <option value="LGBTQ" <?php if(!empty($_POST['population']) && (in_array('LGBTQ',$_POST['population']))){ echo "selected"; } ?>>LGBT</option>
+          <option value="LGBTQ" <?php if(!empty($_POST['population']) && (in_array('LGBTQ',$_POST['population']))){ echo "selected"; } ?>>LGBTQ</option>
           <option value="LowIncome" <?php if(!empty($_POST['population']) && (in_array('LowIncome',$_POST['population']))){ echo "selected"; } ?>>Very Low-Income</option>
-          <option value="Native" <?php if(!empty($_POST['population']) && (in_array('Native',$_POST['population']))){ echo "selected"; } ?>>Native American</option>
+          <option value="Native" <?php if(!empty($_POST['population']) && (in_array('Native',$_POST['population']))){ echo "selected"; } ?>>Native</option>
           <option value="Other" <?php if(!empty($_POST['population']) && (in_array('Other', $_POST['population']))){ echo "selected"; } ?>>Other</option>
           <option value="Senior" <?php if(!empty($_POST['population']) && (in_array('Senior',$_POST['population']))){ echo "selected"; } ?>>Senior</option>
-          <option value="Veteran" <?php if(!empty($_POST['population']) && (in_array('Veteran',$_POST['population']))){ echo "selected"; } ?>>Veteran/Military</option>
+          <option value="Veteran" <?php if(!empty($_POST['population']) && (in_array('Veteran',$_POST['population']))){ echo "selected"; } ?>>Veteran</option>
         </select>
       </th>
       <th scope="col" class="sec">
@@ -455,8 +455,8 @@ if(!empty($practices)){ ?>
 
           <?php 
           if(!empty($practices)){
-           // echo "<pre>";
-           // print_r($practices); die; 
+          // echo "<pre>";
+           //print_r($practices); die; 
          foreach ($practices as $practiceskey => $practicesvalue) { 
            //echo "<pre>";
            //print_r($practicesvalue); die; 
@@ -501,7 +501,7 @@ if(!empty($practices)){ ?>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
             <td>             
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo $popolations; ?>" data-services="<?php echo $services; ?>"style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>"style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
             </td>
 
           </tr>
@@ -571,11 +571,11 @@ if(!empty($practices)){ ?>
       <h4>Program Description</h4>
       <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
       <h4>Populations </h4>
-      <p id='population'><?php echo $popolations; ?></p>
+      <p id='population'><?php echo rtrim($popolations, ','); ?></p>
       <h4>Population Description</h4>
       <p id='populationDesc'><?php echo $populationDesc; ?></p>
          <h4>Services </h4>
-      <p id='services'> <?php echo $services; ?></p>
+      <p id='services'><?php echo rtrim($services, ','); ?></p>
         <h4>Tags </h4>
       <p id="servicesTags"><?php echo $servicesTags; ?></p>
 

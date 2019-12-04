@@ -104,11 +104,7 @@ function faqs($email)
 {
 	   $post = ['email' => $email];
 	   $userauth = $_SESSION['userdata']['authentication_token'];
-
 	   $headers['Authorization'] = 'user-token: '.$userauth;  
-
-	  // $headers['Authorization'] = 'user-token: Do98w4b5bHTmpARtK8_V';  
-
 	   $url = API_URL.'get_faq'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$url);

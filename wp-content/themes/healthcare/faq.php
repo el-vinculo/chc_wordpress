@@ -17,7 +17,7 @@
 
 get_header(); 
 
-$email = 'defaultuser@test.com';
+$email = $_SESSION['userdata']['email'];
 $faqsdata = faqs($email);
 if(!empty($faqsdata)){
     $faqlist = $faqsdata['faqs'];
