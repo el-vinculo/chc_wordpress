@@ -602,6 +602,8 @@ get_header();
   </div>
 </div>
 <!-- client detail pop up -->
+<!-- client detail pop up -->
+<!-- client detail pop up -->
 				            <div class="post-tags"></div>
 				            <div class="post_content">
 							  <div class="panel-group" id="accordion">

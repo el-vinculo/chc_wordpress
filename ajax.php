@@ -800,20 +800,23 @@ function rejectreferralbyclient()
 function providerListHtml($practices,$id){ 
 
     if(!empty($practices)){ 
-    $html = "<div class='row'><div class='col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th>Provider Name</th><th>Category</th><th>Short Descripation</th></tr>";
+    $html = "<div class='row'><div class='col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
      foreach ($practices as $practiceskey => $practicesvalue) { 
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
      $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
+     $programName= $practicesvalue["Programs"]["ProgramName"];
      /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
       $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
      }else{
       $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
     }*/
-    $html.= "<tr><td><i class='fa fa-map-marker'<button type='button' id='".$name."' value='".$shortdesc."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this.id,this.value)' class='custom-btn btn-success'> View</button></td><td>".$name."</td><td></td><td>".$shortdesc."</td></tr>";
+    $html.= "<tr>
+    <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
+<td><button type='button' id='".$name."' value='".$shortdesc."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this.id,this.value)' class='custom-btn btn-success'> Show Detail</button></td>
+    </tr>";
     }}
-    $html.= "</thead></table></div></div><div class='col-sm-12'>   <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin' width='100%' height='350px' frameborder='0' style='border:0;' allowfullscreen=''></iframe></div></div></div><div class='col-md-6 col-sm-12'><h4>Provider Descripation</h4><div class='border pt-20'><div class='img-logo'><p><img class='img-responsive' src='https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png' style='height:73px; width:150px;float: left;'>
-      <span class='fa fa-print' style='float: right;'></span></p></div><div class='provider-content'>";
+    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='col-md-6 col-sm-12 border pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
        $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
 
 
