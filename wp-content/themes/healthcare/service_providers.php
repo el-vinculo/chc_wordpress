@@ -409,7 +409,7 @@ get_header();
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
          // echo "98168"; 
-          } ?>" name="location" id="location" class="form-control" placeholder="Virginia">
+          } ?>" name="location" id="location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -455,8 +455,8 @@ if(!empty($practices)){ ?>
 
           <?php 
           if(!empty($practices)){
-          // echo "<pre>";
-          //  print_r($practices); die; 
+          //  echo "<pre>";
+          // print_r($practices); die; 
          foreach ($practices as $practiceskey => $practicesvalue) { 
            //echo "<pre>";
            //print_r($practicesvalue); die; 
@@ -499,9 +499,29 @@ if(!empty($practices)){ ?>
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
          
          $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
+         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $quickLink="";
+         }
          $contactPage= $practicesvalue["Programs"]["ContactWebPage"];
+         if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $contactPage="";
+         }
          $homePageUrl= $practicesvalue["OrganizationName"]['HomePageURL'];
+         if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $homePageUrl="";
+         }
          $programPageUrl= $practicesvalue['Programs']['ProgramWebPage'];
+         if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $programPageUrl="";
+         }
 
       ?>
           <tr>
@@ -540,10 +560,12 @@ if(!empty($practices)){ ?>
         
 <?php //print_r($practices); die(); 
 
-         $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
+         $quickLink=$practices[0]["Programs"]["QuickConnectWebPage"];
          $contactPage= $practices[0]["Programs"]["ContactWebPage"];
          $homePageUrl= $practices[0]['OrganizationName']['HomePageURL'];
          $programPageUrl= $practices[0]['Programs']['ProgramWebPage'];
+
+
          ?>
     <h4>Provider Description</h4>
     <div class="border pt-set">
@@ -554,10 +576,10 @@ if(!empty($practices)){ ?>
     	 <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs menu-tabs" role="tablist">
-                    <li role="presentation" ><a id="quickLink" href="<?=$quickLink?>" target="_blank">Quick Links</a></li>
-                    <li role="presentation"><a href="<?=$programPageUrl?>" id="programPageUrl" aria-controls="profile" target="_blank">Program Page</a></li>
-                    <li role="presentation"><a href="<?=$homePageUrl?>" id="homePageUrl" aria-controls="messages" target="_blank" >Home Page</a></li>
-                    <li role="presentation"><a href="<?=$contactPage?>" id="contactPage" aria-controls="messages" target="_blank" >Contact Page</a></li>
+                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank">Quick Links</a></li>
+                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank">Program Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" >Home Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" >Contact Page</a></li>
                     <li role="presentation"><a href="#" aria-controls="messages" target="_blank">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
@@ -565,11 +587,7 @@ if(!empty($practices)){ ?>
                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
                          <div class="provider-content">
     <?php 
-         /*if(is_array($practices["0"]['organizationName']["OrgDescription"])){
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
-         }else{
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
-         }*/ 
+ 
          $programName= $practices[0]["Programs"]["ProgramName"];
          $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
@@ -678,10 +696,37 @@ function showdetails(details) {
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
   var programPageUrl = jQuery(details).attr('data-programPageUrl');
   
-  jQuery("#quickLink").attr("href", quickLink);
-  jQuery("#contactPage").attr("href", contactPage);
+  if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
   jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+ } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
   jQuery('#programName').html(programName);

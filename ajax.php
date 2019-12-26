@@ -96,33 +96,32 @@ function referraltasks(){
 
 
 function referralAssessments() {
-	if(!empty($_POST)) {
 		$referral_id 	= $_POST['referral_id'];
 		$email		= $_POST['email'];
-
-                $assessments = array();//assessmentList($referral_id, $email);
-	}
-	if (!empty($assessments)) {
-           if($assessments['status'] == 'ok'){
-		$assessmentList = $assessments['interview_list'];
-	   }
-	}else{
-	   $taskList = array();
-	}
-        
-	$assessmentHtml = assessmentsHtmlTable($referral_id);
-		echo  $taskHtml;
+    $assessments = interviewDetailsTest($referral_id,$email);
+    $detailsData  = $assessments['details_array']; 
+    $assessmentHtml = assessmentsHtmlTable($detailsData, $referral_id);
+    echo  $assessmentHtml;    
 }
 
 function assessmentsHtmlTable($assessmentList, $referral_id)
 {
-	$html = "<table><tbody id='taskbody'><input type='hidden' id='taskrefiid' value='".$referral_id."'>";
+	$html = "<table><tbody id='taskbody'><input type='hidden' id='assementrefiid' value='".$referral_id."'>";
         if(!empty($assessmentList)){ 
             foreach ($assessmentList as $assessmentkey => $assessmentvalue) { 
+                $taskiid =  $taskvalue['task_id'];  
+           $html.= "<tr><td id='refneedtitle-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_title']."</td>
+                 <td id='reftaskprovider-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_description']."</td>
+                 <td id='reftaskowner-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_note']."</td>
+                 <td id='reftaskdesc-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_urgency']."</td>
+                 <td id='reftaskdeadline-".$assessmentvalue['need_id']."'>".date('d-m-Y',strtotime($assessmentvalue['need_status']))."</td>
+                 
+            </tr>";
+	    } }else { 
 
-	    }
-	}
-	
+    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Assesment Found</p></center></td></tr>";                        
+    }
+	return   $html;
 }
 
 function taskHtmlTable($taskList,$referral_id)
@@ -800,41 +799,174 @@ function rejectreferralbyclient()
 function providerListHtml($practices,$id){ 
 
     if(!empty($practices)){ 
-    $html = "<div class='row'><div class='col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
+    $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
      foreach ($practices as $practiceskey => $practicesvalue) { 
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
      $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
      $programName= $practicesvalue["Programs"]["ProgramName"];
-     /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
-      $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
-     }else{
-      $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
-    }*/
+
+          $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
+         $programName= $practicesvalue["Programs"]["ProgramName"];
+         $services="";
+         $popolations="";
+         foreach($practicesvalue['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" && $val=="TRUE"){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P" && $val=="TRUE"){
+            $popolations.=$arr[1]." ,";
+          }
+
+         }
+
+          if($practicesvalue['Programs']['ProgramSites'][0]=="1"){
+           foreach($practicesvalue["OrgSites"] as $key=>$val){
+            if($val["SelectSiteID"]=="1"){
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'].
+              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
+              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
+              $contactName= $val['POCs'][0]['poc']['Name'];
+              break;
+            }
+
+          }
+         }
+
+         $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
+         $servicesTags= $practicesvalue['Programs']["ServiceTags"];
+         
+         $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
+         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $quickLink="";
+         }
+         $contactPage= $practicesvalue["Programs"]["ContactWebPage"];
+         if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $contactPage="";
+         }
+         $homePageUrl= $practicesvalue["OrganizationName"]['HomePageURL'];
+         if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $homePageUrl="";
+         }
+         $programPageUrl= $practicesvalue['Programs']['ProgramWebPage'];
+         if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $programPageUrl="";
+         }
+  
     $html.= "<tr>
     <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
-<td><button type='button' id='".$name."' value='".$shortdesc."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this.id,this.value)' class='custom-btn btn-success'> Show Detail</button></td>
+<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".$mainOffice."' data-officePhone='".$officePhone."' data-OfficeEmail='".$OfficeEmail."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' data-contactName='".$contactName."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-success'> Show Detail</button></td>
     </tr>";
     }}
-    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='col-md-6 col-sm-12 border pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
+    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
+
+       $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
+        if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          $qhref= "href='".$quickLink."'";
+         } else{
+          $qhref='';
+         }
+       $contactPage= $practices[0]["Programs"]["ContactWebPage"];
+       if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          $chref= "href='".$contactPage."'";
+         } else{
+          $chref='';
+         }
+       $homePageUrl= $practices[0]['OrganizationName']['HomePageURL'];
+       if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          $hhref= "href='".$homePageUrl."'";
+         } else{
+          $hhref='';
+         }
+       $programPageUrl= $practices[0]['Programs']['ProgramWebPage'];
+        if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          $phref= "href='".$programPageUrl."'";
+         } else{
+          $phref='';
+         }
+
+
        $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
+       $programName= $practices[0]["Programs"]["ProgramName"];
+       $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+       $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+       $servicesTags= $practices[0]["Programs"]["ServiceTags"];
+       $services="";
+       $popolations="";
+         foreach($practices["0"]['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" && $val=="TRUE"){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P" && $val=="TRUE"){
+            $popolations.=$arr[1]." ,";
+          }
 
+         }
 
-       $providershortdesc= $practices["0"]['Programs']["0"]["ProgramDescription"]["0"]["Text"];
-       //$providershortdesc= trim($providershortdesc,"");
-      // $providershortdesc= str_replace(array('\'', '"'), '', $providershortdesc); 
-      /* if(strpos($providershortdesc,"")){
-        $providershortdesc= trim($providershortdesc,"");
-       }else{
-        $providershortdesc=$providershortdesc;
-       }*/
-        /* if(is_array($practices["0"]['organizationName']["OrgDescription"])){
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
-         }else{
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
-         }*/
-    $html.= "<h4>Provider Name</h4><p id='providernamefill'>".$providername."</p><h4>Short Descripation</h4><p id='providershortdescfill'>'".$providershortdesc."'</p><h4>Mission Statement </h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p></div><ul class='nav'><li> <a href='tel:800.443.4143'><i class='fa fa-phone'></i> 800.443.4143</a></li>
-      <li><a href='mailto:contact@arcora.org'><i class='fa fa-envelope'></i> contact@arcora.org</a></li></ul><div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";    
+         if($practices[0]["Programs"]["ProgramSites"][0]=="1"){
+          foreach($practices[0]["OrgSites"] as $key=>$val){
+            if($val["SelectSiteID"]=="1"){
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip'].
+              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
+              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
+              $contactName= $val['POCs'][0]['poc']['Name'];
+              break;
+            }
+
+          }
+         }
+
+    $html.= "<div class='tab' role='tabpanel'>
+    <ul class='nav nav-tabs menu-tabs' role='tablist'>
+    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank'>Quick Links</a></li>
+                    <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank'>Program Page</a></li>
+                    <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' >Home Page</a></li>
+                    <li role='presentation'><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' >Contact Page</a></li>
+                    <li role='presentation'><a href='#' aria-controls='messages' target='_blank'>Other Page</a></li>
+    </ul>
+     <div class='tab-content tabs'>
+     <div role='tabpanel' class='tab-pane fade in active' id='Section1'>
+                         <div class='provider-content'>
+
+                          <h4>Program Name</h4>
+      <p id='programName'>".$programName."</p>
+      <h4>Program Description</h4>
+      <p id='providershortdescfill'>".$providershortdesc."</p>
+      <h4>Populations </h4>
+      <p id='population'>".rtrim($popolations, ',')."</p>
+      <h4>Population Description</h4>
+      <p id='populationDesc'>".$populationDesc."</p>
+         <h4>Services </h4>
+      <p id='services'>".rtrim($services, ',')."</p>
+        <h4>Tags </h4>
+      <p id='servicesTags'>".$servicesTags."</p>
+
+       <h3 style='margin-bottom: 0px;'>Address</h3>
+
+    <ul class='nav nav-set'>
+      <li id='mainOffice'> <i class='fa fa-map-marker'></i>".$mainOffice."</li>
+       <li id='contactName'> <i class='fa fa-user'></i>".$contactName."</li>
+      <li id='officePhone'> <a href='tel:".$officePhone."'><i class='fa fa-phone'></i>".$officePhone."</a></li>
+      <li id='OfficeEmail'><a href='mailto:".$OfficeEmail."'><i class='fa fa-envelope'></i>".$OfficeEmail."</a></li>
+    </ul>
+          </div>
+
+      </div>
+
+     </div>
+
+    </div>
+<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";    
     }else{ 
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }

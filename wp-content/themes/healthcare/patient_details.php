@@ -388,7 +388,7 @@ if(isset($_SESSION['userdata'])){
     /*--------------------------------------------------*/
 
     /*---------------Assessments List --------------------------*/
-  /*  if(!empty($referralList)){
+    if(!empty($referralList)){
         if(!empty($_POST['addTask']) && (!empty($_POST['referral_id']))){
             $referralid = $_POST['referral_id'];
         }else{
@@ -402,12 +402,10 @@ if(isset($_SESSION['userdata'])){
     }else{
         $error = 1;
         $msg   = $patientdata['status']. ' ! '. $patientdata['message'];
+    }  
+
     }
-       
 
-      
-
-    }*/
 
   //echo  $error."ass________error"; die;
     
@@ -544,7 +542,7 @@ get_header();
 							    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 							      <h4 class="panel-title"><b>Client Details</b></h4></a>
 							    </div>
-    <div id="collapseOne" class="panel-collapse collapse <?php if(($success == '21') || ($success == '11')){ echo "in"; } ?>">
+    <div id="collapseOne" class=" panel-collapse collapse <?php if(($success == '21') || ($success == '11')){ echo "in"; } ?>">
       <div class="panel-body">
 
         <?php if($success == '21'){ ?>
@@ -775,7 +773,7 @@ get_header();
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><h4 class="panel-title"><b>Referrals</b></h4></a></div>
-    <div id="collapseTwo" class="panel-collapse collapse <?php if((($success == '41' || $success == '51') || ($success == '45' || $success == '46'))){ echo "in"; } ?>"">
+    <div id="collapseTwo" class="panel-collapse collapse <?php if((($success == '41' || $success == '51') || ($success == '45' || $success == '46'))){ echo "in"; } ?>">
       <div class="panel-body">
         <?php if($success == '41' || $success == '45' || $success == '51'){ ?>
         <div class="row">
@@ -829,7 +827,9 @@ get_header();
 	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
                                         <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($refvalue['follow_up_date']!='') {echo $refvalue['follow_up_date'];} else{ echo '--';} ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
-	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button><button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button></td>
+	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <!-- <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button> -->
+                                    </td>
                                     </tr>
 	                                <?php $r++; } }else{ ?>
 
@@ -895,12 +895,56 @@ get_header();
 
         <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
 
+         <h4>Assesment</h4> 
+
+         <div class="assesmentBody">
+
+
+         </div>
+    
+<!--          <table class="table table-striped table-bordered" id="example612Q">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Notes</th>
+                                    <th>Urgency</th>
+                                    <th>Status</th>
+                                    
+                                    
+                                  
+                            </thead>
+                            <tbody id="assesmentbody">
+                            <input type="hidden" id="assementrefiid" value="<?php echo $referralList['0']['referral_id']; ?>">
+                                <?php if(!empty($detailsData)){ 
+                                    foreach ($detailsData as $needkey => $needvalue) { ?>    
+                                <tr>
+                                   <td id="refneedtitle-<?php echo $needvalue['need_id']; ?>"><?php echo $needvalue['need_title'];?></td>
+                                   <td id="refneeddesc-<?php echo $needvalue['need_id']; ?>"><?php echo $needvalue['need_description'];?></td>
+                                   <td id="refneednote-<?php echo $needvalue['need_id']; ?>"><?php echo $needvalue['need_note'];?></td>
+                                   <td id="refneedurgency-<?php echo $needvalue['need_id']; ?>"><?php echo $needvalue['need_urgency'];?></td>
+                                 
+                                   <td id="refneedstatus-<?php echo $needvalue['need_id']; ?>"><?php echo $needvalue['need_status'];?></td>
+                                  
+                                   
+                                   
+                                </tr>
+                                <?php } }else { ?>
+                                <tr>
+                                  <td colspan="7" style="color: red"><center><p>No Assesment Found</p></center></td>
+                              </tr>
+
+                              <?php } ?>
+                                
+                            </tbody>
+                        </table>  -->
+
 
 <!-- Assesment Modal -->
   <div id="assesmentModal" class="modal fade" role="dialog">
     <div class="modal-dialog model-width">
 
-    <!-- Modal content-->
+   Modal content
     <div class="modal-content">
       <div class="modal-header">
         <button type="button"  class="close" data-dismiss="modal">&times;</button>
@@ -912,12 +956,9 @@ get_header();
       </div>
     </div>
   </div>
-</div>
+</div> 
 
       <!-- End of assesment modal -->
-
-
-
 
                               
                             
@@ -1707,13 +1748,17 @@ z-index: 9;">
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
+
+
+   <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
 <script>
 /*jQuery(document).ready(function(){
         function updatePatientData(){
@@ -1926,7 +1971,8 @@ function updateInterviewObstacle(iid) {
             data: {'email':email,'obstacle_id':obstacle_iid,'obstacle_title':obstacle_title,'obstacle_description':obstacle_desc,'obstacle_notes':obstacle_notes,'obstacle_urgency':obstacle_urgency,'obstacle_status':obstacle_status,funtion:'updateInterviewObstacles'},
             success: function (res) {
               //alert(res);
-                if(res == '11'){ 
+                if(res == 11){ 
+                  //alert(assementrefid);
                   getAssesment(assementrefid);         
                  // return true;
                 }else{
@@ -2177,11 +2223,11 @@ function updateInterviewSolutiondeatils(iid) {
                 //console.log(res);
                 var trimStr  = $.trim(res);
                 if(trimStr == '11'){  
-                  if(solution_task_iid == ''){
+                  //if(solution_task_iid == ''){
                     //alert('save task');
                     saveRefraalSolutionTask(solution_iid,assementrefid,solution_description,solution_provider,email);
                     getReferralTask(assementrefid);
-                  }
+                 // }
                    
                    getAssesment(assementrefid);         
                    
@@ -2546,9 +2592,18 @@ jQuery(".viewcheck").change(function() {
 				    jQuery("#taskrefiid").val(iid);
 				  }
             });
+
+          getAssesment(iid);
+      
+
+
         }else{
         	alert('not iid');
         }
+
+
+
+
     }
 });
 
@@ -2641,14 +2696,6 @@ function referralsend(transfertaskid,clientid){
 }
 
 
-function showdetails(providername,providershortdesc) {
-  jQuery('#providernamefill').text(providername);
-  jQuery('#providershortdescfill').html(providershortdesc);
-}
-	
-
-
-
 
 </script>
 
@@ -2658,6 +2705,11 @@ function showdetails(providername,providershortdesc) {
 	    	jQuery('#'+iid).val('');
 	    }
 	}
+
+$(window).on("load", function () {
+    var idd = "<?php echo $referralid; ?>";
+    getAssesment(idd);
+});
 
 	function searchprovider(iid){
 		var zipcode = '';
@@ -2724,10 +2776,67 @@ function showdetails(providername,providershortdesc) {
 	    jQuery("#closeserviceprovider").click();
     }
 
-    function showdetails(providername,providershortdesc) {
-       jQuery('#providernamefill').text(providername);
-       jQuery('#providershortdescfill').html(providershortdesc);
-    }
+function showdetails(details) { 
+  var providername = jQuery(details).attr('data-name');
+  var providershortdesc = jQuery(details).attr('data-shortdesc');
+  var programName = jQuery(details).attr('data-programName');
+  var population = jQuery(details).attr('data-population');
+  var populationDesc = jQuery(details).attr('data-populationDesc');
+  var services = jQuery(details).attr('data-services');
+  var servicesTags = jQuery(details).attr('data-servicesTags');
+  var mainOffice = jQuery(details).attr('data-mainOffice');
+  var officePhone = jQuery(details).attr('data-officePhone');
+  var OfficeEmail = jQuery(details).attr('data-OfficeEmail');
+  var contactName = jQuery(details).attr('data-contactName');
+  var quickLink = jQuery(details).attr('data-quickLink');
+  var contactPage = jQuery(details).attr('data-contactPage');
+  var homePageUrl = jQuery(details).attr('data-homePageUrl');
+  var programPageUrl = jQuery(details).attr('data-programPageUrl');
+
+    if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
+  jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+  jQuery('#programName').html(programName);
+  jQuery('#population').html(population);
+  jQuery('#populationDesc').html(populationDesc);
+  jQuery('#services').html(services);
+  jQuery('#servicesTags').html(servicesTags);
+  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+  jQuery('#officePhone').html('<i class="fa fa-phone"></i> '+officePhone);
+  jQuery('#OfficeEmail').html('<i class="fa fa-envelope"></i> '+OfficeEmail);
+  jQuery('#contactName').html('<i class="fa fa-user"></i> '+contactName);
+
+}
 
   function showview(type){
 		    if(type == 'map'){
@@ -2834,8 +2943,7 @@ function showdetails(providername,providershortdesc) {
 
     
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
+
 <script type="text/javascript">
   $(function () {
         $('#services-test').multiselect({

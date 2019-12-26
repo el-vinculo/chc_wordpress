@@ -20,7 +20,9 @@
     color: #42af2a;
 }
  </style>
-</head>
+
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ --></head>
 <?php $health_data= health_care_get_options(); ?>
 <body <?php if($health_data['box_layout']==2) { body_class('boxed'); } else body_class(); ?>>
 
@@ -47,10 +49,10 @@ if($logodata['status']!='unauthorized'){
 		<div class="container">
          
 			   <div class=" logo">
-				  <a href="<?php echo esc_url(home_url( '/' )); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home" class="navbar-brand"><?php if($health_data['upload_image_logo']!=''){ ?>
+				  <a href="<?php if(isset($_SESSION['userdata'])){ echo esc_url(home_url( '/dashboard' )); } else{echo esc_url(home_url( '/' )); }?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home" class="navbar-brand"> <?php if($health_data['upload_image_logo']!=''){ ?>
 					<img class="img-responsive" src="<?php echo $img_src; ?>" style="height:<?php if($health_data['logo_height']!='') { echo esc_attr($health_data['logo_height']); }  else { "50"; } ?>px; width:<?php if($health_data['logo_width']!='') { echo esc_attr($health_data['logo_width']); }  else { "250"; } ?>px;" />
 				 <?php }else{ ?>
-				 <h2><?php echo esc_attr(get_bloginfo('name')); } ?></h2></a>
+				 <h2><?php echo esc_attr(get_bloginfo('name')); } ?></h2> </a>
 				 <p> <?php bloginfo( 'description' ); ?> </p>
 
 				</div>
@@ -63,32 +65,74 @@ if($logodata['status']!='unauthorized'){
               <?php } else{?>
 
                <div style="position: absolute;right: 102px;top: 50px;width: auto;">
-<style type="text/css">
+<!-- <style type="text/css">
 	#menu-usermenu{
 		margin: 10px 0 0; margin-top: 84px;
     margin-left: -34px!important;
 	}
+</style> -->
+
+<style>
+.dropbtn {
+  color: white;
+  position: relative;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 0;
+    top: 100%;
+    left: 20px;
+}
+.dropdown-content li a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content li{
+	list-style: none!important;
+}
+.dropdown-content li a:hover {    background-color: #43b02a;
+    color: #fff!important;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
 </style>
+
     <?php 
        $userdata = userprofiledetails($email); 
      ?>
                	<div class="dropdown">
-					<a href="#" class=" dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;font-weight: normal;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
-			<!-- 		<ul class="dropdown-menu" style="margin: 10px 0 0; margin-top: 84px;
-    margin-left: -34px!important;">
-    <li><a href="#">Report</a></li>
-    <li><a href="#">Setting</a></li>
+					<a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;font-weight: normal;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
+					
+				<!--<ul class="dropdown-content" >
+				    <li><a href="#">Report</a></li>
+				    <li><a href="#">Setting</a></li>
 
-    <li><a href="<?=site_url()?>/logout">Logout</a></li>
-    
-  </ul> -->
+				    <li><a href="<?=site_url()?>/logout">Logout</a></li>
+				    
+				  </ul> -->
 
   <?php  wp_nav_menu(array(
         'menu'            => 'usermenu',
         'container'       => '',
         'container_class' => '',
         'container_id'    => '',
-        'menu_class'      => 'dropdown-menu',
+        'menu_class'      => 'dropdown-content',
         'menu_id'         => '',
         'echo'            => true,
         'fallback_cb'     => 'wp_page_menu',

@@ -1698,7 +1698,7 @@ div#menu ul li:hover a{
     color: #43b02a;
 }
 .set-question {
-      margin-top: -35px;
+     /* margin-top: -35px;*/
      /* position: absolute;
     margin-left: 143px;*/
 }
@@ -1761,4 +1761,8 @@ ul.nav.nav-tabs.menu-tabs li {
 
 .set-question a span {
    font-weight: normal!important;
+}
+
+#providerdiv{
+    padding: 14px;
 }

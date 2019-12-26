@@ -115,7 +115,14 @@ if(!empty($faqsdata)){
                     </div>
                 </div>
 
-                <?php } } ?>
+               
+                  
+                <?php } ?>
+            <div class="text-right"><a href="<?=site_url()?>/report-issue">
+                                <button type="search " class="custom-btn btn-success">Report Issue</button>
+                </a></div>
+             
+            <?php } ?>
                 
                 
 

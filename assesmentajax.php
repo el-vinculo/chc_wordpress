@@ -31,7 +31,7 @@ function getAssesmentByReferralId(){
 
 function assesmentHtml($assessments,$referralid){
 
-     $assesmentHtml= '<h4>Assessments</h4> 
+     $assesmentHtml= '
     <div class="alert alert-success alert-dismissible"  id="interview-msg" style="display: none" >
        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
        <strong>Success!</strong> Assessment detail successfully added.
@@ -54,6 +54,7 @@ function assesmentHtml($assessments,$referralid){
                            <a href="javascript:void(0)"  id="need-'.$intkey.'" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a>
                         </div>
                     <div class="pull-right btn-right">
+                      
                       <a class="addmore" data-ref = "'.$referralid.'" data-cheekint = "'.$intkey.'" onclick="testvikfun(this)" href="javascript:void(0)"  ><i class="fa fa-plus" aria-hidden="true"></i> Add Need</a><br>
                       <a href="javascript:void(0)" data-check = "'.$intkey.'"  class="addmoreObstacle"  onclick="add(this)" style="color: red;"><i class="fa fa-plus" aria-hidden="true"></i> Add Obstacle </a>
                     </div>
@@ -289,7 +290,7 @@ function assesmentHtml($assessments,$referralid){
                               <input type="text"  placeholder="Search Entire Database"  id="solution_provider_'.$intkey.'_'.$obskey.'_'.$solkey.'" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" value="'.$solvalue['solution_provider'].'" onblur="updateInterviewSolutiondeatils(this)" onclick="updateInterviewSolutiondeatils(this)">
                               
                           </div>';
-                          if(!empty($solvalue['task_id']) && $solvalue['task_id'] != ''){
+                          if($solvalue['task_id'] !='' && $solvalue['solution_provider']==''){
 
                           $assesmentHtml .= '<a href="javascript:void(0)" data-toggle="modal"  data-target="#myTransferModal" id="'.$solvalue['task_id'].'" onclick="getTransferTaskdetails(this.id)"   class="custom-task">Transfer task</a>';
 
