@@ -6,6 +6,12 @@
 {
   --text: "Select values";
 }
+ul#mainOffice i:nth-of-type(1) {
+    display: none;
+}
+ul#mainOffice li i {
+    display: inline-block!important;
+}
 .multiple_select
 {
   height: 34px!important;
@@ -482,17 +488,36 @@ if(!empty($practices)){ ?>
 
          }
 
-          if($practicesvalue['Programs']['ProgramSites'][0]=="1"){
+
+          if(is_array($practicesvalue['Programs']['ProgramSites'])){
            foreach($practicesvalue["OrgSites"] as $key=>$val){
-            if($val["SelectSiteID"]=="1"){
-              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'].
-              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
-              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
-              $contactName= $val['POCs'][0]['poc']['Name'];
-              break;
+           if(in_array($val["SelectSiteID"], $practicesvalue["Programs"]["ProgramSites"])){
+
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'];
+             
+             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+           
+            foreach($val['POCs'] as $pockey=>$pocval){
+
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name']; 
+
+              $addressRaw.='<li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
+              <li id="officePhone"> <a href="tel:'.$officePhone.'"><i class="fa fa-phone"></i>'.$officePhone.'</a></li>
+              <li id="OfficeEmail"><a href="mailto:'.$OfficeEmail.'"><i class="fa fa-envelope"></i>'.$OfficeEmail.'</a></li>';
+
+              $addressRaw.="<br>";
+
             }
+    
+          } else{
+            $addressRaw="";
+          }
 
           }
+         } else{
+          $addressRaw="";
          }
 
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
@@ -537,8 +562,9 @@ if(!empty($practices)){ ?>
             </td>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
-            <td>             
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo $mainOffice; ?>" data-officePhone="<?php echo $officePhone; ?>" data-OfficeEmail="<?php echo $OfficeEmail; ?>" data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+            <td>     
+
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data-officePhone="<?php echo $officePhone; ?>" data-OfficeEmail="<?php echo $OfficeEmail; ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
             </td>
 
           </tr>
@@ -607,18 +633,11 @@ if(!empty($practices)){ ?>
 
          }
 
-         if($practices[0]["Programs"]["ProgramSites"][0]=="1"){
-          foreach($practices[0]["OrgSites"] as $key=>$val){
-            if($val["SelectSiteID"]=="1"){
-              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip'].
-              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
-              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
-              $contactName= $val['POCs'][0]['poc']['Name'];
-              break;
-            }
+         //Step-1->logic for displaying the addresses is first of all we will have to check the Program sites if program sites is a valid array then move to step 2
 
-          }
-         }
+         //Step-2->logic for displaying the addresses is first of all we will have to check the Program sites if program sites is a valid array
+
+        
          ?>
       <h4>Program Name</h4>
       <p id='programName'><?php echo $programName; ?></p>
@@ -635,11 +654,36 @@ if(!empty($practices)){ ?>
 
        <h3 style="margin-bottom: 0px;">Address</h3>
 
-    <ul class="nav nav-set">
-    	<li id="mainOffice"> <i class="fa fa-map-marker"></i> <?php echo $mainOffice; ?></li>
-    	 <li id="contactName"> <i class="fa fa-user"></i> <?=$contactName?></li>
-      <li id="officePhone"> <a href="tel:<?php echo $officePhone;?>"><i class="fa fa-phone"></i> <?php echo $officePhone;?></a></li>
-      <li id="OfficeEmail"><a href="mailto:<?php echo $OfficeEmail;?>"><i class="fa fa-envelope"></i> <?php echo $OfficeEmail;?></a></li>
+    <ul class="nav nav-set" id="mainOffice">
+     <?php 
+    	 if(is_array($practices[0]["Programs"]["ProgramSites"])){
+          foreach($practices[0]["OrgSites"] as $key=>$val){
+
+            if(in_array($val["SelectSiteID"], $practices[0]["Programs"]["ProgramSites"])){
+
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip']; ?>
+
+              <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
+
+              <?php foreach($val['POCs'] as $pockey=>$pocval){
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name']; ?>
+
+			<li id="contactName"> <i class="fa fa-user"></i> <?=$contactName?></li>
+			<li id="officePhone"> <a href="tel:<?php echo $officePhone;?>"><i class="fa fa-phone"></i> <?php echo $officePhone;?></a></li>
+			<li id="OfficeEmail"><a href="mailto:<?php echo $OfficeEmail;?>"><i class="fa fa-envelope"></i> 
+
+			<?php echo $OfficeEmail;?></a></li>
+            
+             <?php }
+   
+            }
+
+          }
+         } ?>
+    	
+    
     </ul>
 
 
