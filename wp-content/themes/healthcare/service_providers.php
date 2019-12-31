@@ -414,7 +414,11 @@ get_header();
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
+<<<<<<< HEAD
          // echo "98168";
+=======
+         // echo "98168"; 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
           } ?>" name="location" id="location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
@@ -462,8 +466,13 @@ if(!empty($practices)){ ?>
           <?php
           if(!empty($practices)){
           //  echo "<pre>";
+<<<<<<< HEAD
           // print_r($practices); die;
          foreach ($practices as $practiceskey => $practicesvalue) {
+=======
+          // print_r($practices); die; 
+         foreach ($practices as $practiceskey => $practicesvalue) { 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
            //echo "<pre>";
            //print_r($practicesvalue); die;
          $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
@@ -493,6 +502,7 @@ if(!empty($practices)){ ?>
            foreach($practicesvalue["OrgSites"] as $key=>$val){
            if(in_array($val["SelectSiteID"], $practicesvalue["Programs"]["ProgramSites"])){
 
+<<<<<<< HEAD
               // $mainOffice1 = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'];
               $mainOffice1 = $val['Addr1'][0]['Text'];
               if(!empty($val['Addr2']))
@@ -515,11 +525,21 @@ if(!empty($practices)){ ?>
               $mainOffice = rtrim($mainOffice1, ',');
              $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
 
+=======
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'];
+             
+             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+           
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
             foreach($val['POCs'] as $pockey=>$pocval){
 
               $officePhone= $pocval['poc']['OfficePhone'];
               $OfficeEmail= $pocval['poc']['Email'];
+<<<<<<< HEAD
               $contactName= $pocval['poc']['Name'];
+=======
+              $contactName= $pocval['poc']['Name']; 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
 
               $addressRaw.='<li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
               <li id="officePhone"> <a href="tel:'.$officePhone.'"><i class="fa fa-phone"></i>'.$officePhone.'</a></li>
@@ -528,7 +548,11 @@ if(!empty($practices)){ ?>
               $addressRaw.="<br>";
 
             }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
           } else{
             $addressRaw="";
           }
@@ -540,7 +564,11 @@ if(!empty($practices)){ ?>
 
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
+<<<<<<< HEAD
 
+=======
+         
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
          $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
          if (filter_var($quickLink, FILTER_VALIDATE_URL)){
           //just pass it
@@ -580,9 +608,15 @@ if(!empty($practices)){ ?>
             </td>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
+<<<<<<< HEAD
             <td>
 
              <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+=======
+            <td>     
+
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data-officePhone="<?php echo $officePhone; ?>" data-OfficeEmail="<?php echo $OfficeEmail; ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
             </td>
 
           </tr>
@@ -600,9 +634,15 @@ if(!empty($practices)){ ?>
     </div>
   </div>
   <div class="col-md-6 col-sm-12">
+<<<<<<< HEAD
 
 
 <?php //print_r($practices); die();
+=======
+          
+        
+<?php //print_r($practices); die(); 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
 
          $quickLink=$practices[0]["Programs"]["QuickConnectWebPage"];
          $contactPage= $practices[0]["Programs"]["ContactWebPage"];
@@ -630,8 +670,13 @@ if(!empty($practices)){ ?>
                 <div class="tab-content tabs">
                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
                          <div class="provider-content">
+<<<<<<< HEAD
     <?php
 
+=======
+    <?php 
+ 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
          $programName= $practices[0]["Programs"]["ProgramName"];
          $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
@@ -655,7 +700,11 @@ if(!empty($practices)){ ?>
 
          //Step-2->logic for displaying the addresses is first of all we will have to check the Program sites if program sites is a valid array
 
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
          ?>
       <h4>Program Name</h4>
       <p id='programName'><?php echo $programName; ?></p>
@@ -673,12 +722,17 @@ if(!empty($practices)){ ?>
        <h3 style="margin-bottom: 0px;">Address</h3>
 
     <ul class="nav nav-set" id="mainOffice">
+<<<<<<< HEAD
      <?php
+=======
+     <?php 
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
     	 if(is_array($practices[0]["Programs"]["ProgramSites"])){
           foreach($practices[0]["OrgSites"] as $key=>$val){
 
             if(in_array($val["SelectSiteID"], $practices[0]["Programs"]["ProgramSites"])){
 
+<<<<<<< HEAD
              // $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip']; 
               $mainOffice1 = $val['Addr1'][0]['Text'];
               if(!empty($val['Addr2']))
@@ -705,6 +759,9 @@ if(!empty($practices)){ ?>
 
 
 
+=======
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip']; ?>
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
 
               <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
 
@@ -715,6 +772,7 @@ if(!empty($practices)){ ?>
 
 			<li id="contactName"> <i class="fa fa-user"></i> <?=$contactName?></li>
 			<li id="officePhone"> <a href="tel:<?php echo $officePhone;?>"><i class="fa fa-phone"></i> <?php echo $officePhone;?></a></li>
+<<<<<<< HEAD
 			<li id="OfficeEmail"><a href="mailto:<?php echo $OfficeEmail;?>"><i class="fa fa-envelope"></i>
 
 			<?php echo $OfficeEmail;?></a></li>
@@ -727,6 +785,20 @@ if(!empty($practices)){ ?>
          } ?>
 
 
+=======
+			<li id="OfficeEmail"><a href="mailto:<?php echo $OfficeEmail;?>"><i class="fa fa-envelope"></i> 
+
+			<?php echo $OfficeEmail;?></a></li>
+            
+             <?php }
+   
+            }
+
+          }
+         } ?>
+    	
+    
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
     </ul>
 
 
@@ -734,7 +806,11 @@ if(!empty($practices)){ ?>
 
     </div>
                     </div>
+<<<<<<< HEAD
 
+=======
+                  
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
                 </div>
             </div>
    <!--  <div class="img-logo">
@@ -775,11 +851,21 @@ function showdetails(details) {
   var services = jQuery(details).attr('data-services');
   var servicesTags = jQuery(details).attr('data-servicesTags');
   var mainOffice = jQuery(details).attr('data-mainOffice');
+<<<<<<< HEAD
+=======
+  var officePhone = jQuery(details).attr('data-officePhone');
+  var OfficeEmail = jQuery(details).attr('data-OfficeEmail');
+  var contactName = jQuery(details).attr('data-contactName');
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
   var quickLink = jQuery(details).attr('data-quickLink');
   var contactPage = jQuery(details).attr('data-contactPage');
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
   var programPageUrl = jQuery(details).attr('data-programPageUrl');
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
   if(quickLink==''){
     jQuery("#quickLink").removeAttr("href");
    } else{
@@ -799,8 +885,13 @@ function showdetails(details) {
  }
 
   if(programPageUrl==''){
+<<<<<<< HEAD
   jQuery("#programPageUrl").removeAttr("href");
 
+=======
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
  }
@@ -819,7 +910,13 @@ function showdetails(details) {
   jQuery('#services').html(services);
   jQuery('#servicesTags').html(servicesTags);
   jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+<<<<<<< HEAD
   
+=======
+  jQuery('#officePhone').html('<i class="fa fa-phone"></i> '+officePhone);
+  jQuery('#OfficeEmail').html('<i class="fa fa-envelope"></i> '+OfficeEmail);
+  jQuery('#contactName').html('<i class="fa fa-user"></i> '+contactName);
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
 
 }
 

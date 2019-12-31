@@ -2418,7 +2418,14 @@ function showdetails(details) {
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
   var servicesTags = jQuery(details).attr('data-servicesTags');
+<<<<<<< HEAD
   var mainOffioce = jQuery(details).attr('data-mainOffice');
+=======
+  var mainOffice = jQuery(details).attr('data-mainOffice');
+  var officePhone = jQuery(details).attr('data-officePhone');
+  var OfficeEmail = jQuery(details).attr('data-OfficeEmail');
+  var contactName = jQuery(details).attr('data-contactName');
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
   var quickLink = jQuery(details).attr('data-quickLink');
   var contactPage = jQuery(details).attr('data-contactPage');
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
@@ -2463,6 +2470,12 @@ function showdetails(details) {
   jQuery('#services').html(services);
   jQuery('#servicesTags').html(servicesTags);
   jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+<<<<<<< HEAD
+=======
+  jQuery('#officePhone').html('<i class="fa fa-phone"></i> '+officePhone);
+  jQuery('#OfficeEmail').html('<i class="fa fa-envelope"></i> '+OfficeEmail);
+  jQuery('#contactName').html('<i class="fa fa-user"></i> '+contactName);
+>>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
 
 }
 
