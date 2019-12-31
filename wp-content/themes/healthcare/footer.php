@@ -9,8 +9,6 @@
 $health_data= health_care_get_options(); ?>
 <!-- Start Footer-->
 
-
-
 <div class="container-fluid space footer">
 	<div class="container">
 	<?php if ( is_active_sidebar( 'footer-widget-area' ) ){ dynamic_sidebar('footer-widget-area');
@@ -78,8 +76,60 @@ $health_data= health_care_get_options(); ?>
  --><!-- End Footer -->
 <?php get_template_part('bg', 'css') ;?>
 <?php wp_footer(); ?>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
+
+
+<!-- session Detect and validate the session -->
+<?php if(isset($_SESSION['userdata'])) { ?>
+
+<!--  <div id="warnModal" role="dialog" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            
+            <h4 class="modal-title" style="color: orangered;">WARNING!</h4>
+          </div>
+          <div class="modal-body">
+            <p>Your session will be expire and you will be automatically logged out in 60 seconds</p>
+            <button type="button" class="btn btn-primary btn-default staylogin">Stay Logged in</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary btn-default logout">Logout</button>
+          </div>
+          
+        </div>
+      </div>
+    </div> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <script type="text/javascript">
+/*
+ $(document).ready(function(){
+     
+     var count=900; //session expire time in seconds
+     var timer = setInterval(function() {
+   // var count = parseInt(jQuery('#theTarget').html());
+     count= count-1;
+    if (count!=60) {
+     //countiinue the counter   
+    }   else { 
+       jQuery("#warnModal").modal('show');  //warning messages display
+
+    } if(count==0){
+       window.location.href="<?php echo site_url(); ?>/logout"; // automatically logout
+    }
+  }, 1000);
+
+    $('.staylogin').click(function(){
+      location.reload(true);
+     });
+    $('.logout').click(function(){
+      window.location.href="<?php echo site_url(); ?>/logout";
+     });
+}); */
+  </script>
+<?php } ?>
+<!-- end of session detect code -->
+
+<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
 
 <script>
     $(function () {
@@ -107,87 +157,15 @@ $health_data= health_care_get_options(); ?>
 
     });
 
-     
 </script>
 <script type="text/javascript">
     	jQuery("#toggle").click(function() {
   jQuery(this).toggleClass("on");
   jQuery("#menu").slideToggle();
 }); 
-</script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-<script type="text/javascript">
-  $(".js-select2").select2({
-      closeOnSelect : false,
-      placeholder : "Placeholder",
-      allowHtml: true,
-      allowClear: true,
-      tags: true 
-    });
-</script> -->
-
-    <!-- <script type="text/javascript">
-  $(".multiple_select").mousedown(function(e) {
-    if (e.target.tagName == "OPTION") 
-    {
-      return; //don't close dropdown if i select option
-    }
-    $(this).toggleClass('multiple_select_active'); //close dropdown if click inside <select> box
-});
-$(".multiple_select").on('blur', function(e) {
-    $(this).removeClass('multiple_select_active'); //close dropdown if click outside <select>
-});
-  
-$('.multiple_select option').mousedown(function(e) { //no ctrl to select multiple
-    e.preventDefault(); 
-    $(this).prop('selected', $(this).prop('selected') ? false : true); //set selected options on click
-    $(this).parent().change(); //trigger change event
-});
-
-  
-  $("#myFilter").on('change', function() {
-      var selected = $("#myFilter").val().toString(); //here I get all options and convert to string
-      var document_style = document.documentElement.style;
-      if(selected !== "")
-        document_style.setProperty('--text', "'Selected: "+selected+"'");
-      else
-        document_style.setProperty('--text', "'Select values'");
-  });
 
 </script>
-<script type="text/javascript">
-  $(".multiple_services").mousedown(function(e) {
-    if (e.target.tagName == "OPTION") 
-    {
-      return; //don't close dropdown if i select option
-    }
-    $(this).toggleClass('multiple_services_active'); //close dropdown if click inside <select> box
-});
-$(".multiple_services").on('blur', function(e) {
-    $(this).removeClass('multiple_services_active'); //close dropdown if click outside <select>
-});
-  
-$('.multiple_services option').mousedown(function(e) { //no ctrl to select multiple
-    e.preventDefault(); 
-    $(this).prop('selected', $(this).prop('selected') ? false : true); //set selected options on click
-    $(this).parent().change(); //trigger change event
-});
 
-  
-  $("#myservices").on('change', function() {
-      var selected = $("#myservices").val().toString(); //here I get all options and convert to string
-      var document_style = document.documentElement.style;
-      if(selected !== "")
-        document_style.setProperty('--text', "'Selected: "+selected+"'");
-      else
-        document_style.setProperty('--text', "'Select values'");
-  });
-</script> -->
-	
-
-   
  
-
-
 </body>
 </html>
