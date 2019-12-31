@@ -592,6 +592,7 @@ get_header();
       <th scope="col">
         <label>Populations</label>
         <select class="form-control" name="population[]"  id='testSelect1' multiple>
+          <option value="Any">Any</option>
           <option value="Any">Citizenship</option>
           <option value="Citizenship">Citizenship</option>
           <option value="Disabled">Disabled</option>
@@ -645,7 +646,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -696,10 +697,10 @@ z-index: 9;">
 
 <?php get_footer(); ?>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
 <script>
@@ -937,9 +938,66 @@ function assignprovider(iid){
   jQuery("#closeserviceprovider").click();
 }
 
-function showdetails(providername,providershortdesc) {
+function showdetails(details) { 
+  var providername = jQuery(details).attr('data-name');
+  var providershortdesc = jQuery(details).attr('data-shortdesc');
+  var programName = jQuery(details).attr('data-programName');
+  var population = jQuery(details).attr('data-population');
+  var populationDesc = jQuery(details).attr('data-populationDesc');
+  var services = jQuery(details).attr('data-services');
+  var servicesTags = jQuery(details).attr('data-servicesTags');
+  var mainOffice = jQuery(details).attr('data-mainOffice');
+  var officePhone = jQuery(details).attr('data-officePhone');
+  var OfficeEmail = jQuery(details).attr('data-OfficeEmail');
+  var contactName = jQuery(details).attr('data-contactName');
+  var quickLink = jQuery(details).attr('data-quickLink');
+  var contactPage = jQuery(details).attr('data-contactPage');
+  var homePageUrl = jQuery(details).attr('data-homePageUrl');
+  var programPageUrl = jQuery(details).attr('data-programPageUrl');
+
+  if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
+  jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+ 
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
+  jQuery('#programName').html(programName);
+  jQuery('#population').html(population);
+  jQuery('#populationDesc').html(populationDesc);
+  jQuery('#services').html(services);
+  jQuery('#servicesTags').html(servicesTags);
+  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+  jQuery('#officePhone').html('<i class="fa fa-phone"></i> '+officePhone);
+  jQuery('#OfficeEmail').html('<i class="fa fa-envelope"></i> '+OfficeEmail);
+  jQuery('#contactName').html('<i class="fa fa-user"></i> '+contactName);
+
 }
 
 

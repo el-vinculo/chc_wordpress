@@ -356,5 +356,9 @@ function healthcare_activation_notice(){
     <?php
 }
 
+function set_html_content_type() {
+return 'text/html';
+}
+add_filter('wp_mail_content_type', 'set_html_content_type');
 
 ?>

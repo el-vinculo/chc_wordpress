@@ -14,7 +14,7 @@
 */
 
 ?>
-
+ 
 
 <style type="text/css">
   .panel-body {
@@ -241,13 +241,22 @@ input:focus {
 input.isRequired {
   border: 2px solid #e74c3c;
 }
+.ms-options-wrap > .ms-options > ul input[type="checkbox"] {
+    margin: 0 5px 0 -88px!important;
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    text-align: left;
+    width: 100%;
+    box-shadow: none!important;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/jquery.multiselect.css">
 <?php
 $error = 0;
 if(isset($_SESSION['userdata'])){
@@ -714,7 +723,6 @@ get_header();
       <th scope="col">
         <label>Services</label>
         <select class="form-control" name="services_type[]"  id='services-test' multiple>
-        <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
           <option value="BasicNeeds" >BasicNeeds</option>
@@ -751,7 +759,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="98168" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -813,8 +821,38 @@ z-index: 9;">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> 
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> 
 
+<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
+
+<script>
+    $(function () {
+        $('#testSelect1').multiselect({
+            
+            placeholder: 'Please Select',
+            
+            
+            selectAll: true
+        });
+
+    });
+
+
+
+
+     $(function () {
+        $('#services-test').multiselect({
+            
+            placeholder: 'Please Select',
+            
+            
+            selectAll: true
+        });
+
+    });
+
+     
+</script>
 <script>
     jQuery(document).ready(function(){
         var date_input=jQuery('.datepicker'); //our date input has the name "date"
@@ -1451,25 +1489,67 @@ function assignprovider(iid){
   jQuery("#closeserviceprovider").click();
 }
 
-function showdetails(providername,providershortdesc) {
+function showdetails(details) { 
+  var providername = jQuery(details).attr('data-name');
+  var providershortdesc = jQuery(details).attr('data-shortdesc');
+  var programName = jQuery(details).attr('data-programName');
+  var population = jQuery(details).attr('data-population');
+  var populationDesc = jQuery(details).attr('data-populationDesc');
+  var services = jQuery(details).attr('data-services');
+  var servicesTags = jQuery(details).attr('data-servicesTags');
+  var mainOffice = jQuery(details).attr('data-mainOffice');
+  var officePhone = jQuery(details).attr('data-officePhone');
+  var OfficeEmail = jQuery(details).attr('data-OfficeEmail');
+  var contactName = jQuery(details).attr('data-contactName');
+  var quickLink = jQuery(details).attr('data-quickLink');
+  var contactPage = jQuery(details).attr('data-contactPage');
+  var homePageUrl = jQuery(details).attr('data-homePageUrl');
+  var programPageUrl = jQuery(details).attr('data-programPageUrl');
+
+  if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
+  jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+ 
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
-}
+  jQuery('#programName').html(programName);
+  jQuery('#population').html(population);
+  jQuery('#populationDesc').html(populationDesc);
+  jQuery('#services').html(services);
+  jQuery('#servicesTags').html(servicesTags);
+  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+  jQuery('#officePhone').html('<i class="fa fa-phone"></i> '+officePhone);
+  jQuery('#OfficeEmail').html('<i class="fa fa-envelope"></i> '+OfficeEmail);
+  jQuery('#contactName').html('<i class="fa fa-user"></i> '+contactName);
 
-    /*function showview(type){
-      if(type == 'map'){
-         jQuery('#mapview').show();
-         jQuery('#listview').hide();
-         document.getElementById("mapprac").classList.add("view-active");
-         document.getElementById("listprac").classList.remove("view-active");
-        
-      }else{
-         jQuery('#listview').show();
-         jQuery('#mapview').hide();
-         document.getElementById("listprac").classList.add("view-active");
-         document.getElementById("mapprac").classList.remove("view-active");
-      }
-    }*/
+}
 
   </script>
 

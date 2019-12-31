@@ -1,10 +1,16 @@
- 
+
 
 
 <style >
 :root
 {
   --text: "Select values";
+}
+ul#mainOffice i:nth-of-type(1) {
+    display: none;
+}
+ul#mainOffice li i {
+    display: inline-block!important;
 }
 .multiple_select
 {
@@ -108,7 +114,7 @@
     width: 400px;
     display: inline-block;
 }
-  
+
   .multiselect-container>li>a>label {
     margin: 0;
     height: 100%;
@@ -122,7 +128,7 @@
   span.multiselect-selected-text {
     color: #838586;
 }
-  
+
 
 h1 {
   text-align: center;
@@ -247,20 +253,20 @@ color: #43b02a!important;
        margin-top: 13px;
     position: relative;
     display: block;
-    
+
     margin-right: 5px;
 }
 .border {
     border: 1px solid #ccc;
-   
+
 }
 
 /*new start css*/
 .custom-btn{
   border-radius: 5px;
   padding: 7px 10px;
-  border: 0!important;  
-  box-shadow: none!important; 
+  border: 0!important;
+  box-shadow: none!important;
 }
 .pt-20{
     padding: 20px;
@@ -280,7 +286,7 @@ span.fa.fa-print {
     padding-bottom: 8px!important;
 }
 .margin-bt thead tr th{
-  padding: 8px 0!important; 
+  padding: 8px 0!important;
 }
 .scroll  {
     height: 613px;
@@ -290,7 +296,7 @@ i.fa.fa-envelope {
     padding-left: 0px!important;
 }
 </style>
- <script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI&sensor=false" 
+ <script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI&sensor=false"
           type="text/javascript"></script>
 
 
@@ -318,13 +324,13 @@ if(isset($_SESSION['userdata'])){
     if(!empty($_POST['search']) && $_POST['search'] == 'Search'){
       $serachData = $_POST;
       //echo "<pre>";
-      //print_r($_POST); 
+      //print_r($_POST);
     }
 	  $practicesdata = serviceproviderslist($serachData);
 	  if(!empty($practicesdata['status'] == 'ok')){
 	  	 $practices = $practicesdata['provider_list'];
       // echo "<pre>";
-       //print_r($practices); die; 
+       //print_r($practices); die;
 	  }else{
 	  	$error = 0;
 	    $msg   = 'Error ! Some thing went wrong';
@@ -333,7 +339,7 @@ if(isset($_SESSION['userdata'])){
 	$error = 1;
 	$msg   = 'unauthorized ! you have to login';
 }
-get_header(); 
+get_header();
 //get_template_part('cover');
 ?>
 
@@ -402,30 +408,30 @@ get_header();
       <th scope="col">
         <label>Tags</label>
         <input type="text" value="<?php if(!empty($_POST['tags'])){ echo $_POST['tags']; }else{
-         // echo "98168"; 
+         // echo "98168";
           } ?>" name="tags" id="tags" class="form-control" placeholder="Tags">
       </th>
       <th scope="col">
         <label>Location Name</label>
         <input type="text" value="<?php if(!empty($_POST['location'])){ echo $_POST['location']; }else{
-         // echo "98168"; 
-          } ?>" name="location" id="location" class="form-control" placeholder="Virginia">
+         // echo "98168";
+          } ?>" name="location" id="location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
         <label>Location Type</label>
-        
+
         <select class="form-control" name="location_type">
         <option value="">Please Select </option>
           <option value="City" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'City')){ echo "selected"; } ?>>City</option>
           <option value="State" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'State')){ echo "selected"; } ?>>State</option>
           <option value="County" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'County')){ echo "selected"; } ?>>County</option>
           <option value="National" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'National')){ echo "selected"; } ?>>National</option>
-        
+
         </select>
       </th>
       <th scope="col">
     <!--   <button type="button" onclick="getformdata();" class="custom-btn btn-success">Search</button>  -->
-        <input type="submit" name="search" class="custom-btn btn-success" value="Search"> 
+        <input type="submit" name="search" class="custom-btn btn-success" value="Search">
       </th>
     </tr>
   </thead>
@@ -444,22 +450,22 @@ if(!empty($practices)){ ?>
     <div class="col-sm-12">
       <div class="scroll">
       <table class="margin-bt">
-       
+
           <thead>
             <tr>
-           
+
             <th></th>
             <th></th>
             <!-- <th>Description</th> -->
           </tr>
 
-          <?php 
+          <?php
           if(!empty($practices)){
-           // echo "<pre>";
-           // print_r($practices); die; 
-         foreach ($practices as $practiceskey => $practicesvalue) { 
+          //  echo "<pre>";
+          // print_r($practices); die;
+         foreach ($practices as $practiceskey => $practicesvalue) {
            //echo "<pre>";
-           //print_r($practicesvalue); die; 
+           //print_r($practicesvalue); die;
          $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
          /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
@@ -483,12 +489,86 @@ if(!empty($practices)){ ?>
          }
 
 
+          if(is_array($practicesvalue['Programs']['ProgramSites'])){
+           foreach($practicesvalue["OrgSites"] as $key=>$val){
+           if(in_array($val["SelectSiteID"], $practicesvalue["Programs"]["ProgramSites"])){
+
+              // $mainOffice1 = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'];
+              $mainOffice1 = $val['Addr1'][0]['Text'];
+              if(!empty($val['Addr2']))
+              {
+                   $mainOffice1 .= ','.$val['Addr2'];
+              }
+              if(!empty($val['AddrCity']))
+              {
+                   $mainOffice1 .= ','.$val['AddrCity'];
+              }
+              if(!empty($val['AddrState']))
+              {
+                   $mainOffice1 .= ','.$val['AddrState'];
+              }
+              if(!empty($val['AddrZip']))
+              {
+                   $mainOffice1 .= ','.$val['AddrZip'];
+              }
+
+              $mainOffice = rtrim($mainOffice1, ',');
+             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+
+            foreach($val['POCs'] as $pockey=>$pocval){
+
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name'];
+
+              $addressRaw.='<li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
+              <li id="officePhone"> <a href="tel:'.$officePhone.'"><i class="fa fa-phone"></i>'.$officePhone.'</a></li>
+              <li id="OfficeEmail"><a href="mailto:'.$OfficeEmail.'"><i class="fa fa-envelope"></i>'.$OfficeEmail.'</a></li>';
+
+              $addressRaw.="<br>";
+
+            }
+
+          } else{
+            $addressRaw="";
+          }
+
+          }
+         } else{
+          $addressRaw="";
+         }
 
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
-          ?>
+
+         $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
+         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $quickLink="";
+         }
+         $contactPage= $practicesvalue["Programs"]["ContactWebPage"];
+         if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $contactPage="";
+         }
+         $homePageUrl= $practicesvalue["OrganizationName"]['HomePageURL'];
+         if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $homePageUrl="";
+         }
+         $programPageUrl= $practicesvalue['Programs']['ProgramWebPage'];
+         if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $programPageUrl="";
+         }
+
+      ?>
           <tr>
-            
+
             <td>
              <b>Organization Name: </b> <?php echo $name; ?>
               <br>
@@ -500,28 +580,37 @@ if(!empty($practices)){ ?>
             </td>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
-            <td>             
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo $popolations; ?>" data-services="<?php echo $services; ?>"style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+            <td>
+
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
             </td>
 
           </tr>
           <?php $services=""; $popolations="";} } ?>
-         
+
         </thead>
       </table>
-       
+
 </div>
 <!--   <div class="col-sm-12">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
     </div> -->
     </div>
- 
+
     </div>
   </div>
   <div class="col-md-6 col-sm-12">
-          
-        
-<?php //print_r($practices); die(); ?>
+
+
+<?php //print_r($practices); die();
+
+         $quickLink=$practices[0]["Programs"]["QuickConnectWebPage"];
+         $contactPage= $practices[0]["Programs"]["ContactWebPage"];
+         $homePageUrl= $practices[0]['OrganizationName']['HomePageURL'];
+         $programPageUrl= $practices[0]['Programs']['ProgramWebPage'];
+
+
+         ?>
     <h4>Provider Description</h4>
     <div class="border pt-set">
     	<h4>Organization Name</h4>
@@ -531,22 +620,18 @@ if(!empty($practices)){ ?>
     	 <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs menu-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Quick Links</a></li>
-                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Program Page</a></li>
-                    <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Home Page</a></li>
-                    <li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab">Contact Page</a></li>
-                    <li role="presentation"><a href="#Section5" aria-controls="messages" role="tab" data-toggle="tab">Other Page</a></li>
+                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank">Quick Links</a></li>
+                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank">Program Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" >Home Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" >Contact Page</a></li>
+                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
                          <div class="provider-content">
-    <?php 
-         /*if(is_array($practices["0"]['organizationName']["OrgDescription"])){
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
-         }else{
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
-         }*/ 
+    <?php
+
          $programName= $practices[0]["Programs"]["ProgramName"];
          $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
@@ -565,57 +650,91 @@ if(!empty($practices)){ ?>
           }
 
          }
+
+         //Step-1->logic for displaying the addresses is first of all we will have to check the Program sites if program sites is a valid array then move to step 2
+
+         //Step-2->logic for displaying the addresses is first of all we will have to check the Program sites if program sites is a valid array
+
+
          ?>
       <h4>Program Name</h4>
       <p id='programName'><?php echo $programName; ?></p>
       <h4>Program Description</h4>
       <p id='providershortdescfill'><?php echo $providershortdesc; ?></p>
       <h4>Populations </h4>
-      <p id='population'><?php echo $popolations; ?></p>
+      <p id='population'><?php echo rtrim($popolations, ','); ?></p>
       <h4>Population Description</h4>
       <p id='populationDesc'><?php echo $populationDesc; ?></p>
          <h4>Services </h4>
-      <p id='services'> <?php echo $services; ?></p>
+      <p id='services'><?php echo rtrim($services, ','); ?></p>
         <h4>Tags </h4>
       <p id="servicesTags"><?php echo $servicesTags; ?></p>
 
-       <h3 style="margin-bottom: 0px;">Main Office</h3>
-    <ul class="nav nav-set">
-    	<li> <a href="#"><i class="fa fa-map-marker"></i> 400 Fairview Ave North, Suite 800
-Seattle, WA 98109</a></li>
-    	 <li> <a href="#"><i class="fa fa-user"></i> ARC King</a></li>
-      <li> <a href="tel:800.443.4143"><i class="fa fa-phone"></i> 800.443.4143</a></li>
-      <li><a href="mailto:contact@arcora.org"><i class="fa fa-envelope"></i> contact@arcora.org</a></li>
+       <h3 style="margin-bottom: 0px;">Address</h3>
+
+    <ul class="nav nav-set" id="mainOffice">
+     <?php
+    	 if(is_array($practices[0]["Programs"]["ProgramSites"])){
+          foreach($practices[0]["OrgSites"] as $key=>$val){
+
+            if(in_array($val["SelectSiteID"], $practices[0]["Programs"]["ProgramSites"])){
+
+             // $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip']; 
+              $mainOffice1 = $val['Addr1'][0]['Text'];
+              if(!empty($val['Addr2']))
+              {
+                   $mainOffice1 .= ','.$val['Addr2'];
+              }
+              if(!empty($val['AddrCity']))
+              {
+                   $mainOffice1 .= ','.$val['AddrCity'];
+              }
+              if(!empty($val['AddrState']))
+              {
+                   $mainOffice1 .= ','.$val['AddrState'];
+              }
+              if(!empty($val['AddrZip']))
+              {
+                   $mainOffice1 .= ','.$val['AddrZip'];
+              }
+
+              $mainOffice = rtrim($mainOffice1, ',');
+
+              ?>
+
+
+
+
+
+              <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
+
+              <?php foreach($val['POCs'] as $pockey=>$pocval){
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name']; ?>
+
+			<li id="contactName"> <i class="fa fa-user"></i> <?=$contactName?></li>
+			<li id="officePhone"> <a href="tel:<?php echo $officePhone;?>"><i class="fa fa-phone"></i> <?php echo $officePhone;?></a></li>
+			<li id="OfficeEmail"><a href="mailto:<?php echo $OfficeEmail;?>"><i class="fa fa-envelope"></i>
+
+			<?php echo $OfficeEmail;?></a></li>
+
+             <?php }
+
+            }
+
+          }
+         } ?>
+
+
     </ul>
 
-     <h3 style="margin-bottom: 0px;">Branch Office</h3>
-    <ul class="nav nav-set">
-    	<li> <a href="#"><i class="fa fa-map-marker"></i> 400 Fairview Ave North, Suite 800
-Seattle, WA 98109</a></li>
-    	 <li> <a href="#"><i class="fa fa-user"></i> ARC King</a></li>
-      <li> <a href="tel:800.443.4143"><i class="fa fa-phone"></i> 800.443.4143</a></li>
-      <li><a href="mailto:contact@arcora.org"><i class="fa fa-envelope"></i> contact@arcora.org</a></li>
-    </ul>
+
 
 
     </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="Section2">
-                        <h3>Section 2</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="Section3">
-                        <h3>Section 3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
-                    </div>
-                      <div role="tabpanel" class="tab-pane fade" id="Section4">
-                        <h3>Section 4</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
-                    </div>
-                      <div role="tabpanel" class="tab-pane fade" id="Section5">
-                        <h3>Section 5</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
-                    </div>
+
                 </div>
             </div>
    <!--  <div class="img-logo">
@@ -624,7 +743,7 @@ Seattle, WA 98109</a></li>
       <span class="fa fa-print" style="float: right;"></span>
       </p>
     </div> -->
-    
+
     <div class="text-center">
       <button type="button " class="custom-btn btn-success"> Add Task</button>
 
@@ -639,233 +758,7 @@ Seattle, WA 98109</a></li>
 </div>
 <?php } ?>
 
-	<!-- <div class="col-md-12 rightside">
-	    <div class="post-73 page type-page status-publish hentry">	
-			<div class="row post-area">
-	            <div class="post-73 page type-page status-publish hentry">
-	                
-					<div class="col-md-12 border">
-				        <div class="line"></div>
-              <div class="post_title"><h3>Practices</h3></div>
-							
-
-				            <div class="post-tags"></div>
-				            <div class="post-tags"></div>
-                    <div class="post_title pull-right">
-              <h3><a  id="listprac" class="" href="javascript:void(0)" onclick="showview('list')" ><i class="fa fa-bars " aria-hidden="true" ></i></a>|<a href="javascript:void(0)" class=""  id="mapprac" onclick="showview('map')"><i class="fa fa-map" aria-hidden="true"></i></a></h3></div>
-				            
-				            <div class="post_content">
-				                <?php if($error == 0){ ?>
-                            <table class="table table-bordered">
-                              <form method="post" action="">                
-    									<thead>
-    									    <tr>
-    									      <th scope="col">
-    									      <label>Zipcode</label>
-    									      <input type="text" name="zipcode" class="form-control" placeholder="Zipcode" value="<?php if(!empty($_POST['zipcode'])){ echo $_POST['zipcode']; } ?>"></th>
-    									      <th scope="col">
-                                <label>Radius</label>
-    									         <select class="form-control" name="radius">
-                                  <option value="">Select</option>
-                                  <option value="5" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '5')){ echo "selected"; } ?>>5 Miles</option>
-                                  <option value="10" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '10')){ echo "selected"; } ?>>10 Miles</option>
-                                  <option value="15" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '15')){ echo "selected"; } ?>>15 Miles</option>
-                                  <option value="20" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '20')){ echo "selected"; } ?>>20 Miles</option>
-                                  <option value="25" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '25')){ echo "selected"; } ?>>25 Miles</option>
-                                  <option value="30" <?php if(!empty($_POST['radius']) && ($_POST['radius'] == '30')){ echo "selected"; } ?>>30 Miles</option>
-                               </select>
-                            </th>
-    									      <th scope="col">
-                                <label>Service Type</label>
-                                <select class="form-control" name="services_type">
-                                <option value=''>-Select-</option>
-                                <option value='Extractions' <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Extractions')){ echo "selected"; } ?>>Extractions</option>
-                                <option value='Orthodontics' <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Orthodontics')){ echo "selected"; } ?>>Orthodontics</option>
-                                <option value='Dentures' <?php if(!empty($_POST['services_type']) && ($_POST['services_type'] == 'Dentures')){ echo "selected"; } ?>>Dentures</option>
-                                </select>
-    									      </th>
-    									      <th scope="col">
-                            <label>Provider Name</label>
-    									      <input type="text" value="<?php if(!empty($_POST['provider_name'])){ echo $_POST['provider_name']; } ?>" name="provider_name" class="form-control" placeholder="Provider Name"> </th>
-                            <th scope="col">
-                                <label>&nbsp;&nbsp;</label>
-                                <input name="providerviewtype" type="hidden" id="providerviewtype"  value="<?php if(!empty($_POST['providerviewtype'])){ echo $_POST['providerviewtype']; } ?>" >
-                                <input name="search" type="submit" class="btn-success" value="Search" ></th>
-    									      
-    									    </tr>
-    									</thead>
-                  </form>
-								</table>
-                <div id="listview">
-				 				<table class="table table-striped">
-									<thead>
-									    <tr>
-									      <th scope="col">PRACTICE NAME</th>
-									      <th scope="col">DISTANCE</th>
-									      <th scope="col">HOURS</th> 
-									      <th scope="col">EMAIL </th>
-									      <th scope="col">WEBSITE</th>
-									      <th scope="col">&nbsp;&nbsp;</th>
-									    </tr>
-									</thead>
-                  <tbody>
-                      <?php 
-                          if(!empty($practices)){
-                          foreach ($practices as $key => $value) { 
-                          
-                                $mapaddress = '';
-                                if(!empty($value['Google_Maps_link'])){
-                                   $maplink =  str_replace("http://","https://",$value['Google_Maps_link']);
-                                   $mapaddress = $maplink.'&output=embed';
-                                }else{
-                                   $mapaddress = '';
-                                }
-
-                                $distance = '';
-                                if(!empty($value['distance'])){
-                                  $distance = $value['distance'];
-                                }else{
-                                  $distance = '--';
-                                }
-                            ?>	
-									    <tr>
-									      <th><?php echo $value['Name']; ?></th>
-									      <td><?php echo $distance; ?></td>
-									      <td><?php if(strlen($value['Office_Hours']) > 50){
-                                                      $string2 = substr($value['Office_Hours'], 0, 50); echo $string2.'...';
-                          }else{ echo $value['Office_Hours']; } ?></td>
-									      <td><?php echo $value['Office_Email']; ?></td>
-									      <td><i class="fa fa-globe" aria-hidden="true"></i></td>
-                        <td><a href="" onclick="getpracticsdetails('<?php echo $value['Name']; ?>','<?php echo $mapaddress; ?>','<?php echo $value['Office_Hours'] ?>','<?php echo $value['Billing_Address_Line_1'] ?>','<?php echo $value['Billing_City'] ?>','<?php echo $value['Billing_Zip/Postal_Code'] ?>','<?php echo $value['Billing_State/Province'] ?>','<?php echo $value['Office_Email']; ?>','<?php echo $value['Provider_Type']; ?>')" title="SEE MORES" data-toggle="modal" data-target="#myModal"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></td> 
-									    </tr>
-									    <?php } }else{ ?>
-                      <tr><td colspan="7"><center>No record found</center></td></tr>
-									    <?php } ?>
-									    </tbody>
-									</table>
-                  </div>
-                  <div class="row" id="mapview" >
-                      <div class="col-md-12">
-                      <div class="col-md-8">
-                         <div id="map" style="width: 705px; height: 100%;"></div>
-       
-        
-                </div>
-                <div class="col-md-4">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">PRACTICE NAME</th>
-                          <th scope="col">DISTANCE</th>
-                          <th scope="col">&nbsp;&nbsp;</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <?php 
-                          $locarray = array();
-                          if(!empty($practices)){
-                          foreach ($practices as $key => $value) {
-                              if(!empty($value['Latitude']) && !empty($value['Longitude'])) { 
-                                                       
-                                $locarray[$key] = array(
-                                          'name'=> $value['Name'],
-                                          'lat'=>$value['Latitude'],
-                                          'lng'=>$value['Longitude'],
-                                          'key'=>$key,
-
-                                        );
-
-                                }
-
-                                 $distance = '';
-                                if(!empty($value['distance'])){
-                                  $distance = $value['distance'];
-                                }else{
-                                  $distance = '--';
-                                }
-
-                           ?> 
-                         <tr>
-                            <th scope="row" ><?php echo $value['Name']; ?></th>
-                            <td ><?php echo $distance; ?></td>
-                            <?php
-                             $mapaddress = '';
-                             if(!empty($value['Google_Maps_link'])){
-                               $maplink =  str_replace("http://","https://",$value['Google_Maps_link']);
-                               $mapaddress = $maplink.'&output=embed';
-                             }else{
-                               $mapaddress = '';
-                             }
-
-
-                            ?>
-                        <td ><a href="" onclick="getpracticsdetails('<?php echo $value['Name']; ?>','<?php echo $mapaddress; ?>','<?php echo $value['Office_Hours'] ?>','<?php echo $value['Billing_Address_Line_1'] ?>','<?php echo $value['Billing_City'] ?>','<?php echo $value['Billing_Zip/Postal_Code'] ?>','<?php echo $value['Billing_State/Province'] ?>','<?php echo $value['Office_Email']; ?>','<?php echo $value['Provider_Type']; ?>')" title="SEE MORES" data-toggle="modal" data-target="#myModal"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></td> 
-                      </tr>
-                      <?php }
-
-                      
-     
-       
-
-
-                       }else{ ?>
-                                        <tr><td colspan="7"><center>No record found</center></td></tr>
-                      <?php } ?>
-                      </tbody>
-                  </table>
-                </div>
-                  
-                  </div>
-                  </div>
-
-									<?php }else{ ?>
-									<div class="alert alert-danger alert-dismissible">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									<strong><?php echo $msg; ?></strong> 
-									</div>
-
-									    
-                                    <?php } ?>
-                            </div>
-					</div>
-	            </div>
-            </div>				
-							
-        </div>
-	</div>
-	<?php //get_sidebar(); ?>
-	</div>
-</div> -->
-
-
-<!-- <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="overlay">
-
-    <div class="popup container">
-        <h2 id="practicsname"></h2>
-        <a class="close"  data-dismiss="modal" aria-label="Close" href="#">&times;</a>
-        <div class="content col-md-6">
-      <div class="row">
-      <div class="col-md-7">
-            <ul class="nav  ">
-                <li id="practicsaddress"></li>
-                <li id="practicshour"></li>
-                <li id="practicscontact"></li>
-                <li id="practicsservice"></li>
-            </ul>
-    
-    </div>
-    <div class="col-md-5"><img src="https://www.vikramhospital.com/images/doctors/dummy-men.jpg" class="img-responsive" width="170px " ></div></div>
-    <div class="row"> -->
-    <!-- <div class="col-md-12 content">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>   </div> -->
-
-       <!--  </div></div>
-        <div class=" col-md-6" style="padding-top: 10px;" id="practicsmap" >
-            
-        </div>
-             -->
-          
-    </div>
+	  </div>
     </div>
 
 <?php get_footer(); ?>
@@ -881,6 +774,43 @@ function showdetails(details) {
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
   var servicesTags = jQuery(details).attr('data-servicesTags');
+  var mainOffice = jQuery(details).attr('data-mainOffice');
+  var quickLink = jQuery(details).attr('data-quickLink');
+  var contactPage = jQuery(details).attr('data-contactPage');
+  var homePageUrl = jQuery(details).attr('data-homePageUrl');
+  var programPageUrl = jQuery(details).attr('data-programPageUrl');
+
+  if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
+  jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
   jQuery('#programName').html(programName);
@@ -888,10 +818,13 @@ function showdetails(details) {
   jQuery('#populationDesc').html(populationDesc);
   jQuery('#services').html(services);
   jQuery('#servicesTags').html(servicesTags);
+  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+  
+
 }
-	
+
 function getpracticsdetails(practicesname,maplink,officehours,address1,city,zipcode,state,officeemail,Services){
-    
+
     var addresshtml = "<span>Address:</span><br>"+address1+" , "+city+" , "+state+" "+zipcode;
     var hourshtml = "<span>Hours:</span><br>"+officehours;
     var maphtml = "<iframe  src='"+maplink+"' width='100%'' height='250px' frameborder='0' style='border:0' allowfullscreen></iframe>";
@@ -906,7 +839,7 @@ function getpracticsdetails(practicesname,maplink,officehours,address1,city,zipc
     jQuery('#practicscontact').html(contacthtml);
     jQuery('#practicsmap').html(maphtml);
     jQuery('#practicsservice').html(serviceHtml);
-}	
+}
 
 
 function showview(type){
@@ -918,7 +851,7 @@ function showview(type){
     // localStorage.setItem('viewtype', type);
      document.getElementById("mapprac").classList.add("view-active");
      document.getElementById("listprac").classList.remove("view-active");
-    
+
   }else{
      jQuery('#listview').show();
      jQuery('#mapview').hide();
@@ -929,8 +862,8 @@ function showview(type){
      document.getElementById("mapprac").classList.remove("view-active");
   }
 
-  
-  
+
+
 }
 
 jQuery(window).load(function() {
@@ -940,7 +873,7 @@ jQuery(window).load(function() {
     }else{
       showview('list');
     }
-     
+
 });
 </script>
 
@@ -950,7 +883,7 @@ jQuery(window).load(function() {
    locations.push(['<?php echo $item['loc_name']?>', <?php echo $item['lat']?>,<?php echo $item['lng']?>,<?php echo $item['key']?>]);
    <?php endforeach; ?>
 
-    //alert(locations); 
+    //alert(locations);
 
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
@@ -961,7 +894,7 @@ jQuery(window).load(function() {
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
 
-    for (i = 0; i < locations.length; i++) {  
+    for (i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
         map: map

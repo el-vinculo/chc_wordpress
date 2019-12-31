@@ -96,33 +96,32 @@ function referraltasks(){
 
 
 function referralAssessments() {
-	if(!empty($_POST)) {
 		$referral_id 	= $_POST['referral_id'];
 		$email		= $_POST['email'];
-
-                $assessments = array();//assessmentList($referral_id, $email);
-	}
-	if (!empty($assessments)) {
-           if($assessments['status'] == 'ok'){
-		$assessmentList = $assessments['interview_list'];
-	   }
-	}else{
-	   $taskList = array();
-	}
-        
-	$assessmentHtml = assessmentsHtmlTable($referral_id);
-		echo  $taskHtml;
+    $assessments = interviewDetailsTest($referral_id,$email);
+    $detailsData  = $assessments['details_array']; 
+    $assessmentHtml = assessmentsHtmlTable($detailsData, $referral_id);
+    echo  $assessmentHtml;    
 }
 
 function assessmentsHtmlTable($assessmentList, $referral_id)
 {
-	$html = "<table><tbody id='taskbody'><input type='hidden' id='taskrefiid' value='".$referral_id."'>";
+	$html = "<table><tbody id='taskbody'><input type='hidden' id='assementrefiid' value='".$referral_id."'>";
         if(!empty($assessmentList)){ 
             foreach ($assessmentList as $assessmentkey => $assessmentvalue) { 
+                $taskiid =  $taskvalue['task_id'];  
+           $html.= "<tr><td id='refneedtitle-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_title']."</td>
+                 <td id='reftaskprovider-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_description']."</td>
+                 <td id='reftaskowner-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_note']."</td>
+                 <td id='reftaskdesc-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_urgency']."</td>
+                 <td id='reftaskdeadline-".$assessmentvalue['need_id']."'>".date('d-m-Y',strtotime($assessmentvalue['need_status']))."</td>
+                 
+            </tr>";
+	    } }else { 
 
-	    }
-	}
-	
+    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Assesment Found</p></center></td></tr>";                        
+    }
+	return   $html;
 }
 
 function taskHtmlTable($taskList,$referral_id)
@@ -800,38 +799,210 @@ function rejectreferralbyclient()
 function providerListHtml($practices,$id){ 
 
     if(!empty($practices)){ 
-    $html = "<div class='row'><div class='col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th>Provider Name</th><th>Category</th><th>Short Descripation</th></tr>";
+    $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
      foreach ($practices as $practiceskey => $practicesvalue) { 
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
      $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
-     /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
-      $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
-     }else{
-      $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
-    }*/
-    $html.= "<tr><td><i class='fa fa-map-marker'<button type='button' id='".$name."' value='".$shortdesc."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this.id,this.value)' class='custom-btn btn-success'> View</button></td><td>".$name."</td><td></td><td>".$shortdesc."</td></tr>";
+     $programName= $practicesvalue["Programs"]["ProgramName"];
+
+          $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
+         $programName= $practicesvalue["Programs"]["ProgramName"];
+         $services="";
+         $popolations="";
+         foreach($practicesvalue['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" && $val=="TRUE"){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P" && $val=="TRUE"){
+            $popolations.=$arr[1]." ,";
+          }
+
+         }
+
+          if(is_array($practicesvalue['Programs']['ProgramSites'])){
+           foreach($practicesvalue["OrgSites"] as $key=>$val){
+           if(in_array($val["SelectSiteID"], $practicesvalue["Programs"]["ProgramSites"])){
+
+              // $mainOffice1 = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.', '.$val['AddrZip'];
+              $mainOffice1 = $val['Addr1'][0]['Text'];
+              if(!empty($val['Addr2']))
+              {
+                   $mainOffice1 .= ','.$val['Addr2'];
+              }
+              if(!empty($val['AddrCity']))
+              {
+                   $mainOffice1 .= ','.$val['AddrCity'];
+              }
+              if(!empty($val['AddrState']))
+              {
+                   $mainOffice1 .= ','.$val['AddrState'];
+              }
+              if(!empty($val['AddrZip']))
+              {
+                   $mainOffice1 .= ','.$val['AddrZip'];
+              }
+
+              $mainOffice = rtrim($mainOffice1, ',');
+             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+
+            foreach($val['POCs'] as $pockey=>$pocval){
+
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name'];
+
+              $addressRaw.='<li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
+              <li id="officePhone"> <a href="tel:'.$officePhone.'"><i class="fa fa-phone"></i>'.$officePhone.'</a></li>
+              <li id="OfficeEmail"><a href="mailto:'.$OfficeEmail.'"><i class="fa fa-envelope"></i>'.$OfficeEmail.'</a></li>';
+
+              $addressRaw.="<br>";
+
+            }
+
+          } else{
+            $addressRaw="";
+          }
+
+          }
+         } else{
+          $addressRaw="";
+         }
+
+         $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
+         $servicesTags= $practicesvalue['Programs']["ServiceTags"];
+         
+         $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
+         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $quickLink="";
+         }
+         $contactPage= $practicesvalue["Programs"]["ContactWebPage"];
+         if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $contactPage="";
+         }
+         $homePageUrl= $practicesvalue["OrganizationName"]['HomePageURL'];
+         if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $homePageUrl="";
+         }
+         $programPageUrl= $practicesvalue['Programs']['ProgramWebPage'];
+         if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          //just pass it
+         } else{
+          $programPageUrl="";
+         }
+  
+    $html.= "<tr>
+    <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
+<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-success'> Show Detail</button></td>
+    </tr>";
     }}
-    $html.= "</thead></table></div></div><div class='col-sm-12'>   <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.174718399692!2d-122.33608998454811!3d47.62273489485683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490153736c1ee31%3A0xfeb8a0b88f1c8390!2s1200%2C%20400%20Fairview%20Ave%20N%20%23800%2C%20Seattle%2C%20WA%2098109%2C%20USA!5e0!3m2!1sen!2sin!4v1568816896410!5m2!1sen!2sin' width='100%' height='350px' frameborder='0' style='border:0;' allowfullscreen=''></iframe></div></div></div><div class='col-md-6 col-sm-12'><h4>Provider Descripation</h4><div class='border pt-20'><div class='img-logo'><p><img class='img-responsive' src='https://dev11.resourcestack.com/wp-content/uploads/2018/10/arcora_img.png' style='height:73px; width:150px;float: left;'>
-      <span class='fa fa-print' style='float: right;'></span></p></div><div class='provider-content'>";
+    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
+
+       $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
+        if (filter_var($quickLink, FILTER_VALIDATE_URL)){
+          $qhref= "href='".$quickLink."'";
+         } else{
+          $qhref='';
+         }
+       $contactPage= $practices[0]["Programs"]["ContactWebPage"];
+       if (filter_var($contactPage, FILTER_VALIDATE_URL)){
+          $chref= "href='".$contactPage."'";
+         } else{
+          $chref='';
+         }
+       $homePageUrl= $practices[0]['OrganizationName']['HomePageURL'];
+       if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
+          $hhref= "href='".$homePageUrl."'";
+         } else{
+          $hhref='';
+         }
+       $programPageUrl= $practices[0]['Programs']['ProgramWebPage'];
+        if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
+          $phref= "href='".$programPageUrl."'";
+         } else{
+          $phref='';
+         }
+
+
        $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
+       $programName= $practices[0]["Programs"]["ProgramName"];
+       $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+       $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+       $servicesTags= $practices[0]["Programs"]["ServiceTags"];
+       $services="";
+       $popolations="";
+         foreach($practices["0"]['Programs'] as $key=>$val){
+          $arr=explode("_",$key);
+          if($arr[0]=="S" && $val=="TRUE"){
+            $services .= $arr[1]." ,";
+          }
+          if($arr[0]=="P" && $val=="TRUE"){
+            $popolations.=$arr[1]." ,";
+          }
 
+         }
 
-       $providershortdesc= $practices["0"]['Programs']["0"]["ProgramDescription"]["0"]["Text"];
-       //$providershortdesc= trim($providershortdesc,"");
-      // $providershortdesc= str_replace(array('\'', '"'), '', $providershortdesc); 
-      /* if(strpos($providershortdesc,"")){
-        $providershortdesc= trim($providershortdesc,"");
-       }else{
-        $providershortdesc=$providershortdesc;
-       }*/
-        /* if(is_array($practices["0"]['organizationName']["OrgDescription"])){
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"]["0"]["text"];
-         }else{
-          $providershortdesc= $practices["0"]['organizationName']["OrgDescription"];
-         }*/
-    $html.= "<h4>Provider Name</h4><p id='providernamefill'>".$providername."</p><h4>Short Descripation</h4><p id='providershortdescfill'>'".$providershortdesc."'</p><h4>Mission Statement </h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's </p></div><ul class='nav'><li> <a href='tel:800.443.4143'><i class='fa fa-phone'></i> 800.443.4143</a></li>
-      <li><a href='mailto:contact@arcora.org'><i class='fa fa-envelope'></i> contact@arcora.org</a></li></ul><div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";    
+         if($practices[0]["Programs"]["ProgramSites"][0]=="1"){
+          foreach($practices[0]["OrgSites"] as $key=>$val){
+            if($val["SelectSiteID"]=="1"){
+              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip'].
+              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
+              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
+              $contactName= $val['POCs'][0]['poc']['Name'];
+              break;
+            }
+
+          }
+         }
+
+    $html.= "<div class='tab' role='tabpanel'>
+    <ul class='nav nav-tabs menu-tabs' role='tablist'>
+    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank'>Quick Links</a></li>
+                    <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank'>Program Page</a></li>
+                    <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' >Home Page</a></li>
+                    <li role='presentation'><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' >Contact Page</a></li>
+                    <li role='presentation'><a href='#' aria-controls='messages' target='_blank'>Other Page</a></li>
+    </ul>
+     <div class='tab-content tabs'>
+     <div role='tabpanel' class='tab-pane fade in active' id='Section1'>
+                         <div class='provider-content'>
+
+                          <h4>Program Name</h4>
+      <p id='programName'>".$programName."</p>
+      <h4>Program Description</h4>
+      <p id='providershortdescfill'>".$providershortdesc."</p>
+      <h4>Populations </h4>
+      <p id='population'>".rtrim($popolations, ',')."</p>
+      <h4>Population Description</h4>
+      <p id='populationDesc'>".$populationDesc."</p>
+         <h4>Services </h4>
+      <p id='services'>".rtrim($services, ',')."</p>
+        <h4>Tags </h4>
+      <p id='servicesTags'>".$servicesTags."</p>
+
+       <h3 style='margin-bottom: 0px;'>Address</h3>
+
+    <ul class='nav nav-set'>
+      <li id='mainOffice'> <i class='fa fa-map-marker'></i>".$mainOffice."</li>
+       <li id='contactName'> <i class='fa fa-user'></i>".$contactName."</li>
+      <li id='officePhone'> <a href='tel:".$officePhone."'><i class='fa fa-phone'></i>".$officePhone."</a></li>
+      <li id='OfficeEmail'><a href='mailto:".$OfficeEmail."'><i class='fa fa-envelope'></i>".$OfficeEmail."</a></li>
+    </ul>
+          </div>
+
+      </div>
+
+     </div>
+
+    </div>
+<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";    
     }else{ 
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }

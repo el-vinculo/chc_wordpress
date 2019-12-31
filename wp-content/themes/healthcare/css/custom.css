@@ -28,8 +28,8 @@ background-color:#0098ff;
 color:#fff !important;
 border:1px solid #0098ff !important;
 }
-i.fa.fa-envelope {
-    padding-left: 20px;
+ul.nav.nav-set li i {
+    margin-right: 8px;
 }
 body{
    overflow-y: scroll;

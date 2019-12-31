@@ -602,6 +602,8 @@ get_header();
   </div>
 </div>
 <!-- client detail pop up -->
+<!-- client detail pop up -->
+<!-- client detail pop up -->
 				            <div class="post-tags"></div>
 				            <div class="post_content">
 							  <div class="panel-group" id="accordion">
@@ -1013,7 +1015,7 @@ get_header();
 
 <!-- myTaskModal-->
 <div id="myTransferModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog model-width">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -1252,7 +1254,6 @@ get_header();
       <th scope="col">
         <label>Services</label>
         <select class="form-control" name="services_type[]"  id='services-test' multiple>
-        <option value="">Please Select </option>
           <option value="Abuse">Abuse</option>
           <option value="Addiction">Addiction</option>
           <option value="BasicNeeds" >BasicNeeds</option>
@@ -1289,7 +1290,7 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Name</label>
-        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Virginia">
+        <input type="text" value="" name="location" id="ptn_location" class="form-control" placeholder="Location">
       </th>
       <th scope="col">
         <label>Location Type</label>
@@ -1402,16 +1403,16 @@ z-index: 9;">
     
 
 
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
 <script>
+
 /*jQuery(document).ready(function(){
         function updatePatientData(){
         	alert('hi');
@@ -1431,7 +1432,36 @@ z-index: 9;">
 });*/
         
     </script>
+   <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
 
+<script>
+    $(function () {
+        $('#testSelect1').multiselect({
+            
+            placeholder: 'Please Select',
+            
+            
+            selectAll: true
+        });
+
+    });
+
+
+
+
+     $(function () {
+        $('#services-test').multiselect({
+            
+            placeholder: 'Please Select',
+            
+            
+            selectAll: true
+        });
+
+    });
+
+     
+</script>
     <script type="text/javascript">
  
     jQuery(function () {
@@ -1902,10 +1932,7 @@ function searchprovider(iid){
       jQuery("#closeserviceprovider").click();
     }
 
-    function showdetails(providername,providershortdesc) {
-  jQuery('#providernamefill').text(providername);
-  jQuery('#providershortdescfill').html(providershortdesc);
-}
+
 
 var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
 var upload_ajax_url = "<?php echo '/upload_ajax_url.php'; ?>";
@@ -2328,11 +2355,11 @@ function updateInterviewSolutiondeatils(iid) {
                 //console.log(res);
                 var trimStr  = $.trim(res);
                 if(trimStr == '11'){  
-                  if(solution_task_iid == ''){
+                //  if(solution_task_iid == ''){
                     //alert('save task');
                     saveRefraalSolutionTask(solution_iid,assementrefid,solution_description,solution_provider,email);
                     getReferralTask(assementrefid);
-                  }
+                //  }
                    
                    getAssesment(assementrefid);         
                    
@@ -2383,10 +2410,61 @@ function removeobstr(id){
     jQuery('#'+r).remove();
 }   
 
-  function showdetails(providername,providershortdesc) {
-       jQuery('#providernamefill').text(providername);
-       jQuery('#providershortdescfill').html(providershortdesc);
-    }
+function showdetails(details) { 
+  var providername = jQuery(details).attr('data-name');
+  var providershortdesc = jQuery(details).attr('data-shortdesc');
+  var programName = jQuery(details).attr('data-programName');
+  var population = jQuery(details).attr('data-population');
+  var populationDesc = jQuery(details).attr('data-populationDesc');
+  var services = jQuery(details).attr('data-services');
+  var servicesTags = jQuery(details).attr('data-servicesTags');
+  var mainOffioce = jQuery(details).attr('data-mainOffice');
+  var quickLink = jQuery(details).attr('data-quickLink');
+  var contactPage = jQuery(details).attr('data-contactPage');
+  var homePageUrl = jQuery(details).attr('data-homePageUrl');
+  var programPageUrl = jQuery(details).attr('data-programPageUrl');
+
+  if(quickLink==''){
+    jQuery("#quickLink").removeAttr("href");
+   } else{
+    jQuery("#quickLink").attr("href", quickLink);
+  }
+
+  if(contactPage==''){
+  jQuery("#contactPage").removeAttr("href");
+ } else{
+    jQuery("#contactPage").attr("href", contactPage);
+ }
+
+ if(homePageUrl==''){
+  jQuery("#homePageUrl").removeAttr("href");
+ } else{
+  jQuery("#homePageUrl").attr("href", homePageUrl);
+ }
+
+  if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");  
+  
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+
+ if(programPageUrl==''){
+  jQuery("#programPageUrl").removeAttr("href");
+ } else{
+  jQuery("#programPageUrl").attr("href", programPageUrl);
+ }
+ 
+  jQuery('#providernamefill').text(providername);
+  jQuery('#providershortdescfill').html(providershortdesc);
+  jQuery('#programName').html(programName);
+  jQuery('#population').html(population);
+  jQuery('#populationDesc').html(populationDesc);
+  jQuery('#services').html(services);
+  jQuery('#servicesTags').html(servicesTags);
+  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+
+}
 
   function showview(type){
         if(type == 'map'){

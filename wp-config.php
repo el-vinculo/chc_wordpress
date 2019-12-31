@@ -42,6 +42,7 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -72,6 +73,7 @@ $table_prefix  = 'wp_';
 
 define('IMAGE_PATH', 'https://dev7.resourcestack.com');
 define('API_URL', 'https://dev7.resourcestack.com/api/');
+define('CARE_EMAIL', 'sameer.sharma@resourcestack.com');
 #define('IMAGE_PATH', 'http://localhost/testsite/');
 #define('API_URL', 'http://localhost/testsite/');
 session_start();

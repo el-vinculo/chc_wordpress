@@ -354,7 +354,7 @@ if(isset($_SESSION['userdata'])){
     /* -------------------------------------------------*/
     
     /* ------------ Client List --------------------- */
-    $patientdata = patientlist($email,$search);
+  /*  $patientdata = patientlist($email,$search);
     if(!empty($patientdata['status'] == 'ok')){
        $patients = $patientdata['patients_details'];
       // $patients = array_slice($patients_output, 0, 5);
@@ -362,7 +362,7 @@ if(isset($_SESSION['userdata'])){
     }else{
       $error = 1;
       $patients = array();
-    }
+    } */
 
    
     /* -------------------------------------------------*/
@@ -373,6 +373,8 @@ if(isset($_SESSION['userdata'])){
     }
   }*/
 
+
+/*
   if(!empty($newReferral)){
     foreach ($newReferral as $newReferralkey => $newReferralvalue) { 
         $newReferral[$newReferralkey]['taskdetails'] = getreferraldetails($email,$newReferralvalue['ref_id']);
@@ -384,7 +386,7 @@ if(isset($_SESSION['userdata'])){
         $incomingreferral[$incomingreferralkey]['taskdetails'] = gettaskdetails($email,$incomingreferralvalue['task_id']);
          
     }
-  }
+  } */
 
 
 }else{
@@ -453,7 +455,7 @@ get_header();
               <td >
 
                 <?php if($newReferralDatavalue['client_consent']=='1') {?>
-                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['ref_patient']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a><?php } ?> 
+                 <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['patient_id']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a><?php } ?> 
               </td>
               
             </tr>
@@ -504,21 +506,23 @@ get_header();
             //  print_r($incomingreferral); 
             foreach ($incomingreferral as $requestreffkey => $requestreffvalue) { 
             if($requestreffvalue['status'] == 'Pending'){
+            
+           
             ?>
           
             <tr class="single_item_pendingreferal" data-toggle="collapse" data-target="#requestref-<?php echo $requestreffkey; ?>">
               <td ><?php echo $requestreffvalue['patient_name']; ?></td>
               <td ><?php echo $requestreffvalue['ref_name']; ?> </td>
-              <td ><?php if($requestreffvalue['taskdetails']['task_details']['task_deadline']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['taskdetails']['task_details']['task_deadline']));} else{ echo '--';} ?></td>
+              <td ><?php if($requestreffvalue['submission_date']!=''){ echo date('d/m/y' ,strtotime($requestreffvalue['submission_date']));} else{ echo '--';} ?></td>
               <td ><?php echo $requestreffvalue['ref_source']; ?></td>
               <td ><?php echo $requestreffvalue['ref_urgency']; ?></td>
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><!-- <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a> -->
-              <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> 
+              <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> 
 
-             <button data-toggle="modal"  data-target="#myRejectModal" onclick="showReferralReject('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')" class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+             <button data-toggle="modal"  data-target="#myRejectModal" onclick="showReferralReject('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['task_id']; ?>')" class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
        <tr class="collapse " id="requestref-<?php echo $requestreffkey; ?>" >
@@ -558,7 +562,7 @@ get_header();
               <th class="green-bg">Status </th>
               <th class="green-bg">Follow-up date</th>
               <th class="green-bg">Agreement</th>
-              <th class="green-bg">Action </th>
+              
             </tr> 
             <?php //print_r($outgoingreferral);die;
             if(!empty($outgoingreferral)){
@@ -575,10 +579,7 @@ get_header();
               <td ><?php echo $requestreffvalue['status']; ?></td>
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
-              <td ><!-- <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['external_application_id']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a> -->
-              <a href="javascript:void(0)" onclick="acceptreferralopolicy('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')"><button class="btn-primary btn-request">Accept</button></a> 
-
-             <button data-toggle="modal"  data-target="#myRejectModal" onclick="showReferralReject('<?php echo $requestreffvalue['external_application_id']; ?>','<?php echo $requestreffvalue['taskdetails']['task_details']['task_id']; ?>')" class=" btn-danger btn-request">Reject</button>  <!-- <button class=" btn-success btn-request">Transfer</button> --> </td>
+             
               <!--  <td ><input type="text" width="100%"></td> -->
             </tr>
             <!--  <tr class="collapse" id="requestref-<?php echo $requestreffkey; ?>" style="margin: 0;padding: 10px;display: table-row!important;">
@@ -1004,11 +1005,13 @@ z-index: 9;">
 
 <?php get_footer(); ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script> 
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+
+
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
