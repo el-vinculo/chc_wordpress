@@ -40,12 +40,12 @@ a.custom-task:hover {
     height: 650px;
     overflow-y: scroll;
 }
-  
+
 .obstacle-inter{
   position: relative;
   left: 3%;
   margin-right: 30px;
-  
+
 }
 .obstacle-inter1 {
     position: relative;
@@ -229,7 +229,7 @@ color: #43b02a!important;
        margin-top: 13px;
     position: relative;
     display: block;
-    
+
     margin-right: 5px;
 }
 .border {
@@ -240,8 +240,8 @@ color: #43b02a!important;
 .custom-btn{
   border-radius: 5px;
   padding: 7px 10px;
-  border: 0!important;  
-  box-shadow: none!important; 
+  border: 0!important;
+  box-shadow: none!important;
 }
 .pt-20{
     padding: 20px;
@@ -261,7 +261,7 @@ span.fa.fa-print {
     padding-bottom: 8px!important;
 }
 .margin-bt thead tr th{
-  padding: 8px 0!important; 
+  padding: 8px 0!important;
 }
 .scroll  {
     height: 219px;
@@ -289,23 +289,23 @@ $error = 0;
 $success = 0;
 
 if(isset($_SESSION['userdata'])){
-	$email = $_SESSION['userdata']['email']; 
+	$email = $_SESSION['userdata']['email'];
 	$referral_id = base64_decode($_GET['refid']);
     $patient_id = base64_decode($_GET['ptn']);
     $documents = array();
 
 
-    
+
 
    $referraldata = getreferraldetails($email,$referral_id);
     if(!empty($referraldata['status'] == 'ok')){
     	$referralList  = $referraldata['referral_details'];
     }
 
-    
+
 
    // echo "<pre>";
-   // print_r($referralList); die; 
+   // print_r($referralList); die;
 
 
     /*--------Add Tasks--------------------------------*/
@@ -321,8 +321,8 @@ if(isset($_SESSION['userdata'])){
 	  	if(!empty($saveTask)){
 	  		if($saveTask['status'] == 'ok'){
 	  			$error = 0;
-	  			$success = 51; 
-	  			$msg   = $saveTask['message'];   
+	  			$success = 51;
+	  			$msg   = $saveTask['message'];
 	  		}else{
 	  			$error = 52;
 	  			$msg   = 'Please try again !! Something went wrong';
@@ -345,13 +345,13 @@ if(isset($_SESSION['userdata'])){
 
     /* ------------ Add Referral --------------------- */
    /* if(!empty($_POST) && !empty($_POST['save2'])){
-	  	$postReferralData = $_POST; 
+	  	$postReferralData = $_POST;
 	  	$save = savePatientReferral($postReferralData,$patient_id,$email);
 	  	if(!empty($save)){
 	  		if($save['status'] == 'ok'){
 	  			$error = 0;
-	  			$success = 45; 
-	  			$msg   = $save['message'];   
+	  			$success = 45;
+	  			$msg   = $save['message'];
 	  		}else{
 	  			$error = 46;
 	  			$msg   = 'Please try again !! Something went wrong';
@@ -359,7 +359,7 @@ if(isset($_SESSION['userdata'])){
 	  	}
 	  }*/
 	/* -------------------------------------------------*/
-    
+
     /* ------------ Update Patient Details --------------------- */
 	/*if(!empty($_POST['submit'])){
        $dataArray = $_POST;
@@ -375,7 +375,7 @@ if(isset($_SESSION['userdata'])){
        }
 	}*/
 	/* -------------------------------------------------*/
-    
+
 	/*if(!empty($_POST['vik-ref-post']) && ($_POST['vik-ref-post'] == 497)){
 		 $success = 41;
 		 $msg   = 'Referral Updated';
@@ -402,7 +402,7 @@ if(isset($_SESSION['userdata'])){
         }else{
            $referralid = $referralList[0]['referral_id'];
         }
-       
+
        $taskData = taskList($referralid,$email);
        if(!empty($taskData['status'] == 'ok')){
     	  $taskList  = $taskData['task_list'];
@@ -447,17 +447,17 @@ if(isset($_SESSION['userdata'])){
     	$documentList  = $documentdata['patient_document_array'];
     }*/
     /* -------------------------------------------------*/
-    
+
 
     /* ------------ Add Note --------------------- */
     /*if(!empty($_POST) && !empty($_POST['submitnotes'])){
-	  	$postNotesData = $_POST; 
+	  	$postNotesData = $_POST;
 	  	$save = savePatientNotes($postNotesData,$patient_id,$email);
 	  	if(!empty($save)){
 	  		if($save['status'] == 'ok'){
 	  			$error = 0;
-	  			$success = 61; 
-	  			$msg   = $save['message'];   
+	  			$success = 61;
+	  			$msg   = $save['message'];
 	  		}else{
 	  			$success = 62;
 	  			$msg   = 'Please try again !! Something went wrong';
@@ -485,17 +485,17 @@ if(isset($_SESSION['userdata'])){
     /* -------------------------------------------------*/
 
     //echo "<pre>";
-    //print_r($owners); die; 
+    //print_r($owners); die;
 
 	 //echo "vikkk"; die;
-	
+
 }else{
 	$error = 1;
 	$msg   = 'unauthorized ! you have to login';
 }
 
-//echo $error."_____"; die; 
-get_header(); 
+//echo $error."_____"; die;
+get_header();
 //get_template_part('cover');
 ?>
 <!-- <div class="container-fluid space cover" style="background:linear-gradient(rgba(0, 0, 0, 0.70),rgba(0, 0, 0, 0.70) ),url() no-repeat fixed;">
@@ -519,7 +519,7 @@ get_header();
 <div class="container-fluid space">
 	<div class="container blogs">
 	<div class="col-md-12 rightside">
-	    <div class="post-73 page type-page status-publish hentry">	
+	    <div class="post-73 page type-page status-publish hentry">
 			<div class="row post-area">
 
         <div class="post-73 page type-page status-publish hentry">
@@ -529,9 +529,9 @@ get_header();
                          <div class="col-md-2">
                           <a href="<?php echo site_url().'/patients/patient-details/create-referral?pid='.base64_encode(base64_decode($_GET['ptn']));?>"><button class="btn-success">Add Referral</button></a>
                           </div>
-                       
+
                           </div>
-                          
+
                          </div>
                   </div>
 
@@ -546,7 +546,7 @@ get_header();
 
 <div id="clientModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-  
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -590,7 +590,7 @@ get_header();
                                   <th>Insurance</th>
                                   <td><?php echo $patientsDeatils['healthcare_coverage']; ?></td>
                                  </tr>
-                                                              
+
         </table>
 
       </div>
@@ -607,7 +607,7 @@ get_header();
 				            <div class="post-tags"></div>
 				            <div class="post_content">
 							  <div class="panel-group" id="accordion">
-							
+
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><h4 class="panel-title"><b>Referrals</b></h4></a></div>
@@ -616,7 +616,7 @@ get_header();
         <?php if($success == '41' || $success == '45' || $success == '51'){ ?>
         <div class="row">
 	    <div class="alert alert-success alert-dismissible">
-	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong><?php echo $msg; ?></strong>
         </div>
         </div>
@@ -624,7 +624,7 @@ get_header();
         <?php if($success == '46'){ ?>
         <div class="row">
 	    <div class="alert alert-danger alert-dismissible">
-	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong><?php echo $msg; ?></strong>
         </div>
         </div>
@@ -649,7 +649,7 @@ get_header();
                                 if(!empty($referralList)){
                                 	$r = 1;
                                 	 ?>
-                                     
+
                                 	<tr>
 	                                	<td ><input type="radio" class="viewcheck" name="viewtask" id="<?php echo $referralList['referral_id']; ?>" value="<?php echo $referralList['referral_id']; ?>" checked ></td>
 	                                	<td id="duedate-<?php echo $referralList['referral_id'];?>"><?php echo date('d-m-Y',strtotime($refvalue['due_date'])); ?></td>
@@ -670,8 +670,8 @@ get_header();
 	                                </tr>
 
 	                                <?php } ?>
-                                
-                                
+
+
                             </tbody>
                         </table>
 
@@ -694,10 +694,10 @@ get_header();
 </div>
 
       <!-- End of assesment modal -->
-                       
 
-    <h4>Tasks</h4> 
-    
+
+    <h4>Tasks</h4>
+
      <table class="table table-striped table-bordered" id="example612Q">
                             <thead>
                                 <tr>
@@ -708,18 +708,18 @@ get_header();
                                     <th>Deadline</th>
                                     <th>Task Status</th>
                                     <th colspan="3">Action</th>
-                                  
+
                             </thead>
                             <tbody id="taskbody">
                             <input type="hidden" id="taskrefiid" value="<?php echo $referralList['referral_id']; ?>">
-                                <?php if(!empty($taskList)){ 
-                                	  foreach ($taskList as $taskkey => $taskvalue) { ?>		
+                                <?php if(!empty($taskList)){
+                                	  foreach ($taskList as $taskkey => $taskvalue) { ?>
                                 <tr>
                                    <td id="reftasktype-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_type'];?></td>
                                    <td id="reftaskprovider-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['provider'];?></td>
                                    <td id="reftaskowner-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_owner'];?></td>
                                    <td id="reftaskdesc-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_description'];?></td>
-                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php 
+                                   <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php
                                     if(date('Y-m-d',strtotime($taskvalue['task_deadline'])) == '1970-01-01'){ echo "--";
                                     }else{ echo date('Y-m-d',strtotime($taskvalue['task_deadline']));
                                     }
@@ -732,8 +732,8 @@ get_header();
                                     <button class="btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
 
                                    </td>
-                                   
-                                   
+
+
                                 </tr>
                                 <?php } }else { ?>
                                 <tr>
@@ -741,31 +741,31 @@ get_header();
 	                            </tr>
 
 	                            <?php } ?>
-                                
-                            </tbody>
-                        </table> 
 
-        <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
+                            </tbody>
+                        </table>
+
+        <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a>
 
       </div>
     </div>
   </div>
 
-  
-    
+
+
 </div>
 									<?php }elseif($error == 1){ ?>
 									<div class="alert alert-danger alert-dismissible">
 									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									<strong><?php echo $msg; ?></strong> 
+									<strong><?php echo $msg; ?></strong>
 									</div>
 
-									    
+
                                     <?php } ?>
                             </div>
 					</div>
 	            </div>
-            </div>				
+            </div>
         </div>
 	</div>
 	<?php //get_sidebar(); ?>
@@ -807,10 +807,10 @@ get_header();
         		    <div class="main"></div>
         		</div>
         		<br/>
-        	
-        	    
-        		
-        	
+
+
+
+
         </form>
 
       </div>
@@ -834,7 +834,7 @@ get_header();
       </div>
       <div class="modal-body">
         <form id="referralform">
-        	    
+
         	    <div class="row">
         		  <div class="col-md-6">
         		   <label>Due Date</label>
@@ -844,7 +844,7 @@ get_header();
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                   
+
         		  </div>
         		  <div class="col-md-6">
         		   <label>Referral Name </label>
@@ -869,7 +869,7 @@ get_header();
                    <select name="urgency" id="ref_urgency" class="form-control">
                    <option value="Critical">Critical</option>>
                    <option value="High">High</option>>
-                   
+
                    <option value="Moderate">Moderate</option>>
                    <option value="Low">Low</option>>
                    </select>
@@ -878,7 +878,7 @@ get_header();
         		<br/>
         	    <div class="row">
         		  <div class="col-md-12">
-        		   
+
                   <div class="col-md-6">
                   <label>Description</label>
                    <textarea name="description" id="ref_desc" class="form-control" rows="7"  placeholder="Description..."></textarea>
@@ -892,14 +892,14 @@ get_header();
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                   
+
               </div>
         		  </div>
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="ref_id" id="ref_id" value=""/>
-        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary" value="Update" > 
-        	
+        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary" value="Update" >
+
         </form>
 
       </div>
@@ -923,7 +923,7 @@ get_header();
       </div>
       <div class="modal-body">
         <form id="referraltaskform" enctype="multipart/form-data">
-        	    
+
         	    <div class="row">
         		  <div class="col-md-6">
         		   <label>Deadline</label>
@@ -933,16 +933,16 @@ get_header();
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                   
+
         		  </div>
         		  <div class="col-md-6">
         		   <label>Task Type</label>
                    <select class="form-control" name="task_type"  id="edit_task_type">
-                    <option value="">-Select-</option>    
-                    <option value="Appointment">Appointment</option>    
-                    <option value="Support">Support</option>    
-                    <option value="User Defined">User Defined</option>    
-                    <option value="Delegated Referral">Delegated Referral</option>    
+                    <option value="">-Select-</option>
+                    <option value="Appointment">Appointment</option>
+                    <option value="Support">Support</option>
+                    <option value="User Defined">User Defined</option>
+                    <option value="Delegated Referral">Delegated Referral</option>
                   </select>
         		  </div>
         		</div>
@@ -962,10 +962,10 @@ get_header();
                    <?php if(!empty($owners)){
                    	     foreach ($owners as $ownerkey => $ownervalue) { ?>
                          <option value="<?php  echo ucfirst($ownervalue); ?>"><?php echo ucfirst($ownervalue); ?></option>
-                   	<?php }  }else{ ?> 
-                   	<option value="">-Select-</option>   	
+                   	<?php }  }else{ ?>
+                   	<option value="">-Select-</option>
                     <?php } ?>
-                       
+
                    </select>
         		  </div>
         		</div>
@@ -978,7 +978,7 @@ get_header();
                       <?php if(!empty($taskstatus)){
                    	     foreach ($taskstatus as $taskstatuskey => $taskstatusvalue) { ?>
                          <option value="<?php  echo ucfirst($taskstatusvalue); ?>"><?php echo ucfirst($taskstatusvalue); ?></option>
-                   	<?php }  }else{ ?> 
+                   	<?php }  }else{ ?>
                     <?php } ?>
                    </select>
 
@@ -986,7 +986,7 @@ get_header();
         		   <div class="col-md-6">
         		   <label>Document</label>
                    <input type="file" class="form-control"  name="edit_patient_document" id="edit_patient_document" />
-        		  </div> 
+        		  </div>
         		</div>
         		<br/>
 
@@ -998,8 +998,8 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="task_id" id="edit_task_id" value=""/>
-        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary" value="Update" > 
-        	
+        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary" value="Update" >
+
         </form>
 
       </div>
@@ -1032,25 +1032,25 @@ get_header();
                                     <th>AGREEMENT TYPE</th>
                                     <th>AGREEMENT SIGNED</th>
                                     <th>TRANSFER</th>
-                                </tr> 
-                                  
+                                </tr>
+
                             </thead>
                             <tbody id="taskbody">
                             <input type="hidden" id="transfer_task_id" value="">
                             <?php
                               if(!empty($clientList)){
                             	foreach ($clientList as $clientkey => $clientvalue) {
-                            ?>	
+                            ?>
                             <tr>
                                 <td><?php echo $clientvalue['name']; ?></td>
                                 <td><?php echo $clientvalue['speciality']; ?></td>
                                 <td><?php echo $clientvalue['agreement_type']; ?></td>
                                 <td><?php  if($clientvalue['agreement_signed'] == 1){ echo "Ture";}else{ echo ""; }; ?></td>
                                 <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
-                            </tr> 
-                            <?php } } ?>   
+                            </tr>
+                            <?php } } ?>
                             </tbody>
-                            
+
         </table>
 
       </div>
@@ -1075,8 +1075,8 @@ get_header();
       </div>
       <div class="modal-body">
         <div id="ledgertabledatadummy"></div>
-        
-        
+
+
 
       </div>
       <div class="modal-footer">
@@ -1098,7 +1098,7 @@ get_header();
         <h4 class="modal-title">Document</h4>
       </div>
       <div class="modal-body">
- 
+
 
       </div>
       < class="modal-footer">
@@ -1121,7 +1121,7 @@ get_header();
       </div>
       <div class="modal-body">
         <form id="referralform" method="post" action="" enctype="multipart/form-data">
-        	    
+
         	    <div class="row">
         		  <div class="col-md-6">
         		   <label>Deadline</label>
@@ -1131,17 +1131,17 @@ get_header();
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                   
+
         		  </div>
         		  <div class="col-md-6">
         		   <label>Task Type</label>
-                   
+
                    <select class="form-control" name="task_type" id="task_type">
-                    <option value="">-Select-</option>    
-                    <option value="Appointment">Appointment</option>    
-                    <option value="Support">Support</option>    
-                    <option value="User Defined">User Defined</option>    
-                    <option value="Delegated Referral">Delegated Referral</option>    
+                    <option value="">-Select-</option>
+                    <option value="Appointment">Appointment</option>
+                    <option value="Support">Support</option>
+                    <option value="User Defined">User Defined</option>
+                    <option value="Delegated Referral">Delegated Referral</option>
                   </select>
         		  </div>
         		</div>
@@ -1161,10 +1161,10 @@ get_header();
                    <?php if(!empty($owners)){
                    	     foreach ($owners as $ownerkey => $ownervalue) { ?>
                          <option value="<?php  echo ucfirst($ownervalue); ?>"><?php echo ucfirst($ownervalue); ?></option>
-                   	<?php }  }else{ ?> 
-                   	<option value="">-Select-</option>   	
+                   	<?php }  }else{ ?>
+                   	<option value="">-Select-</option>
                     <?php } ?>
-                       
+
                    </select>
         		  </div>
         		</div>
@@ -1177,8 +1177,8 @@ get_header();
                         <?php if(!empty($taskstatus)){
                    	     foreach ($taskstatus as $taskstatuskey => $taskstatusvalue) { ?>
                          <option value="<?php  echo ucfirst($taskstatusvalue); ?>"><?php echo ucfirst($taskstatusvalue); ?></option>
-                   	<?php }  }else{ ?> 
-                   	<option value="">-Select-</option>  	
+                   	<?php }  }else{ ?>
+                   	<option value="">-Select-</option>
                     <?php } ?>
                    </select>
 
@@ -1186,7 +1186,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Document</label>
                    <input type="file" class="form-control"  name="patient_document" id="patient_document" />
-        		  </div> 
+        		  </div>
         		</div>
         		<br/>
 
@@ -1198,8 +1198,8 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="referral_id" id="referral_id" value=""/>
-        		<input name="addTask"  type="submit" class="btn-primary" value="Save" > 
-        	
+        		<input name="addTask"  type="submit" class="btn-primary" value="Save" >
+
         </form>
 
       </div>
@@ -1215,7 +1215,7 @@ get_header();
 
 <div id="myProviderModal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:1190px;">
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI" 
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyBFAo6LvR1ORPgRNXliXZAWrcrpiAlZtbI"
           type="text/javascript"></script>
     <!-- Modal content-->
     <div class="modal-content">
@@ -1224,11 +1224,11 @@ get_header();
         <h4 class="modal-title">Select Service Providers</h4>
 
       </div>
-      <div class="modal-body" style="height: 450px; overflow-y:auto;"> 
+      <div class="modal-body" style="height: 450px; overflow-y:auto;">
 
 <table class="table ">
       <tbody>
-  
+
   <thead>
     <tr>
       <th scope="col">
@@ -1250,7 +1250,7 @@ get_header();
           <option value="Veteran">Veteran/Military</option>
         </select>
       </th>
-     
+
       <th scope="col">
         <label>Services</label>
         <select class="form-control" name="services_type[]"  id='services-test' multiple>
@@ -1294,25 +1294,25 @@ get_header();
       </th>
       <th scope="col">
         <label>Location Type</label>
-        
+
         <select class="form-control" name="location_type" id="ptn_locationtype">
         <option value="">Please Select </option>
           <option value="City" >City</option>
           <option value="State" >State</option>
           <option value="County" >County</option>
           <option value="National" >National</option>
-        
+
         </select>
       </th>
       <th scope="col">
-        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button>
         <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
     </tr>
   </thead>
 
-  
+
 </tbody>
 </table>
         <div class="loader" style="position: fixed;
@@ -1325,9 +1325,9 @@ z-index: 9;">
                           <img src="<?php echo get_template_directory_uri(); ?>/images/loader-new.gif" alt="loader" style="position: fixed;top: 50%;left: 0;right: 0;margin: auto;width:170px;z-index: 9; transform: translateY(-50%); -webkit-transform: translateY(-50%); -mstransform: translateY(-50%);">
                         </div>
                 <div id="providerdiv"></div>
-        
-          
-        
+
+
+
 
       </div>
       <div class="modal-footer">
@@ -1353,16 +1353,16 @@ z-index: 9;">
         <div class="response"></div>
 
         <form id="inviteOrgForm">
-              
+
               <div class="row">
               <div class="col-md-6">
                <label>Name</label>
                <div>
                    <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value=""/>
                 </div>
-                   
+
               </div>
-             
+
             </div>
             <br/>
             <div class="row">
@@ -1370,24 +1370,24 @@ z-index: 9;">
                <label>Application URL</label>
                    <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value=""/>
               </div>
-            
+
             </div>
 
-            <br/> 
+            <br/>
              <div class="row">
               <div class="col-md-6">
                <label>Email</label>
-                
+
                   <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value=""/>
               </div>
-             
+
             </div>
             <br/>
-          
+
             <br/>
                 <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value=""/>
-            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary" value="Submit" > 
-          
+            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary" value="Submit" >
+
         </form>
 
       </div>
@@ -1400,17 +1400,17 @@ z-index: 9;">
 </div>
 <!-- End of invite modal -->
 <?php get_footer(); ?>
-    
 
 
-<!-- 
+
+<!--
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
-<script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script> 
+<script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script>
 <script>
 
 /*jQuery(document).ready(function(){
@@ -1430,17 +1430,17 @@ z-index: 9;">
           });
         }
 });*/
-        
+
     </script>
    <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
 
 <script>
     $(function () {
         $('#testSelect1').multiselect({
-            
+
             placeholder: 'Please Select',
-            
-            
+
+
             selectAll: true
         });
 
@@ -1451,34 +1451,34 @@ z-index: 9;">
 
      $(function () {
         $('#services-test').multiselect({
-            
+
             placeholder: 'Please Select',
-            
-            
+
+
             selectAll: true
         });
 
     });
 
-     
+
 </script>
     <script type="text/javascript">
- 
+
     jQuery(function () {
                 jQuery( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
                // jQuery( "#edit_task_deadline" ).datepicker({ dateFormat: "yy-mm-dd" });
-               
+
             });
 
-    
+
     /*jQuery('.datepicker').each(function(){    jQuery(this).datepicker({ dateFormat: "yy-mm-dd" });});*/
 </script>
     <script type="text/javascript">
-           
+
 
 
         /*    jQuery(document).ready(function() {
-        window.history.pushState(null, "", window.location.href);        
+        window.history.pushState(null, "", window.location.href);
         window.onpopstate = function() {
             window.history.pushState(null, "", window.location.href);
         };
@@ -1492,7 +1492,7 @@ window.addEventListener('popstate', function(event) {
 
 
 <script type="text/javascript">
-	
+
 	$(document).ready(function() {
     $('#example').DataTable( {
         deferRender:    true,
@@ -1533,7 +1533,7 @@ function sendmessage(){
             	}else{
             		alert('Error ! Please try again ');
             	}
-              
+
             }
           });
 }
@@ -1591,11 +1591,11 @@ function updatereftaskdetails(){
             		alert('Task Updated');
             		getReferralTask(referralid);
             		jQuery('#edittaskclose').click();
-            		
+
             	}else{
             		alert('Error ! Please try again ');
             	}
-              
+
             }
           });
 
@@ -1630,13 +1630,13 @@ function updatereferal(){
             	}else{
             		alert('Error ! Please try again ');
             	}
-              
+
             }
           });
 }
 
 function patireflist(){
-       $("#vikkkref").submit();      
+       $("#vikkkref").submit();
 }
 
 
@@ -1700,13 +1700,13 @@ function getcommicationlist(patient_id) {
 }
 
 
-	
-    
+
+
 
 function getRefList(){
 	var patient_id = "<?php echo base64_decode($_GET['pid']); ?>";
 	var email = "<?php echo $email; ?>";
-        
+
     jQuery.ajax({
 			  url: ajax_url,
 			  type:'POST',
@@ -1718,12 +1718,12 @@ function getRefList(){
 			    jQuery("#refbody").html(html);
 			  }
     });
-        
+
 }
 
 function showReferral(refid){
     //alert('duedate-'+refid);
-	
+
 	document.getElementById("ref_id").value = refid;
 	document.getElementById("ref_name").value = document.getElementById ( 'refname-'+refid ).textContent;
 	document.getElementById("ref_due_date").value = document.getElementById ( 'duedate-'+refid ).textContent;
@@ -1769,7 +1769,7 @@ function getReferralId(){
     }else{
     	alert('Please select any referral to add task');
     	jQuery('#myAddTaskModal').modal('hide');
-    	
+
     }*/
 }
 
@@ -1796,17 +1796,17 @@ jQuery(".viewcheck").change(function() {
         }
     }
 });
-	
+
 
 jQuery('.show-form').on('click', function (event){
     event.preventDefault();
     var elem = jQuery(this); //writing $(this) every time is bad
     var target = jQuery('div[data-target="'+elem.attr("data-target")+'"]');
 
-    if(elem.hasClass('active')){ 
+    if(elem.hasClass('active')){
         //remove from this
         elem.removeClass("active");
-        //close box    
+        //close box
         target.slideUp("slow");
     } else { //toggle menu when clicking on some other link
         //remove from everywhere
@@ -1814,7 +1814,7 @@ jQuery('.show-form').on('click', function (event){
         //slide every box up
         jQuery('.collapse').slideUp("slow");
         //add to this only
-        elem.addClass('active'); 
+        elem.addClass('active');
         //slide associated box down
         target.slideDown("slow");
     }
@@ -1832,7 +1832,7 @@ function transferclient(clientname) {
     else{
         return false;
     }
-	
+
 }
 
 function referralsend(transfertaskid,clientid){
@@ -1927,7 +1927,7 @@ function searchprovider(iid){
 
     function assignprovider(id){
 
-      
+
       document.getElementById(id).value = jQuery('#providernamefill').text();
       jQuery("#closeserviceprovider").click();
     }
@@ -1942,7 +1942,7 @@ var urgencyoption = "<option value=''>Select</option><option value='Critical'>Cr
 
 var statusoption = "<option value=''>Select</option><option value='New'>New</option><option value='Pending'>Pending</option><option value='Close'>Close</option><option value='Review'>Review</option>";
 
-function getAssesment(refid) { 
+function getAssesment(refid) {
     if(refid) {
         var iid = refid;
         var email = "<?php echo $email; ?>";
@@ -1970,7 +1970,7 @@ function addobsoln(iid) {
     var e = $(iid).attr('data-check');
     var f = $(iid).attr('data-neck');
 
-    var g = jQuery("#last_sol_"+e+"_"+f).val(); 
+    var g = jQuery("#last_sol_"+e+"_"+f).val();
     if(g != ''){
       var g = parseInt(g) + 1;
       jQuery("#last_sol_"+e+"_"+f).val(g);
@@ -1978,41 +1978,41 @@ function addobsoln(iid) {
       var g = 1;
     }
 
-    var max_fields      = 20; 
-    var wrapper         = jQuery(".input_fields_wrap_solution_"+e+"_"+f); 
+    var max_fields      = 20;
+    var wrapper         = jQuery(".input_fields_wrap_solution_"+e+"_"+f);
     //alert(wrapper);
-    if(y < max_fields){        
+    if(y < max_fields){
         var titleid = "solution_title_"+e+"_"+f+"_"+g;
-        var descid = "solution_desc_"+e+"_"+f+"_"+g;   
-        var providerid = "solution_provider_"+e+"_"+f+"_"+g;   
-        var savedsoliid = "saved_solutionid_"+e+"_"+f+"_"+g;  
-        var searchprovider = "search-"+e+"_"+f+"_"+g;  
-            
+        var descid = "solution_desc_"+e+"_"+f+"_"+g;
+        var providerid = "solution_provider_"+e+"_"+f+"_"+g;
+        var savedsoliid = "saved_solutionid_"+e+"_"+f+"_"+g;
+        var searchprovider = "search-"+e+"_"+f+"_"+g;
+
         var triid = "trobssol_"+e+"_"+g;
         var soltriid = "soltrobs_"+e+"_"+g;
         var provideriid = "provider-"+y;
-            
+
         jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn1 btn-success'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
-             y++; 
-             g++; 
+             y++;
+             g++;
         }
 }
 
 
 jQuery(document).ready(function() {
-    var max_fields      = 20; 
-    var wrapper         = jQuery(".input_fields_wrap_obstcles"); 
-    //var add_button      = $("#addmore");   
-    var y = 2; 
-    var r = 1; 
+    var max_fields      = 20;
+    var wrapper         = jQuery(".input_fields_wrap_obstcles");
+    //var add_button      = $("#addmore");
+    var y = 2;
+    var r = 1;
     var option= $("#coountry").html();
     var taskstatusoption = $("#tskstatus").html();
-    jQuery(".addmoreObstacle").click(function(e){ 
+    jQuery(".addmoreObstacle").click(function(e){
         //alert('hii');
        // var r = $(this).attr('id');
         //alert(r);
         e.preventDefault();
-        if(y < max_fields){        
+        if(y < max_fields){
             var titleid = "obstacle_title_"+r+"_"+y;
             var descid = "obstacle_desc_"+r+"_"+y;
             var notesdid = "obstacle_notes_"+r+"_"+y;
@@ -2022,12 +2022,12 @@ jQuery(document).ready(function() {
             var triid = "trobs"+y;
             var diivvtriid = "diivtrobs"+y;
             var provideriid = "provider-"+y;
-            
+
             jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' style='color: red;padding-left: 20px;' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg-"+r+"-"+y+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='1' data-tom ='2' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
-             y++; 
+             y++;
         }
     });
-   
+
     /*$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         e.preventDefault(); $(this).parent('tr').remove(); x--;
     })*/
@@ -2041,7 +2041,7 @@ function checkInterviewObstacledeatils(iiid) {
    // alert(obsiid);
     //alert(neediid);
     var need_iid = $("#saved_needid_"+neediid).val();
-    //alert(need_iid); 
+    //alert(need_iid);
     var cheking = jQuery("#saved_obstacleid_"+neediid+"_"+obsiid).val();
     var email = "<?php echo $email; ?>";
     var obstacle_title = $("#obstacle_title_"+neediid+"_"+obsiid).val();
@@ -2067,15 +2067,15 @@ function checkInterviewObstacledeatils(iiid) {
                 var result = obj.error;
                 var saved_obstacleid = obj.obstacle_id
                 var trimStr  = $.trim(result);
-                if(trimStr == '11'){          
+                if(trimStr == '11'){
                     jQuery("#saved_obstacleid_"+neediid+"_"+obsiid).val(obj.obstacle_id);
                     $("#obstacle-msg-"+neediid+"-"+obsiid).show();
-                    getAssesment(assementrefid);   
-            
+                    getAssesment(assementrefid);
+
                 }else{
                     alert('Error ! Please try again ');
                 }
-              
+
             }
           });
     }
@@ -2107,13 +2107,13 @@ function updateInterviewObstacle(iid) {
             data: {'email':email,'obstacle_id':obstacle_iid,'obstacle_title':obstacle_title,'obstacle_description':obstacle_desc,'obstacle_notes':obstacle_notes,'obstacle_urgency':obstacle_urgency,'obstacle_status':obstacle_status,funtion:'updateInterviewObstacles'},
             success: function (res) {
               //alert(res);
-                if(res == '11'){ 
-                  getAssesment(assementrefid);         
+                if(res == '11'){
+                  getAssesment(assementrefid);
                  // return true;
                 }else{
                     return false;
                 }
-              
+
             }
           });
     }
@@ -2155,17 +2155,17 @@ function checkInterviewSolutiondeatils(iid) {
                 var result = obj.error;
                 var saved_solution_id = obj.solution_id
                 var trimStr  = $.trim(result);
-                if(trimStr == '11'){          
+                if(trimStr == '11'){
                     jQuery("#saved_solutionid_"+neediid+"_"+obsiid+"_"+soliid).val(obj.solution_id);
                     $("#solution-msg").show();
-                     getAssesment(assementrefid); 
+                     getAssesment(assementrefid);
                     //$("#solution-msg").fadeOut(10000);
-                    //alert(obj.need_id);         
+                    //alert(obj.need_id);
                     //alert('Obstacle save successfully');
                 }else{
                     alert('Error ! Please try again ');
                 }
-              
+
             }
           });
     }
@@ -2173,14 +2173,14 @@ function checkInterviewSolutiondeatils(iid) {
 }
 
  function add(iid){
-   //var y = 1; 
+   //var y = 1;
         var r = jQuery(iid).attr('data-check');
-        var y = jQuery("#last_obs_"+r).val(); 
+        var y = jQuery("#last_obs_"+r).val();
         //alert(y);
         if (typeof value === "undefined") {
             var y = 1;
         }else if(y != '' &&  y != 'undefined'){
-        
+
           var y = parseInt(y) + 1;
           jQuery("#last_obs_"+r).val(y);
         }else{
@@ -2188,14 +2188,14 @@ function checkInterviewSolutiondeatils(iid) {
         }
 
         //alert(y);
-        
-        //var r = 1; 
+
+        //var r = 1;
        // var ttem1 = jQuery(this).attr('data-check1');
        var max_fields      = 20;
-        var wrapper         = jQuery(".input_fields_wrap_obstcles_"+r); 
+        var wrapper         = jQuery(".input_fields_wrap_obstcles_"+r);
         //alert(ttem);
         //e.preventDefault();
-        if(y < max_fields){        
+        if(y < max_fields){
             var titleid = "obstacle_title_"+r+"_"+y;
             var descid = "obstacle_desc_"+r+"_"+y;
             var notesdid = "obstacle_notes_"+r+"_"+y;
@@ -2205,25 +2205,25 @@ function checkInterviewSolutiondeatils(iid) {
             var triid = "trobs"+y;
             var diivvtriid = "diivtrobs"+y;
             var provideriid = "provider-"+y;
-            
+
             jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' style='color: red;padding-left: 20px;' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
-             y++; 
+             y++;
         }
     }
 
 
 jQuery(document).ready(function() {
-    var max_fields      = 20; 
-    var wrapper         = jQuery(".input_fields_wrap");  
-    var x = 2; 
-   // var x = "<?php echo $intkey+1; ?>"; 
+    var max_fields      = 20;
+    var wrapper         = jQuery(".input_fields_wrap");
+    var x = 2;
+   // var x = "<?php echo $intkey+1; ?>";
     //var reffiid = "<?php echo $referraldevid; ?>";
-    
-    var m = 1; 
-    jQuery("#addmoreneed1").on( 'click', 'a', function () { 
+
+    var m = 1;
+    jQuery("#addmoreneed1").on( 'click', 'a', function () {
         alert('Hello');
        // e.preventDefault();
-        if(x < max_fields){         
+        if(x < max_fields){
             var name1 = "tasks["+x+"][task_type]";
             var name2 = "tasks["+x+"][provider]";
             var name3 = "tasks["+x+"][task_owner]";
@@ -2234,36 +2234,36 @@ jQuery(document).ready(function() {
             var obstriid = "paneltrobs"+x;
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
-            
+
             jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;' >Remove</a><br><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation <em style='color:red'>*</em></label><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' cols='41'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)'>"+statusoption+"</select></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
-             x++; 
-             //x++; 
+             x++;
+             //x++;
         }
     });
-   
+
 });
 
-var m = 1; 
+var m = 1;
 function testvikfun(iid) {
 
    //var y = 1;
     var reffiid = $(iid).attr('data-ref');
     var x = $(iid).attr('data-cheekint');
-    var x = parseInt(x)+1; 
+    var x = parseInt(x)+1;
 
    // alert(e);
   //  alert(f);
 
-   // var max_fields      = 20; 
-  var max_fields      = 20; 
-  var wrapper         = jQuery(".input_fields_wrap");  
-  
+   // var max_fields      = 20;
+  var max_fields      = 20;
+  var wrapper         = jQuery(".input_fields_wrap");
+
  // var reffiid = '';
-   // var x = "<?php echo $intkey+1; ?>"; 
+   // var x = "<?php echo $intkey+1; ?>";
     //var reffiid = "<?php echo $referraldevid; ?>";
-    
-  
-   if(x < max_fields){         
+
+
+   if(x < max_fields){
             var name1 = "tasks["+x+"][task_type]";
             var name2 = "tasks["+x+"][provider]";
             var name3 = "tasks["+x+"][task_owner]";
@@ -2274,9 +2274,9 @@ function testvikfun(iid) {
             var obstriid = "paneltrobs"+x;
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
-            
+
             jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;' >Remove</a><br><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation <em style='color:red'>*</em></label><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' cols='41'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)'>"+statusoption+"</select></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
-             x++; 
+             x++;
       }
 
 }
@@ -2296,7 +2296,7 @@ function removedata(iid){
   }else if(type == 'solution'){
     var id = $("#saved_solutionid_"+idslug).val();
   }
-  
+
   var email = "<?php echo $email; ?>";
   if(type == ''){
      return false;
@@ -2309,12 +2309,12 @@ function removedata(iid){
               url: ajax_url,
               data: {'id':id,'email':email,'type':type,funtion:'removeInterviewData'},
               success: function (res) {
-                  if(res == 11){          
+                  if(res == 11){
                     location.reload();
                   }else{
                       return false;
                   }
-                
+
               }
       });
     }else{
@@ -2354,20 +2354,20 @@ function updateInterviewSolutiondeatils(iid) {
             success: function (res) {
                 //console.log(res);
                 var trimStr  = $.trim(res);
-                if(trimStr == '11'){  
+                if(trimStr == '11'){
                 //  if(solution_task_iid == ''){
                     //alert('save task');
                     saveRefraalSolutionTask(solution_iid,assementrefid,solution_description,solution_provider,email);
                     getReferralTask(assementrefid);
                 //  }
-                   
-                   getAssesment(assementrefid);         
-                   
+
+                   getAssesment(assementrefid);
+
                 }else{
                     //alert('Error ! Please try again ');
                     return false;
                 }
-              
+
             }
         });
     }
@@ -2390,7 +2390,7 @@ function saveRefraalSolutionTask(solution_iid,refferalId,description,provider,em
                 return true;
 
               }
-              
+
             }
           });
 }
@@ -2398,7 +2398,7 @@ function saveRefraalSolutionTask(solution_iid,refferalId,description,provider,em
 function assignprovider(iid){
   alert(iid);
   var id = iid.replace("search-", "solution_provider_");
-  
+
   document.getElementById(id).value = jQuery('#providernamefill').text();
   jQuery("#closeserviceprovider").click();
 }
@@ -2408,9 +2408,9 @@ function removeobstr(id){
     var arr = id.split('-');
     var r = arr[1];
     jQuery('#'+r).remove();
-}   
+}
 
-function showdetails(details) { 
+function showdetails(details) {
   var providername = jQuery(details).attr('data-name');
   var providershortdesc = jQuery(details).attr('data-shortdesc');
   var programName = jQuery(details).attr('data-programName');
@@ -2418,7 +2418,7 @@ function showdetails(details) {
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
   var servicesTags = jQuery(details).attr('data-servicesTags');
-  var mainOffioce = jQuery(details).attr('data-mainOffice');
+  var mainOffice = jQuery(details).attr('data-mainOffice');
   var quickLink = jQuery(details).attr('data-quickLink');
   var contactPage = jQuery(details).attr('data-contactPage');
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
@@ -2443,8 +2443,8 @@ function showdetails(details) {
  }
 
   if(programPageUrl==''){
-  jQuery("#programPageUrl").removeAttr("href");  
-  
+  jQuery("#programPageUrl").removeAttr("href");
+
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
  }
@@ -2454,7 +2454,7 @@ function showdetails(details) {
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
  }
- 
+
   jQuery('#providernamefill').text(providername);
   jQuery('#providershortdescfill').html(providershortdesc);
   jQuery('#programName').html(programName);
@@ -2462,7 +2462,8 @@ function showdetails(details) {
   jQuery('#populationDesc').html(populationDesc);
   jQuery('#services').html(services);
   jQuery('#servicesTags').html(servicesTags);
-  jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
+
+  jQuery('#mainOffice').html(mainOffice);
 
 }
 
@@ -2473,7 +2474,7 @@ function showdetails(details) {
            //localStorage.setItem('viewtype', type);
            document.getElementById("mapprac").classList.add("view-active");
            document.getElementById("listprac").classList.remove("view-active");
-        
+
         }else{
          jQuery('#listview').show();
          jQuery('#mapview').hide();
@@ -2483,8 +2484,8 @@ function showdetails(details) {
          document.getElementById("mapprac").classList.remove("view-active");
         }
 
-  
-  
+
+
   }
 
 
@@ -2512,13 +2513,13 @@ function showdetails(details) {
             url: ajax_url,
             data: {'email':email,'need_id':need_id,'need_title':need_title,'need_description':need_desc,'need_notes':need_notes,'need_urgency':need_urgency,'need_status':need_status,funtion:'updateinterviewneeds'},
             success: function (res) {
-                if(res == 11){ 
+                if(res == 11){
                  jQuery("#need-msg-"+needdiid).show();
-                 getAssesment(assementrefid);          
-                }else{ 
+                 getAssesment(assementrefid);
+                }else{
                     return false;
                 }
-              
+
             }
           });
       }
@@ -2555,14 +2556,14 @@ function showdetails(details) {
                 var result = obj.error;
                 var saved_needid = obj.need_id
                 var trimStr  = $.trim(result);
-                if(trimStr == '11'){          
+                if(trimStr == '11'){
                     jQuery("#saved_needid_"+moreiid).val(obj.need_id);
-                    $("#need-msg-"+moreiid).show(); 
-                    getAssesment(referral_id);    
+                    $("#need-msg-"+moreiid).show();
+                    getAssesment(referral_id);
                 }else{
                     alert('Error ! Please try again ');
                 }
-              
+
             }
           });
       }

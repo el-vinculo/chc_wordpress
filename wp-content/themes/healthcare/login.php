@@ -114,7 +114,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 
 <div class="form-group">
 
-<iframe name="adminAccess" id="frame1" src="https://dev6.resourcestack.com/backend/" width="1000" height="400" style="display: none;"></iframe>
+<iframe name="adminAccess" id="frame1" src="https://dev11.resourcestack.com/backend/" width="1000" height="400" style="display: none;"></iframe>
 
 
 </div>
@@ -128,7 +128,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 	  const otp = false;
           //console.log("otp is " + otp);
 	  const frame = document.getElementById("frame1");
-	  frame.contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev6.resourcestack.com/backend/");
+	  frame.contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev11.resourcestack.com/backend/");
         }
 	jQuery(document).ready(function($){
 		$("#login_details").click(function() {
@@ -139,7 +139,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 	   		console.log("the frame is " , frame.get(0).contentWindow);
 			//if ($("#step-2-otp").val()!= '')
 			//frame.get(0).contentWindow.postMessage("logout","https://dev11.resourcestack.com/backend/");
-	   		frame.get(0).contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev6.resourcestack.com/backend/");
+	   		frame.get(0).contentWindow.postMessage(["login",email,pass,otp].toString(),"https://dev11.resourcestack.com/backend/");
 			//lse
 			//frame.get(0).contentWindow.postMessage([email,pass].toString(),"https://dev11.resourcestack.com/backend/");
 	   		//alert("sdkjfhalfasifjhlafaijsef");

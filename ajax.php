@@ -2,7 +2,7 @@
 session_start();
 error_reporting(1);
 //$filename =  __DIR__.'ajax.php';
-require_once('wp-config.php'); 
+require_once('wp-config.php');
 require_once('api.php');
 //
 
@@ -48,7 +48,7 @@ function saveRefSolTask(){
         $postData['task_type'] =  '';
         $postData['task_status'] =  '';
         $postData['task_owner'] =  '';
-        $postData['task_deadline'] =  '';        
+        $postData['task_deadline'] =  '';
         $patient_id = $postData['patient_id'];
         $patient_email   = $_SESSION['userdata']['email'];
         $save = saveReferralTask($postData,$patient_id,$patient_email,$documents);
@@ -72,7 +72,7 @@ function saveRefSolTask(){
 
 function referraltasks(){
 	if(!empty($_POST)){
-		
+
 		$referral_id = $_POST['referral_id'];
 		$email       = $_POST['email'];
 
@@ -82,11 +82,11 @@ function referraltasks(){
            	   $taskList  = $tasks['task_list'];
 
            }
-		 
+
 		}else{
 			$taskList = array();
 		}
-        
+
 		$taskHtml = taskHtmlTable($taskList,$referral_id);
 		echo  $taskHtml;
 	}
@@ -99,38 +99,38 @@ function referralAssessments() {
 		$referral_id 	= $_POST['referral_id'];
 		$email		= $_POST['email'];
     $assessments = interviewDetailsTest($referral_id,$email);
-    $detailsData  = $assessments['details_array']; 
+    $detailsData  = $assessments['details_array'];
     $assessmentHtml = assessmentsHtmlTable($detailsData, $referral_id);
-    echo  $assessmentHtml;    
+    echo  $assessmentHtml;
 }
 
 function assessmentsHtmlTable($assessmentList, $referral_id)
 {
 	$html = "<table><tbody id='taskbody'><input type='hidden' id='assementrefiid' value='".$referral_id."'>";
-        if(!empty($assessmentList)){ 
-            foreach ($assessmentList as $assessmentkey => $assessmentvalue) { 
-                $taskiid =  $taskvalue['task_id'];  
+        if(!empty($assessmentList)){
+            foreach ($assessmentList as $assessmentkey => $assessmentvalue) {
+                $taskiid =  $taskvalue['task_id'];
            $html.= "<tr><td id='refneedtitle-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_title']."</td>
                  <td id='reftaskprovider-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_description']."</td>
                  <td id='reftaskowner-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_note']."</td>
                  <td id='reftaskdesc-".$assessmentvalue['need_id']."'>".$assessmentvalue['need_urgency']."</td>
                  <td id='reftaskdeadline-".$assessmentvalue['need_id']."'>".date('d-m-Y',strtotime($assessmentvalue['need_status']))."</td>
-                 
-            </tr>";
-	    } }else { 
 
-    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Assesment Found</p></center></td></tr>";                        
+            </tr>";
+	    } }else {
+
+    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Assesment Found</p></center></td></tr>";
     }
 	return   $html;
 }
 
 function taskHtmlTable($taskList,$referral_id)
-{  
-	
+{
+
 	$html = "<table><tbody id='taskbody'><input type='hidden' id='taskrefiid' value='".$referral_id."'>";
-            if(!empty($taskList)){ 
-                foreach ($taskList as $taskkey => $taskvalue) { 
-                $taskiid = 	$taskvalue['task_id'];	
+            if(!empty($taskList)){
+                foreach ($taskList as $taskkey => $taskvalue) {
+                $taskiid = 	$taskvalue['task_id'];
     $html.= "<tr><td id='reftasktype-".$taskvalue['task_id']."'>".$taskvalue['task_type']."</td>
                  <td id='reftaskprovider-".$taskvalue['task_id']."'>".$taskvalue['provider']."</td>
                  <td id='reftaskowner-".$taskvalue['task_id']."'>".$taskvalue['task_owner']."</td>
@@ -142,11 +142,11 @@ function taskHtmlTable($taskList,$referral_id)
                  <button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  >Ledger</button></td>
 
             </tr>";
-            } }else { 
+            } }else {
 
-    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Task Added</p></center></td></tr>";                        
-    } 
-                                
+    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Task Added</p></center></td></tr>";
+    }
+
     $html.= "</tbody></table>";
     return   $html;
 }
@@ -205,7 +205,7 @@ function replymsg(){
 
 function patientsreferralList(){
     if(!empty($_POST)){
-        
+
         $patient_id = $_POST['patient_id'];
         $email       = $_POST['email'];
 
@@ -215,11 +215,11 @@ function patientsreferralList(){
                $referralList  = $referrals['referral_list'];
 
            }
-         
+
         }else{
             $referralList = array();
         }
-        
+
         $refHtml = referralHtmlTable($referralList);
         echo  $refHtml;
     }
@@ -227,8 +227,8 @@ function patientsreferralList(){
 
 function referralHtmlTable($referralList){
     $html = "<table><tbody id='refbody'>";
-            if(!empty($referralList)){ 
-                foreach ($referralList as $refkey => $refvalue) {         
+            if(!empty($referralList)){
+                foreach ($referralList as $refkey => $refvalue) {
     $html.= "<tr><td><input type='radio' class='viewcheck' name='viewtask' id='".$refvalue['referral_id']."' value='".$refvalue['referral_id']."' checked></td>
                  <td id='duedate-".$refvalue['referral_id']."'>".date('d-m-Y',strtotime($refvalue['due_date']))."</td>
                  <td id='refname-".$refvalue['referral_id']."'>".$refvalue['referral_name']."</td>
@@ -239,17 +239,17 @@ function referralHtmlTable($referralList){
                  <td><button class='btn-primary' data-toggle='modal'  data-target='#myModal' onclick='showReferral('".$refvalue[referral_id]."')'><i class='fa fa-pencil' aria-hidden='true'></i></button></td>
 
             </tr>";
-            } }else { 
+            } }else {
 
-    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Referral Added</p></center></td></tr>";                        
-    } 
-                                
+    $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Referral Added</p></center></td></tr>";
+    }
+
     $html.= "</tbody></table>";
     return   $html;
 }
 
 function CommunicationMsgList(){
-    if(!empty($_POST)){ 
+    if(!empty($_POST)){
         $patient_id = $_POST['patient_id'];
         $task_id = $_POST['task_id'];
         $email       = $_POST['email'];
@@ -259,20 +259,20 @@ function CommunicationMsgList(){
                $messagelist  = array_reverse($messages['comm_data']);
                //rsort($messagelist);
            }
-         
+
         }else{
             $messagelist = array();
         }
-        
+
         $msgHtml = commmsgHtml($messagelist);
         echo  $msgHtml;
-    }   
+    }
 }
 
 
 
 function ledgertaskdeatillist(){
-    if(!empty($_POST)){ 
+    if(!empty($_POST)){
         //$patient_id = $_POST['patient_id'];
         $task_id = $_POST['task_id'];
         $email       = $_POST['email'];
@@ -280,37 +280,37 @@ function ledgertaskdeatillist(){
 
         //print_r($ledgers);
         if(!empty($ledgers)) {
-           if($ledgers['status'] == 'ok'){ 
+           if($ledgers['status'] == 'ok'){
            	  $ledgerslist = $ledgers['ledger_details'];
             // echo "<pre>";
-            // print_r($ledgerslist); die; 
+            // print_r($ledgerslist); die;
                //$messagelist  = array_reverse($messages['comm_data']);
                //rsort($messagelist);
            }
-         
+
         }else{
             $ledgerslist = array();
         }
-        
+
         $msgHtml = ledgerHtml($ledgerslist);
         return $msgHtml;
-    }   
+    }
 }
 
 
 function ledgerHtml($ledgerslist){
 
  //echo "<pre>";
-   //print_r($ledgerslist); 
-  
-   if(!empty($ledgerslist)){ 
-  
+   //print_r($ledgerslist);
+
+   if(!empty($ledgerslist)){
+
      $html = "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
             <tr><th colspan='4'>Internal</th></tr><tr><th>Date of Change</th><th>Field Name</th>
             <th>New Value</th><th>Old Value</th></tr><tbody>";
 
-    if(!empty($ledgerslist['internal_record_array'])){ 
-        foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {  
+    if(!empty($ledgerslist['internal_record_array'])){
+        foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {
     if(!empty($internalledvalue['changes']) && (!empty($internalledvalue['created_at']))){
 
        foreach($internalledvalue['changes'] as $key=>$value) {
@@ -325,7 +325,7 @@ function ledgerHtml($ledgerslist){
 
            $html.=  "<tr><td>".$internalledvalue['created_at']."</td><td>Task Status</td><td>".$internalledvalue['changes'][$key+1]['task_status']."</td><td>".$internalledvalue['changes'][$key]['task_status']."</td></tr>";
          }
-            
+
             if($internalledvalue['changes'][$key]['task_owner']!='') {
 
              $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Task Owner</td><td>".$internalledvalue['changes'][$key+1]['task_owner']."</td><td>".$internalledvalue['changes'][$key]['task_owner']."</td></tr>";
@@ -350,34 +350,34 @@ function ledgerHtml($ledgerslist){
           }
 
           if($internalledvalue['changes'][$key]['patient_document']!='') {
-           
+
             $html.="<tr><td>".$internalledvalue['created_at']."</td><td>Patient Document</td><td>".$internalledvalue['changes']['1']['patient_document']."</td><td>".$internalledvalue['changes'][$key+1]['patient_document']."</td></tr>";
 
           }
 
            $html.="</tbody></thead></table>";
 
-           }    
-    }     
-    } } else{ 
-    $html.=  "<table><tr><td colspan='4'>no record found </td></tr></table>";                        
-    } 
-                                
+           }
+    }
+    } } else{
+    $html.=  "<table><tr><td colspan='4'>no record found </td></tr></table>";
+    }
+
     $html.= "<table class='table table-striped table-bordered' id='11externaltabledata'><thead>
             <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
             <th>New Value</th><th>Old Value</th></tr><tbody>";
 
-    if(!empty($ledgerslist['external_record_array'])){ 
+    if(!empty($ledgerslist['external_record_array'])){
         foreach ($ledgerslist['external_record_array'] as $externalledkey => $externalledvalue) {  if(!empty($externalledvalue['changes'])){
 
          foreach($externalledvalue['changes'] as $key=>$value){
 
-            if($externalledvalue['changes'][$key]['task_type']!='') { 
+            if($externalledvalue['changes'][$key]['task_type']!='') {
 
             $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Type</td><td>".$externalledvalue['changes'][$key+1]['task_type']."</td><td>".$externalledvalue['changes'][$key]['task_type']."</td></tr>";
 
           }
-           
+
            if($externalledvalue['changes'][$key]['task_status']!='') {
 
             $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Task Status</td><td>".$externalledvalue['changes'][$key+1]['task_status']."</td><td>".$externalledvalue['changes'][$key]['task_status']."</td></tr>";
@@ -406,21 +406,21 @@ function ledgerHtml($ledgerslist){
             $html.="<tr><td>".$externalledvalue['created_at']."</td><td>Patient Document</td><td>".$externalledvalue['changes'][$key+1]['patient_document']."</td><td>".$externalledvalue['changes'][$key]['patient_document']."</td></tr>";
 
           }
-          $html.="</tbody></thead></table>"; 
+          $html.="</tbody></thead></table>";
 
-        }   
-   } } } else{ 
-    $html.=  "<tr><td colspan='4'>no record found </td></tr>";                        
-    } 
+        }
+   } } } else{
+    $html.=  "<tr><td colspan='4'>no record found </td></tr>";
+    }
 
     }else{
     	$html.=  "
     	<thead><tr><td colspan='4'>
-   
+
        <p style='font-size: 16px;'>No detail found </p></td></tr></thead></table>
-   ";                        
-    } 
-    
+   ";
+    }
+
 
     return   $html;
 }
@@ -428,29 +428,29 @@ function ledgerHtml($ledgerslist){
 function commmsgHtml($messagelist){
 
    $html = "<div class='col-md-6'><ul>";
-    if(!empty($messagelist)){ 
-        foreach ($messagelist as $msgkey => $msgvalue) { 
-            if($msgvalue['sender_name']){  $ref = $msgvalue['sender_name']; }else{ $ref = 'Care Comminator';  } 
+    if(!empty($messagelist)){
+        foreach ($messagelist as $msgkey => $msgvalue) {
+            if($msgvalue['sender_name']){  $ref = $msgvalue['sender_name']; }else{ $ref = 'Care Comminator';  }
                 $html.= "<ol>
                   <div class='message-section' style='background: #f3f1f1; padding: 10px 15px;font-size: 16px; border: 1px solid #ddd;
                     border-radius: 3px;'>
            <p style='font-size: 16px;'><b>".$ref."</b>: ".$msgvalue['message']."</p>
            <small>".$msgvalue['created_at']."</small>
-       </ol>";       
-        } }else { 
+       </ol>";
+        } }else {
               $html.=  "<ol>
    <div class='message-section' style='background: #f3f1f1; padding: 10px 15px;font-size: 16px; border: 1px solid #ddd;
     border-radius: 3px;'>
        <p style='font-size: 16px;'>No message found </p>
-   </ol>";                        
-    } 
-                                
+   </ol>";
+    }
+
     $html.= "</ul></div>";
     return   $html;
 }
 
 function ptnCommunicationList(){
-    if(!empty($_POST)){ 
+    if(!empty($_POST)){
         $patient_id = $_POST['patient_id'];
         $email       = $_POST['email'];
         $communcationdata = communicationList($patient_id,$email);
@@ -459,34 +459,34 @@ function ptnCommunicationList(){
                $commList  = $communcationdata['task_msg_data'];
                //rsort($messagelist);
            }
-         
+
         }else{
             $commList = array();
         }
-        
+
         //echo "<pre>";
         //print_r($commList); die;
         $commHtml = commListHtml($commList);
         echo  $commHtml;
     }
 
-    
+
 }
 
 
 function commListHtml($commList){
     $html = "<table><tbody id='commlistbody'>";
-            if(!empty($commList)){ 
-                foreach ($commList as $commkey => $commvalue) {         
+            if(!empty($commList)){
+                foreach ($commList as $commkey => $commvalue) {
     $html.= "<tr><td>".$commvalue['task_type']."</td>
                  <td>".$commvalue['provider']."</td>
                  <td><i class='fa fa-envelope' aria-hidden='true'></i>".$commvalue['msg_count']."</td>
                  <td><button class='btn-primary' id='".$commvalue['task_id']."' data-toggle='modal'  data-target='#myCommMsgModal' onclick='getcommicationmessage(this.id)'><i class='fa fa-angle-double-right' aria-hidden='true'></td></tr>";
-            } }else { 
+            } }else {
 
-    $html.=  "<tr><td colspan='4' style='color: red'><center><p>No Msg Added</p></center></td></tr>";                        
-    } 
-                                
+    $html.=  "<tr><td colspan='4' style='color: red'><center><p>No Msg Added</p></center></td></tr>";
+    }
+
     $html.= "</tbody></table>";
     return   $html;
 }
@@ -549,11 +549,11 @@ function saveinterview(){
         $interview_id = '';
         $referral_id = '';
     }
-    
+
     $response['error'] = $error;
     $response['interview_id'] = $interview_id;
     $response['referral_id'] = $referral_id;
-    
+
     $responsejson = json_encode($response);
     return $responsejson;
 }
@@ -566,9 +566,9 @@ function saveinterviewneeds()
     $needsdata = $_POST;
     $email   = $_SESSION['userdata']['email'];
     $save = saveinterviewneedsdata($needsdata,$email);
-    if(!empty($save)){ 
+    if(!empty($save)){
     	//echo "<pre>";
-    	//print_r($save); die; 
+    	//print_r($save); die;
       if($save['status'] == 'ok'){
         $error = '11';
         $need_id  = $save['need_id'];
@@ -584,10 +584,10 @@ function saveinterviewneeds()
         $error = 2;
         $need_id = '';
     }
-    
+
     $response['error'] = $error;
     $response['need_id'] = $need_id;
-    
+
     $responsejson = json_encode($response);
     return $responsejson;
 }
@@ -601,7 +601,7 @@ function saveinterviewobstacles()
     $obstaclesdata = $_POST;
     $email   = $_SESSION['userdata']['email'];
     $save = saveinterviewobstaclesdata($obstaclesdata,$email);
-    if(!empty($save)){ 
+    if(!empty($save)){
       if($save['status'] == 'ok'){
         $error = '11';
         $obstacle_id  = $save['obstacle_id'];
@@ -617,10 +617,10 @@ function saveinterviewobstacles()
         $error = 2;
         $obstacle_id = '';
     }
-    
+
     $response['error'] = $error;
     $response['obstacle_id'] = $obstacle_id;
-    
+
     $responsejson = json_encode($response);
     return $responsejson;
 }
@@ -632,9 +632,9 @@ function saveinterviewsolution()
   if(!empty($_POST)){
     $solutionsdata = $_POST;
     $email   = $_SESSION['userdata']['email'];
-    
+
     $save = saveinterviewsolutiondata($solutionsdata,$email);
-    if(!empty($save)){ 
+    if(!empty($save)){
       if($save['status'] == 'ok'){
         $error = '11';
         $solution_id  = $save['solution_id'];
@@ -650,24 +650,24 @@ function saveinterviewsolution()
         $error = 2;
         $solution_id = '';
     }
-    
+
     $response['error'] = $error;
     $response['solution_id'] = $solution_id;
-    
+
     $responsejson = json_encode($response);
     return $responsejson;
 }
 
 function updatePatientReferralTask(){
 /*    echo "<pre>";
-    print_r($_POST); 
+    print_r($_POST);
      print_r($_FILES); die;*/
     $error = 0;
     if(!empty($_POST)){
       //echo "<pre>";
-       
-     // print_r($_POST); 
-      //print_r($_FILES); die; 
+
+     // print_r($_POST);
+      //print_r($_FILES); die;
         $referralTaskdata = $_POST;
         $task_id  = $_POST['task_id'];
         $email   = $_SESSION['userdata']['email'];
@@ -684,7 +684,7 @@ function updatePatientReferralTask(){
     }else{
 
         $error = 2;
-        echo "gofalse"; die; 
+        echo "gofalse"; die;
     }
 
     return $error;
@@ -710,21 +710,21 @@ function inviteOrg(){
     }else{
 
         $error = 2;
-        echo "gofalse"; die; 
+        echo "gofalse"; die;
     }
 
     return $error;
 }
 
 function selectserviceprovider(){
-    if(!empty($_POST)){ 
+    if(!empty($_POST)){
         $serachData = $_POST;
        /* if(!empty($serachData['zipcode'])){
           $serachData = array();
         }else{
           $serachData = $_POST;
         }*/
-       
+
         $id = $_POST['iid'];
         $practicesdata = serviceproviderslist($serachData);
         if(!empty($practicesdata['status'] == 'ok')){
@@ -796,12 +796,12 @@ function rejectreferralbyclient()
 
 
 
-function providerListHtml($practices,$id){ 
+function providerListHtml($practices,$id){
 
-    if(!empty($practices)){ 
+    if(!empty($practices)){
     $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
-     foreach ($practices as $practiceskey => $practicesvalue) { 
+     foreach ($practices as $practiceskey => $practicesvalue) {
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
      $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
      $programName= $practicesvalue["Programs"]["ProgramName"];
@@ -845,7 +845,7 @@ function providerListHtml($practices,$id){
               }
 
               $mainOffice = rtrim($mainOffice1, ',');
-             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+             $addressRaw='<li><i class="fa fa-map-marker"></i>'.$mainOffice.'</li><br>';
 
             foreach($val['POCs'] as $pockey=>$pocval){
 
@@ -872,7 +872,7 @@ function providerListHtml($practices,$id){
 
          $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
-         
+
          $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
          if (filter_var($quickLink, FILTER_VALIDATE_URL)){
           //just pass it
@@ -897,7 +897,7 @@ function providerListHtml($practices,$id){
          } else{
           $programPageUrl="";
          }
-  
+
     $html.= "<tr>
     <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
 <td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-success'> Show Detail</button></td>
@@ -949,19 +949,6 @@ function providerListHtml($practices,$id){
 
          }
 
-         if($practices[0]["Programs"]["ProgramSites"][0]=="1"){
-          foreach($practices[0]["OrgSites"] as $key=>$val){
-            if($val["SelectSiteID"]=="1"){
-              $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip'].
-              $officePhone= $val['POCs'][0]['poc']['OfficePhone'];
-              $OfficeEmail= $val['POCs'][0]['poc']['Email'];
-              $contactName= $val['POCs'][0]['poc']['Name'];
-              break;
-            }
-
-          }
-         }
-
     $html.= "<div class='tab' role='tabpanel'>
     <ul class='nav nav-tabs menu-tabs' role='tablist'>
     <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank'>Quick Links</a></li>
@@ -989,12 +976,51 @@ function providerListHtml($practices,$id){
 
        <h3 style='margin-bottom: 0px;'>Address</h3>
 
-    <ul class='nav nav-set'>
-      <li id='mainOffice'> <i class='fa fa-map-marker'></i>".$mainOffice."</li>
-       <li id='contactName'> <i class='fa fa-user'></i>".$contactName."</li>
+    <ul class='nav nav-set' id='mainOffice'>";
+
+    if(is_array($practices[0]["Programs"]["ProgramSites"])){
+          foreach($practices[0]["OrgSites"] as $key=>$val){
+
+            if(in_array($val["SelectSiteID"], $practices[0]["Programs"]["ProgramSites"])){
+
+             // $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip'];
+              $mainOffice1 = $val['Addr1'][0]['Text'];
+              if(!empty($val['Addr2']))
+              {
+                   $mainOffice1 .= ','.$val['Addr2'];
+              }
+              if(!empty($val['AddrCity']))
+              {
+                   $mainOffice1 .= ','.$val['AddrCity'];
+              }
+              if(!empty($val['AddrState']))
+              {
+                   $mainOffice1 .= ','.$val['AddrState'];
+              }
+              if(!empty($val['AddrZip']))
+              {
+                   $mainOffice1 .= ','.$val['AddrZip'];
+              }
+
+              $mainOffice = rtrim($mainOffice1, ',');
+
+
+     $html.="<li> <i class='fa fa-map-marker'></i>".$mainOffice."</li>";
+
+     foreach($val['POCs'] as $pockey=>$pocval){
+              $officePhone= $pocval['poc']['OfficePhone'];
+              $OfficeEmail= $pocval['poc']['Email'];
+              $contactName= $pocval['poc']['Name'];
+       $html.="<li id='contactName'> <i class='fa fa-user'></i>".$contactName."</li>
       <li id='officePhone'> <a href='tel:".$officePhone."'><i class='fa fa-phone'></i>".$officePhone."</a></li>
-      <li id='OfficeEmail'><a href='mailto:".$OfficeEmail."'><i class='fa fa-envelope'></i>".$OfficeEmail."</a></li>
-    </ul>
+      <li id='OfficeEmail'><a href='mailto:".$OfficeEmail."'><i class='fa fa-envelope'></i>".$OfficeEmail."</a></li>";
+      }
+            }
+
+          }
+         }
+
+    $html.="</ul>
           </div>
 
       </div>
@@ -1002,13 +1028,11 @@ function providerListHtml($practices,$id){
      </div>
 
     </div>
-<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";    
-    }else{ 
+<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";
+    }else{
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }
     //html changes
-
-
 
     return   $html;
 }
@@ -1070,7 +1094,7 @@ function updateInterviewObstacles()
 
         $obstaclesdata = $_POST;
         //echo "<pre>";
-        //print_r($obstaclesdata); die; 
+        //print_r($obstaclesdata); die;
         $obstacle_id  = $_POST['obstacle_id'];
         $email   = $_SESSION['userdata']['email'];
         $update = updateNeedObstaclesDetails($obstaclesdata,$obstacle_id,$email);
@@ -1098,7 +1122,7 @@ function updateInterviewSolutions()
 
         $solutiondata = $_POST;
         //echo "<pre>";
-        //print_r($solutiondata); die; 
+        //print_r($solutiondata); die;
         $solution_id  = $_POST['solution_id'];
         $email   = $_SESSION['userdata']['email'];
         $update = updateObstacleSolutionDetails($solutiondata,$solution_id,$email);
@@ -1132,7 +1156,7 @@ function removeInterviewData(){
         }else if($type == 'obstacle'){
           $delete = deleteInterviewObstacle($id,$email);
         }
-        
+
         if(!empty($delete)){
             if($delete['status'] == 'ok'){
                 $error = '11';
@@ -1155,4 +1179,3 @@ function removeInterviewData(){
 
 
 ?>
-
