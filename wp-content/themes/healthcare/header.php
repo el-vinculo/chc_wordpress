@@ -1,3 +1,9 @@
+
+<?php  if(empty($_SESSION['userdata']) && ($_SERVER['REQUEST_URI']!='/' && $_SERVER['REQUEST_URI']!='/login/')) {?>
+  <script type="text/javascript">
+    window.location.href= "<?php echo site_url(); ?>";
+  </script>
+<?php } ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>

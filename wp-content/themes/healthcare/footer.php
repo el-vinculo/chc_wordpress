@@ -98,13 +98,8 @@ $health_data= health_care_get_options(); ?>
       </div>
     </div> -->
 
-<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-=======
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
->>>>>>> 2eee0bb1286a63c74f54b238a49a6a640795f4a0
  <script type="text/javascript">
 /*
  $(document).ready(function(){

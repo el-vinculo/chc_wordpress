@@ -12,8 +12,12 @@
  * @package WordPress
  * @subpackage healthcare
 */
-session_destroy();
 session_start();
+if($_SESSION['userdata']){?>
+<script type="text/javascript">
+		window.location.href= "<?php echo site_url(); ?>/dashboard";
+	</script>
+<?php }
 if(!empty($_POST)){
 	$error = 0;
 	if(empty($_POST['email'])){

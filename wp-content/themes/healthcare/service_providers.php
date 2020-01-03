@@ -443,8 +443,7 @@ get_header();
 if(!empty($practices)){ ?>
 <div class="row">
   <div class="col-md-6 col-sm-12">
-
-    <h4>Search Results</h4>
+    <h4>Search Results <b>{<?=count($practices)?>}</b></h4>
     <div class="border row">
     <div class="col-sm-12">
       <div class="scroll">

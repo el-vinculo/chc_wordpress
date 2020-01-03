@@ -49,13 +49,14 @@ if(isset($_SESSION['userdata'])){
   if(!empty($_POST['submit'])){
       
        $to=CARE_EMAIL;
+       $from=FROM_EMAIL;
        $subject="Issues Reported";
        $description=$_POST['description'];
-      $headers = array('From: CHC <wordpress@dev11.resourcestack.com>');
+      $headers = array('From: CHC <'.$from.'>');
     $message ="<html><body>Hello Admin, One of our user has reported issues having following details:<br> Name: ".$_POST['fname']." <br>
-      Email:".$_POST['uemail']."<br>
-      Phone:".$_POST['phonenumber']."<br>
-      Description:".$_POST['description']." </body></html>
+      Email: ".$_POST['uemail']."<br>
+      Phone: ".$_POST['phonenumber']."<br>
+      Description: ".$_POST['description']." </body></html>
       ";
 
        $filename = basename($_FILES["screenshots"]["name"]);
@@ -83,39 +84,9 @@ if(isset($_SESSION['userdata'])){
              // echo "File is not uploaded";
              // $uploadOk = 0;
           }
-                // $image_url = $file;
 
-                // $upload_dir = wp_upload_dir();
-
-                // $image_data = file_get_contents( $file );
-
-                // $filename = basename( $image_url );
-
-                // if ( wp_mkdir_p( $upload_dir['path'] ) ) {
-                // $file = $upload_dir['path'] . '/' . $filename;
-                // }
-                // else {
-                // $file = $upload_dir['basedir'] . '/' . $filename;
-                // }
-
-                // file_put_contents($file, $image_data );
-
-               // $wp_filetype = wp_check_filetype( $filename, null );
-
-                // $attachments = array(
-                // 'post_mime_type' => $wp_filetype['type'],
-                // 'post_title' => sanitize_file_name( $filename ),
-                // 'post_content' => '',
-                // 'post_status' => 'inherit'
-                // );
-
-               // $attach_id = wp_insert_attachment( $attachment, $file );
-              //  require_once( ABSPATH . 'wp-admin/includes/image.php' );
-               // $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
-               // wp_update_attachment_metadata( $attach_id, $attach_data );
        }
 
-      // echo '======>'.$target_file;
 
        $attachments = array($target_file);
 
@@ -127,10 +98,7 @@ if(isset($_SESSION['userdata'])){
 	  			$error = 0;
 	  			$success = 51; 
 	  			$msg   = "Your issues reported successfully";
-	  			//$actionurl = site_url().'/report-issue/';  
-	  			//$Message = urlencode("Some error occured please try after some time ");
-                //header("Location:".$actionurl."?msg=".$msg); 
-                //header("Refresh: 2; url=".$actionurl);
+	  			
 	  	}else{
 	  		$error = 0;
 	  		$success = 53; 
