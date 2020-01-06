@@ -66,6 +66,9 @@ a.custom-task:hover {
   padding: 0 20px;
     box-shadow: 0 0 20px #ededed;
 }
+
+
+
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
@@ -542,6 +545,7 @@ get_header();
 							    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 							      <h4 class="panel-title"><b>Client Details</b></h4></a>
 							    </div>
+                  
     <div id="collapseOne" class=" panel-collapse collapse <?php if(($success == '21') || ($success == '11')){ echo "in"; } ?>">
       <div class="panel-body">
 

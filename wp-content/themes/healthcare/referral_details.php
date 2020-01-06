@@ -304,8 +304,8 @@ if(isset($_SESSION['userdata'])){
 
 
 
-   // echo "<pre>";
-   // print_r($referralList); die;
+    //echo "<pre>";
+    //print_r($referralList); die;
 
 
     /*--------Add Tasks--------------------------------*/
@@ -651,17 +651,23 @@ get_header();
                                 	 ?>
 
                                 	<tr>
-	                                	<td ><input type="radio" class="viewcheck" name="viewtask" id="<?php echo $referralList['referral_id']; ?>" value="<?php echo $referralList['referral_id']; ?>" checked ></td>
-	                                	<td id="duedate-<?php echo $referralList['referral_id'];?>"><?php echo date('d-m-Y',strtotime($refvalue['due_date'])); ?></td>
-	                                	<td id="refname-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_name']; ?></td>
-	                                	<td id="refdesc-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_description']; ?></td>
-	                                	<td id="source-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['source']; ?></td>
-	                                	<td id="urgency-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['urgency']; ?></td>
-	                                	<td><?php echo $referralList['task_count']; ?></td>
-                                    <td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
-                                    <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
-                                    <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
-	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button> <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $referralList['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button></td>
+	                                	<td ><input type="radio" class="viewcheck" name="viewtask" id="<?php echo $referralList['referral_id']; ?>" value="<?php echo $referralList['referral_id']; ?>" <?php 
+                                           if(!empty($_POST['addTask']) && (!empty($_POST['referral_id']) && $refvalue['referral_id'] == $_POST['referral_id'] )){
+                                               echo "checked";
+                                           }
+                                       else if(!empty($taskList) && ($refvalue['referral_id'] == $referralList['0']['referral_id'])){  echo "checked"; } ?> ></td>
+                                    <td id="duedate-<?php echo $referralList['referral_id'];?>"><?php echo date('d-m-Y',strtotime($referralList['due_date'])); ?></td>
+                                    <td id="refname-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_name']; ?></td>
+                                    <td id="refdesc-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_description']; ?></td>
+                                    <td id="source-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['source']; ?></td>
+                                    <td id="urgency-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['urgency']; ?></td>
+                                    <td><?php echo $referralList['task_count']; ?></td>
+                                    <td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['status']; ?></td>
+                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($referralList['follow_up_date']!='') {echo $referralList['follow_up_date'];} else{ echo '--';} ?></td>
+                                        <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['agreement_notification_flag']; ?></td>
+                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <!-- <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button> -->
+                                    </td>
                                     </tr>
 	                                <?php  }else{ ?>
 
@@ -675,23 +681,9 @@ get_header();
                             </tbody>
                         </table>
 
-                        <!-- Assesment Modal -->
-  <div id="assesmentModal" class="modal fade" role="dialog">
-    <div class="modal-dialog model-width">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"  class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Manage Assesment</h4>
-      </div>
-      <div class="modal-body assesmentBody">
+       
 
 
-      </div>
-    </div>
-  </div>
-</div>
 
       <!-- End of assesment modal -->
 
@@ -746,6 +738,15 @@ get_header();
                         </table>
 
         <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a>
+
+         <h4>Assesment</h4> 
+
+         <div class="assesmentBody">
+
+
+         </div>
+
+
 
       </div>
     </div>
@@ -1942,7 +1943,7 @@ var urgencyoption = "<option value=''>Select</option><option value='Critical'>Cr
 
 var statusoption = "<option value=''>Select</option><option value='New'>New</option><option value='Pending'>Pending</option><option value='Close'>Close</option><option value='Review'>Review</option>";
 
-function getAssesment(refid) {
+function getAssesment(refid) { 
     if(refid) {
         var iid = refid;
         var email = "<?php echo $email; ?>";
@@ -2569,4 +2570,9 @@ function showdetails(details) {
       }
 
 }
+
+$(window).on("load", function () { 
+    var idd = "<?php echo $referralList['referral_id']; ?>";
+    getAssesment(idd);
+});
 </script>
