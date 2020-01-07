@@ -168,7 +168,7 @@ get_header();
               <td ><?php echo ""; ?></td>
               <td ><?php echo ""; ?></td>
               <td >
-                <?php if($requestreffvalue['status']!="Accepted" && $requestreffvalue['status']!="Rejected") {?>
+                <?php if($requestreffvalue['status']!="Accepted" && $requestreffvalue['status']!="Rejected" && $requestreffvalue['status']!="Transferred") {?>
                 <a href="<?php echo site_url().'/request-referral/details/?refaset='.base64_encode($requestreffvalue['task_description']).'&extid='.base64_encode($requestreffvalue['external_application_id']).'&txtid='.base64_encode($requestreffvalue['task_id']).'&ptn='.base64_encode($requestreffvalue['patient_name']).'&refsr='.base64_encode($requestreffvalue['ref_source']).'&refnma='.base64_encode($requestreffvalue['ref_name']);?>" target="_blank" ><button class="btn-primary btn-request">Details</button></a>
               <?php } ?>
 

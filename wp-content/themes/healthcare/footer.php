@@ -166,6 +166,64 @@ $health_data= health_care_get_options(); ?>
 
 </script>
 
- 
+<div id="timeoutWindow" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<p id="timeoutRemainingTime"></p>
+ <script>
+   
+   localStorage.removeItem("idleTimeValue");
+var idleInterval    = setInterval(timerIncrement, 1000);
+
+
+function timerIncrement()  
+{
+    if(localStorage.getItem("idleTimeValue")) {
+        idleTime            = parseInt(localStorage.getItem("idleTimeValue")) + 1; //increments idle time by one second
+    } else {
+        idleTime            = 1;
+    }
+
+    localStorage.setItem("idleTimeValue", idleTime);
+
+    var timeDiff            = 600; 
+    var totTimeRemaining    = timeDiff-idleTime;
+
+
+    if(totTimeRemaining > 0) {
+
+                $('#timeoutWindow').modal('show');
+                var minutes = Math.floor(totTimeRemaining / 60);
+                var seconds = totTimeRemaining - minutes * 60;
+                $('#timeoutRemainingTime').html(minutes+" minutes and "+seconds+" seconds");
+    } else {
+                window.location = httpHost+"/account/index/logout";
+    }
+
+}
+
+
+$(this).click(function (e) 
+{
+    localStorage.removeItem("idleTimeValue");
+    $('#timeoutWindow').modal('hide');
+});
+ </script>
 </body>
 </html>
