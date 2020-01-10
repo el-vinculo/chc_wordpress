@@ -72,6 +72,8 @@ $health_data= health_care_get_options(); ?>
 		</div>
 	</div>
 </div>
+
+
 <!-- <a href="#top" class="scrol enigma_scrollup"><span class="fa fa-angle-up"></span></a>
  --><!-- End Footer -->
 <?php get_template_part('bg', 'css') ;?>
@@ -81,7 +83,7 @@ $health_data= health_care_get_options(); ?>
 <!-- session Detect and validate the session -->
 <?php if(isset($_SESSION['userdata'])) { ?>
 
-<!--  <div id="warnModal" role="dialog" class="modal fade">
+ <div role="dialog" class="warnModal modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -90,31 +92,37 @@ $health_data= health_care_get_options(); ?>
           </div>
           <div class="modal-body">
             <p>Your session will be expire and you will be automatically logged out in 60 seconds</p>
-            <button type="button" class="btn btn-primary btn-default staylogin">Stay Logged in</button>
+            <button type="button" class="btn btn-primary btn-default">Stay Logged in</button>
             <button type="button" data-dismiss="modal" class="btn btn-primary btn-default logout">Logout</button>
           </div>
           
         </div>
       </div>
-    </div> -->
-
+    </div>
+<!-- <div id="cc">ccccc</div> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
  <script type="text/javascript">
-/*
+
  $(document).ready(function(){
      
-     var count=900; //session expire time in seconds
+     var idleCount=1200; //session expire time in seconds
+     localStorage.setItem("currentCount", idleCount);
      var timer = setInterval(function() {
    // var count = parseInt(jQuery('#theTarget').html());
-     count= count-1;
+   //$("#cc").html(localStorage.getItem("currentCount"));
+     count= localStorage.getItem("currentCount")-1;
+     localStorage.setItem("currentCount", count);
+   //  alert(localStorage.getItem("currentCount"));
     if (count!=60) {
      //countiinue the counter   
     }   else { 
-       jQuery("#warnModal").modal('show');  //warning messages display
+       jQuery(".warnModal").modal('show');  //warning messages display
 
     } if(count==0){
+      
        window.location.href="<?php echo site_url(); ?>/logout"; // automatically logout
+
     }
   }, 1000);
 
@@ -124,7 +132,14 @@ $health_data= health_care_get_options(); ?>
     $('.logout').click(function(){
       window.location.href="<?php echo site_url(); ?>/logout";
      });
-}); */
+
+    $(this).click(function (e) 
+{ 
+    $('.warnModal').modal('hide');
+    localStorage.setItem("currentCount", idleCount);
+    //idleTime = 0;
+});
+}); 
   </script>
 <?php } ?>
 <!-- end of session detect code -->
@@ -165,65 +180,5 @@ $health_data= health_care_get_options(); ?>
 }); 
 
 </script>
-
-<div id="timeoutWindow" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<p id="timeoutRemainingTime"></p>
- <script>
-   
-   localStorage.removeItem("idleTimeValue");
-var idleInterval    = setInterval(timerIncrement, 1000);
-
-
-function timerIncrement()  
-{
-    if(localStorage.getItem("idleTimeValue")) {
-        idleTime            = parseInt(localStorage.getItem("idleTimeValue")) + 1; //increments idle time by one second
-    } else {
-        idleTime            = 1;
-    }
-
-    localStorage.setItem("idleTimeValue", idleTime);
-
-    var timeDiff            = 600; 
-    var totTimeRemaining    = timeDiff-idleTime;
-
-
-    if(totTimeRemaining > 0) {
-
-                $('#timeoutWindow').modal('show');
-                var minutes = Math.floor(totTimeRemaining / 60);
-                var seconds = totTimeRemaining - minutes * 60;
-                $('#timeoutRemainingTime').html(minutes+" minutes and "+seconds+" seconds");
-    } else {
-                window.location = httpHost+"/account/index/logout";
-    }
-
-}
-
-
-$(this).click(function (e) 
-{
-    localStorage.removeItem("idleTimeValue");
-    $('#timeoutWindow').modal('hide');
-});
- </script>
 </body>
 </html>
