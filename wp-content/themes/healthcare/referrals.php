@@ -18,18 +18,17 @@
 
 
 <style type="text/css">
-  .green-bg{
+  /*.green-bg theme-bg{
     background: #43b02a!important;
   }
-  .ref-cls .green-bg{
+  .ref-cls .green-bg theme-bg{
 background: #43b02a!important;
-  }
+  }*/
  .green-bg th {
     padding: 5px 10px;
     border-right: 1px solid #ddd;
     font-size: 15px;
     color: #fff;
-     background: #43b02a!important;
 }
   .margin_left {
     margin-left: 17px;
@@ -63,6 +62,9 @@ background: #43b02a!important;
 
 .view-active{
 color: #43b02a!important;
+}
+.sorting_1 td {
+	    width: 200px!important;
 }
 </style>
 
@@ -127,7 +129,7 @@ get_header();
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                          <a href="<?=site_url()?>/new-referral/"><button class="btn-success">New Referral</button></a>
+                          <a href="<?=site_url()?>/new-referral/"><button class="button-all btn-primary">New Referral</button></a>
                           </div>
                        
                           </div>
@@ -156,17 +158,17 @@ get_header();
         <table class="table table-striped" id="example">
           
             <thead>
-            <tr class="green-bg">
-              <th class="green-bg">Client Name<br> Last, First</th>
-              <th class="green-bg">summary</th>
-              <th>Submission date </th>
-              <th>Source</th>
-              <th>Urgency</th>
-              <th>Status </th>
-              <th>Follow-up date</th>
-              <th>Agreement/<br>Notif.flag</th>
-              <th>Lead<br> Navigator</th>
-              <th>Action</th>
+            <tr class="green-bg theme-bg">
+              <th class="green-bg theme-bg">Client Name<br> Last, First</th>
+              <th class="green-bg theme-bg">summary</th>
+              <th class="green-bg theme-bg">Submission date </th>
+              <th class="green-bg theme-bg">Source</th>
+              <th class="green-bg theme-bg">Urgency</th>
+              <th class="green-bg theme-bg" >Status </th>
+              <th class="green-bg theme-bg">Follow-up date</th>
+              <th class="green-bg theme-bg">Agreement/<br>Notif.flag</th>
+              <th class="green-bg theme-bg">Lead<br> Navigator</th>
+              <th class="green-bg theme-bg">Action</th>
             </tr> 
             </thead>
             <tbody >
@@ -180,7 +182,7 @@ get_header();
              <tr class=" single_item_referal" data-toggle="collapse" data-target="#newref-<?php echo $newReferralDatakey; ?>" data-parent="#myTable">
               <td ><?php echo $newReferralDatavalue['ref_patient']; ?> </td>
 
-              <td><?php echo  $newReferralDatavalue['ref_description']; ?></td>
+              <td><?php $pos=strpos($newReferralDatavalue['ref_description'], ' ', 100);if($pos>100){echo substr($newReferralDatavalue['ref_description'],0,$pos ).'......';}else{$newReferralDatavalue['ref_description'];}  ?></td>
 
               <td ><?php if($newReferralDatavalue['submission_date']!='') {echo $newReferralDatavalue['submission_date'];} else{echo '--';} ?></td>
               <td ><?php echo $newReferralDatavalue['ref_source']; ?></td>

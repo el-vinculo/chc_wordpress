@@ -562,9 +562,9 @@ get_header();
 			 </div>
 		</div>
 		<?php if(isset($_GET['pid'])){ ?>
-<input name="update" type="submit" class="btn-primary" value="Update" > 
+<input name="update" type="submit" class="btn-primary button-all" value="Update" > 
 		<?php }else{ ?>    
-	   <input name="submit" type="submit" class="btn-primary" value="Save" > 
+	   <input name="submit" type="submit" class="btn-primary button-all" value="Save" > 
 	   <?php } ?>
 	  
 	</form>
@@ -629,7 +629,7 @@ get_header();
 	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
                                         <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
-	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+	                                	<td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php $r++; } }else{ ?>
 
@@ -676,8 +676,8 @@ get_header();
                                    }
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
+                                   <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
+                                   <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary button-all" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
 
                                    </td>
                                    
@@ -833,7 +833,7 @@ get_header();
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="msg_task_id" id="msg_task_id" value=""/>
                 <div class="pull-right">
-        		<input name="ref-update"  type="button" onclick="sendmessage()" class="btn-primary" value="Send" > </div>
+        		<input name="ref-update"  type="button" onclick="sendmessage()" class="btn-primary button-all" value="Send" > </div>
         	    <label>Message</label>
         	    <div class="container" id="commmsgdiv">
         		    <div class="main"></div>
@@ -847,7 +847,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close1</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close1</button>
       </div>
     </div>
 
@@ -915,13 +915,13 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="ref_id" id="ref_id" value=""/>
-        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary" value="Update" > 
+        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary button-all" value="Update" > 
         	
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -996,13 +996,13 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="task_id" id="edit_task_id" value=""/>
-        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary" value="Update" > 
+        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary button-all" value="Update" > 
         	
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1077,13 +1077,13 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="referral_id" id="referral_id" value=""/>
-        		<input name="addTask"  type="submit" class="btn-primary" value="Save" > 
+        		<input name="addTask"  type="submit" class="btn-primary button-all" value="Save" > 
         	
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1131,7 +1131,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1155,7 +1155,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 

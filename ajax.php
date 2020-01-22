@@ -137,9 +137,9 @@ function taskHtmlTable($taskList,$referral_id)
                  <td id='reftaskdesc-".$taskvalue['task_id']."'>".$taskvalue['task_description']."</td>
                  <td id='reftaskdeadline-".$taskvalue['task_id']."'>".date('d-m-Y',strtotime($taskvalue['task_deadline']))."</td>
                  <td id='reftaskstatus-".$taskvalue['task_id']."'>".$taskvalue['task_status']."</td>
-                 <td><button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
-                 <td><button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  >Transfer</button>
-                 <button class='btn-primary' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  >Ledger</button></td>
+                 <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
+                 <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  >Transfer</button>
+                 <button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  >Ledger</button></td>
 
             </tr>";
             } }else {
@@ -236,7 +236,7 @@ function referralHtmlTable($referralList){
                  <td id='source-".$refvalue['referral_id']."'>".$refvalue['source']."</td>
                  <td id='urgency-".$refvalue['referral_id']."'>".$refvalue['urgency']."</td>
                  <td>".$refvalue['task_count']."</td>
-                 <td><button class='btn-primary' data-toggle='modal'  data-target='#myModal' onclick='showReferral('".$refvalue[referral_id]."')'><i class='fa fa-pencil' aria-hidden='true'></i></button></td>
+                 <td><button class='btn-primary button-all' data-toggle='modal'  data-target='#myModal' onclick='showReferral('".$refvalue[referral_id]."')'><i class='fa fa-pencil' aria-hidden='true'></i></button></td>
 
             </tr>";
             } }else {
@@ -293,6 +293,7 @@ function ledgertaskdeatillist(){
         }
 
         $msgHtml = ledgerHtml($ledgerslist);
+		
         return $msgHtml;
     }
 }
@@ -307,7 +308,7 @@ function ledgerHtml($ledgerslist){
 
      $html = "<table class='table table-striped table-bordered' id='externaltabledata'><thead>
             <tr><th colspan='4'>Internal</th></tr><tr><th>Date of Change</th><th>Field Name</th>
-            <th>New Value</th><th>Old Value</th></tr><tbody>";
+            <th>New Value</th><th>Old Value</th></tr></thead><tbody>";
 
     if(!empty($ledgerslist['internal_record_array'])){
         foreach ($ledgerslist['internal_record_array'] as $internalledkey => $internalledvalue) {
@@ -355,15 +356,18 @@ function ledgerHtml($ledgerslist){
 
           }
 
-           $html.="</tbody></thead></table>";
+           
 
            }
+		   
     }
-    } } else{
+    } $html.="</tbody></table>";} 
+	
+	else{
     $html.=  "<table><tr><td colspan='4'>no record found </td></tr></table>";
     }
 
-    $html.= "<table class='table table-striped table-bordered' id='11externaltabledata'><thead>
+    $html.= "<table class='table table-striped table-bordered' id='11	'><thead>
             <tr><th colspan='4'>External</th></tr><tr><th>Date of Change</th><th>Field Name</th>
             <th>New Value</th><th>Old Value</th></tr><tbody>";
 
@@ -481,7 +485,7 @@ function commListHtml($commList){
     $html.= "<tr><td>".$commvalue['task_type']."</td>
                  <td>".$commvalue['provider']."</td>
                  <td><i class='fa fa-envelope' aria-hidden='true'></i>".$commvalue['msg_count']."</td>
-                 <td><button class='btn-primary' id='".$commvalue['task_id']."' data-toggle='modal'  data-target='#myCommMsgModal' onclick='getcommicationmessage(this.id)'><i class='fa fa-angle-double-right' aria-hidden='true'></td></tr>";
+                 <td><button class='btn-primary button-all' id='".$commvalue['task_id']."' data-toggle='modal'  data-target='#myCommMsgModal' onclick='getcommicationmessage(this.id)'><i class='fa fa-angle-double-right' aria-hidden='true'></td></tr>";
             } }else {
 
     $html.=  "<tr><td colspan='4' style='color: red'><center><p>No Msg Added</p></center></td></tr>";
@@ -900,7 +904,7 @@ function providerListHtml($practices,$id){
 
     $html.= "<tr>
     <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
-<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style='background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-success'> Show Detail</button></td>
+<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
     </tr>";
     }}
     $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
@@ -1028,7 +1032,7 @@ function providerListHtml($practices,$id){
      </div>
 
     </div>
-<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-success'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";
+<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-primary button-all'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";
     }else{
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }

@@ -10,9 +10,33 @@
    <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/jquery.multiselect.css">
-  <?php wp_head(); ?>
+  <link rel="stylesheet" type="text/scss" href="<?php echo get_template_directory_uri(); ?>/scss/custom.scss">
+
+  <?php wp_head(); 
+if($_SESSION['userdata']!=''){
+  $email = $_SESSION['userdata']['email'];
+  $authToken= $_SESSION['userdata']['authentication_token'];
+  $theme = getTheme($email, $authToken);
+  if($theme['user_theme']!=''){
+    $linkColor= $theme['user_theme'];
+  } else{
+    $linkColor= DEFAULT_THEME_COLOR;
+  }
+} else{
+  $linkColor= DEFAULT_THEME_COLOR;
+} 
+   ?>
 
  <style type="text/css">
+ .theme-bg{ background-color: <?php echo $linkColor; ?> !important;/*#43b02a;*/}
+.button-all{
+   /* border: 1px solid red;*/
+     background: <?php echo $linkColor; ?>;
+}
+
+.links:hover{
+  background: red
+}
  .login-link{
     position: absolute;
     right: 65px;
@@ -51,7 +75,7 @@ if($logodata['status']!='unauthorized'){
 ?>
 
 
-	<nav class="navbar  navbar-static-top marginBottom-0 menu" <?php if ( has_header_image() ) { ?> style='background-image: url("<?php header_image(); ?>")' <?php  } ?>>
+	<nav class="navbar navbar-static-top marginBottom-0 menu" <?php if ( has_header_image() ) { ?> style='background-image: url("<?php header_image(); ?>")' <?php  } ?>>
 		<div class="container">
          
 			   <div class=" logo">
@@ -66,7 +90,7 @@ if($logodata['status']!='unauthorized'){
 
 				<?php if($_SESSION['userdata']==''){?>	
                 <div class="signup-link">
-					<a href="<?=site_url()?>/backend/registration_requests/new" target="_blank">Sign up</a>
+					<a href="<?=site_url()?>/backend/registration_requests/new" target="_blank" class="button-all">Sign up</a>
 				</div>
               <?php } else{?>
 
@@ -80,13 +104,12 @@ if($logodata['status']!='unauthorized'){
 
 <style>
 .dropbtn {
-  color: white;
-  position: relative;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
+padding: 10px 19px;
+border-radius: 100px;
+color: #000;
+font-size: 20px;
+font-weight: normal;
+margin-right: 33px;}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -95,8 +118,8 @@ if($logodata['status']!='unauthorized'){
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
+/*    background-color: #f1f1f1;
+*/    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     padding: 0;
@@ -104,7 +127,7 @@ if($logodata['status']!='unauthorized'){
     left: 20px;
 }
 .dropdown-content li a {
-  color: black;
+  color: #fff;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -116,14 +139,13 @@ if($logodata['status']!='unauthorized'){
     color: #fff!important;}
 
 .dropdown:hover .dropdown-content {display: block;}
-
 </style>
 
     <?php 
        $userdata = userprofiledetails($email); 
      ?>
                	<div class="dropdown">
-					<a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" style="padding: 10px 19px;border-radius: 100px;color: #42af2a;font-size: 20px;font-weight: normal;margin-right: 33px;"><span class="fa fa-user-plus icon-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
+					<a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" ><span class="fa fa-user-plus icon-bg theme-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
 					
 				<!--<ul class="dropdown-content" >
 				    <li><a href="#">Report</a></li>
@@ -138,7 +160,7 @@ if($logodata['status']!='unauthorized'){
         'container'       => '',
         'container_class' => '',
         'container_id'    => '',
-        'menu_class'      => 'dropdown-content',
+        'menu_class'      => 'dropdown-content theme-bg',
         'menu_id'         => '',
         'echo'            => true,
         'fallback_cb'     => 'wp_page_menu',
@@ -165,14 +187,14 @@ if($logodata['status']!='unauthorized'){
                   
 				<div id="toggle">
 					 
-					  <figure class="menu-fig">
+					  <figure class="menu-fig theme-bg">
 					  	 
 					  <div class="one"></div>
 					  <div class="two"></div>
 					  <div class="three"></div>
 					  </figure>
 					</div>
-					<div id="menu">
+					<div id="menu" class="theme-bg">
            <!--  <div class="collapse navbar-collapse" id="navbar-collapse-1">      -->          
 						<?php  wp_nav_menu( array(
 						'theme_location' => 'primary',
@@ -233,8 +255,8 @@ if($logodata['status']!='unauthorized'){
 
 	<script type="text/javascript">
 		$('ul.nav li.dropdown').hover(function() {
-  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+  $(this).find('.dropdown-menu ').stop(true, true).delay(200).fadeIn(500);
 }, function() {
-  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+  $(this).find('.dropdown-menu ').stop(true, true).delay(200).fadeOut(500);
 });
 	</script>

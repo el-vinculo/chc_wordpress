@@ -63,9 +63,9 @@ color: #43b02a!important;
 
 				            <div class="post_content">
                              <a href="<?=site_url()?>/backend/contact_management_details" target="_blank">
-				            	<button type="search " class="custom-btn btn-success">Catalog Manager</button>
+				            	<button type="search " class="custom-btn btn-primary button-all">Catalog Manager</button>
 				            </a>
-				            	<p class="pull-right" style="margin-right:58px"><a href="<?=site_url()?>/backend/" target="_blank">Open this link in a new tab</a></p>
+				            	<p class="pull-right " style="margin-right:58px"><a href="<?=site_url()?>/backend/" target="_blank">Open this link in a new tab</a></p>
 				                    <?php if($error == 0){ ?>
 
 										

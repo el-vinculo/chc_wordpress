@@ -192,7 +192,7 @@ get_header();
                          </div>
          </div>
 
-	     <input type="submit" name="savepatient" value="Save" class="btn-primary"/>
+	     <input type="submit" name="savepatient" value="Save" class="btn-primary button-all"/>
 	</form>
 
 

@@ -290,10 +290,12 @@ function assesmentHtml($assessments,$referralid){
                               <input type="text"  placeholder="Search Entire Database"  id="solution_provider_'.$intkey.'_'.$obskey.'_'.$solkey.'" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" value="'.$solvalue['solution_provider'].'" onblur="updateInterviewSolutiondeatils(this)" onclick="updateInterviewSolutiondeatils(this)">
                               
                           </div>';
-                          if($solvalue['task_id'] !='' && $solvalue['solution_provider']==''){
-
+                          if($solvalue['task_id'] !='' && $solvalue['solution_provider']=='' && $solvalue['task_transferable']=='1'){
+        
                           $assesmentHtml .= '<a href="javascript:void(0)" data-toggle="modal"  data-target="#myTransferModal" id="'.$solvalue['task_id'].'" onclick="getTransferTaskdetails(this.id)"   class="custom-task">Transfer task</a>';
 
+                          } else{
+                            $assesmentHtml .= '<a href="javascript:void(0)" data-toggle="modal"  data-target="#myTransferModal" disabled="disabled" id="'.$solvalue['task_id'].'" onclick="getTransferTaskdetails(this.id)"   class="custom-task disabled-link">Transfer task</a>';
                           } 
 
                          $assesmentHtml .=  '</div>

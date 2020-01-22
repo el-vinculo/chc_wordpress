@@ -8,6 +8,8 @@ a:hover{
 text-decoration:none;
 /* color:#fff; */
 }
+td{
+word-break: break-all;}
 p{
 color:#666;
 }
@@ -36,7 +38,7 @@ body{
 }
 figure.menu-fig {
     margin: 7;
-    background: #43b02a;
+   
     padding: 7px;
     /*width: 51px;*/
     float: right;
@@ -142,7 +144,7 @@ p.menu-cls {
     position: absolute;
     right: 0;
     top: 90px;
-    background: #37ab1c;
+    
     box-shadow: 0 0 15px 1px #f9f9f9;
 }
 .signup-link {
@@ -151,16 +153,16 @@ p.menu-cls {
     top: 59px;
 }
 .signup-link a {
-    border: 1px solid #42af2a;
+    
     padding: 10px 19px;
     border-radius: 100px;
-    color: #42af2a;
+    color: #fff;
 }
-.signup-link a:hover{
+/*.signup-link a:hover{
 background:#42af2a;
 color:#fff;
 border: 1px solid #42af2a;
-}
+}*/
 .top-nav-netx {
     position: relative;
 }
@@ -243,7 +245,7 @@ color:#fff;
   background-color:#0098ff;
   }
 .footer {
-    background-color: #43b02a;
+   
     padding-bottom: 0px!important;
 }
 .footer-nav ul li {
@@ -288,7 +290,7 @@ color:#fff;
 color:#fff;
 }
 .footer-bottom, .footer1 {
-    background-color: #43b02a;
+   
     color: #fff;
     padding: 10px 0 20px;
 }
@@ -428,3 +430,9 @@ i.fa.fa-sort-desc {
   float:right;
 }
 /*end new css*/
+.disabled-link {
+    pointer-events: none;
+    cursor: default;
+    color: #b5b5b5;
+    border: 2px solid #b5b5b5!important;
+}

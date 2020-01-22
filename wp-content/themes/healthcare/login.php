@@ -110,7 +110,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
  <div class="col-xs-offset-2 col-xs-10"><label><input type="checkbox" checked="checked" name="remember"> Remember me</label></div></div>
 
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" id="login_details" onclick="" type="submit">Login</button></div>
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary button-all" id="login_details" onclick="" type="submit">Login</button></div>
 </div>
 
 

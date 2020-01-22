@@ -40,18 +40,17 @@ get_header();
 ?>
 
 <style type="text/css">
-  .green-bg{
+  /*.green-bg theme-bg{
     background: #43b02a!important;
   }
-  .ref-cls .green-bg{
+  .ref-cls .green-bg theme-bg{
 background: #43b02a!important;
-  }
+  }*/
  .green-bg th {
     padding: 5px 10px;
     border-right: 1px solid #ddd;
     font-size: 15px;
     color: #fff;
-     background: #43b02a!important;
 }
   .margin_left {
     margin-left: 17px;
@@ -110,7 +109,7 @@ table.dataTable thead th, table.dataTable thead td {
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                         	<a  href="<?php echo site_url().'/patients/create-patient';?>"><button class="btn-success">New Client</button></a>
+                         	<a  href="<?php echo site_url().'/patients/create-patient';?>"><button class="btn-primary button-all">New Client</button></a>
                          	</div>
                        
                          	</div>
@@ -135,14 +134,14 @@ table.dataTable thead th, table.dataTable thead td {
 				                <?php if($error == 0){ ?>
 				 				<table class="table table-striped" id="example">
 									<thead>
-									    <tr class="green-bg">
-									      <th scope="col" class="green-bg">CLIENT NAME</th>
-									      <th scope="col" class="width">EMAIL</th>
-									      <th scope="col">MOBILE</th>
-									      <th scope="col">AGE </th>
-									      <th scope="col">ACTIVE</th>
-									      <th scope="col">STATUS</th>
-									      <th scope="col">SEE MORE</th>
+									    <tr class="green-bg theme-bg">
+									      <th scope="col" class="green-bg theme-bg">CLIENT NAME</th>
+									      <th scope="col" class="width green-bg theme-bg">EMAIL</th>
+									      <th scope="col" class="green-bg theme-bg">MOBILE</th>
+									      <th scope="col" class="green-bg theme-bg">AGE </th>
+									      <th scope="col" class="green-bg theme-bg">ACTIVE</th>
+									      <th scope="col" class="green-bg theme-bg">STATUS</th>
+									      <th scope="col" class="green-bg theme-bg">SEE MORE</th>
 									    </tr>
 									</thead>
                                     <tbody>

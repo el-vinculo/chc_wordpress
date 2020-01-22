@@ -754,6 +754,8 @@ get_header();
                         <div class="col-md-4">
                                   <div class="form-group">
                                     <label for="email":>Client Consent:</label>
+
+                                    <label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(($patientsDeatils['client_consent']!= '1') && ($patientsDeatils['client_consent']!= '0')) { echo "checked"; } ?>>Not Answered</label>
 			
 <label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '1')) { echo "checked"; } ?>>yes</label>
 <label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '0')) { echo "checked"; } ?>>no</label>
@@ -765,7 +767,7 @@ get_header();
                          </div>
                 </div>
 
-	   <input name="submit" type="submit" class="btn-primary" value="Update" > 
+	   <input name="submit" type="submit" class="btn-primary button-all" value="Update" > 
 	  
 	</form>
       </div>
@@ -831,7 +833,7 @@ get_header();
 	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
                                         <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($refvalue['follow_up_date']!='') {echo $refvalue['follow_up_date'];} else{ echo '--';} ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
-	                                	<td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+	                                	<td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                     <!-- <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button> -->
                                     </td>
                                     </tr>
@@ -880,8 +882,12 @@ get_header();
                                    }
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button><button class="btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
+                                   <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
+                                   <td>
+                                    <?php if($taskvalue['transferable']=='1'){ ?>
+                                    <button class="btn-primary button-all" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><?php } ?>
+
+                                    <button class="btn-primary button-all" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >History </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
 
                                    </td>
                                    
@@ -1011,7 +1017,7 @@ get_header();
         		</div>
         		<br/>
 
-        		<input name="submitnotes" type="submit" class="btn-primary" value="Create" >	
+        		<input name="submitnotes" type="submit" class="btn-primary button-all" value="Create" >	
         </form>
       </div>
     </div>
@@ -1041,7 +1047,7 @@ get_header();
 									      <td><?php echo $commvalue['task_type'];?></td>
 									      <td><?php echo $commvalue['provider'];?></td>
 									      <td><i class="fa fa-envelope" aria-hidden="true"></i><?php echo $commvalue['msg_count'];?></td>
-									      <td><button class="btn-primary" data-toggle="modal"  data-target="#myCommMsgModal" onclick="getcommicationmessage('<?php echo $commvalue['task_id']; ?>')"  ><i class="fa fa-angle-double-right" aria-hidden="true"></i></button></td>  
+									      <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myCommMsgModal" onclick="getcommicationmessage('<?php echo $commvalue['task_id']; ?>')"  ><i class="fa fa-angle-double-right" aria-hidden="true"></i></button></td>  
 									    </tr>
 
 									    <?php } }else{ ?>
@@ -1086,7 +1092,7 @@ get_header();
 									      <td>Task ID : <a href="javascript:void(0)"><?php echo $filesvalue['task_id'];?></a></td>
                         <?php $downloadURL = site_url().'/download.php?path='.$filesvalue['file_path'].'&size='.$filesvalue['file_size'];
                          $pathurl = IMAGE_PATH.'/'.$filesvalue['file_path']; ?>
-										      <td><a href="<?php echo $pathurl;?>" target="_blank"><button class="btn-primary" ><i class="fa fa-download" aria-hidden="true"></i></button></a></td>  
+										      <td><a href="<?php echo $pathurl;?>" target="_blank"><button class="btn-primary button-all" ><i class="fa fa-download" aria-hidden="true"></i></button></a></td>  
 									    </tr>
 
 									    <?php } }else{ ?>
@@ -1148,7 +1154,7 @@ get_header();
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="msg_task_id" id="msg_task_id" value=""/>
                 <div class="pull-right">
-        		<input name="ref-update"  type="button" onclick="sendmessage()" class="btn-primary" value="Send" > </div>
+        		<input name="ref-update"  type="button" onclick="sendmessage()" class="btn-primary button-all" value="Send" > </div>
         	    <label>Message</label>
         	    <div class="container" id="commmsgdiv">
         		    <div class="main"></div>
@@ -1162,7 +1168,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1245,13 +1251,13 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="ref_id" id="ref_id" value=""/>
-        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary" value="Update" > 
+        		<input name="ref-update" onclick="updatereferal()" type="button" class="btn-primary button-all" value="Update" > 
         	
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1345,13 +1351,13 @@ get_header();
         		</div>
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="task_id" id="edit_task_id" value=""/>
-        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary" value="Update" > 
+        		<input name="ref-update" onclick="updatereftaskdetails()"  type="button" class="btn-primary button-all" value="Update" > 
         	
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1401,7 +1407,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" id="transfermdelclosebutton" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" id="transfermdelclosebutton" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1457,13 +1463,13 @@ get_header();
           
             <br/>
                 <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value=""/>
-            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary" value="Submit" > 
+            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary button-all" value="Submit" > 
           
         </form>
 
       </div>
       <div class="modal-footer">
-        <button type="button" id="transfermdelclosebutton" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" id="transfermdelclosebutton" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1481,14 +1487,14 @@ get_header();
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Ledger Details</h4>
+        <h4 class="modal-title">History Details</h4>
       </div>
       <div class="modal-body">
         <div id="ledgertabledatadummy"></div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1510,7 +1516,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1612,7 +1618,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary button-all" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1714,7 +1720,7 @@ get_header();
         </select>
       </th>
       <th scope="col">
-        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-primary button-all">Search</button> 
         <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
@@ -1860,7 +1866,7 @@ function addobsoln(iid) {
         var soltriid = "soltrobs_"+e+"_"+g;
         var provideriid = "provider-"+y;
             
-        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn1 btn-success'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
+        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn-primary button-all'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
              y++; 
              g++; 
         }
@@ -2327,7 +2333,7 @@ function getledgerdetails(taskid) {
         data : {'task_id':taskid,'email':email,funtion:'ledgertaskdeatillist'},
         success: function(html){
           //alert(html);
-         // console.log(html);
+         //console.log(html);
          jQuery("#ledgertabledatadummy div").html(' ');
          jQuery('#ledgertabledatadummy').html('');
 

@@ -1971,6 +1971,30 @@ function inviteOrganization($name,$email,$application_url,$task_id)
 	   }
 }
 
+function getTheme($email, $authToken)
+{
+	   $post = ['email' => $email];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL.'get_theme'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
 
 
 

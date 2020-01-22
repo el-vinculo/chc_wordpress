@@ -23,15 +23,15 @@ height:100%;
 .btn-primary, .btn-success, .btn-danger {
     padding:5px 7px;
 border:0!important;
-    background-color: #42af2a!important;
-    border-color: #42af2a!important;
+    /*background-color: #42af2a!important;
+    border-color: #42af2a!important;*/
 }
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     z-index: 2;
-    color: #fff!important;
+    /*color: #fff!important;
     cursor: default;
     background-color: #42ae2a!important;
-    border-color: #42ae2a!important;
+    border-color: #42ae2a!important;*/
 }
   body {
     overflow-y: scroll;
@@ -1682,10 +1682,10 @@ div#menu ul li:hover a{
     position: absolute;
     right: 67px;
     top: 104px;
-    background: #37ab1c;
+   
 }
 .icon-bg {
-       background: #43b02a;
+       
    
     border-radius: 6px;
     color: #fff;
@@ -1720,7 +1720,7 @@ div#menu ul li a {
 }*/
 /*25-11-2019 start date*/
 .nav-tabs>li>a {
-      background-color: #42af2a !important;
+      background-color: #42af2a ;
           padding: 8px 5px!important;
     color: #fff!important;
     font-size: 15px;

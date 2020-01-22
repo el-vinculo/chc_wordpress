@@ -17,12 +17,12 @@
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <style type="text/css">
-  .green-bg{
+  /*.green-bg theme-bg{
     background: #43b02a;
   }
-  .ref-cls .green-bg{
+  .ref-cls .green-bg theme-bg{
 background: #43b02a!important;
-  }
+  }*/
  .green-bg th {
     padding: 5px 10px;
     border-right: 1px solid #fff;
@@ -420,9 +420,9 @@ get_header();
         <table class="table table-striped" id="examplerefferal">
           
             <thead>
-            <tr class="green-bg">
-              <th class="green-bg">Patient<br> Last, First</th>
-              <th class="green-bg">summary</th>
+            <tr class="green-bg theme-bg">
+              <th class="green-bg theme-bg">Patient<br> Last, First</th>
+              <th class="green-bg theme-bg">summary</th>
               <th>Submission date </th>
               <th>Source</th>
               <th>Urgency</th>
@@ -487,16 +487,16 @@ get_header();
          <table class="table table-striped"  id="example1acceptt">
    
         <thead class="ref-cls">
-           <tr class="green-bg">
-              <th class="green-bg">Patient</th>
-              <th class="green-bg">Request Title </th>
-              <th class="green-bg">Submission date </th>
-              <th class="green-bg">Source</th>
-              <th class="green-bg">Urgency</th>
-              <th class="green-bg">Status </th>
-              <th class="green-bg">Follow-up date</th>
-              <th class="green-bg">Agreement</th>
-              <th class="green-bg">Action </th>
+           <tr class="green-bg theme-bg">
+              <th class="green-bg theme-bg">Patient</th>
+              <th class="green-bg theme-bg">Request Title </th>
+              <th class="green-bg theme-bg">Submission date </th>
+              <th class="green-bg theme-bg">Source</th>
+              <th class="green-bg theme-bg">Urgency</th>
+              <th class="green-bg theme-bg">Status </th>
+              <th class="green-bg theme-bg">Follow-up date</th>
+              <th class="green-bg theme-bg">Agreement</th>
+              <th class="green-bg theme-bg">Action </th>
             </tr> 
              </thead> 
              <tbody>
@@ -553,15 +553,15 @@ get_header();
          <table class="table table-striped"  id="example1acceptt">
     <tbody>
         <thead class="ref-cls">
-           <tr class="green-bg">
-              <th class="green-bg">Patient</th>
-              <th class="green-bg">Request Title </th>
-              <th class="green-bg">Submission date </th>
-              <th class="green-bg">Source</th>
-              <th class="green-bg">Urgency</th>
-              <th class="green-bg">Status </th>
-              <th class="green-bg">Follow-up date</th>
-              <th class="green-bg">Agreement</th>
+           <tr class="green-bg theme-bg">
+              <th class="green-bg theme-bg">Patient</th>
+              <th class="green-bg theme-bg">Request Title </th>
+              <th class="green-bg theme-bg">Submission date </th>
+              <th class="green-bg theme-bg">Source</th>
+              <th class="green-bg theme-bg">Urgency</th>
+              <th class="green-bg theme-bg">Status </th>
+              <th class="green-bg theme-bg">Follow-up date</th>
+              <th class="green-bg theme-bg">Agreement</th>
               
             </tr> 
             <?php //print_r($outgoingreferral);die;

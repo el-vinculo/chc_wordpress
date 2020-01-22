@@ -55,7 +55,7 @@ get_header();
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                          <a  href="<?php echo site_url().'/interviews/create-interview';?>"><button class="btn-success">New Assessments</button></a>
+                          <a  href="<?php echo site_url().'/interviews/create-interview';?>"><button class="btn-primary button-all">New Assessments</button></a>
                           </div>
                       
                           </div>

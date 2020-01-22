@@ -527,7 +527,7 @@ get_header();
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                          <a href="<?php echo site_url().'/patients/patient-details/create-referral?pid='.base64_encode(base64_decode($_GET['ptn']));?>"><button class="btn-success">Add Referral</button></a>
+                          <a href="<?php echo site_url().'/patients/patient-details/create-referral?pid='.base64_encode(base64_decode($_GET['ptn']));?>"><button class="button-all btn-primary">Add Referral</button></a>
                           </div>
 
                           </div>
@@ -595,7 +595,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -665,7 +665,7 @@ get_header();
                                     <td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['status']; ?></td>
                                         <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($referralList['follow_up_date']!='') {echo $referralList['follow_up_date'];} else{ echo '--';} ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['agreement_notification_flag']; ?></td>
-                                    <td><button class="btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <td><button class="button-all btn-primary" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $referralList['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                     <!-- <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button> -->
                                     </td>
                                     </tr>
@@ -717,11 +717,14 @@ get_header();
                                     }
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
-                                   <td><button class="btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button>
-                                    <button class="btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >Ledger </button>
+                                   <td><button class="button-all btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
+                                   <td>
+                                   <?php if($taskvalue['transferable']=='1'){ ?>
+                                    <button class="button-all btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button>
+                                  <?php } ?>
+                                    <button class="button-all btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >History </button>
 
-                                    <button class="btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
+                                    <button class="button-all btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
 
                                    </td>
 
@@ -802,7 +805,7 @@ get_header();
         		<br/>
                 <input type="hidden" class="form-control" placeholder="source" name="msg_task_id" id="msg_task_id" value=""/>
                 <div class="pull-right">
-        		<input name="ref-update"  type="button" onclick="sendmessage()" class="btn-primary" value="Send" > </div>
+        		<input name="ref-update"  type="button" onclick="sendmessage()" class="button-all btn-primary" value="Send" > </div>
         	    <label>Message</label>
         	    <div class="container" id="commmsgdiv">
         		    <div class="main"></div>
@@ -816,7 +819,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -905,7 +908,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1005,7 +1008,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1056,7 +1059,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1072,7 +1075,7 @@ get_header();
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Ledger Details</h4>
+        <h4 class="modal-title">History Details</h4>
       </div>
       <div class="modal-body">
         <div id="ledgertabledatadummy"></div>
@@ -1081,7 +1084,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1103,7 +1106,7 @@ get_header();
 
       </div>
       < class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1205,7 +1208,7 @@ get_header();
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1306,7 +1309,7 @@ get_header();
         </select>
       </th>
       <th scope="col">
-        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button>
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn button-all btn-primary">Search</button>
         <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
@@ -1332,7 +1335,7 @@ z-index: 9;">
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-success" data-dismiss="modal">Close</button>
+        <button type="button" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1393,7 +1396,7 @@ z-index: 9;">
 
       </div>
       <div class="modal-footer">
-        <button type="button" id="transfermdelclosebutton" class="btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" id="transfermdelclosebutton" class="button-all btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -1993,7 +1996,7 @@ function addobsoln(iid) {
         var soltriid = "soltrobs_"+e+"_"+g;
         var provideriid = "provider-"+y;
 
-        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn1 btn-success'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
+        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='button-all btn-primary'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
              y++;
              g++;
         }

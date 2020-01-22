@@ -75,6 +75,7 @@ define('IMAGE_PATH', 'https://dev7.resourcestack.com');
 define('API_URL', 'https://dev7.resourcestack.com/api/');
 define('CARE_EMAIL', 'sameer.sharma@resourcestack.com');
 define('FROM_EMAIL', 'wordpress@dev11.resourcestack.com');
+define('DEFAULT_THEME_COLOR', 'green');
 #define('IMAGE_PATH', 'http://localhost/testsite/');
 #define('API_URL', 'http://localhost/testsite/');
 session_start();

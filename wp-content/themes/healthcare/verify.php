@@ -96,7 +96,7 @@ get_header();
 <div class="col-xs-10"><input id="inputEmail" class="form-control" name="email" required="" type="email" placeholder="Email" /></div>
 </div>
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary" type="submit">Next</button></div>
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary button-all" type="submit">Next</button></div>
 </div>
 <div class="form-group">
 <div class="col-xs-offset-2 col-xs-10"><a href="#">Forgot Password</a></div>

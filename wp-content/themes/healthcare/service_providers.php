@@ -430,7 +430,7 @@ get_header();
       </th>
       <th scope="col">
     <!--   <button type="button" onclick="getformdata();" class="custom-btn btn-success">Search</button>  -->
-        <input type="submit" name="search" class="custom-btn btn-success" value="Search">
+        <input type="submit" name="search" class="custom-btn btn-primary button-all" value="Search">
       </th>
     </tr>
   </thead>
@@ -578,7 +578,7 @@ if(!empty($practices)){ ?>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
             <td>
 
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style="background: #42af29; display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-success"> Show Detail</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
             </td>
 
           </tr>
@@ -615,11 +615,11 @@ if(!empty($practices)){ ?>
     	 <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs menu-tabs" role="tablist">
-                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank">Quick Links</a></li>
-                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank">Program Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" >Home Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" >Contact Page</a></li>
-                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank">Other Page</a></li>
+                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank" class="theme-bg">Quick Links</a></li>
+                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="theme-bg">Program Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="theme-bg">Home Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" class="theme-bg">Contact Page</a></li>
+                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank" class="theme-bg">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
@@ -739,7 +739,7 @@ if(!empty($practices)){ ?>
     </div> -->
 
     <div class="text-center">
-      <button type="button " class="custom-btn btn-success"> Add Task</button>
+      <button type="button " class="custom-btn btn-primary button-all"> Add Task</button>
 
     </div>
     </div>

@@ -9,7 +9,7 @@
 $health_data= health_care_get_options(); ?>
 <!-- Start Footer-->
 
-<div class="container-fluid space footer">
+<div class="container-fluid space footer theme-bg ">
 	<div class="container">
 	<?php if ( is_active_sidebar( 'footer-widget-area' ) ){ dynamic_sidebar('footer-widget-area');
 		} else { 
@@ -29,7 +29,7 @@ $health_data= health_care_get_options(); ?>
 
 	</div>
 </div>
-<div class="container-fluid footer-bottom1 footer1">
+<div class="container-fluid footer-bottom1 footer1 theme-bg">
 	<div class="container">
 		<div class="row">
 
