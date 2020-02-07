@@ -22,36 +22,7 @@
 */
 
 
-$error = 0;
-if(isset($_SESSION['userdata'])){
-	$email = $_SESSION['userdata']['email'];
-	if(!empty($_POST['savepatient'])){
-      	$postPatientData = $_POST; 
-	  	$savePatinets = savePatinets($postPatientData,$email);
-	  	if(!empty($savePatinets)){
-	  		if($savePatinets['status'] == 'ok'){
-	  			$error = 0;
-	  			$success = 51; 
-	  			$msg   = $savePatinets['message'];
-	  			$actionurl = site_url().'/patients/';  
-	  			//$Message = urlencode("Some error occured please try after some time ");
-                //header("Location:".$actionurl."?msg=".$msg); 
-                header("Refresh: 2; url=".$actionurl);
-	  		}else{
-	  			$error = 0;
-	  			$success = 52; 
-	  			$msg   = $savePatinets['message'];
-	  		}
-	  	}else{
-	  		$error = 0;
-	  		$success = 53; 
-	  		$msg   = 'Please try again !! Something went wrong';
-	  	}
-      }
-}else{
-	$error = 1;
-	$msg   = 'unauthorized ! you have to login';
-}
+
 get_header(); 
 //get_template_part('cover');
 ?>
@@ -191,8 +162,11 @@ get_header();
 
                          </div>
          </div>
-
-	     <input type="submit" name="savepatient" value="Save" class="btn-primary button-all"/>
+<a href="javascript:void(0)" id="addmoreadditional" class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add additional field</a>
+	     <div class="input_fields_wrap_additional">
+                                        
+          </div>
+		 <input type="submit" name="savepatient" value="Save" class="btn-primary button-all"/>
 	</form>
 
 
@@ -230,4 +204,137 @@ function checknumber(iid,vaalue){
     	jQuery('#'+iid).val('');
     }
 }
+
+jQuery(document).ready(function() {
+    var max_fields      = 40; 
+    var wrapper         = jQuery(".input_fields_wrap_additional");    
+    var x = 1; 
+    jQuery("#addmoreadditional").click(function(e){ 
+       e.preventDefault();
+        if(x < max_fields){ 
+            var name1 = "additional[]";
+            var name2 = "additionalkeys[]";
+            var divviid = "additionaldiv"+x;
+            var placeholdertext = "additional field "+x;
+            jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value=''  ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+             x++; 
+        }
+    });
+
+});
 </script>
+<?php
+$error = 0;
+if(isset($_SESSION['userdata'])){
+	$email = $_SESSION['userdata']['email'];
+	if(!empty($_POST['savepatient'])){
+      	$postPatientData = $_POST; 
+		
+	  	$savePatinets = savePatinets($postPatientData,$email);		
+		if(!empty($savePatinets)){			
+	  	   if($savePatinets['status'] == 'ok'){
+			   $patient_id = $savePatinets['patient_id'];
+?>
+<script type="text/javascript">
+    var postdata = '<?php echo json_encode($postPatientData);?>';
+    var interview_iid = '<?php echo $patient_id ;?>';
+	
+	//console.log(postdata);
+    updateinterviewfield(postdata,interview_iid);	
+	function updateinterviewfield(postdata,interview_iid){
+		var postdata = JSON.parse(postdata);
+	    console.log(postdata);
+      var interview_iid = interview_iid;
+	  console.log(interview_iid);
+	  var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
+      //var email = "<?php echo $email; ?>";
+	  if("additionalkeys" in postdata){
+		  var add_keys =postdata.additionalkeys;
+          var add_values =postdata.additional;
+	      var values  = add_keys.toString();
+          var values1 = add_values.toString();
+	  }
+      
+	  
+       var caller_firstname = postdata.first_name;
+       var caller_lastname = postdata.last_name;
+       var caller_dob = postdata.date_of_birth;
+       var email =  postdata.patient_email;
+       var caller_zipcode = postdata.patient_zipcode;
+       
+   
+      if(values == ''){
+         var caller_additional_fields = '';
+      }else{
+         var caller_additional_fields = values1;
+      } 
+
+      if(values1 == ''){
+         var caller_additional_keys = '';
+      }else{
+         var caller_additional_keys = values;
+      }        
+      
+
+      
+      if(interview_iid != ''){
+
+       
+      if(caller_firstname == ''){
+         return false;
+      }else if(caller_dob == ''){
+        return false;
+      }else{
+        jQuery.ajax({
+            type: 'post',
+            url: ajax_url,
+            data: {'interview_id':interview_iid,'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,'caller_zipcode':caller_zipcode,'caller_additional_fields':caller_additional_fields,'caller_additional_keys':caller_additional_keys,funtion:'updateInterviewData'},
+            success: function (res) {
+				console.log(res);
+                if(res == '11'){          
+                    return true;
+                }else{
+                    //alert('Error ! Please try again ');
+                }
+              
+            }
+          });
+      }
+
+      }else{
+        return false;
+      }
+
+ 
+
+}
+
+function removeobstr(id){
+    var arr = id.split('-');
+    var r = arr[1];
+    jQuery('#'+r).remove();
+}
+</script>
+<?php	  	
+	  			$error = 0;
+	  			$success = 51; 
+	  			$msg   = $savePatinets['message'];
+	  			$actionurl = site_url().'/patients/';  
+	  			//$Message = urlencode("Some error occured please try after some time ");
+                //header("Location:".$actionurl."?msg=".$msg); 
+                header("Refresh: 2; url=".$actionurl);
+	  		}else{
+	  			$error = 0;
+	  			$success = 52; 
+	  			$msg   = $savePatinets['message'];
+	  		}
+	  	}else{
+	  		$error = 0;
+	  		$success = 53; 
+	  		$msg   = 'Please try again !! Something went wrong';
+	  	}
+      }
+}else{
+	$error = 1;
+	$msg   = 'unauthorized ! you have to login';
+}

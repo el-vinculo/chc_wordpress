@@ -619,12 +619,18 @@ function savePatinets($patientData,$email){
        $healthcare_coverage     = $patientData['healthcare_coverage'];
        $patient_zipcode     = $patientData['patient_zipcode'];
        $mode_of_contact     = $patientData['mode_of_contact'];
+       $primary_care_physician     = $patientData['primary_care_physician'];
+       $emergency_contact_fName     = $patientData['emergency_contact_fName'];
+       $emergency_contact_lName     = $patientData['emergency_contact_lName'];
+       $emergency_contact_phone     = $patientData['emergency_contact_phone'];
+       $emergency_contact_email     = $patientData['emergency_contact_email'];
+       $client_consent     = $patientData['client_consent'];
+       $mode_of_contact     = $patientData['mode_of_contact'];
        $date_of_birth      = date('Y-m-d' ,strtotime($patientData['date_of_birth']));
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
-       
-	   $post = array('email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'patient_email'=>$patient_email,'patient_phone'=>$patient_phone,'patient_coverage_id'=>$patient_coverage_id,'healthcare_coverage'=>$healthcare_coverage,'patient_zipcode'=>$patient_zipcode,'date_of_birth'=>$date_of_birth,'mode_of_contact'=>$mode_of_contact); 
+	   $post = array('email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'patient_email'=>$patient_email,'patient_phone'=>$patient_phone,'patient_coverage_id'=>$patient_coverage_id,'healthcare_coverage'=>$healthcare_coverage,'patient_zipcode'=>$patient_zipcode,'date_of_birth'=>$date_of_birth,'mode_of_contact'=>$mode_of_contact,'primary_care_physician'=>$primary_care_physician,'emergency_contact_fName'=>$emergency_contact_fName,'emergency_contact_lName'=>$emergency_contact_lName,'emergency_contact_phone'=>$emergency_contact_phone,'client_consent'=>$client_consent,'emergency_contact_email'=>$emergency_contact_email); 
 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'create_patient');
@@ -1612,16 +1618,16 @@ function interviewDetailsTest($iid,$email){
 
 function updateInterviewDetails($interviewdata,$interview_id,$email)
 {
-        
+        //echo json_encode($interviewdata);exit;
        $userauth = $_SESSION['userdata']['authentication_token'];
        $first_name = $interviewdata['caller_first_name'];
-       $last_name  = $interviewdata['caller_last_name'];
+       $last_name  = isset($interviewdata['caller_last_name'])?$interviewdata['caller_last_name']:'';
        $dob        = date('Y-m-d',strtotime($interviewdata['caller_dob']));
-       $address     = $interviewdata['caller_address'];
-       $zipcode     = $interviewdata['caller_zipcode'];
-       $state = $interviewdata['caller_state'];
-       $additional_fields    = $interviewdata['caller_additional_fields'];
-       $additional_keys    = $interviewdata['caller_additional_keys'];
+       $address     = isset($interviewdata['caller_address'])?$interviewdata['caller_address']:'';
+       $zipcode     = isset($interviewdata['caller_zipcode'])?$interviewdata['caller_zipcode']:'';
+       $state = isset($interviewdata['caller_state'])?$interviewdata['caller_state']:'';
+       $additional_fields    = isset($interviewdata['caller_additional_fields'])?$interviewdata['caller_additional_fields']:'';
+       $additional_keys    = isset($interviewdata['caller_additional_keys'])?$interviewdata['caller_additional_keys']:'';
 
        if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
           $additionalfields = array_filter($additional_fields);
@@ -1976,6 +1982,102 @@ function getTheme($email, $authToken)
 	   $post = ['email' => $email];
 	   $headers['Authorization'] = 'user-token: '.$authToken;  
 	   $url = API_URL.'get_theme'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+
+function getPatientsReport($email, $authToken,$duration='',$date_filter='')
+{
+	   $post = ['email' => $email,'duration'=>$duration,'date_filter'=>$date_filter];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL.'clients_created_by_a_navigator'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+ 
+function getAssessments($email, $authToken,$duration='',$date_filter=''){
+	   $post = ['email' => $email,'duration'=>$duration,'date_filter'=>$date_filter];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL.'assessment_created_by_a_navigator'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+
+function getTaskTransfered($email, $authToken,$duration='',$date_filter=''){
+	   $post = ['email' => $email,'duration'=>$duration,'date_filter'=>$date_filter];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL.'task_transferred_by_navigator'; 
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,$url);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+
+function getRefferalAccepted($email, $authToken,$duration='',$date_filter=''){
+	   $post = ['email' => $email,'duration'=>$duration,'date_filter'=>$date_filter];
+	   $headers['Authorization'] = 'user-token: '.$authToken;  
+	   $url = API_URL.'requests_accepted_by_navigator'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$url);
 	   curl_setopt($curl_handle, CURLOPT_POST ,true);

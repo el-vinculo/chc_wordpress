@@ -28,10 +28,27 @@ if($_SESSION['userdata']!=''){
    ?>
 
  <style type="text/css">
- .theme-bg{ background-color: <?php echo $linkColor; ?> !important;/*#43b02a;*/}
+ .theme-bg{ background-color: <?php echo $linkColor; ?> !important;}
 .button-all{
    /* border: 1px solid red;*/
      background: <?php echo $linkColor; ?>;
+}
+.button-all:hover{
+   opacity: 0.6;
+     background: <?php echo $linkColor; ?>!important;
+}
+.faq .panel-title a {    border-bottom: 2px solid <?php echo $linkColor; ?>!important;
+}
+.button-all1 li a:hover{
+    color: #fff;
+     background: #fff!important;
+}
+.mark1{
+  color: <?php echo $linkColor; ?>!important
+}
+.disable-grey {
+    background-color: <?php echo $linkColor; ?>!important;
+    opacity: 0.4;
 }
 
 .links:hover{
@@ -118,8 +135,7 @@ margin-right: 33px;}
 .dropdown-content {
     display: none;
     position: absolute;
-/*    background-color: #f1f1f1;
-*/    min-width: 160px;
+    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     padding: 0;
@@ -135,8 +151,8 @@ margin-right: 33px;}
 .dropdown-content li{
 	list-style: none!important;
 }
-.dropdown-content li a:hover {    background-color: #43b02a;
-    color: #fff!important;}
+.dropdown-content li a:hover {    background-color: #fff;
+    color: #000!important;}
 
 .dropdown:hover .dropdown-content {display: block;}
 </style>
@@ -177,7 +193,7 @@ margin-right: 33px;}
 
 				</div>
 					<div class="set-question" style="float: right;">
-						<a href="<?=site_url()?>/faq"><span>?</span> </a>
+						<a href="<?=site_url()?>/faq"><span class="mark1">?</span> </a>
 					</div>
 				</div>
 

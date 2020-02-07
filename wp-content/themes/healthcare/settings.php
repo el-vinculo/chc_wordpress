@@ -156,7 +156,7 @@ get_header();
     <?php } ?>
   </div>
 
-  <input type="submit" class="btn-success" name="update" value="Update">
+  <input type="submit" class="btn-primary button-all" name="update" value="Update">
 
 
 

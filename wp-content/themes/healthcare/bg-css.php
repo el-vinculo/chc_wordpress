@@ -175,15 +175,15 @@ color:<?php echo wp_kses_post($health_data['theme_color']);?> !important ;
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
 background-color:<?php echo wp_kses_post($health_data['theme_color']);?> !important ;  
 }
-.dropdown-menu > li > a:hover{
- background-color:<?php echo wp_kses_post($health_data['theme_color']);?> !important ;  
-}
+/*.dropdown-menu > li > a:hover{
+ background-color:<?php //echo wp_kses_post($health_data['theme_color']);?> !important ;  
+}*/
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
 background-color:#fff !important;
- color:<?php echo wp_kses_post($health_data['theme_color']);?> !important ;  
+ color:<?php echo wp_kses_post($health_data['theme_color']);?>  ;  
 }
 .dropdown-menu  .open > a, .dropdown-menu  .open > a:focus, .dropdown-menu  .open > a:hover{
- background-color:<?php echo wp_kses_post($health_data['theme_color']);?> !important ;  
+ /*background-color:<?php //echo wp_kses_post($health_data['theme_color']);?> !important ; */ 
 color:#fff !important;
 }
 /* MENU CSS */ 

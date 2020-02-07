@@ -162,38 +162,7 @@ get_header();
 			</div>
 	   </div>
 
-	    <!-- <p>-------------------------------------------------------------------------------------------------------------</p>
-	    <h4>Task ></h4>
-	    </br></br>
-	    </div>
-	    <table class="table">
-	    <thead>
-									    <tr>
-									      
-									      <th>Task Type</th>
-									      <th>Provider</th>
-									      <th>Owner</th>
-									      <th>Description</th>
-									      <th>Deadline</th>
-									      <th>Status</th>
-									      <th>&nbsp;&nbsp;</th>
-									     
-									    </tr>
-									</thead>
-                                    <tbody class="input_fields_wrap">
-                                       <tr>
-									        <td>&nbsp;</td>
-                                            <td>&nbsp;</td> 
-                                            <td>&nbsp;</td> 
-                                            <td>&nbsp;</td> 
-                                            <td>&nbsp;</td> 
-                                            <td>&nbsp;</td> 
-                                            <td><button class="btn-primary" id="addmore" Title="Add More"  type="button"><i class="fa fa-plus-circle"></i></button></td>
-									      
-									    </tr>
-                                    </tbody>
-                                    </table>
--->
+	   
        <div class="container" style="max-width:600px;margin:60px auto;">
         <div class="form-group">
 	    

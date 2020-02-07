@@ -50,9 +50,7 @@ function assesmentHtml($assessments,$referralid){
               <div id="panelneed_'.$intkey.'" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div class="col-md-6">
-                   <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="need-'.$intkey.'" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a>
-                        </div>
+                  
                     <div class="pull-right btn-right">
                       
                       <a class="addmore" data-ref = "'.$referralid.'" data-cheekint = "'.$intkey.'" onclick="testvikfun(this)" href="javascript:void(0)"  ><i class="fa fa-plus" aria-hidden="true"></i> Add Need</a><br>
@@ -66,28 +64,17 @@ function assesmentHtml($assessments,$referralid){
                 </div>
                 <form action="">
                    <div class="row">
-                      <div class="form-group col-md-3 left">
+                   <div class="col-md-6">
+                   <div class="row">
+                      <div class="form-group col-md-8 left">
                         <label for="first">Title <em style="color:red">*</em></label>
                         <input type="hidden" id="last_obs_'.$intkey.'" value="'.end(array_keys($intvalue['obstacles_array'])).'">
                         <input type="hidden" id="saved_needid_'.$intkey.'" value="'.$intvalue['need_id'].'">
                         <input type="text" data-check="'.$intkey.'" id="need_title_'.$intkey.'" class="form-control" value="'.$intvalue['need_title'].'" onblur="checkneedupdate(this)">
                       </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                          <label for="first">Descripation <em style="color:red">*</em></label>
-                          <textarea class="focus-edit" rows="5" id="need_desc_'.$intkey.'" data-check="'.$intkey.'" onblur="checkneedupdate(this)" cols="41">'.$intvalue['need_description'].'</textarea>
-                        </div>
-                        
-                        <div class="form-group col-md-4">
-                          <label for="first"> Notes</label>
-                            <textarea rows="5" data-check="'.$intkey.'" onblur="checkneedupdate(this)" id="need_notes_'.$intkey.'" cols="41">'.$intvalue['need_note'].'</textarea>
-                        </div>
-
-                        <div class="form-group col-md-2 ">
+                      <div class="form-group col-md-4 pull-right">
                           <label for="first">Urgency</label><br>
-                            <select id="need_urgency_'.$intkey.'" data-check="'.$intkey.'" onchange="checkneedupdate(this)">
+                            <select id="need_urgency_'.$intkey.'" data-check="'.$intkey.'" onchange="checkneedupdate(this)" class="form-control">
                             
                             <option value="Critical"'; 
                               if($intvalue['need_urgency'] == "Critical"){  "selected"; }
@@ -108,9 +95,15 @@ function assesmentHtml($assessments,$referralid){
                             </select>
                         </div>
 
-                        <div class="form-group col-md-2 pull-right">
+                        
+                    </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                    <div class="row">
+                    <div class="form-group col-md-4 ">
                            <label for="first">Status</label><br>
-                            <select id="need_status_'.$intkey.'" data-check="'.$intkey.'" onchange="checkneedupdate(this)">
+                            <select id="need_status_'.$intkey.'" data-check="'.$intkey.'" onchange="checkneedupdate(this)" class="form-control">
                               <option value="New"'; 
 
                               if($intvalue['need_status'] == "New"){  "selected"; }
@@ -133,6 +126,27 @@ function assesmentHtml($assessments,$referralid){
                               $assesmentHtml .='>Review </option>
                             </select>
                         </div>
+                        <div class="col-md-2">
+                         <div class="pull-left btn-right btn-right1 "> 
+                           <a href="javascript:void(0)"  id="need-'.$intkey.'" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for="first">Description <em style="color:red">*</em></label><br>
+                          <textarea class="focus-edit" rows="5" id="need_desc_'.$intkey.'" data-check="'.$intkey.'" onblur="checkneedupdate(this)" >'.$intvalue['need_description'].'</textarea>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                          <label for="first"> Notes</label><br>
+                            <textarea rows="5" data-check="'.$intkey.'" onblur="checkneedupdate(this)" id="need_notes_'.$intkey.'" >'.$intvalue['need_note'].'</textarea>
+                        </div>
+
+                        
                     </div>
                    </div>
                  </form>
@@ -151,9 +165,7 @@ function assesmentHtml($assessments,$referralid){
                       <div class="panel-body">
                         <div class="col-md-8 inline">
 
-                        <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="obstacle-'.$intkey.'_'.$obskey.'" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a>
-                        </div>    
+                           
                             <div class="pull-right btn-right  ">
                               
                               <a href="javascript:void(0)" style="color: red;" data-check = "'.$intkey.'" data-neck = "'.$obskey.'"   onclick="addobsoln(this)"><i class="fa fa-plus" aria-hidden="true"></i> Add solution </a>
@@ -168,26 +180,17 @@ function assesmentHtml($assessments,$referralid){
 
                       <form action="">
                         <div class="row">
-                          <div class="form-group col-md-3 left">
+                        <div class="col-md-6">
+                        <div class="row">
+                          <div class="form-group col-md-8 left">
                             <input type="hidden" id="last_sol_'.$intkey.'_'.$obskey.'" value="'.end(array_keys($obsvalue['solutions_array'])).'">
                             <input type="hidden" id="saved_obstacleid_'.$intkey.'_'.$obskey.'" value="'.$obsvalue['obstacle_id'].'">
                             <label for="first">Title</label>
                             <input type="text" id="obstacle_title_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" class="form-control" value="'.$obsvalue['obstacle_title'].'" onblur="updateInterviewObstacle(this)">
                            </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group col-md-4">
-                            <label for="first">Descripation</label>
-                              <textarea rows="5" id="obstacle_desc_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" cols="41" onblur="updateInterviewObstacle(this)"> '.$obsvalue['obstacle_description'].'</textarea>
-                          </div>
-                          <div class="form-group col-md-4">
-                             <label for="first"> Notes</label>
-                             <textarea rows="5" id="obstacle_notes_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" cols="41" onblur="updateInterviewObstacle(this)">'.$obsvalue['obstacle_notes'].'</textarea>
-                          </div>
-                          <div class="form-group col-md-2 ">
+                           <div class="form-group col-md-4 pull-right">
                             <label for="first">Urgency</label><br>
-                              <select id="obstacle_urgency_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" onchange="updateInterviewObstacle(this)">
+                              <select id="obstacle_urgency_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" onchange="updateInterviewObstacle(this)" class="form-control">
                               <option value="Critical"'; 
 
 
@@ -212,9 +215,15 @@ function assesmentHtml($assessments,$referralid){
                                 $assesmentHtml .='>Low</option>
                               </select>
                           </div>
-                          <div class="form-group col-md-2 pull-right">
+                           </div>
+
+                           </div>
+                           <div class="col-md-6">
+                           <div class="row">
+
+                          <div class="form-group col-md-4 ">
                             <label for="first">Status</label><br>
-                              <select id="obstacle_status_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" onchange="updateInterviewObstacle(this)">
+                              <select id="obstacle_status_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'" onchange="updateInterviewObstacle(this)" class="form-control">
                                 <option value="New"'; 
 
                                 if(!empty($obsvalue['obstacle_status'] == "New")){  "selected"; }
@@ -235,6 +244,25 @@ function assesmentHtml($assessments,$referralid){
                                 $assesmentHtml .='>Review </option>
                                </select>
                            </div>
+                           <div class="col-md-6">
+                           <div class="pull-left btn-right btn-right1 "> 
+                           <a href="javascript:void(0)"  id="obstacle-'.$intkey.'_'.$obskey.'" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a>
+                        </div> 
+                           </div>
+                           </div>
+                           </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="form-group col-md-6">
+                            <label for="first">Description</label><br>
+                              <textarea rows="5" id="obstacle_desc_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'"  onblur="updateInterviewObstacle(this)"> '.$obsvalue['obstacle_description'].'</textarea>
+                          </div>
+                          <div class="form-group col-md-6">
+                             <label for="first"> Notes</label><br>
+                             <textarea rows="5" id="obstacle_notes_'.$intkey.'_'.$obskey.'" data-pop="'.$intkey.'" data-mom="'.$obskey.'"  onblur="updateInterviewObstacle(this)">'.$obsvalue['obstacle_notes'].'</textarea>
+                          </div>
+                         
                          </div>
                         </div>
                       </form></div>
@@ -254,7 +282,7 @@ function assesmentHtml($assessments,$referralid){
                             <div class="col-md-8 inline">
                          
                             <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="solution-'.$intkey.'_'.$obskey.'_'.$solkey.'" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a></div>
+                          </div>
                             </div>
                            </div>
 
@@ -273,11 +301,12 @@ function assesmentHtml($assessments,$referralid){
                               <input type="hidden" id="saved_solutiontaskid_'.$intkey.'_'.$obskey.'_'.$solkey.'" value="'.$solvalue['task_id'].'">
                               <input type="text" id="solution_title_'.$intkey.'_'.$obskey.'_'.$solkey.'" class="form-control" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" value="'.$solvalue['solution_title'].'" onblur="updateInterviewSolutiondeatils(this)">
                           </div>
+                          <div class="col-md-2"> <a href="javascript:void(0)"  id="solution-'.$intkey.'_'.$obskey.'_'.$solkey.'" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a></div>
                       </div>
                       <div class="row">
                           <div class="form-group col-md-4">
-                              <label for="first">Descripation</label>
-                              <textarea rows="5" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" id="solution_desc_'.$intkey.'_'.$obskey.'_'.$solkey.'" onblur="updateInterviewSolutiondeatils(this)" cols="45">'.$solvalue['solution_description'].'</textarea>
+                              <label for="first">Description</label>
+                              <textarea rows="5" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" id="solution_desc_'.$intkey.'_'.$obskey.'_'.$solkey.'" onblur="updateInterviewSolutiondeatils(this)" >'.$solvalue['solution_description'].'</textarea>
                           </div>
 
                       </div>
@@ -285,7 +314,7 @@ function assesmentHtml($assessments,$referralid){
                       <div class="row">
 
                           <div class="form-group col-md-4">
-                              <h5><button type="button" class="btn1 btn-success"  data-toggle="modal"  data-target="#myProviderModal" class="form-control" id="search-'.$intkey.'_'.$obskey.'_'.$solkey.'" onclick="searchprovider(this.id)">Search Provider</button></h5>
+                              <h5><button type="button" class="btn1 btn-success btn-primary button-all"  data-toggle="modal"  data-target="#myProviderModal" id="search-'.$intkey.'_'.$obskey.'_'.$solkey.'" onclick="searchprovider(this.id)">Search Provider</button></h5>
                               <label for="first">Selected Provider</label>
                               <input type="text"  placeholder="Search Entire Database"  id="solution_provider_'.$intkey.'_'.$obskey.'_'.$solkey.'" data-tot="'.$intkey.'" data-fot="'.$obskey.'" data-got="'.$solkey.'" value="'.$solvalue['solution_provider'].'" onblur="updateInterviewSolutiondeatils(this)" onclick="updateInterviewSolutiondeatils(this)">
                               
@@ -337,27 +366,19 @@ function assesmentHtml($assessments,$referralid){
 
                         <form action="">
                            <div class="row">
-                              <div class="form-group col-md-3 left">
+                           <div class="col-md-6">
+                           <div class="row">
+                              <div class="form-group col-md-8 left">
                                  <label for="first">Title <em style="color:red">*</em></label>
                                  <input type="hidden" id="saved_needid_1" value="">
                                  <input type="text" id="need_title_1" class="form-control">
                                  <input type="hidden" id="referral_id_1" value="'.$referralid.'" class="form-control">
                                </div>
-                           </div>
-                           
-                           <div class="row">
-                              <div class="form-group col-md-4">
-                                  <label for="first">Description <em style="color:red">*</em></label>
-                                  <textarea rows="5" id="need_desc_1" data-check="1" onblur="checkinterviewneeddeatils(this)" cols="41"></textarea>
-                               </div>
-                               <div class="form-group col-md-4">
-                                  <label for="first"> Notes</label>
-                                   <textarea rows="5" cols="41" id="need_notes_1" data-check="1" onblur="checkneedupdate(this)"></textarea>
-                               </div>
-                               <div class="form-group col-md-2 ">
+                               <div class="col-md-4 pull-right">
+                               <div class="form-group  ">
                                   <label for="first">Urgency</label>
                                                 <br>
-                                                <select id="need_urgency_1" data-check="1" onchange="checkneedupdate(this)">
+                                                <select id="need_urgency_1" data-check="1" onchange="checkneedupdate(this)" class="form-control">
                                                    <option value="">Select</option>
                                                    <option value="Critical">Critical</option>
                                                    <option value="High">High </option>
@@ -366,11 +387,16 @@ function assesmentHtml($assessments,$referralid){
                                                     <option value="Low">Low</option>
 
                                                 </select>
-                               </div>
-                                            <div class="form-group col-md-2 pull-right">
+                                           </div>
+                                           </div>
+                                       </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                       <div class="row">
+                                       <div class="form-group col-md-4 ">
                                                 <label for="first">Status</label>
                                                 <br>
-                                                <select id="need_status_1" data-check="1" onchange="checkneedupdate(this)">
+                                                <select id="need_status_1" data-check="1" onchange="checkneedupdate(this)" class="form-control">
                                                      <option value="">Select</option>
                                                      <option value="New">New </option>
                                                     <option value="Pending">Pending</option>
@@ -379,6 +405,24 @@ function assesmentHtml($assessments,$referralid){
 
                                                 </select>
                                             </div>
+                                            <div class="col-md-6">
+
+                                            </div>
+                                          </div>
+                           </div>
+                           </div>
+                           
+                           <div class="row">
+                              <div class="form-group col-md-6">
+                                  <label for="first">Description <em style="color:red">*</em></label><br>
+                                  <textarea rows="5" id="need_desc_1" data-check="1" onblur="checkinterviewneeddeatils(this)" cols="41"></textarea>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="first"> Notes</label><br>
+                                   <textarea rows="5" cols="41" id="need_notes_1" data-check="1" onblur="checkneedupdate(this)"></textarea>
+                               </div>
+                               
+                                            
                                         </div>
                                 </div>
                                 </form>

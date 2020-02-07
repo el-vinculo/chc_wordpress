@@ -67,6 +67,22 @@ a.custom-task:hover {
     box-shadow: 0 0 20px #ededed;
 }
 
+/*.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: absolute;
+    margin-top: 4px;
+    margin-left: -35px!important;
+}
+*/
+/*.checkbox-inline, .radio-inline {
+    position: relative;
+    display: inline-block;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}*/
+
 
 
 .panel-heading .accordion-toggle:after {
@@ -85,19 +101,26 @@ a.custom-task:hover {
 .input-group-addon:last-child span {
     text-align: center;
     position: relative;
-    right: 5px;
+    right: 0px;
 }
 .input-group-addon:last-child {
     border-left: 0;
     position: absolute;
-    top: 25px;
+    top: 0px;
     text-align: center;
     padding: 9px 15px;
-    right: 16px;
+    right: 0;
+    z-index: 10;
 }
 
 .view-active{
 color: #43b02a!important;
+}
+.lebel-set label {
+     width: 110px!important;
+}
+.set-lebel {
+     width: 110px!important;
 }
 </style>
 
@@ -273,6 +296,22 @@ span.fa.fa-print {
 i.fa.fa-envelope {
     padding-left: 0px!important;
 }
+
+/*.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: absolute;
+    margin-top: 4px;
+    margin-left: -35px!important;
+}
+
+.checkbox-inline, .radio-inline {
+    position: relative;
+    display: inline-block;
+    padding-left: 20px!important;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}*/
 </style>
 
 
@@ -397,8 +436,8 @@ if(isset($_SESSION['userdata'])){
         }else{
            $referralid = $referralList[0]['referral_id'];
         }
+        //$interviewdata = interviewDetailsTest($referralid,$email);
         $interviewdata = interviewDetailsTest($referralid,$email);
-
     if(!empty($interviewdata['status'] == 'ok')){
         $interviewDeatils = $interviewdata['interview_hash'];
         $detailsData  = $interviewdata['details_array']; 
@@ -418,7 +457,6 @@ if(isset($_SESSION['userdata'])){
     /* ------------ Patient Details --------------------- */
  
 	$patientdata = patientDetails($patient_id,$email);
-
 	if(!empty($patientdata['status'] == 'ok')){
 
 	  	$patientsDeatils = $patientdata['patients_details'];
@@ -438,7 +476,15 @@ if(isset($_SESSION['userdata'])){
 	    $msg   = $patientdata['status']. ' ! '. $patientdata['message'];
 	}
 
-
+      $patientAdditionaldata = interviewDetails($patient_id,$email);
+	  if(!empty($patientAdditionaldata['status'] == 'ok')){
+		   $patientAdditionalDeatils = $patientAdditionaldata['interview_hash'];
+	  }
+	  else{
+	  	$error = 1;
+	    $msg   = $patientAdditionaldata['status']. ' ! '. $patientAdditionaldata['message'];
+	   }
+	   //echo '<pre>'; print_r($patientAdditionalDeatils);exit;
 
 	/* -------------------------------------------------*/
 
@@ -569,13 +615,13 @@ get_header();
 	    <div class="row">
 		    <div class="col-md-12">
 		        <div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="email">First Name:<span style="color: red">*</span></label>
 				    <input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name" value="<?php echo $patientsDeatils['first_name']; ?>" required>
 				  </div>
 				</div>  
 				<div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="pwd">Last Name:</label>
 				    <div class='input-group' >
 				    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" value="<?php echo $patientsDeatils['last_name']; ?>">
@@ -583,7 +629,7 @@ get_header();
 				  </div>
 				</div>
 				<div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="pwd">Date of Birth:<span style="color: red">*</span></label>
 				    <div class='input-group date' >
                     <input type='text' name="date_of_birth" class="form-control datepicker" id="datepicker1"    placeholder="Date of Birth"  value="<?php echo date('Y-m-d',strtotime($patientsDeatils['date_of_birth'])); ?>" required="required"/>
@@ -600,19 +646,19 @@ get_header();
 			<div class="row">
 		    <div class="col-md-12">
 		        <div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="email">Phone:<span style="color: red">*</span></label>
 				    <input type="text" name="patient_phone" class="form-control" id="mobile" placeholder="Mobile" value="<?php echo $patientsDeatils['ph_number']; ?>" required="required">
 				  </div>
 				</div>  
 				<div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="pwd">Email:</label>
 				    <input type="email" name="patient_email" class="form-control" id="email" placeholder="Email" value="<?php echo $patientsDeatils['patient_email']; ?>" >
 				  </div>
 				</div>
 				<div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="pwd">Zip:<span style="color: red">*</span></label>
 				    <input type="text"  name="patient_zipcode" class="form-control" id="zip" placeholder="Zip" value="<?php echo $patientsDeatils['patient_zipcode']; ?>" required="required" maxlength="5" onkeyup="checknumber(this.id,this.value);">
 				  </div>
@@ -648,7 +694,7 @@ get_header();
 		    <div class="col-md-12">
 				
 				<div class="col-md-4">
-                                  <div class="form-group">
+                                  <div class="form-group lebel-set">
                                     <label for="email">Primary Care Physician:</label>
                                     <input type="text" name="primary_care_physician" class="form-control" id="insurance" placeholder="Primary Care"
                                     value="<?php echo $patientsDeatils['primary_care_physician']; ?>">
@@ -656,13 +702,13 @@ get_header();
                                 </div>
 
 				<div class="col-md-4">
-				  <div class="form-group">
+				  <div class="form-group lebel-set">
 				    <label for="pwd">Policy Id:</label>
 				    <input type="text" name="patient_coverage_id" class="form-control" id="policyid" placeholder="Policy Id" value="<?php echo $patientsDeatils['patient_coverage_id']; ?>">
 				  </div>
 				</div>
 				<div class="col-md-4">
-                                  <div class="form-group">
+                                  <div class="form-group lebel-set">
                                     <label for="email">Insurance:</label>
                                     <input type="text" name="healthcare_coverage" class="form-control" id="insurance" placeholder="Insurance"
                                     value="<?php echo $patientsDeatils['healthcare_coverage']; ?>">
@@ -673,21 +719,21 @@ get_header();
 <br/>
 <p>Emergency Contacts: </p>
 	<div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="email">Name:</label>
+                                  <div class="form-group lebel-set">
+                                    <label  for="email">Name:</label>
                                     <input type="text" name="emergency_contact_fName" class="form-control" id="insurance" placeholder="Name"
                                     value="<?php echo $patientsDeatils['emergency_contact_fName']; ?>">
                                   </div>
                                 </div>
 <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="email">Email:</label>
+                                  <div class="form-group lebel-set">
+                                    <label  for="email">Email:</label>
                                     <input type="text" name="emergency_contact_email" class="form-control" id="insurance" placeholder="Email"
                                     value="<?php echo $patientsDeatils['emergency_contact_email']; ?>">
                                   </div>
                                 </div>
 <div class="col-md-4">
-                                  <div class="form-group">
+                                  <div class="form-group lebel-set">
                                     <label for="email">Phone Number:</label>
                                     <input type="text" name="emergency_contact_phone" class="form-control" id="insurance" placeholder="Phone Number"
                                     value="<?php echo $patientsDeatils['emergency_contact_phone']; ?>">
@@ -736,9 +782,9 @@ get_header();
 		<div class="row">
 		    <div class="col-md-12">
 		        <div class="col-md-4">
-				  <div class="form-group">
-				    <label for="email">Perfered Contact:</label>
-<label class="radio-inline"><input type="radio" name="mode_of_contact"  value="call" <?php if(isset($patientsDeatils['mode_of_contact']) && ($patientsDeatils['mode_of_contact'] == 'call')) { echo "checked"; } ?>>Call</label>
+				  <div class="form-group ">
+				    <label  for="email  " class="set-lebel">Perfered Contact:</label>
+<label class="radio-inline"><input type="radio" name="mode_of_contact"  value="call"  <?php if(isset($patientsDeatils['mode_of_contact']) && ($patientsDeatils['mode_of_contact'] == 'call')) { echo "checked"; } ?>>Call</label>
 <label class="radio-inline"><input type="radio" name="mode_of_contact" value="text" <?php if(isset($patientsDeatils['mode_of_contact']) && ($patientsDeatils['mode_of_contact'] == 'text')) { echo "checked"; } ?>>Text</label>
 <label class="radio-inline"><input type="radio" name="mode_of_contact" value="email" <?php if(isset($patientsDeatils['mode_of_contact']) && ($patientsDeatils['mode_of_contact'] == 'email')) { echo "checked"; } ?>>Email</label>
 				  </div>
@@ -751,13 +797,13 @@ get_header();
 
  <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                                   <div class="form-group">
-                                    <label for="email":>Client Consent:</label>
+                                    <label for="email" class="set-lebel">Client Consent:</label>
 
-                                    <label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(($patientsDeatils['client_consent']!= '1') && ($patientsDeatils['client_consent']!= '0')) { echo "checked"; } ?>>Not Answered</label>
+                                    <label class="radio-inline"><input type="radio" name="client_consent"  value="yes"  <?php if(($patientsDeatils['client_consent']!= '1') && ($patientsDeatils['client_consent']!= '0')) { echo "checked"; } ?>>Not Answered</label>
 			
-<label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '1')) { echo "checked"; } ?>>yes</label>
+<label class="radio-inline"><input type="radio" name="client_consent"  value="yes"  <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '1')) { echo "checked"; } ?>>yes</label>
 <label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '0')) { echo "checked"; } ?>>no</label>
 
                                   </div>
@@ -766,7 +812,26 @@ get_header();
 
                          </div>
                 </div>
-
+       <a href="javascript:void(0)" id="addmoreadditional" class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add additional field</a>
+	   
+	   <?php if(!empty($patientAdditionalDeatils['caller_additional_fields'])){
+                                            foreach ($patientAdditionalDeatils['caller_additional_fields'] as $additionalkey => $additionalvalue) { ?>   
+                                          
+                                             <div class="row">
+                                             <div class="col-md-12">
+                                             <div class="col-md-8">
+                                             <input type="text" name="additionalkeys[]" class="form-control" value="<?php echo $additionalkey; ?>" placeholder="Additional Field" onblur="updateinterviewfield();" >
+                                            </div>
+                                            <div class="col-md-8">
+                                            <input type="text" name="additional[]" class="form-control" value="<?php echo $additionalvalue; ?>" placeholder="Additional Value" onblur="updateinterviewfield();" >
+                                        </div>
+                                        </div>
+                                        </div>
+                                         <br/>
+                                        <?php } } ?>
+                                        <div class="input_fields_wrap_additional">
+                                        
+                                        </div>
 	   <input name="submit" type="submit" class="btn-primary button-all" value="Update" > 
 	  
 	</form>
@@ -885,9 +950,12 @@ get_header();
                                    <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
                                    <td>
                                     <?php if($taskvalue['transferable']=='1'){ ?>
-                                    <button class="btn-primary button-all" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  >Transfer</button><?php } ?>
+                                    <button class="btn-primary button-all" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?=site_url()?>/wp-content/themes/healthcare/images/transfer-icon.png"></button><?php } else{?>
+                                       <button class="btn-primary button-all disable-grey" disabled data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?=site_url()?>/wp-content/themes/healthcare/images/transfer-icon.png"></button>
 
-                                    <button class="btn-primary button-all" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  >History </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')">Invite</button>
+                                    <?php  } ?>
+
+                                    <button class="btn-primary button-all " data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="https://dev11.resourcestack.com/wp-content/themes/healthcare/images/history-icon.png"> </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
 
                                    </td>
                                    
@@ -1866,7 +1934,7 @@ function addobsoln(iid) {
         var soltriid = "soltrobs_"+e+"_"+g;
         var provideriid = "provider-"+y;
             
-        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn-primary button-all'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
+        jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div><div class='col-md-2'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' ></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn-primary button-all'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
              y++; 
              g++; 
         }
@@ -1897,7 +1965,7 @@ jQuery(document).ready(function() {
             var diivvtriid = "diivtrobs"+y;
             var provideriid = "provider-"+y;
             
-            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' style='color: red;padding-left: 20px;' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg-"+r+"-"+y+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='1' data-tom ='2' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg-"+r+"-"+y+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div><div class='col-md-4 pull-right'><div class='form-group '><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a href='javascript:void(0)'  id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation</label><br><textarea rows='5' data-com='1' data-tom ='2' id='"+descid+"'  onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
              y++; 
         }
     });
@@ -2081,7 +2149,7 @@ function checkInterviewSolutiondeatils(iid) {
             var diivvtriid = "diivtrobs"+y;
             var provideriid = "provider-"+y;
             
-            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' style='color: red;padding-left: 20px;' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div><div class='col-md-4'><div class='form-group '><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a href='javascript:void(0)' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation</label><br><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
              y++; 
         }
     }
@@ -2110,7 +2178,7 @@ jQuery(document).ready(function() {
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
             
-            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;' >Remove</a><br><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation <em style='color:red'>*</em></label><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' cols='41'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)'>"+statusoption+"</select></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group '><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")'  style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5' data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
              x++; 
              //x++; 
         }
@@ -2150,7 +2218,7 @@ function testvikfun(iid) {
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
             
-            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;' >Remove</a><br><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation <em style='color:red'>*</em></label><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' cols='41'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)'>"+statusoption+"</select></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
              x++; 
       }
 
@@ -2970,4 +3038,101 @@ function showdetails(details) {
         });
 
     });
+	
+jQuery(document).ready(function() {
+    var max_fields      = 40; 
+    var wrapper         = jQuery(".input_fields_wrap_additional");    
+    var x = 1; 
+    jQuery("#addmoreadditional").click(function(e){ 
+       e.preventDefault();
+        if(x < max_fields){ 
+            var name1 = "additional[]";
+            var name2 = "additionalkeys[]";
+            var divviid = "additionaldiv"+x;
+            var placeholdertext = "additional field "+x;
+            jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value='' onblur='updateinterviewfield()' ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value='' onblur='updateinterviewfield()' ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+             x++; 
+        }
+    });
+
+});
+
+function updateinterviewfield(){
+      var interview_iid = "<?php echo base64_decode($_GET['pid']); ?>";
+      var email = "<?php echo $email; ?>";
+      
+      var caller_firstname = $("#first_name").val();
+      var caller_lastname = $("#last_name").val();
+      var caller_dob = $("#datepicker1").val();
+     // var caller_address = $("#caller_address").val();
+      var caller_mobile = $("#mobile").val();
+      var caller_state = $("#caller_state").val();
+      var caller_zipcode = $("#zip").val();
+      var values = $("input[name='additional[]']")
+              .map(function(){return $(this).val();}).get();
+      var values1 = $("input[name='additionalkeys[]']")
+              .map(function(){return $(this).val();}).get();
+
+      //alert(values);        
+      //alert(values1);  
+      //console.log("1 "+ values);
+      //console.log("2 "+ values1);
+              
+      if(values == ''){
+         var caller_additional_fields = '';
+      }else{
+         var caller_additional_fields = values;
+      } 
+
+      if(values1 == ''){
+         var caller_additional_keys = '';
+      }else{
+         var caller_additional_keys = values1;
+      }        
+      
+
+      
+      if(interview_iid != ''){
+
+
+      if(caller_firstname == ''){
+         //alert('Please fill first name');
+         return false;
+      }else if(caller_lastname == ''){
+        //alert('Please fill last name');
+        return false;
+      }else if(caller_dob == ''){
+        //alert('Please fill DOB');
+        return false;
+      }else{
+        jQuery.ajax({
+            type: 'post',
+            url: ajax_url,
+            data: {'interview_id':interview_iid,'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,'caller_zipcode':caller_zipcode,'caller_additional_fields':caller_additional_fields,'caller_additional_keys':caller_additional_keys,funtion:'updateInterviewData'},
+            success: function (res) {
+                //console.log(res);
+                if(res == '11'){          
+                    return true;
+                }else{
+                    //alert('Error ! Please try again ');
+                }
+              
+            }
+          });
+      }
+
+      }else{
+        return false;
+      }
+
+ 
+
+}
+
+function removeobstr(id){
+    var arr = id.split('-');
+    var r = arr[1];
+    jQuery('#'+r).remove();
+}
+
 </script>

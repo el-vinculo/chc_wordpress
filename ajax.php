@@ -138,8 +138,18 @@ function taskHtmlTable($taskList,$referral_id)
                  <td id='reftaskdeadline-".$taskvalue['task_id']."'>".date('d-m-Y',strtotime($taskvalue['task_deadline']))."</td>
                  <td id='reftaskstatus-".$taskvalue['task_id']."'>".$taskvalue['task_status']."</td>
                  <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
-                 <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  >Transfer</button>
-                 <button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  >Ledger</button></td>
+                 <td>";
+
+                 if($taskvalue['transferable']=="1"){
+
+                $html.= "<button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  ><img src='".site_url()."/wp-content/themes/healthcare/images/transfer-icon.png'></button>";
+            } else{
+            	$html.= "<button class='btn-primary button-all disable-grey' disabled id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  > <img src='".site_url()."/wp-content/themes/healthcare/images/transfer-icon.png'></button>";
+            }   
+
+               $html.="<button class='btn-primary button-all' data-toggle='modal' data-target='#inviteModal' onclick='getTaskId('".$taskvalue['task_id']."')''><img src='".site_url()."/wp-content/themes/healthcare/images/invite-icon.png'></button>";
+
+                $html.="<button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  ><img src='".site_url()."/wp-content/themes/healthcare/images/history-icon.png'></button></td>
 
             </tr>";
             } }else {
@@ -807,10 +817,12 @@ function providerListHtml($practices,$id){
     if(!empty($practices)){
      foreach ($practices as $practiceskey => $practicesvalue) {
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
-     $shortdesc= $practicesvalue['Programs']["0"]["ProgramDescription"]["0"]["Text"];
+     $shortdesc= $practicesvalue["Programs"]["ProgramDescriptionDisplay"];
+    if($shortdesc==''){
+               $shortdesc= $practicesvalue['Programs']["ProgramDescription"]["0"]["Text"];
+         }
      $programName= $practicesvalue["Programs"]["ProgramName"];
 
-          $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
          $programName= $practicesvalue["Programs"]["ProgramName"];
          $services="";
          $popolations="";
@@ -907,7 +919,14 @@ function providerListHtml($practices,$id){
 <td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
     </tr>";
     }}
-    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'><h4>Organization Name</h4><p id='providernamefill'>".$name."</p><div class='provider-content'>";
+    $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'>
+<div class='row'><div class='col-md-9'>
+<h4>Organization Name</h4><p id='providernamefill'>".$name."</p></div>
+
+    <div class='text-right col-md-3'><button type='button' id='".$id."'  class='custom-btn btn-primary button-all'  onclick='assignprovider(this.id)'> Add Task</button></div>
+    </div>
+
+    <div class='provider-content'>";
 
        $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
@@ -937,7 +956,10 @@ function providerListHtml($practices,$id){
 
        $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
        $programName= $practices[0]["Programs"]["ProgramName"];
-       $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+       $providershortdesc= $practices[0]["Programs"]["ProgramDescriptionDisplay"];
+       if($providershortdesc==''){
+       	       $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+       }
        $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
        $servicesTags= $practices[0]["Programs"]["ServiceTags"];
        $services="";
@@ -955,11 +977,11 @@ function providerListHtml($practices,$id){
 
     $html.= "<div class='tab' role='tabpanel'>
     <ul class='nav nav-tabs menu-tabs' role='tablist'>
-    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank'>Quick Links</a></li>
-                    <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank'>Program Page</a></li>
-                    <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' >Home Page</a></li>
-                    <li role='presentation'><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' >Contact Page</a></li>
-                    <li role='presentation'><a href='#' aria-controls='messages' target='_blank'>Other Page</a></li>
+    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank' class='button-all'>Quick Links</a></li>
+                    <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank' class='button-all'>Program Page</a></li>
+                    <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' class='button-all'>Home Page</a></li>
+                    <li role='presentation' class='button-all'><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' >Contact Page</a></li>
+                    <li role='presentation' class='button-all'><a href='#' aria-controls='messages' target='_blank'>Other Page</a></li>
     </ul>
      <div class='tab-content tabs'>
      <div role='tabpanel' class='tab-pane fade in active' id='Section1'>
@@ -1032,7 +1054,7 @@ function providerListHtml($practices,$id){
      </div>
 
     </div>
-<div class='text-center'><button type='button' id='".$id."'  class='custom-btn btn-primary button-all'  onclick='assignprovider(this.id)'> Add Task</button></div></div></div></div>";
+</div></div></div>";
     }else{
       $html =  "<div class='row'><div class='col-md-12'><span><center><strong><p style='color: red'>No Record found for this search</p></strong></center></span></div></div>";
     }

@@ -3,7 +3,7 @@
 class weblizar_nav_walker extends Walker_Nav_Menu {	
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
-		$output .= "\n$indent<ul class=\"dropdown-menu\">\n";
+		$output .= "\n$indent<ul class=\"dropdown-menu theme-bg button-all1\">\n";
 	}
 	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
@@ -13,7 +13,7 @@ class weblizar_nav_walker extends Walker_Nav_Menu {
 		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
 		if ($args->has_children && $depth > 0) {
-			$classes[] = 'dropdown dropdown-submenu';
+			$classes[] = 'dropdown dropdown-submenu ';
 		} else if($args->has_children && $depth === 0) {
 			$classes[] = 'dropdown';
 		}

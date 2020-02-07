@@ -8,8 +8,17 @@ a:hover{
 text-decoration:none;
 /* color:#fff; */
 }
-td{
-word-break: break-all;}
+/*td{
+word-break: break-all;}*/
+table#example tbody tr td {
+word-break: break-all;
+}
+tbody#taskbody tr td button {
+    margin-right: 2px;
+    margin-bottom: 6px;
+    width: 33px;
+    height: 31px;
+}
 p{
 color:#666;
 }
@@ -122,7 +131,7 @@ div#menu ul li:hover {
     width: 100%;
 }
 div#menu ul li:hover a{
-  color: #37ab1c;
+  color: #000;
 }
 p.menu-cls {
     float: left;
@@ -130,6 +139,9 @@ p.menu-cls {
     color: #fff;
     padding-left: 9px;
     margin:0;
+}
+.dropdown-menu>li>a {
+    color: #fff!important;
 }
 .menu{
   box-shadow: 0 1px 8px 0 rgba(2, 3, 3, 0.3)
@@ -315,9 +327,10 @@ color:#0098ff;
 	color:#0098ff;
 	border:2px solid #0098ff;
 	}
-.rightside a:hover{
+/
+*.rightside a:hover{
 color:#0098ff;;
-}
+}*/
 .rightside .btn:hover{
 color:#fff;
 }

@@ -8,7 +8,160 @@
  */
 $health_data= health_care_get_options(); ?>
 <!-- Start Footer-->
+<style>
 
+.cd-popup-trigger {
+  display: block;
+  width: 170px;
+  height: 50px;
+  line-height: 50px;
+  margin: 3em auto;
+  text-align: center;
+  color: #FFF;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 50em;
+  background: #35a785;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
+}
+@media only screen and (min-width: 1170px) {
+  .cd-popup-trigger {
+    margin: 6em auto;
+  }
+}
+
+/* -------------------------------- 
+
+xpopup 
+
+-------------------------------- */
+.cd-popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(94, 110, 141, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+.cd-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.cd-popup-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 4em auto;
+  background: #FFF;
+  border-radius: .25em .25em .4em .4em;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(-40px);
+  -moz-transform: translateY(-40px);
+  -ms-transform: translateY(-40px);
+  -o-transform: translateY(-40px);
+  transform: translateY(-40px);
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-backface-visibility: hidden;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.cd-popup-container p {
+  padding: 3em 1em;
+}
+.cd-popup-container .cd-buttons:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd-popup-container .cd-buttons li {
+  float: left;
+  width: 50%;
+  list-style: none;
+}
+.cd-popup-container .cd-buttons a {
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  text-transform: uppercase;
+  color: #FFF;
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+.cd-popup-container .cd-buttons li:first-child a {
+  background: #fc7169;
+  border-radius: 0 0 0 .25em;
+}
+.no-touch .cd-popup-container .cd-buttons li:first-child a:hover {
+  background-color: #fc8982;
+}
+.cd-popup-container .cd-buttons li:last-child a {
+  background: #b6bece;
+  border-radius: 0 0 .25em 0;
+}
+.no-touch .cd-popup-container .cd-buttons li:last-child a:hover {
+  background-color: #c5ccd8;
+}
+.cd-popup-container .cd-popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+}
+.cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  width: 14px;
+  height: 3px;
+  background-color: #8f9cb5;
+}
+.cd-popup-container .cd-popup-close::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 8px;
+}
+.cd-popup-container .cd-popup-close::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  right: 8px;
+}
+.is-visible .cd-popup-container {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+@media only screen and (min-width: 1170px) {
+  .cd-popup-container {
+    margin: 8em auto;
+  }
+}
+</style>
 <div class="container-fluid space footer theme-bg ">
 	<div class="container">
 	<?php if ( is_active_sidebar( 'footer-widget-area' ) ){ dynamic_sidebar('footer-widget-area');
@@ -83,7 +236,7 @@ $health_data= health_care_get_options(); ?>
 <!-- session Detect and validate the session -->
 <?php if(isset($_SESSION['userdata'])) { ?>
 
- <div role="dialog" class="warnModal modal fade">
+ <!--<div role="dialog" class="warnModal modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -98,16 +251,25 @@ $health_data= health_care_get_options(); ?>
           
         </div>
       </div>
-    </div>
+    </div>-->
+	
+<div class="cd-popup" role="alert">
+	<div class="cd-popup-container">
+		<p>Your session will be expire and you will be automatically logged out in 60 seconds</p>
+		<ul class="cd-buttons">
+			<li><a href="JavaScript:Void(0);" id="stay_popup">Stay Logged in</a></li>
+			<li><a href="JavaScript:Void(0);" id="logout_popup">Logout</a></li>
+		</ul>
+	</div> <!-- cd-popup-container -->
+</div> <!-- cd-popup -->
 <!-- <div id="cc">ccccc</div> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
- <script type="text/javascript">
-
+ <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+  <script type="text/javascript">
  $(document).ready(function(){
-     
      var idleCount=1200; //session expire time in seconds
      localStorage.setItem("currentCount", idleCount);
+	 
      var timer = setInterval(function() {
    // var count = parseInt(jQuery('#theTarget').html());
    //$("#cc").html(localStorage.getItem("currentCount"));
@@ -115,31 +277,38 @@ $health_data= health_care_get_options(); ?>
      localStorage.setItem("currentCount", count);
    //  alert(localStorage.getItem("currentCount"));
     if (count!=60) {
-     //countiinue the counter   
-    }   else { 
-       jQuery(".warnModal").modal('show');  //warning messages display
+     //countiinue the  counter   
+    }   else {
+				setTimeout(function(){
+					         // jQuery_3_4_1(".popup-content").addClass("active");
+							 $('.cd-popup').addClass('is-visible');
+							  //jQuery_3_4_1(".warnModal").modal('show');
+							}, 2000);
+           // jQuery(".warnModal").modal('show');  //warning messages display
 
     } if(count==0){
-      
-       window.location.href="<?php echo site_url(); ?>/logout"; // automatically logout
+				window.location.href="<?php echo site_url(); ?>/logout"; // automatically logout
+			}
+		  }, 1000);
 
-    }
-  }, 1000);
-
-    $('.staylogin').click(function(){
-      location.reload(true);
+    $('#stay_popup').click(function(){
+    //location.reload(true);
+		$('.cd-popup').removeClass('is-visible');
+		localStorage.setItem("currentCount", idleCount);
      });
-    $('.logout').click(function(){
+    $('#logout_popup').click(function(){
       window.location.href="<?php echo site_url(); ?>/logout";
      });
 
     $(this).click(function (e) 
 { 
-    $('.warnModal').modal('hide');
+	//jQuery_3_4_1('.warnModal').modal('hide');
+	$('.cd-popup').removeClass('is-visible');
+	//jQuery_3_4_1(".popup-content").removeClass("active");
     localStorage.setItem("currentCount", idleCount);
     //idleTime = 0;
 });
-}); 
+});
   </script>
 <?php } ?>
 <!-- end of session detect code -->
@@ -147,7 +316,7 @@ $health_data= health_care_get_options(); ?>
 <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.multiselect.js"></script>
 
 <script>
-    $(function () {
+    (function($) {
         $('#testSelect1').multiselect({
             
             placeholder: 'Please Select',
@@ -156,12 +325,12 @@ $health_data= health_care_get_options(); ?>
             selectAll: true
         });
 
-    });
+    }(jQuery));
 
 
 
 
-     $(function () {
+     (function($) {
         $('#services-test').multiselect({
             
             placeholder: 'Please Select',
@@ -170,7 +339,7 @@ $health_data= health_care_get_options(); ?>
             selectAll: true
         });
 
-    });
+    }(jQuery));
 
 </script>
 <script type="text/javascript">
@@ -178,7 +347,7 @@ $health_data= health_care_get_options(); ?>
   jQuery(this).toggleClass("on");
   jQuery("#menu").slideToggle();
 }); 
-
 </script>
+
 </body>
 </html>

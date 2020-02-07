@@ -391,9 +391,7 @@ get_header();
               <div id="panelneed_<?php echo $intkey; ?>" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div class="col-md-6">
-                   <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="need-<?php echo $intkey; ?>" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a>
-                        </div>
+                   
                     <div class="pull-right btn-right">
                       <a class="add-need addmore" href="javascript:void(0)"  ><i class="fa fa-plus" aria-hidden="true"></i> Add Need</a><br>
                       <a href="javascript:void(0)" data-check = "<?php echo $intkey; ?>"  class="addmoreObstacle"  onclick='add(this)' style="color: red;"><i class="fa fa-plus" aria-hidden="true"></i> Add Obstacle </a>
@@ -406,28 +404,19 @@ get_header();
                 </div>
                 <form action="">
                    <div class="row">
-                      <div class="form-group col-md-3 left">
+                    <div class="col-md-6">
+                   <div class="row">
+                      <div class="form-group col-md-8 left">
+                      
                         <label for="first">Title <em style="color:red">*</em></label>
                         <input type="hidden" id="last_obs_<?php echo $intkey; ?>" value="<?php echo  end(array_keys($intvalue['obstacles_array'])) ?>">
                         <input type="hidden" id="saved_needid_<?php echo $intkey; ?>" value="<?php echo $intvalue['need_id'];?>">
                         <input type="text" data-check="<?php echo $intkey; ?>" id="need_title_<?php echo $intkey; ?>" class="form-control" value="<?php echo $intvalue['need_title'];?>" onblur="checkneedupdate(this)">
                       </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                          <label for="first">Descripation <em style="color:red">*</em></label>
-                          <textarea class="focus-edit" rows="5" id="need_desc_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onblur="checkneedupdate(this)" cols="41"><?php echo $intvalue['need_description'];?></textarea>
-                        </div>
-                        
-                        <div class="form-group col-md-4">
-                          <label for="first"> Notes</label>
-                            <textarea rows="5" data-check="<?php echo $intkey; ?>" onblur="checkneedupdate(this)" id="need_notes_<?php echo $intkey; ?>" cols="41"><?php echo $intvalue['need_note'];?></textarea>
-                        </div>
-
-                        <div class="form-group col-md-2 ">
+                      <div class="col-md-4 pull-right">
+                        <div class="form-group  ">
                           <label for="first">Urgency</label><br>
-                            <select id="need_urgency_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onchange="checkneedupdate(this)">
+                            <select id="need_urgency_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onchange="checkneedupdate(this)" class="form-control">
                             <option value="Critical" <?php if($intvalue['need_urgency'] == 'Critical'){ echo "selected"; } ?>>Critical</option>
                                <option value="High" <?php if($intvalue['need_urgency'] == 'High'){ echo "selected"; } ?>>High </option>
                                
@@ -435,16 +424,42 @@ get_header();
                                <option value="Low" <?php if($intvalue['need_urgency'] == 'Low'){ echo "selected"; } ?>>Low </option>
                             </select>
                         </div>
-
-                        <div class="form-group col-md-2 pull-right">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-4"> <div class="form-group  ">
                            <label for="first">Status</label><br>
-                            <select id="need_status_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onchange="checkneedupdate(this)">
+                            <select id="need_status_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onchange="checkneedupdate(this)" class="form-control">
                               <option value="New" <?php if($intvalue['need_status'] == 'New'){ echo "selected"; } ?>>New </option>
                               <option value="Pending" <?php if($intvalue['need_status'] == 'Pending'){ echo "selected"; } ?>>Pending</option>
                               <option value="Close" <?php if($intvalue['need_status'] == 'Close'){ echo "selected"; } ?>>Close </option>
                               <option value="Review" <?php if($intvalue['need_status'] == 'Review'){ echo "selected"; } ?>>Review </option>
                             </select>
+                        </div></div>
+                      <div class="col-md-2">
+                           <a href="javascript:void(0)"  id="need-<?php echo $intkey; ?>" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for="first">Descripation <em style="color:red">*</em></label><br>
+                          <textarea class="focus-edit" rows="5" id="need_desc_<?php echo $intkey; ?>" data-check="<?php echo $intkey; ?>" onblur="checkneedupdate(this)" cols="54"><?php echo $intvalue['need_description'];?></textarea>
                         </div>
+                        
+                        <div class="form-group col-md-6">
+                          <label for="first"> Notes</label><br>
+                            <textarea rows="5" data-check="<?php echo $intkey; ?>" onblur="checkneedupdate(this)" id="need_notes_<?php echo $intkey; ?>" cols="54"><?php echo $intvalue['need_note'];?></textarea>
+                        </div>
+
+                        
+
+                       
                     </div>
                    </div>
                  </form>
@@ -464,9 +479,7 @@ get_header();
                       <div class="panel-body">
                         <div class="col-md-8 inline">
 
-                        <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="obstacle-<?php echo $intkey; ?>_<?php echo $obskey; ?>" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a>
-                        </div>    
+                          
                             <div class="pull-right btn-right  ">
                               
                               <a href="javascript:void(0)" style="color: red;" data-check = "<?php echo $intkey; ?>" data-neck = "<?php echo $obskey; ?>"   onclick='addobsoln(this)'><i class="fa fa-plus" aria-hidden="true"></i> Add solution </a>
@@ -481,26 +494,18 @@ get_header();
 
                       <form action="">
                         <div class="row">
-                          <div class="form-group col-md-3 left">
+                    <div class="col-md-6">
+                   <div class="row">
+                      <div class="form-group col-md-8 left">
                             <input type="hidden" id="last_sol_<?php echo $intkey; ?>_<?php echo $obskey; ?>" value="<?php echo  end(array_keys($obsvalue['solutions_array'])) ?>">
                             <input type="hidden" id="saved_obstacleid_<?php echo $intkey; ?>_<?php echo $obskey; ?>" value="<?php echo $obsvalue['obstacle_id']; ?>">
                             <label for="first">Title</label>
                             <input type="text" id="obstacle_title_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' class="form-control" value="<?php echo $obsvalue['obstacle_title']; ?>" onblur="updateInterviewObstacle(this)">
                            </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group col-md-4">
-                            <label for="first">Descripation</label>
-                              <textarea rows="5" id="obstacle_desc_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' cols="41" onblur="updateInterviewObstacle(this)"><?php echo $obsvalue['obstacle_description']; ?></textarea>
-                          </div>
-                          <div class="form-group col-md-4">
-                             <label for="first"> Notes</label>
-                             <textarea rows="5" id="obstacle_notes_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' cols="41" onblur="updateInterviewObstacle(this)"><?php echo $obsvalue['obstacle_notes']; ?></textarea>
-                          </div>
-                          <div class="form-group col-md-2 ">
+                           <div class="col-md-4 pull-right">
+                             <div class="form-group  ">
                             <label for="first">Urgency</label><br>
-                              <select id="obstacle_urgency_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' onchange="updateInterviewObstacle(this)">
+                              <select id="obstacle_urgency_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' onchange="updateInterviewObstacle(this)" class="form-control">
                               <option value="Critical" <?php if(!empty($obsvalue['obstacle_urgency'] == 'Critical')){ echo "selected"; }?>>Critical</option>
                                <option value="High" <?php if(!empty($obsvalue['obstacle_urgency'] == 'High')){ echo "selected"; }?>>High </option>
                                
@@ -508,15 +513,38 @@ get_header();
                                <option value="Low" <?php if(!empty($obsvalue['obstacle_urgency'] == 'Low')){ echo "selected"; }?>>Low</option>
                               </select>
                           </div>
-                          <div class="form-group col-md-2 pull-right">
+                           </div>
+                         </div>
+                       </div>
+                       <div class="col-md-6">
+                         <div class="row">
+                           <div class="col-md-4">
+                              <div class="form-group">
                             <label for="first">Status</label><br>
-                              <select id="obstacle_status_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' onchange="updateInterviewObstacle(this)">
+                              <select id="obstacle_status_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' onchange="updateInterviewObstacle(this)" class="form-control">
                                 <option value="New" <?php if(!empty($obsvalue['obstacle_status'] == 'New')){ echo "selected"; }?>>New </option>
                                 <option value="Pending" <?php if(!empty($obsvalue['obstacle_status'] == 'Pending')){ echo "selected"; }?>>Pending</option>
                                 <option value="Close" <?php if(!empty($obsvalue['obstacle_status'] == 'Close')){ echo "selected"; }?>>Close </option>
                                 <option value="Review" <?php if(!empty($obsvalue['obstacle_status'] == 'Review')){ echo "selected"; }?>>Review </option>
                                </select>
                            </div>
+                           </div>
+                           <div class="col-md-2"> <a href="javascript:void(0)"  id="obstacle-<?php echo $intkey; ?>_<?php echo $obskey; ?>" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a></div>
+                         </div>
+                       </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="form-group col-md-6">
+                            <label for="first">Descripation</label><br>
+                              <textarea rows="5" id="obstacle_desc_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' cols="52" onblur="updateInterviewObstacle(this)"><?php echo $obsvalue['obstacle_description']; ?></textarea>
+                          </div>
+                          <div class="form-group col-md-6">
+                             <label for="first"> Notes</label><br>
+                             <textarea rows="5" id="obstacle_notes_<?php echo $intkey; ?>_<?php echo $obskey; ?>" data-pop='<?php echo $intkey; ?>' data-mom='<?php echo $obskey; ?>' cols="52" onblur="updateInterviewObstacle(this)"><?php echo $obsvalue['obstacle_notes']; ?></textarea>
+                          </div>
+                          
+                         
                          </div>
                         </div>
                       </form></div>
@@ -536,7 +564,7 @@ get_header();
                             <div class="col-md-8 inline">
                          
                             <div class="pull-left btn-right btn-right1 "> 
-                           <a href="javascript:void(0)"  id="solution-<?php echo $intkey;?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" onclick="removedata(this.id)" style="color: red;padding-left: 20px;">Remove</a></div>
+                          </div>
                             </div>
                            </div>
 
@@ -553,6 +581,7 @@ get_header();
 	                            <input type="hidden" id="saved_solutionid_<?php echo $intkey; ?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" class="form-control" value="<?php echo $solvalue['solution_id'];?>">
 	                            <input type="text" id="solution_title_<?php echo $intkey; ?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" class="form-control" data-tot="<?php echo $intkey; ?>" data-fot="<?php echo $obskey; ?>" data-got="<?php echo $solkey; ?>" value="<?php echo $solvalue['solution_title']; ?>" onblur="updateInterviewSolutiondeatils(this)">
 	                        </div>
+                          <div class="col-md-2"> <a href="javascript:void(0)"  id="solution-<?php echo $intkey;?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" onclick="removedata(this.id)" style="color: red;font-size: 31px;position: relative;top: 23px;"><i class="fa fa-trash"></i></a></div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="form-group col-md-4">
@@ -565,7 +594,7 @@ get_header();
 	                    <div class="row">
 
 	                        <div class="form-group col-md-4">
-	                            <h5><button type="button" class="btn1 btn-success"  data-toggle='modal'  data-target='#myProviderModal' class="form-control" id="search-<?php echo $intkey; ?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" onclick="searchprovider(this.id)">Search Provider</button></h5>
+	                            <h5><button type="button" class="btn1 btn-primary button-all"  data-toggle='modal'  data-target='#myProviderModal' class="form-control" id="search-<?php echo $intkey; ?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" onclick="searchprovider(this.id)">Search Provider</button></h5>
 	                            <label for="first">Selected Provider</label>
 	                            <input type="text"  placeholder="Search Entire Database"  id="solution_provider_<?php echo $intkey; ?>_<?php echo $obskey; ?>_<?php echo $solkey; ?>" data-tot="<?php echo $intkey; ?>" data-fot="<?php echo $obskey; ?>" data-got="<?php echo $solkey; ?>" value="<?php echo $solvalue['solution_provider']; ?>" onblur="updateInterviewSolutiondeatils(this)" onclick="updateInterviewSolutiondeatils(this)">
 	                        </div>
@@ -774,7 +803,7 @@ get_header();
         </select>
       </th>
       <th scope="col">
-        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-success">Search</button> 
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-primary button-all">Search</button> 
         <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
@@ -946,7 +975,7 @@ function addobsoln(iid) {
         var triid = "trobs_"+e+"_"+g;
         var soltriid = "soltrobs_"+e+"_"+g;
 
-            jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' cols='45'></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn1 btn-success'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+soltriid+"'><div class='main-interview obstacle-inter1 margin-left box-shadow'><div class='row'><div class='col-md-4'><h3><a id='solutionancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Solution </a> </h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-right btn-right btn-right1'></div></div></div><div class='alert alert-success alert-dismissible' id='solution-msg' style='display: none' ><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Solution detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title</label><input type='hidden' id='"+savedsoliid+"' class='form-control' value=''><input type='text' id='"+titleid+"' class='form-control'></div><div class='col-md-2'><a href='javascript:void(0)' id='remove-"+soltriid+"' onclick='removeobstr(this.id)' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' id='"+descid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='checkInterviewSolutiondeatils(this)' ></textarea></div></div><div class='row'><div class='form-group col-md-4'><h5><button type='button' class='btn1 btn-primary button-all'  data-toggle='modal'  data-target='#myProviderModal' class='form-control' id='"+searchprovider+"' onclick='searchprovider(this.id)'>Search Provider</button></h5><label for='first'>Search</label><input type='text' id='"+providerid+"' data-tot='"+e+"'  data-fot='"+f+"' data-got='"+g+"' onblur='updateInterviewSolutiondeatils(this)' onclick='updateInterviewSolutiondeatils(this)' class='form-control' placeholder='Search Entire Database'></div></div></div></form></div></div></div>"); //add input box
              y++; 
              g++; 
         }
@@ -1035,7 +1064,7 @@ function checkInterviewSolutiondeatils(iid) {
             var diivvtriid = "diivtrobs"+y;
             var provideriid = "provider-"+y;
             
-            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' style='color: red;padding-left: 20px;' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diivvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse margin-left box-shadow'><div class='panel-body'><div class='col-md-8 inline'><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div><div class='col-md-4  pull-right'><div class='form-group'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a href='javascript:void(0)' id='remove-"+diivvtriid+"' onclick='removeobstr(this.id)'  style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation</label><br><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)'></textarea></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
              y++; 
         }
     }
@@ -1063,7 +1092,7 @@ jQuery(document).ready(function() {
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
             
-            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;' >Remove</a><br><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='form-group col-md-3 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='text' id='need_title_"+x+"' class='form-control'></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation <em style='color:red'>*</em></label><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' cols='41'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)'>"+statusoption+"</select></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group '><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
              x++; 
              //x++; 
         }

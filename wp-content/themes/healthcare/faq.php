@@ -57,7 +57,6 @@ if(!empty($faqsdata)){
     color: #000;
     background: #fff;
     border: none;
-    border-bottom: 2px solid #43b02a;
     padding: 15px 20px 15px 47px;
     position: relative;
     transition: all 0.5s ease 0s;
@@ -95,7 +94,7 @@ if(!empty($faqsdata)){
   <div class="container">
     <div class="row">
         <div class=" col-md-12">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel-group faq" id="accordion" role="tablist" aria-multiselectable="true">
             <?php
             if(!empty($faqlist)){ 
                 foreach ($faqlist as $key => $value) { ?>
@@ -119,7 +118,7 @@ if(!empty($faqsdata)){
                   
                 <?php } ?>
             <div class="text-right"><a href="<?=site_url()?>/report-issue">
-                                <button type="search " class="custom-btn btn-success">Report Issue</button>
+                                <button type="search " class="custom-btn btn-primary button-all">Report Issue</button>
                 </a></div>
              
             <?php } ?>

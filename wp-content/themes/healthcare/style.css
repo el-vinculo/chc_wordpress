@@ -26,6 +26,10 @@ border:0!important;
     /*background-color: #42af2a!important;
     border-color: #42af2a!important;*/
 }
+ textarea {
+   
+    width: 100%;
+}
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     z-index: 2;
     /*color: #fff!important;
@@ -118,6 +122,8 @@ margin:0px 15px;
 .menu{
 	background-color:#fff;
 }
+.nav>li>a:focus, .nav>li>a:hover{
+color:#000!important;}
 .sticky-header{
 	position:fixed !important;
 	top:0;
@@ -216,13 +222,13 @@ color:#0098ff;
 padding:10px 25px !important;
 white-space:normal !important;
 }
-.dropdown-menu > li > a:hover{
+/*.dropdown-menu > li > a:hover{
 background-color:#0098ff !important;
-color:#fff !important;
+color:#fff !important;*/
 }
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
 background-color:#fff !important;
-color:#0098ff !important;
+color:#000 !important;
 }
 .dropdown-menu  .open > a, .dropdown-menu  .open > a:focus, .dropdown-menu  .open > a:hover{
 background-color:#0098ff !important;
@@ -1669,9 +1675,9 @@ div#menu ul li:hover {
     background: #fff;
     width: 100%;
 }
-div#menu ul li:hover a{
+/*div#menu ul li:hover a{
   color: #37ab1c;
-}
+}*/
 #menu {
     color: white;
     width: 174px;
@@ -1718,16 +1724,21 @@ div#menu ul li a {
     padding: 14px 21px!important;
     color: #fff!important;
 }*/
+.nav>li>a:focus, .nav>li>a:hover {
+    
+    background-color: #fff;
+    color: #000!important;
+}
 /*25-11-2019 start date*/
 .nav-tabs>li>a {
-      background-color: #42af2a ;
+      
           padding: 8px 5px!important;
     color: #fff!important;
     font-size: 15px;
     font-weight: normal;
 }
 .nav-tabs>li>a:hover {
-    border-color: #42af2a  #42af2a  #42af2a !important; 
+    border-color: transparent !important; 
 }
 /*.nav>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
@@ -1762,7 +1773,13 @@ ul.nav.nav-tabs.menu-tabs li {
 .set-question a span {
    font-weight: normal!important;
 }
-
+.dropdown-menu li a:hover {
+    background: #fff!important;
+    color: #000!important;
+}
+.dropdown-menu li a:focus{
+color: #000!important;
+}
 #providerdiv{
     padding: 14px;
 }

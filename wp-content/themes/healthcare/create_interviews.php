@@ -357,26 +357,18 @@ get_header();
 
                         <form action="">
                            <div class="row">
-                              <div class="form-group col-md-3 left">
+                            <div class="col-md-6">
+                            <div class="row">
+                              <div class="form-group col-md-8 left">
                                  <label for="first">Title <em style="color:red">*</em></label>
                                  <input type="hidden" id="saved_needid_1" value="">
                                  <input type="text" id="need_title_1" class="form-control">
                                </div>
-                           </div>
-                           
-                           <div class="row">
-                              <div class="form-group col-md-4">
-                                  <label for="first">Descripation <em style="color:red">*</em></label>
-                                  <textarea rows="5" id="need_desc_1" data-check="1" onblur="checkinterviewneeddeatils(this)" cols="41"></textarea>
-                               </div>
-                               <div class="form-group col-md-4">
-                                  <label for="first"> Notes</label>
-                                   <textarea rows="5" cols="41" id="need_notes_1" data-check="1" onblur="checkneedupdate(this)"></textarea>
-                               </div>
-                               <div class="form-group col-md-2 ">
+                               <div class="col-md-4 pull-right">
+                                 <div class="form-group  ">
                                   <label for="first">Urgency</label>
                                                 <br>
-                                                <select id="need_urgency_1" data-check="1" onchange="checkneedupdate(this)">
+                                                <select id="need_urgency_1" data-check="1" onchange="checkneedupdate(this)" class="form-control">
                                                    <option value="">Select</option>
                                                    <option value="Critical">Critical</option>
                                                    <option value="High">High </option>
@@ -386,10 +378,16 @@ get_header();
 
                                                 </select>
                                </div>
-                                            <div class="form-group col-md-2 pull-right">
+                               </div>
+                             </div>
+                           </div>
+                           <div class="col-md-6">
+                             <div class="row">
+                               <div class="col-md-4">
+                                 <div class="form-group  ">
                                                 <label for="first">Status</label>
                                                 <br>
-                                                <select id="need_status_1" data-check="1" onchange="checkneedupdate(this)">
+                                                <select id="need_status_1" data-check="1" onchange="checkneedupdate(this)" class="form-control">
                                                      <option value="">Select</option>
                                                      <option value="New">New </option>
                                                     <option value="Pending">Pending</option>
@@ -398,6 +396,25 @@ get_header();
 
                                                 </select>
                                             </div>
+                               </div>
+                               <div class="col-md-2">
+                                 
+                               </div>
+                             </div>
+                           </div>
+                           </div>
+                           
+                           <div class="row">
+                              <div class="form-group col-md-6">
+                                  <label for="first">Descripation <em style="color:red">*</em></label><br>
+                                  <textarea rows="5" id="need_desc_1" data-check="1" onblur="checkinterviewneeddeatils(this)" cols="61"></textarea>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="first"> Notes</label><br>
+                                   <textarea rows="5" cols="61" id="need_notes_1" data-check="1" onblur="checkneedupdate(this)"></textarea>
+                               </div>
+                               
+                                            
                                         </div>
                                 </div>
                                 </form>
@@ -770,7 +787,7 @@ function add(iid) {
             var provideriid = "provider-"+y;
             
 
-            jQuery(wrapper).append("<div id='"+divvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse '><div class='panel-body'><div class='col-md-8 inline'><div class='pull-left btn-right btn-right1 '><a href='javascript:void(0)' id='remove-"+divvtriid+"' onclick='removeobstr(this.id)' style='color: red;padding-left: 20px;'>Remove</a></div><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg-"+r+"-"+y+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='form-group col-md-3 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div></div><div class='row'><div class='form-group col-md-4'><label for='first'>Descripation</label><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' cols='41' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-4'><label for='first'> Notes</label><textarea rows='5' cols='41' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)' ></textarea></div><div class='form-group col-md-2'><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)'>"+urgencyoption+"</select></div><div class='form-group col-md-2 pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)'>"+statusoption+"</select></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+divvtriid+"'><div class='main-interview '><div class='row'><div class='col-md-4'><h3><a id='obstacleancher' class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Obstacle</a> </h3></div><div id='"+triid+"' class='panel-collapse collapse '><div class='panel-body'><div class='col-md-8 inline'><div class='pull-right btn-right'><a href='javascript:void(0)' id='sol_1_"+y+"' data-check = '"+r+"' data-neck = '"+y+"' onclick='addobsoln(this)'  style='color: red;'><i class='fa fa-plus' aria-hidden='true'></i> Add solution </a></div></div></div><div class='alert alert-success alert-dismissible' id='obstacle-msg-"+r+"-"+y+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Obstacle detail successfully added.</div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><input type='hidden' id='saved_obstacleid_"+r+"_"+y+"' value=''><label for='first'>Title</label><input type='text' id='"+titleid+"' class='form-control' value=''></div><div class='col-md-4 pull-right'><div class='form-group '><label for='first'>Urgency</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+urgencyid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group pull-right'><label for='first'>Status</label><br><select data-pop='"+r+"' data-mom ='"+y+"' id='"+statusid+"' onchange='updateInterviewObstacle(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a href='javascript:void(0)' id='remove-"+divvtriid+"' onclick='removeobstr(this.id)' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation</label><br><textarea rows='5' data-com='"+r+"' data-tom ='"+y+"' id='"+descid+"' cols='61' onblur='checkInterviewObstacledeatils(this)'></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5' cols='61' data-pop='"+r+"' data-mom ='"+y+"' id='"+notesdid+"' onblur='updateInterviewObstacle(this)' ></textarea></div></div></div></form></div> <div id='main-interview'></div><div class='input_fields_wrap_solution_"+r+"_"+y+"'></div></div></div>"); //add input box
              y++; 
              r++; 
         }

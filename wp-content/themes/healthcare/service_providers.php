@@ -1,6 +1,3 @@
-
-
-
 <style >
 :root
 {
@@ -471,7 +468,10 @@ if(!empty($practices)){ ?>
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"];
          }*/
 
-         $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
+        $shortdesc= $practicesvalue["Programs"]["ProgramDescriptionDisplay"];
+         if($shortdesc==''){
+          $shortdesc= $practicesvalue["Programs"]["ProgramDescription"][0]["Text"];
+         }
          $programName= $practicesvalue["Programs"]["ProgramName"];
          $services="";
          $popolations="";
@@ -608,18 +608,27 @@ if(!empty($practices)){ ?>
          ?>
     <h4>Provider Description</h4>
     <div class="border pt-set">
+      <div class="row">
+        <div class="col-sm-9">
     	<h4>Organization Name</h4>
     	<p id='providernamefill'><?php $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
          echo $providername;
-       ?></p>
+       ?></p></div>
+       <div class="text-right col-sm-3 ">
+         <div  style="padding-right: 10px;">
+      <button type="button " class="custom-btn btn-primary button-all"> Add Task</button>
+</div>
+   
+       </div>
+     </div>
     	 <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs menu-tabs" role="tablist">
-                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank" class="theme-bg">Quick Links</a></li>
-                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="theme-bg">Program Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="theme-bg">Home Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" class="theme-bg">Contact Page</a></li>
-                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank" class="theme-bg">Other Page</a></li>
+                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank" class="button-all">Quick Links</a></li>
+                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="button-all">Program Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="button-all">Home Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" class="button-all">Contact Page</a></li>
+                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank" class="button-all">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
@@ -628,7 +637,10 @@ if(!empty($practices)){ ?>
     <?php
 
          $programName= $practices[0]["Programs"]["ProgramName"];
+         $providershortdesc= $practices[0]["Programs"]["ProgramDescriptionDisplay"];
+         if($providershortdesc==''){
          $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
+         }
          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
          $servicesTags= $practices[0]["Programs"]["ServiceTags"];
          $services="";
@@ -738,10 +750,7 @@ if(!empty($practices)){ ?>
       </p>
     </div> -->
 
-    <div class="text-center">
-      <button type="button " class="custom-btn btn-primary button-all"> Add Task</button>
-
-    </div>
+    
     </div>
   </div>
 </div>
