@@ -745,6 +745,7 @@ var urgencyoption = "<option value=''>Select</option><option value='Critical'>Cr
 var statusoption = "<option value=''>Select</option><option value='New'>New</option><option value='Pending'>Pending</option><option value='Close'>Close</option><option value='Review'>Review</option>";
 
 jQuery(document).ready(function() {
+	$("#intervirefiels").css("pointer-events","none");
     var max_fields      = 40; 
     var wrapper         = jQuery(".input_fields_wrap_additional");    
     var x = 1; 
@@ -1159,6 +1160,7 @@ function checkneedupdate(iid) {
 
 function updateinterviewfield(){
       var interview_iid =  $("#saved_interview_id").val();
+	  
       var email = "<?php echo $email; ?>";
       var caller_firstname = $("#caller_first_name").val();
       var caller_lastname = $("#caller_last_name").val();
@@ -1181,8 +1183,9 @@ function updateinterviewfield(){
          var caller_additional_keys = '';
       }else{
          var caller_additional_keys = values1;
-      }       
-
+      }
+	  
+	  
       if(interview_iid != ''){
         //return false;
        if(caller_firstname == ''){
@@ -1200,7 +1203,7 @@ function updateinterviewfield(){
             success: function (res) {
               console.log(" updateInterviewData in create_interviews.php - " + res);
                 if(res == '11'){          
-                    return true;
+                    return true;					
                 }else{
                     return false;
                 }
@@ -1258,6 +1261,7 @@ function checkinterviewfield(){
                        $("#intervirefiels").attr("href", newUrl);
                        $("#intervirefiels")[0].click();
                        $("#interview-msg").show(1000);
+					   $("#intervirefiels").css("pointer-events","auto");
                         //  $("#interview-msg").fadeOut(3000);
                         //alert(obj.interview_id);         
                         //alert('interview save successfully');

@@ -1,5 +1,5 @@
 
-<?php  if(empty($_SESSION['userdata']) && ($_SERVER['REQUEST_URI']!='/' && $_SERVER['REQUEST_URI']!='/login/')) {?>
+<?php  if(empty($_SESSION['userdata']) && ($_SERVER['REQUEST_URI']!='/' && $_SERVER['REQUEST_URI']!='/login/' && $_SERVER['REQUEST_URI']!='/about/' && $_SERVER['REQUEST_URI']!='/contact-us/' && $_SERVER['REQUEST_URI']!='/privacy-policy-2/' && $_SERVER['REQUEST_URI']!='/terms-of-use/' && $_SERVER['REQUEST_URI']!='/faq/')) {?>
   <script type="text/javascript">
     window.location.href= "<?php echo site_url(); ?>";
   </script>
@@ -193,7 +193,7 @@ margin-right: 33px;}
 
 				</div>
 					<div class="set-question" style="float: right;">
-						<a href="<?=site_url()?>/faq"><span class="mark1">?</span> </a>
+						<a href="<?=site_url()?>/faq" target="_blank"><span class="mark1">?</span> </a>
 					</div>
 				</div>
 
@@ -228,14 +228,8 @@ margin-right: 33px;}
     </nav> 
     
 <!-- End Header -->
-<!-- <?php 
 
- if($userdata['profile']['admin'] == 'true'){ ?>
- 	<script>
-    jQuery("#menu-item-186").css("display", "none");
-    </script>
-    <?php }  ?> -->
- <?php if($userdata['profile']['admin'] == 'false'){ ?>
+ <?php if($userdata['profile']['admin']!= 'true'){ ?>
  	<script>
     jQuery("#menu-item-176").css("display", "none");
     </script>

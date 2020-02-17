@@ -535,8 +535,16 @@ if(!empty($practices)){ ?>
           $addressRaw="";
          }
 
-         $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
+         $populationDesc= $practicesvalue['Programs']["PopulationDescriptionDisplay"];
+         if($populationDesc==''){
+          $populationDesc= $practicesvalue['Programs']["PopulationDescription"][0]["Text"];
+         }
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
+
+         $serviceAreaDesc=$practicesvalue["Programs"]["ServiceAreaDescriptionDisplay"];
+        if($serviceAreaDesc==''){
+          $serviceAreaDesc=$practicesvalue["Programs"]["ServiceAreaDescription"][0]["Text"];
+        }
          $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
          if (filter_var($quickLink, FILTER_VALIDATE_URL)){
           //just pass it
@@ -578,7 +586,7 @@ if(!empty($practices)){ ?>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
             <td>
 
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-serviceAreaDesc="<?php echo $serviceAreaDesc; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
             </td>
 
           </tr>
@@ -641,9 +649,17 @@ if(!empty($practices)){ ?>
          if($providershortdesc==''){
          $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
          }
-         $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+         $populationDesc= $practices[0]['Programs']["PopulationDescriptionDisplay"];
+         if($populationDesc==''){
+          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+         }
          $servicesTags= $practices[0]["Programs"]["ServiceTags"];
          $services="";
+
+        $serviceAreaDesc=$practices[0]["Programs"]["ServiceAreaDescriptionDisplay"];
+        if($serviceAreaDesc==''){
+          $serviceAreaDesc=$practices[0]["Programs"]["ServiceAreaDescription"][0]["Text"];
+        }
          $popolations="";
 
 
@@ -673,6 +689,9 @@ if(!empty($practices)){ ?>
       <p id='populationDesc'><?php echo $populationDesc; ?></p>
          <h4>Services </h4>
       <p id='services'><?php echo rtrim($services, ','); ?></p>
+
+       <h4>Service Area Description</h4>
+       <p id='serviceAreaDesc'><?php echo $serviceAreaDesc; ?></p>
         <h4>Tags </h4>
       <p id="servicesTags"><?php echo $servicesTags; ?></p>
 
@@ -776,6 +795,7 @@ function showdetails(details) {
   var population = jQuery(details).attr('data-population');
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
+  var serviceAreaDesc = jQuery(details).attr('data-serviceAreaDesc');
   var servicesTags = jQuery(details).attr('data-servicesTags');
   var mainOffice = jQuery(details).attr('data-mainOffice');
   var quickLink = jQuery(details).attr('data-quickLink');
@@ -819,6 +839,7 @@ function showdetails(details) {
   jQuery('#population').html(population);
   jQuery('#populationDesc').html(populationDesc);
   jQuery('#services').html(services);
+  jQuery('#serviceAreaDesc').html(serviceAreaDesc);
   jQuery('#servicesTags').html(servicesTags);
   jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
   

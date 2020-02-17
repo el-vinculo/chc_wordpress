@@ -1,4 +1,18 @@
 <style type="text/css">
+	.input-cl:last-child {
+  border-left: 0;
+    position: absolute;
+    top: 25px!important;
+    text-align: center;
+    padding: 9px 15px;
+    right: 0;
+    z-index: 10;
+}
+.input-cl:last-child span {
+    text-align: center;
+    position: relative;
+    right: 6px!important;
+}
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
@@ -992,7 +1006,7 @@ get_header();
         		   <label>Due Date</label>
         		   <div  >
                     <input type="text" class="form-control datepicker" placeholder="Due Date" name="due_date" id="ref_due_date"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>

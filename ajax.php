@@ -711,7 +711,8 @@ function inviteOrg(){
         $email   = $_POST['email'];
         $name   = $_POST['name'];
         $application_url   = $_POST['application_url'];
-        $invite = inviteOrganization($name,$email,$application_url,$task_id);
+        $homepage_url   = $_POST['homepage_url'];
+        $invite = inviteOrganization($name,$email,$application_url,$task_id,$homepage_url);
         if(!empty($invite)){
             if($invite['status'] == 'ok'){
                 $error = '11';
@@ -886,8 +887,17 @@ function providerListHtml($practices,$id){
           $addressRaw="";
          }
 
-         $populationDesc= $practicesvalue['Programs']["0"]["PopulationDescription"]["0"]["Text"];
+         $populationDesc= $practicesvalue['Programs']["PopulationDescriptionDisplay"];
+         if($populationDesc==''){
+          $populationDesc= $practicesvalue['Programs']["PopulationDescription"][0]["Text"];
+         }
+         
          $servicesTags= $practicesvalue['Programs']["ServiceTags"];
+
+        $serviceAreaDesc=$practicesvalue["Programs"]["ServiceAreaDescriptionDisplay"];
+        if($serviceAreaDesc==''){
+          $serviceAreaDesc=$practicesvalue["Programs"]["ServiceAreaDescription"][0]["Text"];
+        }
 
          $quickLink= $practicesvalue["Programs"]["QuickConnectWebPage"];
          if (filter_var($quickLink, FILTER_VALIDATE_URL)){
@@ -916,7 +926,7 @@ function providerListHtml($practices,$id){
 
     $html.= "<tr>
     <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
-<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
+<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-serviceAreaDesc='".$serviceAreaDesc."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
     </tr>";
     }}
     $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'>
@@ -960,8 +970,15 @@ function providerListHtml($practices,$id){
        if($providershortdesc==''){
        	       $providershortdesc= $practices[0]["Programs"]["ProgramDescription"][0]["Text"];
        }
-       $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+       $$populationDesc= $practices[0]['Programs']["PopulationDescriptionDisplay"];
+         if($populationDesc==''){
+          $populationDesc= $practices[0]['Programs']["PopulationDescription"][0]["Text"];
+         }
        $servicesTags= $practices[0]["Programs"]["ServiceTags"];
+       $serviceAreaDesc=$practices[0]["Programs"]["ServiceAreaDescriptionDisplay"];
+        if($serviceAreaDesc==''){
+          $serviceAreaDesc=$practices[0]["Programs"]["ServiceAreaDescription"][0]["Text"];
+        }
        $services="";
        $popolations="";
          foreach($practices["0"]['Programs'] as $key=>$val){
@@ -997,6 +1014,8 @@ function providerListHtml($practices,$id){
       <p id='populationDesc'>".$populationDesc."</p>
          <h4>Services </h4>
       <p id='services'>".rtrim($services, ',')."</p>
+       <h4>Service Area Description</h4>
+       <p id='serviceAreaDesc'>".$serviceAreaDesc."</p>
         <h4>Tags </h4>
       <p id='servicesTags'>".$servicesTags."</p>
 

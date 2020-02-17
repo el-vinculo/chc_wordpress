@@ -390,7 +390,8 @@ function taskList($refid,$email){
 
 function updatePatientDetails($detaildata,$patient_id,$email)
 {
-        
+        //echo "<pre>";
+      //print_r($detaildata); die;
        $userauth = $_SESSION['userdata']['authentication_token'];
        $first_name = ucfirst($detaildata['first_name']);
        $last_name  = $detaildata['last_name'];
@@ -407,28 +408,46 @@ function updatePatientDetails($detaildata,$patient_id,$email)
        $emergency_contact_email = $detaildata['emergency_contact_email'];
        $emergency_contact_phone = $detaildata['emergency_contact_phone'];
        $primary_care_physician = $detaildata['primary_care_physician'];
-      
-       //echo $dob; 
-       //echo "vikk"; die;
+        $additional_fields    = isset($detaildata['additional'])?$detaildata['additional']:'';
+        $additional_keys    = isset($detaildata['additionalkeys'])?$detaildata['additionalkeys']:'';
 
-	   //$headers = array();
-	   $headers['Content-length'] = '0';
-       $headers['Content-type'] = 'application/json';
-	   $headers['Authorization'] = 'user-token: '.$userauth;
+       if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
+          $additionalfields = array_filter($additional_fields);
+          $additionalkeys = array_filter($additional_keys);
+          	if(is_array($additionalkeys) && is_array($additionalfields)){
+          		$additional_fields_array = array_combine($additionalkeys, $additionalfields);
+          	}
+         
+       }else{
+       	$additional_fields_array = '';
+       }
+	   $headuserauth = "Authorization: user-token ".$userauth;
+       $headers['Content-type']    = 'Content-Type: application/json';
+	   $headers['Authorization']   = 'user-token: '.$userauth;
        
-	   $post = array('patient_id'=>$patient_id,'email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'date_of_birth'=>$dob,'gender'=>$gender,'patient_phone'=>$mobile,'patient_email'=>$patientemail,'patient_zipcode'=>$zipcode,'healthcare_coverage'=>$healthcare_coverage,'patient_coverage_id'=>$policyid,'mode_of_contact'=>$contacttype,'client_consent'=>$client_consent,'emergency_contact_fName'=>$emergency_contact_fName,'emergency_contact_email'=>$emergency_contact_email,'emergency_contact_phone'=>$emergency_contact_phone,'primary_care_physician'=>$primary_care_physician); 
+	   
+	   if(!empty($additional_fields_array)){
+          $post = array('patient_id'=>$patient_id,'email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'date_of_birth'=>$dob,'gender'=>$gender,'patient_phone'=>$mobile,'patient_email'=>$patientemail,'patient_zipcode'=>$zipcode,'healthcare_coverage'=>$healthcare_coverage,'patient_coverage_id'=>$policyid,'mode_of_contact'=>$contacttype,'client_consent'=>$client_consent,'emergency_contact_fName'=>$emergency_contact_fName,'emergency_contact_email'=>$emergency_contact_email,'emergency_contact_phone'=>$emergency_contact_phone,'primary_care_physician'=>$primary_care_physician,'caller_additional_fields'=>$additional_fields_array);
+	   }else{
+       	 $post = array('patient_id'=>$patient_id,'email'=>$email,'first_name'=>$first_name,'last_name'=>$last_name,'date_of_birth'=>$dob,'gender'=>$gender,'patient_phone'=>$mobile,'patient_email'=>$patientemail,'patient_zipcode'=>$zipcode,'healthcare_coverage'=>$healthcare_coverage,'patient_coverage_id'=>$policyid,'mode_of_contact'=>$contacttype,'client_consent'=>$client_consent,'emergency_contact_fName'=>$emergency_contact_fName,'emergency_contact_email'=>$emergency_contact_email,'emergency_contact_phone'=>$emergency_contact_phone,'primary_care_physician'=>$primary_care_physician);
+	      
+       }
 
-	   //echo "<pre>";
-      // print_r($post); die;
-
+	   $datastring = json_encode($post);
+	   //echo $datastring; die; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'update_patient');
-	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
-	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
-	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers); 
+       curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, "POST");
+       curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $datastring);
+       curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   
 	   $buffer = curl_exec($curl_handle);
 	   curl_close($curl_handle);
+	   
+	   
+	   //echo "<pre>";
+     // print_r($buffer); die;
 	   if (empty($buffer)){
 	      print "Nothing returned from url.<p>";
 	   }
@@ -1949,7 +1968,7 @@ function chcAuthNextStep($email)
 }
 
 
-function inviteOrganization($name,$email,$application_url,$task_id)
+function inviteOrganization($name,$email,$application_url,$task_id,$homepage_url)
 {
 
        $userauth = $_SESSION['userdata']['authentication_token'];

@@ -24,12 +24,27 @@
   .panel-body {
     padding: 15px 0;
 }
+.input-cl:last-child {
+  border-left: 0;
+    position: absolute;
+    top: 25px!important;
+    text-align: center;
+    padding: 9px 15px;
+    right: 0;
+    z-index: 10;
+}
+.input-cl:last-child span {
+    text-align: center;
+    position: relative;
+    right: 6px!important;
+}
   a.custom-task {
     border: 2px solid #242424;
     border-radius: 7px;
     padding: 11px 16px;
     position: relative;
     top: 64px;
+}
 }
 a.custom-task:hover {
     border: 2px solid #5cb85c;
@@ -457,10 +472,10 @@ if(isset($_SESSION['userdata'])){
     /* ------------ Patient Details --------------------- */
  
 	$patientdata = patientDetails($patient_id,$email);
+	//echo '<pre>';print_r($patientdata);exit;
 	if(!empty($patientdata['status'] == 'ok')){
 
 	  	$patientsDeatils = $patientdata['patients_details'];
-
      
 	  	$patinetZip  = $patientsDeatils['patient_zipcode'];
 
@@ -476,14 +491,14 @@ if(isset($_SESSION['userdata'])){
 	    $msg   = $patientdata['status']. ' ! '. $patientdata['message'];
 	}
 
-      $patientAdditionaldata = interviewDetails($patient_id,$email);
-	  if(!empty($patientAdditionaldata['status'] == 'ok')){
-		   $patientAdditionalDeatils = $patientAdditionaldata['interview_hash'];
-	  }
-	  else{
-	  	$error = 1;
-	    $msg   = $patientAdditionaldata['status']. ' ! '. $patientAdditionaldata['message'];
-	   }
+      // $patientAdditionaldata = interviewDetails($patient_id,$email);
+	  // if(!empty($patientAdditionaldata['status'] == 'ok')){
+		   // $patientAdditionalDeatils = $patientAdditionaldata['interview_hash'];
+	  // }
+	  // else{
+	  	// $error = 1;
+	    // $msg   = $patientAdditionaldata['status']. ' ! '. $patientAdditionaldata['message'];
+	   // }
 	   //echo '<pre>'; print_r($patientAdditionalDeatils);exit;
 
 	/* -------------------------------------------------*/
@@ -814,16 +829,16 @@ get_header();
                 </div>
        <a href="javascript:void(0)" id="addmoreadditional" class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add additional field</a>
 	   
-	   <?php if(!empty($patientAdditionalDeatils['caller_additional_fields'])){
-                                            foreach ($patientAdditionalDeatils['caller_additional_fields'] as $additionalkey => $additionalvalue) { ?>   
+	   <?php if(!empty($patientsDeatils['caller_additional_fields'])){
+                                            foreach ($patientsDeatils['caller_additional_fields'] as $additionalkey => $additionalvalue) { ?>   
                                           
                                              <div class="row">
                                              <div class="col-md-12">
                                              <div class="col-md-8">
-                                             <input type="text" name="additionalkeys[]" class="form-control" value="<?php echo $additionalkey; ?>" placeholder="Additional Field" onblur="updateinterviewfield();" >
+                                             <input type="text" name="additionalkeys[]" class="form-control" value="<?php echo $additionalkey; ?>" placeholder="Additional Field"  >
                                             </div>
                                             <div class="col-md-8">
-                                            <input type="text" name="additional[]" class="form-control" value="<?php echo $additionalvalue; ?>" placeholder="Additional Value" onblur="updateinterviewfield();" >
+                                            <input type="text" name="additional[]" class="form-control" value="<?php echo $additionalvalue; ?>" placeholder="Additional Value"  >
                                         </div>
                                         </div>
                                         </div>
@@ -1261,7 +1276,7 @@ get_header();
         		   <label>Due Date</label>
         		   <div  >
                     <input type="text" class="form-control datepicker" placeholder="Due Date" name="due_date" id="ref_due_date"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -1309,7 +1324,7 @@ get_header();
                <label>Follow Up Date</label>
                <div  >
                     <input type="text" class="form-control datepicker" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -1350,7 +1365,7 @@ get_header();
         		   <label>Deadline</label>
         		   <div >
                     <input type="text" class="form-control datepicker" placeholder="Deadline" name="task_deadline" id="edit_task_deadline"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -1372,7 +1387,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Provider</label>
                    <input type="text" class="form-control" placeholder="Provider" name="task_provider" id="edit_task_provider" data-toggle='modal'  data-target='#myProviderModal' onclick="searchprovider(this.id)" value=""/>
-                   <span class="input-group-addon">
+                   <span class="input-group-addon  input-cl">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
 
@@ -1498,41 +1513,59 @@ get_header();
         <div class="response"></div>
 
         <form id="inviteOrgForm">
-              
+               
+			   <div class="row">
+              <div class="col-md-6">
+               <label>Homepage URL</label>
+               <div>
+                   <input type="text" class="form-control" placeholder="Homepage URL" name="homepage_url" id="homepage_url" value="" required>
+                </div>
+                  <div id="homepage_url_error" style="color:red;">                 
+                </div>
+              </div>
+			
+            </div>
+            <br/>
+			
               <div class="row">
               <div class="col-md-6">
                <label>Name</label>
                <div>
-                   <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value=""/>
+                   <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value="" required>
                 </div>
-                   
+                    <div id="org_name_error" style="color:red;">                 
+                </div>
               </div>
-             
+               
             </div>
             <br/>
             <div class="row">
               <div class="col-md-6">
                <label>Application URL</label>
-                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value=""/>
+                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value="" disabled="disabled" required>
               </div>
-            
+			  <div id="application_url_error" style="color:red;">                 
+                </div>
+          
             </div>
 
-            <br/> 
+            <br/>
              <div class="row">
               <div class="col-md-6">
                <label>Email</label>
-                
-                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value=""/>
+
+                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value="" required>
               </div>
-             
+			  <div id="org_email_error" style="color:red;">                 
+                </div>
+              
             </div>
             <br/>
-          
+
             <br/>
-                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value=""/>
-            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary button-all" value="Submit" > 
-          
+                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value="">
+            <input name="ref-update" onclick="inviteOrg()" id="invite-org" type="button" class="btn-primary" value="Submit">
+
         </form>
 
       </div>
@@ -1609,7 +1642,7 @@ get_header();
         		   <label>Deadline</label>
         		   <div>
                     <input type="text" class="form-control datepicker " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -1632,7 +1665,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Provider</label>
                    <input type="text" class="form-control" placeholder="Provider" name="provider" id="task_provider" data-toggle='modal'  data-target='#myProviderModal' onclick="searchprovider(this.id)" value=""/>
-                   <span class="input-group-addon">
+                   <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
 
@@ -2481,27 +2514,37 @@ function inviteOrg(){
     var name  = document.getElementById("org_name").value;
     var email  = document.getElementById("org_email").value;
     var application_url   = document.getElementById("application_url").value;
+    var homepage_url = document.getElementById("homepage_url").value;
+	
+	if(name == '' || email =='' ||  application_url =='' || homepage_url=='' ){
+		jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Please fill all required fields.</div>');
+		return false;
+	}
 
+	
+	else{
+		//$('#invite-org').removeAttr("disabled");
        jQuery.ajax({
             type: 'post',
             url: ajax_url,        
-            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url, funtion:'inviteOrg'},
+            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url,'homepage_url':homepage_url, funtion:'inviteOrg'},
             success: function (res) {
               //alert(res);
               //exit;
               //console.log(res);exit;
               var trimStr = jQuery.trim(res);
               if(trimStr == '11'){
-                jQuery('.response').html('<div class="alert-success">Successfully Invited</div>');
+                jQuery('.response').html('<div class="alert  alert-success alert-dismissible">Successfully Invited</div>');
                 $('#inviteOrgForm' ).each(function(){
                     this.reset();
                  });        
               }else{
-                jQuery('.response').html('<div class="alert-danger">Error ! Please try again</div>');
+                jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Error ! Please try again</div>');
               }
               
             }
           });
+	}
 
 }
 
@@ -2861,6 +2904,7 @@ function showdetails(details) {
   var population = jQuery(details).attr('data-population');
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
+  var serviceAreaDesc = jQuery(details).attr('data-serviceAreaDesc');
   var servicesTags = jQuery(details).attr('data-servicesTags');
   var mainOffice = jQuery(details).attr('data-mainOffice');
   var quickLink = jQuery(details).attr('data-quickLink');
@@ -2905,6 +2949,7 @@ function showdetails(details) {
   jQuery('#population').html(population);
   jQuery('#populationDesc').html(populationDesc);
   jQuery('#services').html(services);
+  jQuery('#serviceAreaDesc').html(serviceAreaDesc);
   jQuery('#servicesTags').html(servicesTags);
   jQuery('#mainOffice').html(mainOffice);
 
@@ -3050,89 +3095,21 @@ jQuery(document).ready(function() {
             var name2 = "additionalkeys[]";
             var divviid = "additionaldiv"+x;
             var placeholdertext = "additional field "+x;
-            jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value='' onblur='updateinterviewfield()' ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value='' onblur='updateinterviewfield()' ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value=''  ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
              x++; 
         }
     });
 
 });
 
-function updateinterviewfield(){
-      var interview_iid = "<?php echo base64_decode($_GET['pid']); ?>";
-      var email = "<?php echo $email; ?>";
-      
-      var caller_firstname = $("#first_name").val();
-      var caller_lastname = $("#last_name").val();
-      var caller_dob = $("#datepicker1").val();
-     // var caller_address = $("#caller_address").val();
-      var caller_mobile = $("#mobile").val();
-      var caller_state = $("#caller_state").val();
-      var caller_zipcode = $("#zip").val();
-      var values = $("input[name='additional[]']")
-              .map(function(){return $(this).val();}).get();
-      var values1 = $("input[name='additionalkeys[]']")
-              .map(function(){return $(this).val();}).get();
-
-      //alert(values);        
-      //alert(values1);  
-      //console.log("1 "+ values);
-      //console.log("2 "+ values1);
-              
-      if(values == ''){
-         var caller_additional_fields = '';
-      }else{
-         var caller_additional_fields = values;
-      } 
-
-      if(values1 == ''){
-         var caller_additional_keys = '';
-      }else{
-         var caller_additional_keys = values1;
-      }        
-      
-
-      
-      if(interview_iid != ''){
-
-
-      if(caller_firstname == ''){
-         //alert('Please fill first name');
-         return false;
-      }else if(caller_lastname == ''){
-        //alert('Please fill last name');
-        return false;
-      }else if(caller_dob == ''){
-        //alert('Please fill DOB');
-        return false;
-      }else{
-        jQuery.ajax({
-            type: 'post',
-            url: ajax_url,
-            data: {'interview_id':interview_iid,'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,'caller_zipcode':caller_zipcode,'caller_additional_fields':caller_additional_fields,'caller_additional_keys':caller_additional_keys,funtion:'updateInterviewData'},
-            success: function (res) {
-                //console.log(res);
-                if(res == '11'){          
-                    return true;
-                }else{
-                    //alert('Error ! Please try again ');
-                }
-              
-            }
-          });
-      }
-
-      }else{
-        return false;
-      }
-
- 
-
-}
-
 function removeobstr(id){
     var arr = id.split('-');
     var r = arr[1];
     jQuery('#'+r).remove();
 }
+$( "#org_name" ).keyup(function() {
+	var org_name = $(this).val();
+  $("#application_url").val(org_name+".commonhealthcore.org");
+});
 
 </script>

@@ -1362,24 +1362,40 @@ z-index: 9;">
         <div class="response"></div>
 
         <form id="inviteOrgForm">
-
+               
+			   <div class="row">
+              <div class="col-md-6">
+               <label>Homepage URL</label>
+               <div>
+                   <input type="text" class="form-control" placeholder="Homepage URL" name="homepage_url" id="homepage_url" value="" required>
+                </div>
+                  <div id="homepage_url_error" style="color:red;">                 
+                </div>
+              </div>
+			
+            </div>
+            <br/>
+			
               <div class="row">
               <div class="col-md-6">
                <label>Name</label>
                <div>
-                   <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value=""/>
+                   <input type="text" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value="" required>
                 </div>
-
+                    <div id="org_name_error" style="color:red;">                 
+                </div>
               </div>
-
+               
             </div>
             <br/>
             <div class="row">
               <div class="col-md-6">
                <label>Application URL</label>
-                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value=""/>
+                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " id="application_url" value="" disabled="disabled" required>
               </div>
-
+			  <div id="application_url_error" style="color:red;">                 
+                </div>
+          
             </div>
 
             <br/>
@@ -1387,15 +1403,17 @@ z-index: 9;">
               <div class="col-md-6">
                <label>Email</label>
 
-                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value=""/>
+                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email" value="" required>
               </div>
-
+			  <div id="org_email_error" style="color:red;">                 
+                </div>
+              
             </div>
             <br/>
 
             <br/>
-                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value=""/>
-            <input name="ref-update" onclick="inviteOrg()" type="button" class="btn-primary" value="Submit" >
+                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value="">
+            <input name="ref-update" onclick="inviteOrg()" id="invite-org" type="button" class="btn-primary" value="Submit">
 
         </form>
 
@@ -1650,7 +1668,45 @@ function patireflist(){
 }
 
 
+function inviteOrg(){
 
+    var task_id  = document.getElementById("task_id_for_invite").value;
+    var name  = document.getElementById("org_name").value;
+    var email  = document.getElementById("org_email").value;
+    var application_url   = document.getElementById("application_url").value;
+    var homepage_url = document.getElementById("homepage_url").value;
+	
+	if(name == '' || email =='' ||  application_url =='' || homepage_url=='' ){
+		jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Please fill all required fields.</div>');
+		return false;
+	}
+
+	
+	else{
+		//$('#invite-org').removeAttr("disabled");
+       jQuery.ajax({
+            type: 'post',
+            url: ajax_url,        
+            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url,'homepage_url':homepage_url, funtion:'inviteOrg'},
+            success: function (res) {
+              //alert(res);
+              //exit;
+              //console.log(res);exit;
+              var trimStr = jQuery.trim(res);
+              if(trimStr == '11'){
+                jQuery('.response').html('<div class="alert  alert-success alert-dismissible">Successfully Invited</div>');
+                $('#inviteOrgForm' ).each(function(){
+                    this.reset();
+                 });        
+              }else{
+                jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Error ! Please try again</div>');
+              }
+              
+            }
+          });
+	}
+
+}
 
 function getledgerdetails(taskid) {
   //alert(taskid);
@@ -2426,6 +2482,7 @@ function showdetails(details) {
   var population = jQuery(details).attr('data-population');
   var populationDesc = jQuery(details).attr('data-populationDesc');
   var services = jQuery(details).attr('data-services');
+  var serviceAreaDesc = jQuery(details).attr('data-serviceAreaDesc');
   var servicesTags = jQuery(details).attr('data-servicesTags');
   var mainOffice = jQuery(details).attr('data-mainOffice');
   var quickLink = jQuery(details).attr('data-quickLink');
@@ -2470,6 +2527,7 @@ function showdetails(details) {
   jQuery('#population').html(population);
   jQuery('#populationDesc').html(populationDesc);
   jQuery('#services').html(services);
+  jQuery('#serviceAreaDesc').html(serviceAreaDesc);
   jQuery('#servicesTags').html(servicesTags);
 
   jQuery('#mainOffice').html(mainOffice);
@@ -2582,5 +2640,10 @@ function showdetails(details) {
 $(window).on("load", function () { 
     var idd = "<?php echo $referralList['referral_id']; ?>";
     getAssesment(idd);
+});
+
+$( "#org_name" ).keyup(function() {
+	var org_name = $(this).val();
+  $("#application_url").val(org_name+".commonhealthcore.org");
 });
 </script>

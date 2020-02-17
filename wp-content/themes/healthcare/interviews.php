@@ -29,6 +29,7 @@ $error = 0;
 if(isset($_SESSION['userdata'])){
     $email = $_SESSION['userdata']['email'];
     $interviewdata = interviewslist($email);
+	//echo '<pre>'; print_r($interviewdata);
     if(!empty($interviewdata['status'] == 'ok')){
        $interview = $interviewdata['interview_list']; 
     }else{
@@ -55,7 +56,7 @@ get_header();
                          <div class="col-md-12">
                          <div class="col-md-4"></div>
                          <div class="col-md-2">
-                          <a  href="<?php echo site_url().'/interviews/create-interview';?>"><button class="btn-primary button-all">New Assessments</button></a>
+                          <!--<a  href="<?php //echo site_url().'/interviews/create-interview';?>"><button class="btn-primary button-all">New Assessments</button></a>-->
                           </div>
                       
                           </div>
@@ -95,7 +96,7 @@ get_header();
                         <th scope="row"><?php echo $value['caller_first_name']; ?></th>
                         <td><?php echo $value['need_title']; ?></td>
                         <td><?php echo $value['obstacle_title'] ?></td>
-                        <td><a href="<?php echo site_url().'/interviews/edit-interviews?iid='.base64_encode($value['interview_id']);?>"  title="Edit Interview"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                        <td><a href="<?php echo site_url().'/patients/patient-details/?pid='.base64_encode($value['patient_id']);?>"  title="Edit Interview"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                       </tr>
                       <?php } }else{ ?>
                         <tr><td colspan="7"><center>No record found</center></td></tr>
