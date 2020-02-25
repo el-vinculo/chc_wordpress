@@ -18,11 +18,10 @@ function getAssesmentByReferralId(){
     $email       = $_POST['email'];
 
     $assessments = interviewDetailsTest($referral_id,$email);
-
     $detailsData  = $assessments['details_array'];
-   // echo "<pre>";
-   // print_r($detailsData); die; 
-        
+    //echo "<pre>";
+    //print_r(count($detailsData)); die; 
+     //$dataId =  count($detailsData)-1;
     $assesmentHtml = assesmentHtml($detailsData,$referral_id);
     echo  $assesmentHtml;
   }
@@ -30,30 +29,30 @@ function getAssesmentByReferralId(){
 }
 
 function assesmentHtml($assessments,$referralid){
-
      $assesmentHtml= '
     <div class="alert alert-success alert-dismissible"  id="interview-msg" style="display: none" >
        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
        <strong>Success!</strong> Assessment detail successfully added.
     </div>
-    <input type="hidden" id="assement-refid" value="'.$referralid.'">';
+    <input type="hidden" id="assement-refid" value="'.$referralid.'">
+	<div id="panel1" class="panel-collapse collapse in" aria-expanded="true">
+	<a class="addmore" data-ref = "'.$referralid.'"   href="javascript:void(0);"  ><i class="fa fa-plus" aria-hidden="true"></i> Add Need</a><br>';
 
      if(!empty($assessments)){
       foreach ($assessments as $intkey => $intvalue) {
-    $assesmentHtml .= '<div id="panel1" class="panel-collapse collapse in" aria-expanded="true">
+    $assesmentHtml .= '
        <div class="panel-body">
           <div class="main-interview box-shadow">
             <div class="row">
               <div class="col-md-6">
-                 <h3 ><a class="accordion-toggle" data-toggle="collapse"  href="#panelneed_'.$intkey.'">'.$intvalue['need_title'].'</a></h3>
+                 <h3 ><a class="accordion-toggle need_obs" data-toggle="collapse"  href="#panelneed_'.$intkey.'">'.$intvalue['need_title'].'</a></h3>
               </div>
               <div id="panelneed_'.$intkey.'" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div class="col-md-6">
                   
                     <div class="pull-right btn-right">
-                      
-                      <a class="addmore" data-ref = "'.$referralid.'" data-cheekint = "'.$intkey.'" onclick="testvikfun(this)" href="javascript:void(0)"  ><i class="fa fa-plus" aria-hidden="true"></i> Add Need</a><br>
+
                       <a href="javascript:void(0)" data-check = "'.$intkey.'"  class="addmoreObstacle"  onclick="add(this)" style="color: red;"><i class="fa fa-plus" aria-hidden="true"></i> Add Obstacle </a>
                     </div>
                   </div>

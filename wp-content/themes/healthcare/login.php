@@ -151,7 +151,7 @@ if(!empty($_SESSION['two_factor_enabled'])){ ?>
 </script>
 
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><a href="javascript:void(0)">Forgot Password</a></div>
+<div class="col-xs-offset-2 col-xs-10"><a href="<?=site_url()?>?action=f">Forgot Password</a></div>
 </div>
 
 </fieldset>

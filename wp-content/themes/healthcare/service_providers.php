@@ -320,8 +320,11 @@ if(isset($_SESSION['userdata'])){
 	  $email = $_SESSION['userdata']['email'];
     if(!empty($_POST['search']) && $_POST['search'] == 'Search'){
       $serachData = $_POST;
-      //echo "<pre>";
-      //print_r($_POST);
+	  if($serachData['location_type']=='Virtual'){
+		  $serachData['location']='Virtual';
+	  }
+       //echo "<pre>";
+      //print_r($serachData);exit;
     }
 	  $practicesdata = serviceproviderslist($serachData);
 	  if(!empty($practicesdata['status'] == 'ok')){
@@ -416,13 +419,13 @@ get_header();
       <th scope="col">
         <label>Location Type</label>
 
-        <select class="form-control" name="location_type">
+        <select class="form-control" name="location_type" id="location_type">
         <option value="">Please Select </option>
           <option value="City" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'City')){ echo "selected"; } ?>>City</option>
           <option value="State" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'State')){ echo "selected"; } ?>>State</option>
           <option value="County" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'County')){ echo "selected"; } ?>>County</option>
           <option value="National" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'National')){ echo "selected"; } ?>>National</option>
-
+          <option value="Virtual" <?php if(!empty($_POST['location_type']) && ($_POST['location_type'] == 'Virtual')){ echo "selected"; } ?> id="location_virtual">Virtual</option>
         </select>
       </th>
       <th scope="col">
@@ -786,6 +789,27 @@ if(!empty($practices)){ ?>
 <?php get_footer(); ?>
 
 <script type="text/javascript">
+
+$('#location_type').on('change', function() {
+	if(this.value == 'Virtual'){
+		$('#location').val('');
+		$( "#location" ).prop( "disabled", true );
+	}
+	else{
+		$( "#location" ).prop( "disabled", false );
+	}
+});
+ 
+$( document ).ready(function() {
+    if($( "#location_type option:selected" ).text() == 'Virtual'){
+		$('#location').val('');
+		$( "#location" ).prop( "disabled", true );
+	}
+	else{
+		$( "#location" ).prop( "disabled", false );
+	}
+});
+
 var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 function showdetails(details) {
@@ -898,6 +922,7 @@ jQuery(window).load(function() {
     }
 
 });
+
 </script>
 
 <script>

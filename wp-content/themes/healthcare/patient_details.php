@@ -479,7 +479,7 @@ if(isset($_SESSION['userdata'])){
      
 	  	$patinetZip  = $patientsDeatils['patient_zipcode'];
 
-       if($patientsDeatils['client_consent'] == 'no'){
+       if($patientsDeatils['client_consent'] == 'no'){ 
    /* writte code for modal window */
   }
   else {
@@ -816,10 +816,10 @@ get_header();
                                   <div class="form-group">
                                     <label for="email" class="set-lebel">Client Consent:</label>
 
-                                    <label class="radio-inline"><input type="radio" name="client_consent"  value="yes"  <?php if(($patientsDeatils['client_consent']!= '1') && ($patientsDeatils['client_consent']!= '0')) { echo "checked"; } ?>>Not Answered</label>
+                                    <label class="radio-inline"><input type="radio" name="client_consent"  value="not_answered"  <?php if(($patientsDeatils['client_consent']!= 'yes') && ($patientsDeatils['client_consent']!= 'no')) { echo "checked"; } ?>>Not Answered</label>
 			
-<label class="radio-inline"><input type="radio" name="client_consent"  value="yes"  <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '1')) { echo "checked"; } ?>>yes</label>
-<label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == '0')) { echo "checked"; } ?>>no</label>
+<label class="radio-inline"><input type="radio" name="client_consent"  value="yes"  <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'yes')) { echo "checked"; } ?>>yes</label>
+<label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'no')) { echo "checked"; } ?>>no</label>
 
                                   </div>
                                 </div>
@@ -855,7 +855,7 @@ get_header();
   </div>
 
 
-<?php if($patientsDeatils['client_consent'] == '1') {?>
+<?php if($patientsDeatils['client_consent'] == 'yes') {?>
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><h4 class="panel-title"><b>Referrals</b></h4></a></div>
@@ -971,8 +971,12 @@ get_header();
                                     <?php  } ?>
 
                                     <button class="btn-primary button-all " data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="https://dev11.resourcestack.com/wp-content/themes/healthcare/images/history-icon.png"> </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
-
-                                   </td>
+                                    <?php if($taskvalue['transferable']!='1'){ ?>
+									<button class="btn-primary btn-request" onclick="revertTask('<?php echo $taskvalue['task_id']; ?>');"><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
+                                    <?php } else{?>
+									 <button class="btn-primary button-all disable-grey" disabled ><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
+									<?php }?>
+								   </td>
                                    
                                    
                                 </tr>
@@ -1059,7 +1063,7 @@ get_header();
     </div>
   </div> <?php } ?>
 
-  <?php if($patientsDeatils['client_consent'] == '1') {?>
+  <?php if($patientsDeatils['client_consent'] == 'yes') {?>
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><h4 class="panel-title"><b>Notes</b></h4></a></div>  
@@ -1107,7 +1111,7 @@ get_header();
   </div>
 <?php } ?>
 
-<?php if($patientsDeatils['client_consent'] == '1') {?>
+<?php if($patientsDeatils['client_consent'] == 'yes') {?>
   <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><h4 class="panel-title"><b>Communication</b></h4></a></div>
@@ -1145,7 +1149,7 @@ get_header();
     </div>
   </div> <?php } ?>
 
-  <?php if($patientsDeatils['client_consent'] == '1') {?>
+  <?php if($patientsDeatils['client_consent'] == 'yes') {?>
     <div class="panel panel-default">
     <div class="panel-heading">
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><h4 class="panel-title"><b>Files</b></h4></a></div>
@@ -2219,16 +2223,19 @@ jQuery(document).ready(function() {
    
 });
 
-var m = 1; 
-function testvikfun(iid) {
+var m = 1;
 
-   //var y = 1;
-    var reffiid = $(iid).attr('data-ref');
-    var x = $(iid).attr('data-cheekint');
-    var x = parseInt(x)+1; 
-
-   // alert(e);
-  //  alert(f);
+$(document).on('click', '.addmore', function(e) { // all reply buttons
+  e.preventDefault();
+   var reffiid = $(this).attr('data-ref');
+    //var x = $(iid).attr('data-cheekint');
+    //var x = parseInt(x)+1; 
+   
+  var str = $(".need_obs:last").attr('href');
+  //alert(str);
+  var res = str.substr(11);;
+  var x = parseInt(res)+1;
+    
 
    // var max_fields      = 20; 
   var max_fields      = 20; 
@@ -2246,16 +2253,52 @@ function testvikfun(iid) {
             var name4 = "tasks["+x+"][task_description]";
             var name5 = "tasks["+x+"][task_deadline]";
             var name6 = "tasks["+x+"][task_status]";
-            var triid = "paneltr"+x;
+            var triid = "panelneed_"+x;
             var obstriid = "paneltrobs"+x;
             var soltriid = "paneltrsol"+x;
             var diviid = "tr"+x;
-            
-            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
+            jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle need_obs' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
              x++; 
       }
+});
+ 
+// function testvikfun(iid) {
+// //alert(iid);
+   // //var y = 1;
+    // var reffiid = $(iid).attr('data-ref');
+    // //var x = $(iid).attr('data-cheekint');
+    // //var x = parseInt(x)+1; 
+   
+  // var str = $(".need_obs:last").attr('href');
+  // var res = str.substr(11);;
+  // var x = parseInt(res)+1;
+    // alert(x);
 
-}
+   // // var max_fields      = 20; 
+  // var max_fields      = 20; 
+  // var wrapper         = jQuery(".input_fields_wrap");  
+  
+ // // var reffiid = '';
+   // // var x = "<?php echo $intkey+1; ?>"; 
+    // //var reffiid = "<?php echo $referraldevid; ?>";
+    
+  
+   // if(x < max_fields){         
+            // var name1 = "tasks["+x+"][task_type]";
+            // var name2 = "tasks["+x+"][provider]";
+            // var name3 = "tasks["+x+"][task_owner]";
+            // var name4 = "tasks["+x+"][task_description]";
+            // var name5 = "tasks["+x+"][task_deadline]";
+            // var name6 = "tasks["+x+"][task_status]";
+            // var triid = "paneltr"+x;
+            // var obstriid = "paneltrobs"+x;
+            // var soltriid = "paneltrsol"+x;
+            // var diviid = "tr"+x;
+            // jQuery(wrapper).append("<div id='"+diviid+"'><div  class='main-interview'><div class='row'><div class='col-md-6'><h3 ><a class='accordion-toggle need_obs' data-toggle='collapse'  href='#"+triid+"'>Need</a></h3></div><div id='"+triid+"' class='panel-collapse collapse'><div class='panel-body'><div class='col-md-6'><div class='pull-right btn-right'><a onclick='add(this)' class='addmoreObstacle' data-check ='"+x+"' href='javascript:void(0)'  ><i class='fa fa-plus' aria-hidden='true'></i> Add Obstacle </a></div></div></div> <div class='alert alert-success alert-dismissible' id='need-msg-"+x+"' style='display: none'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Success!</strong> Need detail successfully added. </div><form action=''><div class='row'><div class='col-md-6'><div class='row'><div class='form-group col-md-8 left'><label for='first'>Title <em style='color:red'>*</em></label><input type='hidden' id='saved_needid_"+x+"' value=''><input type='hidden' id='referral_id_"+x+"' value='"+reffiid+"'><input type='text' id='need_title_"+x+"' class='form-control'></div><div class='col-md-4 pull-right'><div class='form-group'><label for='first'>Urgency</label><br><select data-check='"+x+"' id='need_urgency_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+urgencyoption+"</select></div></div></div></div><div class='col-md-6'><div class='row'><div class='col-md-4'><div class='form-group '><label for='first'>Status</label><br><select data-check='"+x+"' id='need_status_"+x+"' onchange='checkneedupdate(this)' class='form-control'>"+statusoption+"</select></div></div><div class='col-md-2'><a class='add-need' href='javascript:void(0)' id='addmore11' onclick='removetr("+x+")' style='color: red;font-size: 31px;position: relative;top: 23px;'><i class='fa fa-trash'></i></a></div></div></div></div><div class='row'><div class='form-group col-md-6'><label for='first'>Descripation <em style='color:red'>*</em></label><br><textarea rows='5'data-check='"+x+"' id='need_desc_"+x+"' onblur='checkinterviewneeddeatils(this)' ></textarea></div><div class='form-group col-md-6'><label for='first'> Notes</label><br><textarea rows='5'  data-check='"+x+"' id='need_notes_"+x+"' onblur='checkneedupdate(this)'></textarea></div></div></div></form></div></div><div class='main-interview'></div><div class='input_fields_wrap_obstcles_"+x+"'></div><hr><div class='post-tags'></div></div></div>"); //add input box
+             // x++; 
+      // }
+
+// }
 
 function removetr(id){
     jQuery('#tr'+id).remove();
@@ -2728,8 +2771,37 @@ jQuery(".viewcheck").change(function() {
     }
 });
 
+function revertTask(taskId){
+	var status = confirm("Are you sure to revert this task?");
+	if(status){
+		var email = "<?php echo $email; ?>";
+        //var taskId = '5e463b7a5fd8db1acfb04c28';
+		if(taskId && email){
+          jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'task_id':taskId,'email':email,funtion:'revertTask'},
+          success: function(response){
+            if(response == '11')
+			{
+				alert('Request was successfully canceled.');
+			}
+            console.log(response);
+            //jQuery(".assesmentBody").html(html);
+          }
+            });
+        }else{
+          alert('taskId');
+        }
+		
+		
+	}
+}
+
+
 function getAssesment(refid) { 
-    if(refid) {
+    if(refid) {		
         var iid = refid;
         var email = "<?php echo $email; ?>";
         if(iid){
@@ -2829,6 +2901,9 @@ function referralsend(transfertaskid,clientid){
 
 $(window).on("load", function () {
     var idd = "<?php echo $referralid; ?>";
+	//var dataId = $(".need_obs:last").attr('href');
+		//dataId = dataId+1;
+		//alert(dataId);
     getAssesment(idd);
 });
 

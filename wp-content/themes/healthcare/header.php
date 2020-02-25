@@ -1,5 +1,5 @@
 
-<?php  if(empty($_SESSION['userdata']) && ($_SERVER['REQUEST_URI']!='/' && $_SERVER['REQUEST_URI']!='/login/' && $_SERVER['REQUEST_URI']!='/about/' && $_SERVER['REQUEST_URI']!='/contact-us/' && $_SERVER['REQUEST_URI']!='/privacy-policy-2/' && $_SERVER['REQUEST_URI']!='/terms-of-use/' && $_SERVER['REQUEST_URI']!='/faq/')) {?>
+<?php  if(empty($_SESSION['userdata']) && ($_SERVER['REQUEST_URI']!='/' && $_SERVER['REQUEST_URI']!='/login/' && $_SERVER['REQUEST_URI']!='/about/' && $_SERVER['REQUEST_URI']!='/contact-us/' && $_SERVER['REQUEST_URI']!='/privacy-policy-2/' && $_SERVER['REQUEST_URI']!='/terms-of-use/' && $_SERVER['REQUEST_URI']!='/faq/' && $_SERVER['REQUEST_URI']!='/forgot-password/')) {?>
   <script type="text/javascript">
     window.location.href= "<?php echo site_url(); ?>";
   </script>

@@ -134,6 +134,53 @@ get_header();
 				  </div>
 				</div>
 				<div class="col-md-4">
+                                    <div class="form-group">
+                                    <label for="email">Primary Care Physician:</label>
+                                    <input type="text" name="primary_care_physician" class="form-control" id="insurance" placeholder="Primary Care">
+                                    </div>
+                                </div>
+								
+					 </div>
+			</div>
+	   </div>
+	   
+
+<p>Emergency Contacts: </p>
+
+	   <div class="form-group">
+	    
+			<div class="row">
+			    <div class="col-md-12">
+			    <div class="col-md-4">
+                                  <div class="form-group lebel-set">
+                                    <label  for="email">Name:</label>
+                                    <input type="text" name="emergency_contact_fName" class="form-control" id="insurance" placeholder="Name">
+                                  </div>
+                                </div>
+<div class="col-md-4">
+                                  <div class="form-group lebel-set">
+                                    <label  for="email">Email:</label>
+                                    <input type="text" name="emergency_contact_email" class="form-control" id="insurance" placeholder="Email">
+                                  </div>
+                                </div>
+<div class="col-md-4">
+                                  <div class="form-group lebel-set">
+                                    <label for="email">Phone Number:</label>
+                                    <input type="text" name="emergency_contact_phone" class="form-control" id="insurance" placeholder="Phone Number">
+                                  </div>
+                                </div>
+			        
+					
+				
+				 </div>
+			</div>
+	   </div>
+	   
+	   
+	    
+			<div class="row">
+			    <div class="col-md-12">
+				<div class="col-md-6">
 				  <div class="form-group">
 				    <label for="email">Perfered Contact:</label>
 				    <label class="radio-inline"><input type="radio" name="mode_of_contact"  value="call">Call</label>
@@ -146,15 +193,15 @@ get_header();
 				
 				 </div>
 			</div>
-	   </div>
+
 	 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                                   <div class="form-group">
                                     <label for="email":>Client Consent</label>
-                                <?php echo $patientsDeatils['client_consent']; ?>
-<label class="radio-inline"><input type="radio" name="client_consent"  value="yes" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'yes')) { echo "checked"; } ?>>yes</label>
-<label class="radio-inline"><input type="radio" name="client_consent" value="no" <?php if(isset($patientsDeatils['client_consent']) && ($patientsDeatils['client_consent'] == 'no')) { echo "checked"; } ?>>no</label>
+<label class="radio-inline"><input type="radio" name="client_consent"  value="not_answered">Not Answered</label>
+<label class="radio-inline"><input type="radio" name="client_consent"  value="yes" >yes</label>
+<label class="radio-inline"><input type="radio" name="client_consent" value="no" >no</label>
 
                                   </div>
                                 </div>
@@ -230,99 +277,20 @@ if(isset($_SESSION['userdata'])){
 	if(!empty($_POST['savepatient'])){
       	$postPatientData = $_POST; 
 		
-	  	$savePatinets = savePatinets($postPatientData,$email);		
+	  	$savePatinets = savePatinets($postPatientData,$email);
+   	
 		if(!empty($savePatinets)){			
 	  	   if($savePatinets['status'] == 'ok'){
-			   $patient_id = $savePatinets['patient_id'];
-?>
-<script type="text/javascript">
-    var postdata = '<?php echo json_encode($postPatientData);?>';
-    var interview_iid = '<?php echo $patient_id ;?>';
-	
-	//console.log(postdata);
-    updateinterviewfield(postdata,interview_iid);	
-	function updateinterviewfield(postdata,interview_iid){
-		var postdata = JSON.parse(postdata);
-	    console.log(postdata);
-      var interview_iid = interview_iid;
-	  console.log(interview_iid);
-	  var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
-      //var email = "<?php echo $email; ?>";
-	  if("additionalkeys" in postdata){
-		  var add_keys =postdata.additionalkeys;
-          var add_values =postdata.additional;
-	      var values  = add_keys.toString();
-          var values1 = add_values.toString();
-	  }
-      
-	  
-       var caller_firstname = postdata.first_name;
-       var caller_lastname = postdata.last_name;
-       var caller_dob = postdata.date_of_birth;
-       var email =  postdata.patient_email;
-       var caller_zipcode = postdata.patient_zipcode;
-       
-   
-      if(values == ''){
-         var caller_additional_fields = '';
-      }else{
-         var caller_additional_fields = values1;
-      } 
-
-      if(values1 == ''){
-         var caller_additional_keys = '';
-      }else{
-         var caller_additional_keys = values;
-      }        
-      
-
-      
-      if(interview_iid != ''){
-
-       
-      if(caller_firstname == ''){
-         return false;
-      }else if(caller_dob == ''){
-        return false;
-      }else{
-        jQuery.ajax({
-            type: 'post',
-            url: ajax_url,
-            data: {'interview_id':interview_iid,'email':email,'caller_first_name':caller_firstname,'caller_last_name':caller_lastname,'caller_dob':caller_dob,'caller_zipcode':caller_zipcode,'caller_additional_fields':caller_additional_fields,'caller_additional_keys':caller_additional_keys,funtion:'updateInterviewData'},
-            success: function (res) {
-				console.log(res);
-                if(res == '11'){          
-                    return true;
-                }else{
-                    //alert('Error ! Please try again ');
-                }
-              
-            }
-          });
-      }
-
-      }else{
-        return false;
-      }
-
- 
-
-}
-
-function removeobstr(id){
-    var arr = id.split('-');
-    var r = arr[1];
-    jQuery('#'+r).remove();
-}
-</script>
-<?php	  	
+			   $patient_id = base64_encode($savePatinets['patient_id']);  	
 	  			$error = 0;
 	  			$success = 51; 
 	  			$msg   = $savePatinets['message'];
-	  			$actionurl = site_url().'/patients/';  
+	  			$actionurl = site_url().'/patients/patient-details/?pid='.$patient_id;  
 	  			//$Message = urlencode("Some error occured please try after some time ");
                 //header("Location:".$actionurl."?msg=".$msg); 
-                header("Refresh: 2; url=".$actionurl);
+				echo "<script>window.location.href='$actionurl';</script>";
+                exit;
+                //header("Refresh: 2; url=".$actionurl);
 	  		}else{
 	  			$error = 0;
 	  			$success = 52; 

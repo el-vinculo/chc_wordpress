@@ -1218,6 +1218,35 @@ function removeInterviewData(){
     return $error;
 }
 
+function revertTask(){
+	
+	$error = 0;
+    if(!empty($_POST)){
+
+        $taskdata = $_POST;
+        //echo "<pre>";
+        //print_r($taskdata); die;
+        $task_id  = $_POST['task_id'];
+        $email   = $_SESSION['userdata']['email'];
+        $update = updateTasktoRevert($task_id,$email);
+		//print_r($update); die;
+        if(!empty($update)){
+            if($update['status'] == 'ok'){
+                $error = '11';
+            }else{
+                $error = 1;
+            }
+        }else{
+            $error = 3;
+        }
+    }else{
+
+        $error = 2;
+    }
+
+    return $error;
+}
+
 
 
 

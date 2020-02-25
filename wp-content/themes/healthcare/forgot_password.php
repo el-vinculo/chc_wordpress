@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Verify
+ * Template Name: forgot Password
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
@@ -13,11 +13,13 @@
  * @subpackage healthcare
 */
 session_start();
+	
 if($_SESSION['userdata']){?>
 <script type="text/javascript">
 		window.location.href= "<?php echo site_url(); ?>/dashboard";
 	</script>
 <?php }
+
 if(!empty($_POST)){
 	$error = 0;
 	if(empty($_POST['email'])){
@@ -34,26 +36,18 @@ if(!empty($_POST)){
      
 	<?php } else{
 		$email = $_POST['email'];
-		$authdata = emailverification($email);
-		/*echo "<pre>";
-		print_r($authdata); die; */
-		if($authdata){
-			//echo "<pre>";
-			//	print_r($authdata); die; 
-			if(!empty($authdata['two_factor_enabled']) && ($authdata['two_factor_enabled'] == true) ){
-				//echo "ifcondition";
-				//die; 
-				$error = 2;
-			    $_SESSION['emailaddress'] = $email;
-			    $_SESSION['two_factor_enabled'] = 1;
-			    wp_redirect( site_url()."/login/", 301 );
+		$response = forgotPassword($email);
+		if($response){
+			// echo "<pre>";
+			// 	print_r($response); die; 
+			if($response['status']=="ok"){
+			$msg = $response['message'];
+			$error = 0;
 			}else{
 				//echo "elsecondition";
 				//die; 
 				$error = 2;
-			    $_SESSION['emailaddress'] = $email;
-			   // $_SESSION['two_factor_enabled'] = 1;
-			    wp_redirect( site_url()."/login/", 301 );
+			    $msg = 'Something went wrong !!';
 			}
 			
 
@@ -70,10 +64,15 @@ get_header();
 <div class="container-fluid space">
 	<div class="container blogs">
 	<div class="col-md-9 rightside">
-	    <?php if($error == 1){ ?>
+	    <?php if($error == 1 || $error == 2){ ?>
 	    <div class="alert alert-danger alert-dismissible">
 	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error!</strong> <?php echo $msg; ?>
+        </div>
+        <?php } if($error == "0"){?>
+        <div class="alert alert-success alert-dismissible">
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             <?php echo $msg; ?>
         </div>
         <?php } ?>
 		<div <?php post_class();?>>	
@@ -82,7 +81,7 @@ get_header();
 					<div class="col-md-12 border">
 				<div class="line"></div>
 								<div class="post_title">
-				<h3><?php //the_title(); ?>Login</h3>
+				<h3><?php //the_title(); ?>Forgot Password</h3>
 				</div>
 								<div class="post-tags">				</div>
 				
@@ -96,14 +95,13 @@ get_header();
 <div class="col-xs-10"><input id="inputEmail" class="form-control" name="email" required="" type="email" placeholder="Email" /></div>
 </div>
 <div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary button-all" type="submit">Next</button></div>
+<div class="col-xs-offset-2 col-xs-10"><button class="btn-primary button-all" type="submit">Submit</button></div>
 </div>
-<div class="form-group">
-<div class="col-xs-offset-2 col-xs-10"><a href="<?=site_url()?>/forgot-password">Forgot Password</a></div>
+<!-- <div class="form-group">
 <div class="col-xs-offset-2 col-xs-10" >
 <input type="checkbox" name="googleAuth" value="yes"> Sign in with GoogleOAuth2
-	<!-- <a href="<?=site_url()?>/verify?type=chcauth" class="google-sign">Sign in with GoogleOAuth2</a> --></div>
-</div></fieldset>
+</div>
+</div> --></fieldset>
 </form>
         <?php if ( have_posts()): 
 			while ( have_posts() ): the_post(); ?>
