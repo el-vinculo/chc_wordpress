@@ -194,7 +194,7 @@ get_header();
               <td></td>
               <td>
 
-              	<?php if($newReferralDatavalue['client_consent']=='1') {?>
+              	<?php if($newReferralDatavalue['client_consent']=='yes') {?>
                  <a target="_blank" href="<?php echo site_url().'/patients/referral-details?refid='.base64_encode($newReferralDatavalue['ref_id']).'&ptn='.base64_encode($newReferralDatavalue['patient_id']) ?>"><span class="blue-text" >See More&nbsp;&nbsp; </span></a> <?php } ?>
               </td>
               

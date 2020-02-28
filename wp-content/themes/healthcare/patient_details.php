@@ -137,6 +137,7 @@ color: #43b02a!important;
 .set-lebel {
      width: 110px!important;
 }
+
 </style>
 
 <style >
@@ -971,7 +972,7 @@ get_header();
                                     <?php  } ?>
 
                                     <button class="btn-primary button-all " data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="https://dev11.resourcestack.com/wp-content/themes/healthcare/images/history-icon.png"> </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
-                                    <?php if($taskvalue['transferable']!='1'){ ?>
+                                    <?php if($taskvalue['transferable']!='1' && $taskvalue['transfer_status'] == "Pending"){ ?> 
 									<button class="btn-primary btn-request" onclick="revertTask('<?php echo $taskvalue['task_id']; ?>');"><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
                                     <?php } else{?>
 									 <button class="btn-primary button-all disable-grey" disabled ><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
@@ -1821,7 +1822,7 @@ get_header();
           <option value="State" >State</option>
           <option value="County" >County</option>
           <option value="National" >National</option>
-        
+          <option   value="Virtual"  id="location_virtual">Virtual</option>
         </select>
       </th>
       <th scope="col">
@@ -2934,8 +2935,19 @@ $(window).on("load", function () {
   				  }
   	    });
     }
+	
+$('#ptn_locationtype').on('change', function() {
+	if(this.value == 'Virtual'){
+		$('#ptn_location').val('');
+		$( "#ptn_location" ).prop( "disabled", true );
+	}
+	else{
+		$( "#ptn_location" ).prop( "disabled", false );
+	}
+});
 
-    function getserachserviceprovider(){
+
+   function getserachserviceprovider(){
 		jQuery("#providerdiv").html('');
 		var location_type = jQuery("#ptn_locationtype").val();
   //  var population = jQuery("#ptn_population").val();
@@ -2946,8 +2958,11 @@ $(window).on("load", function () {
 		var services_type = jQuery("#services-test").val();
 		var provider_name = jQuery("#ptn_provider").val();
 		var iid = jQuery("#assignprovidertab").val();
-    alert(population);
-    alert(services_type);
+		if($( "#ptn_locationtype option:selected" ).text() == 'Virtual'){
+              var location = 'Virtual';
+			}
+    //alert(population);
+    //alert(services_type);
 		jQuery.ajax({
 				  url: ajax_url,
 				  type:'POST',

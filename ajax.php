@@ -812,7 +812,7 @@ function rejectreferralbyclient()
 
 
 function providerListHtml($practices,$id){
-
+//echo '<pre>';print_r($practices);die;
     if(!empty($practices)){
     $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
@@ -937,7 +937,7 @@ function providerListHtml($practices,$id){
     </div>
 
     <div class='provider-content'>";
-
+      
        $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
           $qhref= "href='".$quickLink."'";
@@ -997,8 +997,8 @@ function providerListHtml($practices,$id){
     <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank' class='button-all'>Quick Links</a></li>
                     <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank' class='button-all'>Program Page</a></li>
                     <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' class='button-all'>Home Page</a></li>
-                    <li role='presentation' class='button-all'><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' >Contact Page</a></li>
-                    <li role='presentation' class='button-all'><a href='#' aria-controls='messages' target='_blank'>Other Page</a></li>
+                    <li role='presentation' ><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' class='button-all'>Contact Page</a></li>
+                    <li role='presentation' ><a   href='javascript:void(0);' style='opacity: 0.2; ' aria-controls='messages' class='button-all'>Other Page</a></li>
     </ul>
      <div class='tab-content tabs'>
      <div role='tabpanel' class='tab-pane fade in active' id='Section1'>

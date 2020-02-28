@@ -639,7 +639,7 @@ if(!empty($practices)){ ?>
                     <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="button-all">Program Page</a></li>
                     <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="button-all">Home Page</a></li>
                     <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" class="button-all">Contact Page</a></li>
-                    <li role="presentation"><a href="#" aria-controls="messages" target="_blank" class="button-all">Other Page</a></li>
+                    <li role="presentation"><a href='javascript:void(0);' aria-controls="messages" style='opacity: 0.2;'  class="button-all">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">

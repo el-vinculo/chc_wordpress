@@ -45,6 +45,7 @@ if($_SESSION['userdata']!=''){
 }
 .mark1{
   color: <?php echo $linkColor; ?>!important
+
 }
 .disable-grey {
     background-color: <?php echo $linkColor; ?>!important;
@@ -111,7 +112,7 @@ if($logodata['status']!='unauthorized'){
 				</div>
               <?php } else{?>
 
-               <div style="position: absolute;right: 102px;top: 50px;width: auto;">
+               <div style="position: absolute;right: 90px;top: 50px;width: auto;">
 <!-- <style type="text/css">
 	#menu-usermenu{
 		margin: 10px 0 0; margin-top: 84px;
@@ -126,7 +127,7 @@ border-radius: 100px;
 color: #000;
 font-size: 20px;
 font-weight: normal;
-margin-right: 33px;}
+/*margin-right: 33px;*/}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -160,7 +161,7 @@ margin-right: 33px;}
     <?php 
        $userdata = userprofiledetails($email); 
      ?>
-               	<div class="dropdown">
+               	<div class="dropdown pus-to">
 					<a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" ><span class="fa fa-user-plus icon-bg theme-bg"></span> <?php echo $userdata['profile']['name']; ?> </a>
 					
 				<!--<ul class="dropdown-content" >
@@ -192,9 +193,36 @@ margin-right: 33px;}
     ));	 ?>
 
 				</div>
-					<div class="set-question" style="float: right;">
+
+        <style>
+          .cl-bg {
+             background: #27aacc!important;
+          }
+          .mark02 {
+               font-size: 26px!important;
+               color: #27aacc;
+                 
+          }
+          .pus-to {
+             top: -4px;
+              left: -17px;
+          }
+        </style>
+
+            <div class="dropdown">
+              <a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" ><span class="mark02">?</span>
+                
+              </a>
+              <ul class="dropdown-content cl-bg">
+                  <li><a href="https://dev11.resourcestack.com/about/">About</a></li>
+                  <li><a href="https://dev11.resourcestack.com/faq/">Faq</a></li>
+                   <li><a href="https://dev11.resourcestack.com/terms-of-use/">Terms of Use</a></li>
+                </ul>
+            </div>
+					<!-- <div class="set-question" style="float: right;">
+          
 						<a href="<?=site_url()?>/faq" target="_blank"><span class="mark1">?</span> </a>
-					</div>
+					</div> -->
 				</div>
 
 

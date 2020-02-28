@@ -730,7 +730,11 @@ get_header();
                                     <button class="button-all btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?php echo get_template_directory_uri(); ?>/images/history-icon.png"> </button>
 
                                     <button class="button-all btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?php echo get_template_directory_uri(); ?>/images/invite-icon.png"></button>
-
+                                     <?php if($taskvalue['transferable']!='1' && $taskvalue['transfer_status'] == "Pending"){ ?> 
+									<button class="btn-primary btn-request" onclick="revertTask('<?php echo $taskvalue['task_id']; ?>');"><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
+                                    <?php } else{?>
+									 <button class="btn-primary button-all disable-grey" disabled ><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
+									<?php }?>
                                    </td>
 
 
@@ -2474,6 +2478,35 @@ function removeobstr(id){
     var r = arr[1];
     jQuery('#'+r).remove();
 }
+
+function revertTask(taskId){
+	var status = confirm("Are you sure to revert this task?");
+	if(status){
+		var email = "<?php echo $email; ?>";
+        //var taskId = '5e463b7a5fd8db1acfb04c28';
+		if(taskId && email){
+          jQuery.ajax({
+          url: ajax_url,
+          type:'POST',
+          cache: false,
+          data : {'task_id':taskId,'email':email,funtion:'revertTask'},
+          success: function(response){
+            if(response == '11')
+			{
+				alert('Request was successfully canceled.');
+			}
+            console.log(response);
+            //jQuery(".assesmentBody").html(html);
+          }
+            });
+        }else{
+          alert('taskId');
+        }
+		
+		
+	}
+}
+
 
 function showdetails(details) {
   var providername = jQuery(details).attr('data-name');

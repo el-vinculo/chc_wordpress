@@ -674,11 +674,11 @@ get_header();
           <option value="State" >State</option>
           <option value="County" >County</option>
           <option value="National" >National</option>
-        
+          <option   value="Virtual"  id="location_virtual">Virtual</option>
         </select>
       </th>
       <th scope="col">
-        <button type="search " onclick="getserachserviceprovider()" class="custom-btn button-all">Search</button> 
+        <button type="search " onclick="getserachserviceprovider()" class="custom-btn btn-primary button-all">Search</button> 
         <input type="hidden" id="assignprovidertab" value=""/>
         <!-- <input type="submit" name="search" class="custom-btn btn-success" value="Search"> -->
       </th>
@@ -1012,6 +1012,15 @@ function showdetails(details) {
 
 }
 
+$('#ptn_locationtype').on('change', function() {
+	if(this.value == 'Virtual'){
+		$('#ptn_location').val('');
+		$( "#ptn_location" ).prop( "disabled", true );
+	}
+	else{
+		$( "#ptn_location" ).prop( "disabled", false );
+	}
+});
 
   function getserachserviceprovider(){
    jQuery("#providerdiv").html('');
@@ -1024,6 +1033,9 @@ function showdetails(details) {
     var services_type = jQuery("#services-test").val();
     var provider_name = jQuery("#ptn_provider").val();
     var iid = jQuery("#assignprovidertab").val();
+	if($( "#ptn_locationtype option:selected" ).text() == 'Virtual'){
+              var location = 'Virtual';
+			}
     jQuery.ajax({
           url: ajax_url,
           type:'POST',
