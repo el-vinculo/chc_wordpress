@@ -96,8 +96,11 @@ if(!empty($faqsdata)){
         <div class=" col-md-12">
             <div class="panel-group faq" id="accordion" role="tablist" aria-multiselectable="true">
             <?php
-            if(!empty($faqlist)){ 
-                foreach ($faqlist as $key => $value) { ?>
+            if(!empty($faqlist)){?>
+                <div class="text-right"><a href="<?=site_url()?>/report-issue">
+                                <button type="search " class="custom-btn btn-primary button-all">Report Issue</button>
+                </a></div>				
+             <?php    foreach ($faqlist as $key => $value) { ?>
                     
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne-<?php echo $key; ?>">
@@ -116,12 +119,9 @@ if(!empty($faqsdata)){
 
                
                   
-                <?php } ?>
-            <div class="text-right"><a href="<?=site_url()?>/report-issue">
-                                <button type="search " class="custom-btn btn-primary button-all">Report Issue</button>
-                </a></div>
-             
-            <?php } ?>
+			<?php } }?>
+            
+
                 
                 
 

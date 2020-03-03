@@ -361,4 +361,34 @@ return 'text/html';
 }
 add_filter('wp_mail_content_type', 'set_html_content_type');
 
+
+
+
+function add_class_to_items_link( $atts, $item, $args ) {
+// check if the item has children
+$hasChildren = (in_array('menu-item-has-children', $item->classes));
+if ($hasChildren) {
+// add the desired attributes:
+$atts['class'] = 'dropdown-toggle dropbtn';
+$atts['data-toggle'] = 'dropdown ';
+$atts['data-hover'] = 'dropdown';
+}
+return $atts;
+}
+
+class Child_Wrap extends Walker_Nav_Menu
+{
+function start_lvl(&$output, $depth = 0, $args = array())
+{
+$indent = str_repeat("\t", $depth);
+$output .= "\n$indent<ul class=\"dropdown-content cl-bg\">\n";
+}
+
+function end_lvl(&$output, $depth = 0, $args = array())
+{
+$indent = str_repeat("\t", $depth);
+$output .= "$indent</ul>\n";
+}
+}
+
 ?>

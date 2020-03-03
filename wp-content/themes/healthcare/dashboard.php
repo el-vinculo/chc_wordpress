@@ -612,7 +612,8 @@ get_header();
  
                         
 <div class="panel">
-  <table class="table table-striped">
+  <table class="table table-striped"  id="examplemessage">
+  
   <tbody>
    
     <?php
@@ -622,7 +623,8 @@ get_header();
       $task_id = $messagevalue['task_id'];
       $patient_id = $messagevalue['patient_id'];
        ?>
-    <tr class="single_gallery_item"><td class="border-right">
+	<tr class="single_gallery_item" data-toggle="collapse" data-target="#requestref-<?php echo $messagekey; ?>">
+	<td class="border-right">
       <p><?php if(strlen($messagevalue['message']) > 40){ $small = substr($messagevalue['message'], 0, 40); echo $small; }else{ echo $messagevalue['message']; } ?> 
 
       <?php if(strlen($messagevalue['message']) > 40){ ?> <span class="more-text hide"><?php echo substr($messagevalue['message'],40); ?></span> <a data-show="more" more-collapse="false" href="/" class="showmore">...View More</a> <?php } ?>&nbsp; &nbsp;
@@ -1055,6 +1057,17 @@ jQuery(document).ready(function(){
            
         }
     });
+	
+	 jQuery(".single_gallery_item").slice(0, 5).toggle();
+	 jQuery("#viewmore").click(function(){ 
+        jQuery(".single_gallery_item").append(jQuery(".single_gallery_item").slice(0, 5).toggle()); 
+
+        jQuery(".single_gallery_item").toggle(); 
+         $(this).text($(this).text() == 'View More' ? 'View Less' : 'View More');
+        if(jQuery(".single_gallery_item").length == 0){ 
+           
+        }
+    });
 });
 
 
@@ -1381,11 +1394,12 @@ function updatereftaskdetails(){
           data : {'external_application_id':application_id,'task_id':task_id,funtion:'acceptreferralbyclient'},
           success: function(res){
            // console.log(res);
-            if(res == 11){
-              alert('Patient and Task were transferred successfully');
+		   var myArray = JSON.parse(res);
+            if(myArray.error == 11){
+              alert(myArray.message);
               location.reload();
             }else{
-              alert('Something error');
+              alert(myArray.message);
             }
           }
         });

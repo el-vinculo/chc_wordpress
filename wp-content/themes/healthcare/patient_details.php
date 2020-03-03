@@ -3002,35 +3002,50 @@ function showdetails(details) {
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
   var programPageUrl = jQuery(details).attr('data-programPageUrl');
 
-    if(quickLink==''){
+ if(quickLink==''){
     jQuery("#quickLink").removeAttr("href");
+	jQuery("#quickLink").css("opacity", "0.2");
    } else{
     jQuery("#quickLink").attr("href", quickLink);
+	  jQuery("#contactPage").removeAttr("style");
   }
 
   if(contactPage==''){
-  jQuery("#contactPage").removeAttr("href");
+    jQuery("#contactPage").removeAttr("href");
+	jQuery("#contactPage").css("opacity", "0.2");
+    
+
  } else{
     jQuery("#contactPage").attr("href", contactPage);
+	jQuery("#contactPage").removeAttr("style");
+
  }
 
  if(homePageUrl==''){
   jQuery("#homePageUrl").removeAttr("href");
+   jQuery("#homePageUrl").css("opacity", "0.2");
+
  } else{
   jQuery("#homePageUrl").attr("href", homePageUrl);
+  jQuery("#homePageUrl").removeAttr("style");
  }
 
   if(programPageUrl==''){
-  jQuery("#programPageUrl").removeAttr("href");  
+  jQuery("#programPageUrl").removeAttr("href");
   
+jQuery("#programPageUrl").css("opacity", "0.2");
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
+   jQuery("#programPageUrl").removeAttr("style");
  }
 
  if(programPageUrl==''){
   jQuery("#programPageUrl").removeAttr("href");
+  jQuery("#programPageUrl").css("opacity", "0.2");
+
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
+   jQuery("#programPageUrl").removeAttr("style");
  }
 
   jQuery('#providernamefill').text(providername);

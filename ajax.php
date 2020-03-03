@@ -767,19 +767,24 @@ function acceptreferralbyclient()
         $accept = acceptreferral($referrals,$email);
         if(!empty($accept)){
             if($accept['status'] == 'ok'){
+				
                 $error = '11';
+				$result = array('message'=>$accept['message'],'error'=>$error);
             }else{
                 $error = 1;
+				$result = array('message'=>$accept['message'],'error'=>$error);
             }
         }else{
             $error = 3;
+			$result = array('message'=>$accept['message'],'error'=>$error);
         }
     }else{
-
+ 
         $error = 2;
+		$result = array('message'=>$accept['message'],'error'=>$error);
     }
 
-    return $error;
+    echo  json_encode($result);exit;
 }
 
 function rejectreferralbyclient()
@@ -941,26 +946,34 @@ function providerListHtml($practices,$id){
        $quickLink= $practices[0]["Programs"]["QuickConnectWebPage"];
         if (filter_var($quickLink, FILTER_VALIDATE_URL)){
           $qhref= "href='".$quickLink."'";
+		  $qhref_style= '';
          } else{
           $qhref='';
+		   $qhref_style= 'style="opacity:0.2;"';
          }
        $contactPage= $practices[0]["Programs"]["ContactWebPage"];
        if (filter_var($contactPage, FILTER_VALIDATE_URL)){
           $chref= "href='".$contactPage."'";
+		  $chref_style= '';
          } else{
           $chref='';
+		   $chref_style= 'style="opacity:0.2;"';
          }
        $homePageUrl= $practices[0]['OrganizationName']['HomePageURL'];
        if (filter_var($homePageUrl, FILTER_VALIDATE_URL)){
           $hhref= "href='".$homePageUrl."'";
+		  $hhref_style= '';
          } else{
           $hhref='';
+		  $hhref_style= 'style="opacity:0.2;"';
          }
        $programPageUrl= $practices[0]['Programs']['ProgramWebPage'];
         if (filter_var($programPageUrl, FILTER_VALIDATE_URL)){
           $phref= "href='".$programPageUrl."'";
+		  $phref_style= '';
          } else{
           $phref='';
+		   $phref_style= 'style="opacity:0.2;"';
          }
 
 
@@ -994,11 +1007,11 @@ function providerListHtml($practices,$id){
 
     $html.= "<div class='tab' role='tabpanel'>
     <ul class='nav nav-tabs menu-tabs' role='tablist'>
-    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank' class='button-all'>Quick Links</a></li>
-                    <li role='presentation'><a ".$phref." id='programPageUrl' aria-controls='profile' target='_blank' class='button-all'>Program Page</a></li>
-                    <li role='presentation'><a ".$hhref." id='homePageUrl' aria-controls='messages' target='_blank' class='button-all'>Home Page</a></li>
-                    <li role='presentation' ><a ".$chref." id='contactPage' aria-controls='messages' target='_blank' class='button-all'>Contact Page</a></li>
-                    <li role='presentation' ><a   href='javascript:void(0);' style='opacity: 0.2; ' aria-controls='messages' class='button-all'>Other Page</a></li>
+    <li role='presentation' ><a id='quickLink' ".$qhref." target='_blank'".$qhref_style." class='button-all'>Quick Links</a></li>
+                    <li role='presentation'><a ".$phref." id='programPageUrl' ".$phref_style." aria-controls='profile' target='_blank' class='button-all'>Program Page</a></li>
+                    <li role='presentation'><a ".$hhref." id='homePageUrl' ".$hhref_style." aria-controls='messages' target='_blank' class='button-all'>Home Page</a></li>
+                    <li role='presentation' ><a ".$chref." id='contactPage' ".$chref_style." aria-controls='messages' target='_blank' class='button-all'>Contact Page</a></li>
+                    <li role='presentation' ><a    style='opacity: 0.2; ' aria-controls='messages' class='button-all'>Other Page</a></li>
     </ul>
      <div class='tab-content tabs'>
      <div role='tabpanel' class='tab-pane fade in active' id='Section1'>

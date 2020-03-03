@@ -608,7 +608,8 @@ if(!empty($practices)){ ?>
   </div>
   <div class="col-md-6 col-sm-12">
 
-<?php //print_r($practices); die();
+<?php
+//echo '<pre>' print_r($practices[0]); die();
 
          $quickLink=$practices[0]["Programs"]["QuickConnectWebPage"];
          $contactPage= $practices[0]["Programs"]["ContactWebPage"];
@@ -635,11 +636,11 @@ if(!empty($practices)){ ?>
     	 <div class="tab" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs menu-tabs" role="tablist">
-                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } ?> target="_blank" class="button-all">Quick Links</a></li>
-                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="button-all">Program Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="button-all">Home Page</a></li>
-                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } ?> id="contactPage" aria-controls="messages" target="_blank" class="button-all">Contact Page</a></li>
-                    <li role="presentation"><a href='javascript:void(0);' aria-controls="messages" style='opacity: 0.2;'  class="button-all">Other Page</a></li>
+                    <li role="presentation" ><a id="quickLink" <?php if (filter_var($quickLink, FILTER_VALIDATE_URL)) { ?> href="<?=$quickLink?>" <?php } elseif(!filter_var($quickLink, FILTER_VALIDATE_URL)){?>  style='opacity: 0.2;' <?php  } ?>  target="_blank" class="button-all">Quick Links</a></li>
+                    <li role="presentation"><a  <?php if (filter_var($programPageUrl, FILTER_VALIDATE_URL)) {?>href="<?=$programPageUrl?>" <?php } elseif(!filter_var($programPageUrl, FILTER_VALIDATE_URL)){?>  style='opacity: 0.2;' <?php  } ?> id="programPageUrl" aria-controls="profile" target="_blank" class="button-all">Program Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($homePageUrl, FILTER_VALIDATE_URL)) { ?> href="<?=$homePageUrl?>" <?php } elseif(!filter_var($homePageUrl, FILTER_VALIDATE_URL)){?>  style='opacity: 0.2;' <?php  } ?> id="homePageUrl" aria-controls="messages" target="_blank" class="button-all">Home Page</a></li>
+                    <li role="presentation"><a <?php if (filter_var($contactPage, FILTER_VALIDATE_URL)) {?> href="<?=$contactPage?>" <?php } elseif(!filter_var($contactPage, FILTER_VALIDATE_URL)){?>  style='opacity: 0.2;' <?php  } ?> id="contactPage" aria-controls="messages" target="_blank" class="button-all">Contact Page</a></li>
+                    <li role="presentation"><a  aria-controls="messages" style='opacity: 0.2;'  class="button-all">Other Page</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs">
@@ -828,33 +829,48 @@ function showdetails(details) {
   var programPageUrl = jQuery(details).attr('data-programPageUrl');
   if(quickLink==''){
     jQuery("#quickLink").removeAttr("href");
+	jQuery("#quickLink").css("opacity", "0.2");
    } else{
     jQuery("#quickLink").attr("href", quickLink);
+	  jQuery("#contactPage").removeAttr("style");
   }
 
   if(contactPage==''){
-  jQuery("#contactPage").removeAttr("href");
+    jQuery("#contactPage").removeAttr("href");
+	jQuery("#contactPage").css("opacity", "0.2");
+    
+
  } else{
     jQuery("#contactPage").attr("href", contactPage);
+	jQuery("#contactPage").removeAttr("style");
+
  }
 
  if(homePageUrl==''){
   jQuery("#homePageUrl").removeAttr("href");
+   jQuery("#homePageUrl").css("opacity", "0.2");
+
  } else{
   jQuery("#homePageUrl").attr("href", homePageUrl);
+  jQuery("#homePageUrl").removeAttr("style");
  }
 
   if(programPageUrl==''){
   jQuery("#programPageUrl").removeAttr("href");
-
+  
+jQuery("#programPageUrl").css("opacity", "0.2");
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
+   jQuery("#programPageUrl").removeAttr("style");
  }
 
  if(programPageUrl==''){
   jQuery("#programPageUrl").removeAttr("href");
+  jQuery("#programPageUrl").css("opacity", "0.2");
+
  } else{
   jQuery("#programPageUrl").attr("href", programPageUrl);
+   jQuery("#programPageUrl").removeAttr("style");
  }
 
   jQuery('#providernamefill').text(providername);

@@ -141,7 +141,10 @@ font-weight: normal;
     z-index: 1;
     padding: 0;
     top: 100%;
-    left: 20px;
+    left: 0px;
+}
+.pus-to2 li a {
+    padding: 10px 15px!important;
 }
 .dropdown-content li a {
   color: #fff;
@@ -207,18 +210,46 @@ font-weight: normal;
              top: -4px;
               left: -17px;
           }
+          .pus-to2 {
+    top: -21px;
+    position: absolute;
+    right: -37px;
+}
         </style>
-
-            <div class="dropdown">
-              <a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" ><span class="mark02">?</span>
+         <?php  wp_nav_menu(array(
+        'menu'            => 'Help Menu',
+        'container'       => '',
+        'container_class' => '',
+        'container_id'    => '',
+        'menu_class'      => 'nav pus-to2',
+        'menu_id'         => '',
+        'echo'            => true,
+        'fallback_cb'     => 'wp_page_menu',
+        'before'          => '',
+        'after'           => '',
+        'link_before'     => '',
+        'link_after'      => '',
+        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        'item_spacing'    => 'preserve',
+        'depth'           => 0,
+        'walker'          => new Child_Wrap(),
+        'theme_location'  => '',
+    ));	 ?> 
+       <!--  <ul class="nav pus-to2">
+            <li class="dropdown">
+               <a href="#" class=" dropdown-toggle dropbtn" data-toggle="dropdown" data-hover="dropdown" ><span class="mark02">?</span>
                 
-              </a>
-              <ul class="dropdown-content cl-bg">
+              </a> 
+             <ul class="dropdown-content cl-bg">
                   <li><a href="https://dev11.resourcestack.com/about/">About</a></li>
                   <li><a href="https://dev11.resourcestack.com/faq/">Faq</a></li>
                    <li><a href="https://dev11.resourcestack.com/terms-of-use/">Terms of Use</a></li>
                 </ul>
-            </div>
+                </li>
+            </ul> -->
+
+                 
+            
 					<!-- <div class="set-question" style="float: right;">
           
 						<a href="<?=site_url()?>/faq" target="_blank"><span class="mark1">?</span> </a>
