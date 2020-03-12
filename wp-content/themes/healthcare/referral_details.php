@@ -722,15 +722,19 @@ get_header();
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="button-all btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
                                    <td>
-                                   <?php if($taskvalue['transferable']=='1'){ ?>
+                                   <?php if($taskvalue['transferable']=== true){ ?>
                                     <button class="button-all btn-primary" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?php echo get_template_directory_uri(); ?>/images/transfer-icon.png"></button>
                                   <?php } else{ ?>
                                   <button class="button-all btn-primary disable-grey" disabled="disabled" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?php echo get_template_directory_uri(); ?>/images/transfer-icon.png"></button>
                                   <?php } ?>
                                     <button class="button-all btn-primary" data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?php echo get_template_directory_uri(); ?>/images/history-icon.png"> </button>
 
-                                    <button class="button-all btn-primary" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?php echo get_template_directory_uri(); ?>/images/invite-icon.png"></button>
-                                     <?php if($taskvalue['transferable']!='1' && $taskvalue['transfer_status'] == "Pending"){ ?> 
+									<?php if($taskvalue['transferable']=== true){ ?>
+									<button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
+                                    <?php }else{?>
+									<button class="btn-primary button-all disable-grey" disabled><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
+									<?php }?>
+                                     <?php if($taskvalue['transferable']=== false && $taskvalue['transfer_status'] == "Pending"){ ?> 
 									<button class="btn-primary btn-request" onclick="revertTask('<?php echo $taskvalue['task_id']; ?>');"><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
                                     <?php } else{?>
 									 <button class="btn-primary button-all disable-grey" disabled ><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
@@ -1908,6 +1912,7 @@ function transferclient(clientname) {
 function referralsend(transfertaskid,clientid){
 	if((transfertaskid != '') &&  (clientid != '')){
 		var email = "<?php echo $email; ?>";
+		var referralid  = document.getElementById("taskrefiid").value;
 		$.ajax({
 				  url: ajax_url,
 				  type:'POST',
@@ -1917,6 +1922,7 @@ function referralsend(transfertaskid,clientid){
 				  	//alert(res);
 				  	 if(res == 11){
 				  	 	alert('Task send successfully');
+						getReferralTask(referralid);
 				  	 }else{
 				  	 	alert('This tasks already send or may be some error');
 				  	 }
@@ -2483,6 +2489,7 @@ function revertTask(taskId){
 	var status = confirm("Are you sure to revert this task?");
 	if(status){
 		var email = "<?php echo $email; ?>";
+		var referralid  = document.getElementById("taskrefiid").value;
         //var taskId = '5e463b7a5fd8db1acfb04c28';
 		if(taskId && email){
           jQuery.ajax({
@@ -2494,6 +2501,7 @@ function revertTask(taskId){
             if(response == '11')
 			{
 				alert('Request was successfully canceled.');
+				getReferralTask(referralid);
 			}
             console.log(response);
             //jQuery(".assesmentBody").html(html);

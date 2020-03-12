@@ -266,7 +266,7 @@ if(isset($_SESSION['userdata'])){
    // $mytasksdata = mytasks($email);
     $inboxdata = inbox($email);
     $notificationdata = notification($email);
-   $referraldata = referralDasboard($email);
+    $referraldata = referralDasboard($email);
     //$referraldata = referralList($email);
   	if(!empty($mytasksdata['status'] == 'ok')){
   	  	$todayTasks = $mytasksdata['today_array'];
@@ -285,7 +285,7 @@ if(isset($_SESSION['userdata'])){
         $msg   = $notificationdata['status']. ' ! '. $notificationdata['message'];
     }
     /* ------------------------------------------ */
-    
+      
     /* ------------ Message --------------------- */
     if(!empty($inboxdata['status'] == 'ok')){
         $message = $inboxdata['message_array'];
@@ -606,12 +606,12 @@ get_header();
 </div></div>
  <br>
                     <h5 class=" blue-font accordion"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;<b>My Communications</b></h5>
-                    <div class="panel" style="display: none;">
+                    <div class="panel collapse in" style="display: none;">
                       <div class="margin_left">
                     <h6 class="accordion black-font" ><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Client Messages</h6>
  
                         
-<div class="panel">
+<div class="panel collapse" style="display: none;">
   <table class="table table-striped"  id="examplemessage">
   
   <tbody>
@@ -648,8 +648,8 @@ get_header();
 </div>
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Provider Messages
 </h6>
-<div class="panel">
-  <table class="table table-striped">
+<div class="panel collapse" style="display: none;">
+  <table class="table table-striped" id="exampleprovidermessage">
   <tbody>
  
  <tr>
@@ -661,8 +661,8 @@ get_header();
 
 <h6 class="accordion black-font"><i class="fa fa-sort-desc" aria-hidden="true"></i>&nbsp;Notifications
 </h6>
-<div class="panel">
-  <table class="table table-striped">
+<div class="panel collapse" style="display: none;">
+  <table class="table table-striped" id="exmplenotification">
   <tbody>
    
 <?php
@@ -675,7 +675,9 @@ get_header();
         $spanclass = 'red-text';
         $spantext = 'Overdue';
       }  ?>
-<tr><td>
+<tr class="single_notification_item" data-toggle="collapse">
+
+<td>
       <span><i class="fa fa-check-circle"></i><?php if(strlen($notificationvalue['notificaiton_message']) > 70){ $small = substr($notificationvalue['notificaiton_message'], 0, 70); echo $small."......."; }else{ echo $notificationvalue['notificaiton_message']; } ?></span>
 
       <span class="accordion upcoming-right"><span class="<?php echo $spanclass; ?>"><?php echo $spantext; ?>  </span><i class="fa fa-angle-right  " aria-hidden="true"></i></span> 
@@ -1069,6 +1071,7 @@ jQuery(document).ready(function(){
         }
     });
 });
+
 
 
 jQuery(document).ready(function(){

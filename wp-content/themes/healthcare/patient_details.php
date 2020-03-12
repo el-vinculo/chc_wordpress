@@ -18,6 +18,18 @@
 
 
 <style type="text/css">
+
+table.dataTable thead th div.DataTables_sort_wrapper {
+    position: relative;
+    width: 169px;
+    margin-left: 10px;
+}
+table.dataTable thead th div.DataTables_sort_wrapper span {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    right: -24px!important;
+}
   .model-width { -ms-overflow-style: none; }
   .model-width { overflow: -moz-scrollbars-none; }
   .model-width::-webkit-scrollbar { width: 0 !important }
@@ -142,6 +154,10 @@ color: #43b02a!important;
 
 <style >
   tbody#taskbody tr td button {
+    margin-right: 6px;
+}
+
+ thead#taskhead tr th button {
     margin-right: 6px;
 }
 tbody#refbody tr td button {
@@ -921,7 +937,7 @@ get_header();
 	                                <?php $r++; } }else{ ?>
 
 	                                <tr>
-	                                	<td colspan="8" style="color: red"><center><p>No Referral Added</p></center></td>
+	                                	<td colspan="11" style="color: red"><center><p>No Referral Added</p></center></td>
 	                                </tr>
 
 	                                <?php } ?>
@@ -934,7 +950,7 @@ get_header();
     <h4>Tasks</h4> 
     
      <table class="table table-striped table-bordered" id="example612Q">
-                            <thead>
+                            <thead >
                                 <tr>
                                     <th>Task Type</th>
                                     <th>Provider</th>
@@ -948,7 +964,11 @@ get_header();
                             <tbody id="taskbody">
                             <input type="hidden" id="taskrefiid" value="<?php echo $referralList['0']['referral_id']; ?>">
                                 <?php if(!empty($taskList)){ 
-                                	  foreach ($taskList as $taskkey => $taskvalue) { ?>		
+								      
+                                	  foreach ($taskList as $taskkey => $taskvalue) { 
+									  
+									  ?>
+                                      									  
                                 <tr>
                                    <td id="reftasktype-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_type'];?></td>
                                    <td id="reftaskprovider-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['provider'];?></td>
@@ -965,14 +985,19 @@ get_header();
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
                                    <td>
-                                    <?php if($taskvalue['transferable']=='1'){ ?>
+                                    <?php if($taskvalue['transferable']=== true){ ?>
                                     <button class="btn-primary button-all" data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?=site_url()?>/wp-content/themes/healthcare/images/transfer-icon.png"></button><?php } else{?>
                                        <button class="btn-primary button-all disable-grey" disabled data-toggle="modal"  data-target="#myTransferModal" onclick="getTransferTaskdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="<?=site_url()?>/wp-content/themes/healthcare/images/transfer-icon.png"></button>
 
                                     <?php  } ?>
 
-                                    <button class="btn-primary button-all " data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="https://dev11.resourcestack.com/wp-content/themes/healthcare/images/history-icon.png"> </button><button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
-                                    <?php if($taskvalue['transferable']!='1' && $taskvalue['transfer_status'] == "Pending"){ ?> 
+                                    <button class="btn-primary button-all " data-toggle="modal"  data-target="#myLedgerModal" onclick="getledgerdetails('<?php echo $taskvalue['task_id']; ?>')"  ><img src="https://dev11.resourcestack.com/wp-content/themes/healthcare/images/history-icon.png"> </button>
+									<?php if($taskvalue['transferable']=== true){ ?>
+									<button class="btn-primary button-all" data-toggle="modal"  data-target="#inviteModal" onclick="getTaskId('<?php echo $taskvalue['task_id']; ?>')"><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
+                                    <?php }else{?>
+									<button class="btn-primary button-all disable-grey" disabled><img src="<?=site_url()?>/wp-content/themes/healthcare/images/invite-icon.png"></button>
+									<?php }?>
+									<?php if($taskvalue['transferable']===false && $taskvalue['transfer_status'] == "Pending"){ ?> 
 									<button class="btn-primary btn-request" onclick="revertTask('<?php echo $taskvalue['task_id']; ?>');"><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
                                     <?php } else{?>
 									 <button class="btn-primary button-all disable-grey" disabled ><img src="<?php echo get_template_directory_uri(); ?>/images/revert.png"></button>
@@ -991,7 +1016,7 @@ get_header();
                             </tbody>
                         </table> 
 
-        <a href="javascript:void(0)" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
+        <a href="javascript:void(0)" id="add-task" data-toggle="modal" onclick="getReferralId()" data-target="#myAddTaskModal" >+ Add Task</a> 
 
          <h4>Assesment</h4> 
 
@@ -1462,11 +1487,11 @@ get_header();
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" id="edittaskclose" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tranfer Task</h4>
+        <h4 class="modal-title">Transfer Task</h4>
       </div>
       <div class="modal-body">
         <table class="table table-striped table-bordered" id="example">
-                            <thead>
+                            <thead id="taskhead">
                                 <tr>
                                     <th>APPLICATION NAME</th>
                                     <th>SPECIALTY</th>
@@ -2732,9 +2757,11 @@ function getReferralId(){
 	var radioValue = jQuery("input[name='viewtask']:checked").val();
     if(radioValue){
                 document.getElementById("referral_id").value = radioValue;
+				jQuery('#add-task').attr('data-target','#myAddTaskModal');
     }else{
     	alert('Please select any referral to add task');
-    	jQuery('#myAddTaskModal').modal('hide');
+		jQuery('#add-task').attr('data-target',' ');
+    	
     	
     }
 }
@@ -2776,6 +2803,7 @@ function revertTask(taskId){
 	var status = confirm("Are you sure to revert this task?");
 	if(status){
 		var email = "<?php echo $email; ?>";
+		var referralid  = document.getElementById("taskrefiid").value;
         //var taskId = '5e463b7a5fd8db1acfb04c28';
 		if(taskId && email){
           jQuery.ajax({
@@ -2787,6 +2815,7 @@ function revertTask(taskId){
             if(response == '11')
 			{
 				alert('Request was successfully canceled.');
+				getReferralTask(referralid);
 			}
             console.log(response);
             //jQuery(".assesmentBody").html(html);
@@ -2866,17 +2895,20 @@ function transferclient(clientname) {
 function referralsend(transfertaskid,clientid){
 	if((transfertaskid != '') &&  (clientid != '')){
 		var email = "<?php echo $email; ?>";
+	   var referralid  = document.getElementById("taskrefiid").value;
+	   //alert(referralid);return;
 		$.ajax({
 				  url: ajax_url,
 				  type:'POST',
 				  cache: false,
 				  data : {"task_id":transfertaskid,"email":email,"referred_application_id":clientid,funtion:'sendtaskapp'},
 				  success: function(res){
-           // console.log(res);
+           console.log(res);
 				  	//alert(res);
 				  	 if(res == 11){
 
 				  	 	alert('Task send successfully');
+						getReferralTask(referralid);
               $("#transfermdelclosebutton").click();
 				  	 }else{
 				  	 	alert('This tasks already send or may be some error');

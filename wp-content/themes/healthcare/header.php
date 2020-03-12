@@ -43,7 +43,7 @@ if($_SESSION['userdata']!=''){
     color: #fff;
      background: #fff!important;
 }
-.mark1{
+.mark1, .mark02{
   color: <?php echo $linkColor; ?>!important
 
 }
@@ -159,6 +159,23 @@ font-weight: normal;
     color: #000!important;}
 
 .dropdown:hover .dropdown-content {display: block;}
+
+ /*.cl-bg {
+             background: #27aacc!important;
+          }*/
+          .mark02 {
+               font-size: 26px!important;
+                 
+          }
+          .pus-to {
+             top: -4px;
+              left: -17px;
+          }
+          .pus-to2 {
+    top: -21px;
+    position: absolute;
+    right: -37px;
+}
 </style>
 
     <?php 
@@ -197,25 +214,7 @@ font-weight: normal;
 
 				</div>
 
-        <style>
-          .cl-bg {
-             background: #27aacc!important;
-          }
-          .mark02 {
-               font-size: 26px!important;
-               color: #27aacc;
-                 
-          }
-          .pus-to {
-             top: -4px;
-              left: -17px;
-          }
-          .pus-to2 {
-    top: -21px;
-    position: absolute;
-    right: -37px;
-}
-        </style>
+     
          <?php  wp_nav_menu(array(
         'menu'            => 'Help Menu',
         'container'       => '',

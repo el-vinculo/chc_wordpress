@@ -381,7 +381,7 @@ class Child_Wrap extends Walker_Nav_Menu
 function start_lvl(&$output, $depth = 0, $args = array())
 {
 $indent = str_repeat("\t", $depth);
-$output .= "\n$indent<ul class=\"dropdown-content cl-bg\">\n";
+$output .= "\n$indent<ul class=\"dropdown-content theme-bg\">\n";
 }
 
 function end_lvl(&$output, $depth = 0, $args = array())

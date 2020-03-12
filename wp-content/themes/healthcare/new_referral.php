@@ -759,7 +759,7 @@ get_header();
 	                                <?php $r++; } }else{ ?>
 
 	                                <tr>
-	                                	<td colspan="8" style="color: red"><center><p>No Referral Added</p></center></td>
+	                                	<td colspan="11" style="color: red"><center><p>No Referral Added</p></center></td>
 	                                </tr>
 
 	                                <?php } ?>
@@ -1161,7 +1161,7 @@ get_header();
         		   <label>Deadline</label>
         		   <div>
                     <input type="text" class="form-control datepicker " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -1183,7 +1183,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Provider</label>
                    <input type="text" class="form-control" placeholder="Provider" name="provider" id="task_provider" data-toggle='modal'  data-target='#myProviderModal' onclick="searchprovider(this.id)" value=""/>
-                   <span class="input-group-addon">
+                   <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
                    

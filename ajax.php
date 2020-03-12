@@ -26,8 +26,10 @@ function sendtaskapp(){
         if(!empty($save)){
             if($save['status'] == 'ok'){
                 $error = '11';
+				
             }else{
                 $error = 1;
+				
             }
         }else{
             $error = 3;
@@ -140,18 +142,27 @@ function taskHtmlTable($taskList,$referral_id)
                  <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
                  <td>";
 
-                 if($taskvalue['transferable']=="1"){
+                 if($taskvalue['transferable']=== true){
 
                 $html.= "<button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  ><img src='".site_url()."/wp-content/themes/healthcare/images/transfer-icon.png'></button>";
             } else{
             	$html.= "<button class='btn-primary button-all disable-grey' disabled id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTransferModal' onclick='getTransferTaskdetails(this.id)''  > <img src='".site_url()."/wp-content/themes/healthcare/images/transfer-icon.png'></button>";
             }   
+              if($taskvalue['transferable']=== true){
+               $html.="<button class='btn-primary button-all' data-toggle='modal' data-target='#inviteModal' onclick='getTaskId(\"$taskvalue[task_id]\")'><img src='".site_url()."/wp-content/themes/healthcare/images/invite-icon.png'></button>";
+			  }else{
+				   $html.="<button class='btn-primary button-all disable-grey' disabled ><img src='".site_url()."/wp-content/themes/healthcare/images/invite-icon.png'></button>";	
+			  }
+                $html.="<button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  ><img src='".site_url()."/wp-content/themes/healthcare/images/history-icon.png'></button>";
 
-               $html.="<button class='btn-primary button-all' data-toggle='modal' data-target='#inviteModal' onclick='getTaskId('".$taskvalue['task_id']."')''><img src='".site_url()."/wp-content/themes/healthcare/images/invite-icon.png'></button>";
-
-                $html.="<button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myLedgerModal' onclick='getledgerdetails(this.id)''  ><img src='".site_url()."/wp-content/themes/healthcare/images/history-icon.png'></button></td>
-
-            </tr>";
+			 if($taskvalue['transferable']=== false && $taskvalue['transfer_status'] == "Pending"){  
+			    $html.="<button class='btn-primary btn-request'  onclick='revertTask(\"$taskvalue[task_id]\")'><img src='".get_template_directory_uri()."/images/revert.png'></button>";
+			   }
+			   else{
+				   $html.="<button class='btn-primary button-all disable-grey' disabled ><img src='".get_template_directory_uri()."/images/revert.png'></button>";			   
+			   }
+			   
+			   $html.=  "</td></tr>";
             } }else {
 
     $html.=  "<tr><td colspan='7' style='color: red'><center><p>No Task Added</p></center></td></tr>";
