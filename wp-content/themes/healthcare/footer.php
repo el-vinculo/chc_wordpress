@@ -263,7 +263,9 @@ xpopup
 	</div> <!-- cd-popup-container -->
 </div> <!-- cd-popup -->
 <!-- <div id="cc">ccccc</div> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
   <script type="text/javascript">
  $(document).ready(function(){
@@ -343,10 +345,19 @@ xpopup
 
 </script>
 <script type="text/javascript">
-    	jQuery("#toggle").click(function() {
+  jQuery("#toggle").click(function() {
   jQuery(this).toggleClass("on");
   jQuery("#menu").slideToggle();
 }); 
+$(function(){
+	var custom_date_format = "<?php echo CUSTOM_DATE_FORMAT;?>";
+    $("#datetimepicker1,#due_date,#ref_followup_date,#ref_due_date,#edit_task_deadline,#task_deadline").datepicker({
+        changeMonth: true,
+        changeYear: true,
+		dateFormat: custom_date_format,
+		yearRange: "-120:+0",
+    });
+});
 </script>
 
 </body>

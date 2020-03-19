@@ -435,6 +435,7 @@ if(isset($_SESSION['userdata'])){
     if(!empty($referraldata['status'] == 'ok')){
     	$referralList  = $referraldata['referral_list'];
     }
+	//echo '<pre>';print_r($referralList);die;
     /* -------------------------------------------------*/
 
     /* ------------ Communcation List --------------------- */
@@ -458,7 +459,7 @@ if(isset($_SESSION['userdata'])){
        }
 
     }
-    
+    //echo '<pre>';print_r($taskList);die;
     /*--------------------------------------------------*/
 
     /*---------------Assessments List --------------------------*/
@@ -654,9 +655,9 @@ get_header();
 				</div>  
 				<div class="col-md-4">
 				  <div class="form-group lebel-set">
-				    <label for="pwd">Last Name:</label>
+				    <label for="pwd">Last Name:<span style="color: red">*</span></label>
 				    <div class='input-group' >
-				    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" value="<?php echo $patientsDeatils['last_name']; ?>">
+				    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" value="<?php echo $patientsDeatils['last_name']; ?>" required>
 				    </div>
 				  </div>
 				</div>
@@ -664,7 +665,7 @@ get_header();
 				  <div class="form-group lebel-set">
 				    <label for="pwd">Date of Birth:<span style="color: red">*</span></label>
 				    <div class='input-group date' >
-                    <input type='text' name="date_of_birth" class="form-control datepicker" id="datepicker1"    placeholder="Date of Birth"  value="<?php echo date('Y-m-d',strtotime($patientsDeatils['date_of_birth'])); ?>" required="required"/>
+                    <input type='text' name="date_of_birth" class="form-control" id="datetimepicker1"    placeholder="Date of Birth"  value="<?php echo $patientsDeatils['date_of_birth']; ?>" required="required"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -921,14 +922,15 @@ get_header();
                                                echo "checked";
                                            }
 	                                	   else if(!empty($taskList) && ($refvalue['referral_id'] == $referralList['0']['referral_id'])){  echo "checked"; } ?> ></td>
-	                                	<td id="duedate-<?php echo $refvalue['referral_id'];?>"><?php echo date('d-m-Y',strtotime($refvalue['due_date'])); ?></td>
-	                                	<td id="refname-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['referral_name']; ?></td>
+	                                	<td id="duedate-<?php echo $refvalue['referral_id'];?>"><?php echo str_replace(' ','',$refvalue['due_date']);?></td>
+	                                	
+										<td id="refname-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['referral_name']; ?></td>
 	                                	<td id="refdesc-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['referral_description']; ?></td>
 	                                	<td id="source-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['source']; ?></td>
 	                                	<td id="urgency-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['urgency']; ?></td>
 	                                	<td><?php echo $refvalue['task_count']; ?></td>
 	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
-                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php if($refvalue['follow_up_date']!='') {echo $refvalue['follow_up_date'];} else{ echo '--';} ?></td>
+                                        <td id="reffolllowup-<?php echo $refvalue['referral_id'];?>"><?php if($refvalue['follow_up_date']!='') {echo $refvalue['follow_up_date'];} else{ echo '--';} ?></td>
                                         <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                     <!-- <button class="btn-primary" title="Manage Referral" onclick="getAssesment('<?php echo $refvalue['referral_id']; ?>')" data-toggle="modal"  data-target="#assesmentModal"><i class="fa fa-file-code-o" aria-hidden="true"></i></button> -->
@@ -975,11 +977,11 @@ get_header();
                                    <td id="reftaskowner-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_owner'];?></td>
                                    <td id="reftaskdesc-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_description'];?></td>
                                    <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php 
-                                  if(date('Y-m-d',strtotime($taskvalue['task_deadline'])) == '1970-01-01'){
-                                    echo "--";
+                                  if(date('m-d-Y',strtotime($taskvalue['task_deadline'])) == '01-01-1900'){
+                                    echo '--';
                                     
                                    }else{
-                                     echo date('Y-m-d',strtotime($taskvalue['task_deadline']));
+                                    echo date('m-d-Y',strtotime($taskvalue['task_deadline']));
                                    }
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
@@ -1305,7 +1307,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Due Date</label>
         		   <div  >
-                    <input type="text" class="form-control datepicker" placeholder="Due Date" name="due_date" id="ref_due_date"  />
+                    <input type="text" class="form-control" placeholder="Due Date" name="due_date" id="ref_due_date"  />
                     <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1353,7 +1355,7 @@ get_header();
                    <div class="col-md-6">
                <label>Follow Up Date</label>
                <div  >
-                    <input type="text" class="form-control datepicker" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
+                    <input type="text" class="form-control" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
                     <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1394,7 +1396,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Deadline</label>
         		   <div >
-                    <input type="text" class="form-control datepicker" placeholder="Deadline" name="task_deadline" id="edit_task_deadline"  />
+                    <input type="text" class="form-control" placeholder="Deadline" name="task_deadline" id="edit_task_deadline"  />
                     <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1671,7 +1673,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Deadline</label>
         		   <div>
-                    <input type="text" class="form-control datepicker " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
+                    <input type="text" class="form-control " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
                     <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -2545,7 +2547,7 @@ function updatereftaskdetails(){
 		var task_owner  = document.getElementById("edit_task_owner").value;
 		var task_deadline  = document.getElementById("edit_task_deadline").value;
 		var referralid  = document.getElementById("taskrefiid").value;
-		//alert(referralid);
+		//alert(task_deadline);return;
         //var fileupload = document.getElementById("edit_patient_document");
 		//var formdata = jQuery('#referraltaskform').serialize();
 		var formdata = new FormData(document.getElementById("referraltaskform"));
@@ -2558,9 +2560,9 @@ function updatereftaskdetails(){
             contentType: false,
             data: formdata,
             success: function (res) {
-            	//alert(res);
+            	//alert(res);return;
             	//exit;
-            	//console.log(res);exit;
+            	//console.log(res);return;
             	var trimStr = jQuery.trim(res);
             	if(trimStr == '11'){
             		alert('Task Updated');
@@ -2632,6 +2634,7 @@ function updatereferal(){
             url: ajax_url,
             data: {ref_id:ref_id,ref_name:ref_name,ref_due_date:ref_due_date,ref_urgency:ref_urgency,ref_source:ref_source,ref_desc:ref_desc,follow_up_date:followup_date,funtion:action},
             success: function (res) {
+				//console.log(res);return;
             	var trimStr = $.trim(res);
             	//alert(trimStr);
             	if(trimStr == '11'){

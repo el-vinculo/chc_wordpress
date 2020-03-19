@@ -395,7 +395,7 @@ function updatePatientDetails($detaildata,$patient_id,$email)
        $userauth = $_SESSION['userdata']['authentication_token'];
        $first_name = ucfirst($detaildata['first_name']);
        $last_name  = $detaildata['last_name'];
-       $dob        = date('Y-m-d',strtotime($detaildata['date_of_birth']));
+       $dob        = $detaildata['date_of_birth'];
        $gender     = $detaildata['gender'];
        $mobile     = $detaildata['patient_phone'];
        $contacttype = $detaildata['mode_of_contact'];
@@ -479,7 +479,7 @@ function updateReferral($referraldata,$referral_id,$email)
        
 	   $post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'follow_up_date'=>$follow_up_date); 
 	   $curl_handle=curl_init();
-
+      //print_r($post);die;
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'rfl_update');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
 	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
@@ -502,7 +502,7 @@ function savePatientReferral($postData,$patient_id,$patient_email)
 {
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
        $referral_name = $postData['referral_name'];
-       $due_date      = date('Y-m-d' ,strtotime($postData['due_date']));
+       $due_date      = $postData['due_date'];
        $urgency       = $postData['urgency'];
        $source        = $postData['source'];
        $referral_description     = $postData['referral_description'];
@@ -629,6 +629,7 @@ function messagesList($patient_id,$taskid,$email){
 
 
 function savePatinets($patientData,$email){
+	
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
        $first_name = ucfirst($patientData['first_name']);
        $last_name       = $patientData['last_name']; 
@@ -644,7 +645,8 @@ function savePatinets($patientData,$email){
        $emergency_contact_email     = $patientData['emergency_contact_email'];
        $client_consent     = $patientData['client_consent'];
        $mode_of_contact     = $patientData['mode_of_contact'];
-       $date_of_birth      = date('Y-m-d' ,strtotime($patientData['date_of_birth']));
+       $date_of_birth      = $patientData['date_of_birth'];
+	   //echo $date_of_birth ;die;
 	   //$headers['Content-length'] = '0';
        //$headers['Content-type'] = 'application/json';
 	   //$headers['Authorization'] = 'user-token: '.$userauth;
@@ -947,10 +949,8 @@ function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
        $task_status       = $referralTaskdata['task_status'];
        $task_provider        = $referralTaskdata['task_provider'];
        $task_owner     = $referralTaskdata['task_owner'];
-       $task_deadline     = date('Y-m-d',strtotime($referralTaskdata['task_deadline']));
+       $task_deadline     = $referralTaskdata['task_deadline'];
        
-       
-
        if(!empty($documents)){
        	 if(!empty($documents['tmp_name']) && !empty($documents['name'])){
 			$tmpfile = $documents['tmp_name'];
@@ -973,7 +973,7 @@ function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
 
 	   $post = array('task_id'=>$task_id,'email'=>$email,'task_type'=>$task_type,'task_description'=>$task_description,'task_status'=>$task_status,'provider'=>$task_provider,'task_owner'=>$task_owner,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument); 
        
-       //print_r($post); die;
+       
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'tsk_update');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);

@@ -659,7 +659,7 @@ get_header();
                                                echo "checked";
                                            }
                                        else if(!empty($taskList) && ($refvalue['referral_id'] == $referralList['0']['referral_id'])){  echo "checked"; } ?> ></td>
-                                    <td id="duedate-<?php echo $referralList['referral_id'];?>"><?php echo date('d-m-Y',strtotime($referralList['due_date'])); ?></td>
+                                    <td id="duedate-<?php echo $referralList['referral_id'];?>"><?php echo str_replace(' ','',$referralList['due_date']);?></td>
                                     <td id="refname-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_name']; ?></td>
                                     <td id="refdesc-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['referral_description']; ?></td>
                                     <td id="source-<?php echo $referralList['referral_id'];?>"><?php echo $referralList['source']; ?></td>
@@ -715,9 +715,12 @@ get_header();
                                    <td id="reftaskowner-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_owner'];?></td>
                                    <td id="reftaskdesc-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_description'];?></td>
                                    <td id="reftasktdeadline-<?php echo $taskvalue['task_id']; ?>"><?php
-                                    if(date('Y-m-d',strtotime($taskvalue['task_deadline'])) == '1970-01-01'){ echo "--";
-                                    }else{ echo date('Y-m-d',strtotime($taskvalue['task_deadline']));
-                                    }
+                                    if(date('m-d-Y',strtotime($taskvalue['task_deadline'])) == '01-01-1970'){
+                                    echo '--';
+                                    
+                                   }else{
+                                    echo date('m-d-Y',strtotime($taskvalue['task_deadline']));
+                                   }
                                    ?></td>
                                    <td id="reftaskstatus-<?php echo $taskvalue['task_id']; ?>"><?php echo $taskvalue['task_status'];?></td>
                                    <td><button class="button-all btn-primary" data-toggle="modal"  data-target="#myTaskModal" onclick="getPatientRefTask('<?php echo $taskvalue['task_id']; ?>')"  ><i class="fa fa-pencil" title="Edit" aria-hidden="true"></i></button></td>
@@ -856,7 +859,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Due Date</label>
         		   <div  >
-                    <input type="text" class="form-control datepicker " placeholder="Due Date" name="due_date" id="ref_due_date"  />
+                    <input type="text" class="form-control" placeholder="Due Date" name="due_date" id="ref_due_date"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -904,7 +907,7 @@ get_header();
                    <div class="col-md-6">
                <label>Follow Up Date</label>
                <div  >
-                    <input type="text" class="form-control datepicker" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
+                    <input type="text" class="form-control" placeholder="Follow Up Date" name="followup_date" id="ref_followup_date"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -945,7 +948,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Deadline</label>
         		   <div >
-                    <input type="text" class="form-control datepicker" placeholder="Deadline" name="task_deadline" id="edit_task_deadline"  />
+                    <input type="text" class="form-control" placeholder="Deadline" name="task_deadline" id="edit_task_deadline"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1143,7 +1146,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Deadline</label>
         		   <div>
-                    <input type="text" class="form-control datepicker " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
+                    <input type="text" class="form-control " placeholder="Deadline" name="task_deadline" id="task_deadline"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

@@ -521,8 +521,8 @@ get_header();
 <div class="col-md-4">
             <div class="form-group lebel-set">
               <label for="pwd">Date of Birth: <span style="color: red">*</span></label>
-              <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' name="date_of_birth" autocomplete="off" class="form-control" id="datedatepicker"    placeholder="Date of Birth" value="<?php echo isset($patientsDeatils['date_of_birth'])?date('Y-m-d',strtotime($patientsDeatils['date_of_birth'])):''; ?>" required="required" />
+              <div class='input-group date' >
+                    <input type='text' id='datetimepicker1' name="date_of_birth" autocomplete="off" class="form-control" id="datedatepicker"    placeholder="Date of Birth" value="<?php echo isset($patientsDeatils['date_of_birth'])? $patientsDeatils['date_of_birth'] :''; ?>" required="required" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -751,9 +751,9 @@ get_header();
 	                                	<td id="source-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['source']; ?></td>
 	                                	<td id="urgency-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['urgency']; ?></td>
 	                                	<td><?php echo $refvalue['task_count']; ?></td>
-	                                	<td id="refstatus-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
-                                        <td id="reffolllowup-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
-                                        <td id="refagreement-<?php echo $referralList['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
+	                                	<td id="refstatus-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['status']; ?></td>
+                                        <td id="reffolllowup-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['follow_up_date']; ?></td>
+                                        <td id="refagreement-<?php echo $refvalue['referral_id'];?>"><?php echo $refvalue['agreement_notification_flag']; ?></td>
 	                                	<td><button class="btn-primary button-all" data-toggle="modal"  data-target="#myModal" onclick="showReferral('<?php echo $refvalue['referral_id']; ?>')"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
 	                                <?php $r++; } }else{ ?>
@@ -1005,7 +1005,7 @@ get_header();
         		  <div class="col-md-6">
         		   <label>Due Date</label>
         		   <div  >
-                    <input type="text" class="form-control datepicker" placeholder="Due Date" name="due_date" id="ref_due_date"  />
+                    <input type="text" class="form-control" placeholder="Due Date" name="due_date" id="ref_due_date"  />
                     <span class="input-group-addon input-cl">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1042,9 +1042,20 @@ get_header();
         		</div>
         		<br/>
         	    <div class="row">
-        		  <div class="col-md-12">
+        		  <div class="col-md-6">
         		   <label>Description</label>
                    <textarea name="description" id="ref_desc" class="form-control" rows="7"  placeholder="Description..."></textarea>
+        		  </div>
+				  
+				  <div class="col-md-6">
+        		   <label>Follow up Date</label>
+        		   <div  >
+                    <input type="text" class="form-control" placeholder="Follow up Date" name="ref_followup_date" id="ref_followup_date"  />
+                    <span class="input-group-addon input-cl">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                   
         		  </div>
         		</div>
         		<br/>
@@ -1398,7 +1409,7 @@ z-index: 9;">
 <?php get_footer(); ?>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
@@ -1472,6 +1483,7 @@ window.addEventListener('popstate', function(event) {
         deferRender:    true
     } );
 } );
+
 </script>
 <script type="text/javascript">
 var ajax_url = "<?php echo site_url().'/ajax.php'; ?>";
@@ -1628,6 +1640,7 @@ function updatereferal(){
          var ref_source  = document.getElementById("ref_source").value;
          var ref_desc  = document.getElementById("ref_desc").value;
          var followup_date  = document.getElementById("ref_followup_date").value;
+
           jQuery.ajax({
             type: 'post',
             url: ajax_url,

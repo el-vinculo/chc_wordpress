@@ -75,8 +75,8 @@ get_header();
 					<div class="col-md-4">
 					  <div class="form-group">
 					    <label for="pwd">Date of Birth: <span style="color: red">*</span></label>
-					    <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' name="date_of_birth" autocomplete="off" class="form-control" id="datepicker"    placeholder="Date of Birth" required="required" />
+					    <div class='input-group date'>
+                    <input type='text' id='datetimepicker1' name="date_of_birth" autocomplete="off" class="form-control"     placeholder="Date of Birth" required="required" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

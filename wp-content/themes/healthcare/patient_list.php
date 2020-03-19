@@ -165,7 +165,7 @@ table.dataTable thead th, table.dataTable thead td {
 									<?php }else{ ?>
 									<div class="alert alert-danger alert-dismissible">
 									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									<strong><?php echo $msg; ?></strong> 
+									<strong><?php if(isset($msg) && $msg!=' ! '){echo $msg;}else{echo "No record found";}; ?></strong> 
 									</div>
 
 									    

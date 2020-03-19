@@ -133,11 +133,18 @@ function taskHtmlTable($taskList,$referral_id)
             if(!empty($taskList)){
                 foreach ($taskList as $taskkey => $taskvalue) {
                 $taskiid = 	$taskvalue['task_id'];
+				
+				 if(date('m-d-Y',strtotime($taskvalue['task_deadline'])) == '01-01-1970'){
+					  $taskdeadline =  '--';
+				 }
+				 else{
+					 $taskdeadline =  date('m-d-Y',strtotime($taskvalue['task_deadline']));
+				 }
     $html.= "<tr><td id='reftasktype-".$taskvalue['task_id']."'>".$taskvalue['task_type']."</td>
                  <td id='reftaskprovider-".$taskvalue['task_id']."'>".$taskvalue['provider']."</td>
                  <td id='reftaskowner-".$taskvalue['task_id']."'>".$taskvalue['task_owner']."</td>
                  <td id='reftaskdesc-".$taskvalue['task_id']."'>".$taskvalue['task_description']."</td>
-                 <td id='reftaskdeadline-".$taskvalue['task_id']."'>".date('d-m-Y',strtotime($taskvalue['task_deadline']))."</td>
+                 <td id='reftaskdeadline-".$taskvalue['task_id']."'>".$taskdeadline."</td>
                  <td id='reftaskstatus-".$taskvalue['task_id']."'>".$taskvalue['task_status']."</td>
                  <td><button class='btn-primary button-all' id='".$taskvalue['task_id']."' data-toggle='modal'  data-target='#myTaskModal' onclick='getPatientRefTask(this.id)' ><i class='fa fa-pencil' aria-hidden='true' ></i></button></td>
                  <td>";

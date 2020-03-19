@@ -149,7 +149,7 @@ get_header();
 					  <div class="form-group">
 					    <label for="pwd">Deadline:</label>
 					    <div class='input-group date' >
-                    <input type='text' name="due_date" class="form-control datepicker" id="due_date"    placeholder="Deadline"  />
+                    <input type='text' name="due_date" class="form-control" id="due_date"    placeholder="Deadline"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
