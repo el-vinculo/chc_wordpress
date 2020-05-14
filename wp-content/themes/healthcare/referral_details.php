@@ -1321,6 +1321,7 @@ get_header();
           <option value="State" >State</option>
           <option value="County" >County</option>
           <option value="National" >National</option>
+          <option value="Virtual" >Virtual</option>
 
         </select>
       </th>
@@ -1976,6 +1977,22 @@ function searchprovider(iid){
       });
     }
 
+    $('#ptn_locationtype').on('change', function() {
+  if(this.value == 'Virtual'){
+    $('#ptn_location').val('');
+    $( "#ptn_location" ).prop( "disabled", true );
+  }
+
+  else if(this.value == 'National'){
+    $('#ptn_location').val('');
+    $( "#ptn_location" ).prop( "disabled", true );
+  }
+
+  else{
+    $( "#ptn_location" ).prop( "disabled", false );
+  }
+});
+
     function getserachserviceprovider(){
    jQuery("#providerdiv").html('');
     var location_type = jQuery("#ptn_locationtype").val();
@@ -1987,6 +2004,14 @@ function searchprovider(iid){
     var services_type = jQuery("#services-test").val();
     var provider_name = jQuery("#ptn_provider").val();
     var iid = jQuery("#assignprovidertab").val();
+
+    if($( "#ptn_locationtype option:selected" ).text() == 'Virtual'){
+              var location = 'Virtual';
+      }
+
+      if($( "#ptn_locationtype option:selected" ).text() == 'National'){
+              var location = 'National';
+      }
     jQuery.ajax({
           url: ajax_url,
           type:'POST',

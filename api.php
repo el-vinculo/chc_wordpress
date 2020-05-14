@@ -815,6 +815,7 @@ function msgsend($msgData,$patient_id,$email){
 }
 
 function serviceproviderslist($search){
+	//print_r($search);die;
 	   $userauth = $_SESSION['userdata']['authentication_token'];
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
@@ -873,8 +874,12 @@ function serviceproviderslist($search){
 
 
 	   	    if(!empty($search['location']) || !empty($search['location_type'])){
-	   	   
-	   	    	$radiusarray = array('value' => $search['location'], 'type' => $search['location_type']);
+					if(($search['location_type'] == 'Virtual') || ($search['location_type'] == 'National')){
+						$radiusarray = array('value' => $search['location_type'], 'type' => 'Scope');
+					}
+					else{
+						$radiusarray = array('value' => $search['location'], 'type' => $search['location_type']);
+					}
                 $postsearch['GeoScope']  = $radiusarray;
                 
 	   	    }
@@ -915,9 +920,9 @@ function serviceproviderslist($search){
 	    $datastring = json_encode($post);*/
 	   }
 
-	   
-	   
-	   //echo $datastring;
+	   //echo $search['location'];
+	   //echo $search['location_type'];
+	  //echo $datastring;die;
 	   $serviceproviderAPIURL = 'https://aokx9crg6l.execute-api.us-west-2.amazonaws.com/post_hash'; 
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,$serviceproviderAPIURL);

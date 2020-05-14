@@ -2976,6 +2976,12 @@ $('#ptn_locationtype').on('change', function() {
 		$('#ptn_location').val('');
 		$( "#ptn_location" ).prop( "disabled", true );
 	}
+
+	else if(this.value == 'National'){
+		$('#ptn_location').val('');
+		$( "#ptn_location" ).prop( "disabled", true );
+	}
+
 	else{
 		$( "#ptn_location" ).prop( "disabled", false );
 	}
@@ -2995,6 +3001,10 @@ $('#ptn_locationtype').on('change', function() {
 		var iid = jQuery("#assignprovidertab").val();
 		if($( "#ptn_locationtype option:selected" ).text() == 'Virtual'){
               var location = 'Virtual';
+			}
+
+			if($( "#ptn_locationtype option:selected" ).text() == 'National'){
+              var location = 'National';
 			}
     //alert(population);
     //alert(services_type);

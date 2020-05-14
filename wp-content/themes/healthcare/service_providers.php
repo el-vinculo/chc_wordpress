@@ -323,14 +323,20 @@ if(isset($_SESSION['userdata'])){
 	  if($serachData['location_type']=='Virtual'){
 		  $serachData['location']='Virtual';
 	  }
-       //echo "<pre>";
-      //print_r($serachData);exit;
+
+    if($serachData['location_type']=='National'){
+      $serachData['location']='National';
     }
+     //  echo "<pre>";
+     // print_r($serachData);exit;
+    }
+	//echo "<pre>";
+      //print_r($serachData);exit;
 	  $practicesdata = serviceproviderslist($serachData);
 	  if(!empty($practicesdata['status'] == 'ok')){
 	  	 $practices = $practicesdata['provider_list'];
-      // echo "<pre>";
-       //print_r($practices); die;
+      //echo "<pre>";
+      // print_r($practices); 
 	  }else{
 	  	$error = 0;
 	    $msg   = 'Error ! Some thing went wrong';
@@ -400,7 +406,7 @@ get_header();
           <option value="Respite" <?php if(!empty($_POST['services_type']) && (in_array('Respite', $_POST['services_type']))){ echo "selected"; } ?>>Respite</option>
           <option value="Senior" <?php if(!empty($_POST['services_type']) && (in_array('Senior', $_POST['services_type']))){ echo "selected"; } ?>>Senior</option>
           <option value="Transportation" <?php if(!empty($_POST['services_type']) && (in_array('Transportation', $_POST['services_type']))){ echo "selected"; } ?>>Transportation</option>
-          <option value="Veteran" <?php if(!empty($_POST['services_type']) && (in_array('Veteran', $_POST['services_type']))){ echo "selected"; } ?>>Veteran</option>
+          <option value="Veterans" <?php if(!empty($_POST['services_type']) && (in_array('Veterans', $_POST['services_type']))){ echo "selected"; } ?>>Veterans</option>
           <option value="Victim" <?php if(!empty($_POST['services_type']) && (in_array('Victim', $_POST['services_type']))){ echo "selected"; } ?>>Victim</option>
 
         </select>
@@ -488,7 +494,7 @@ if(!empty($practices)){ ?>
           }
 
          }
-
+        $addressRaw="";
 
           if(is_array($practicesvalue['Programs']['ProgramSites'])){
            foreach($practicesvalue["OrgSites"] as $key=>$val){
@@ -514,7 +520,7 @@ if(!empty($practices)){ ?>
               }
 
               $mainOffice = rtrim($mainOffice1, ',');
-             $addressRaw='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+             $addressRaw.='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
 
             foreach($val['POCs'] as $pockey=>$pocval){
 
@@ -529,9 +535,11 @@ if(!empty($practices)){ ?>
               $addressRaw.="<br>";
 
             }
-          } else{
-            $addressRaw="";
-          }
+          } 
+		  
+		  // else{
+            // $addressRaw="";
+          // }
 
           }
          } else{
@@ -588,7 +596,8 @@ if(!empty($practices)){ ?>
             <td style="padding-top: 10px;"><?php echo ""; ?></td>
            <!--  <td><?php  echo $shortdesc; ?></td> -->
             <td>
-
+	<?php /* print_r($practicesvalue) */ ?>
+		
              <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-serviceAreaDesc="<?php echo $serviceAreaDesc; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
             </td>
 
@@ -700,12 +709,11 @@ if(!empty($practices)){ ?>
       <p id="servicesTags"><?php echo $servicesTags; ?></p>
 
        <h3 style="margin-bottom: 0px;">Address</h3>
-
+	<?php /*print_r($practices)*/ ?>
     <ul class="nav nav-set" id="mainOffice">
      <?php
     	 if(is_array($practices[0]["Programs"]["ProgramSites"])){
           foreach($practices[0]["OrgSites"] as $key=>$val){
-
             if(in_array($val["SelectSiteID"], $practices[0]["Programs"]["ProgramSites"])){
 
              // $mainOffice = $val['Addr1'][0]['Text'].', '.$val['Addr2'].', '.$val['AddrCity'].', '.$val['AddrState'].', '.$val['AddrZip']; 
@@ -734,7 +742,7 @@ if(!empty($practices)){ ?>
 
 
 
-
+	
               <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
 
               <?php foreach($val['POCs'] as $pockey=>$pocval){
@@ -796,6 +804,10 @@ $('#location_type').on('change', function() {
 		$('#location').val('');
 		$( "#location" ).prop( "disabled", true );
 	}
+  if(this.value == 'National'){
+    $('#location').val('');
+    $( "#location" ).prop( "disabled", true );
+  }
 	else{
 		$( "#location" ).prop( "disabled", false );
 	}
