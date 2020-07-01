@@ -471,6 +471,7 @@ if(!empty($practices)){ ?>
            //echo "<pre>";
            //print_r($practicesvalue); die;
          $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
+         $orgDescription =  $practicesvalue['OrganizationName']["OrgDescription"]["0"]["Text"];
          /*if(is_array($practicesvalue['organizationName']["OrgDescription"])){
           $shortdesc= $practicesvalue['organizationName']["OrgDescription"]["0"]["text"];
          }else{
@@ -583,7 +584,7 @@ if(!empty($practices)){ ?>
 
       ?>
           <tr>
-
+        
             <td>
              <b>Organization Name: </b> <?php echo $name; ?>
               <br>
@@ -598,7 +599,7 @@ if(!empty($practices)){ ?>
             <td>
 	<?php /* print_r($practicesvalue) */ ?>
 		
-             <button type="button" data-name="<?php echo $name; ?>" data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-serviceAreaDesc="<?php echo $serviceAreaDesc; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
+             <button type="button" data-name="<?php echo $name; ?>" data-orgDesc="<?php echo $orgDescription; ?>"  data-shortdesc="<?php echo $shortdesc; ?>" data-programName="<?php echo $programName; ?>" data-populationDesc="<?php echo $populationDesc; ?>" data-servicesTags="<?php echo $servicesTags; ?>" data-serviceAreaDesc="<?php echo $serviceAreaDesc; ?>" data-population="<?php echo rtrim($popolations, ','); ?>" data-services="<?php echo rtrim($services, ','); ?>" data-mainOffice="<?php echo htmlentities($addressRaw); ?>" data- data-quickLink="<?=$quickLink?>" data-contactPage="<?=$contactPage?>" data-homePageUrl="<?=$homePageUrl?>" data-programPageUrl="<?=$programPageUrl?>" data-contactName="<?=$contactName?>" style=" display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;" onclick="showdetails(this)" class="custom-btn btn-primary button-all"> Show Detail</button>
             </td>
 
           </tr>
@@ -631,10 +632,20 @@ if(!empty($practices)){ ?>
     <div class="border pt-set">
       <div class="row">
         <div class="col-sm-9">
+        <?php /* print_r("You are in the right place") */ ?>
     	<h4>Organization Name</h4>
     	<p id='providernamefill'><?php $providername =  $practices["0"]['OrganizationName']["OrganizationName"]["0"]["Text"];
          echo $providername;
-       ?></p></div>
+       ?></p>
+        
+        <h4>Organizationnn Description</h4>
+        <p id='providerdescriptionfill'><?php $providerdescription =  $practices["0"]['OrganizationName']["OrgDescription"]["0"]["Text"];
+         echo $providerdescription;
+       ?></p>
+      </div>
+
+
+
        <div class="text-right col-sm-3 ">
          <div  style="padding-right: 10px;">
       <button type="button " class="custom-btn btn-primary button-all"> Add Task</button>
@@ -827,6 +838,7 @@ var ajax_url = "<?php echo '/ajax.php'; ?>";
 
 function showdetails(details) {
   var providername = jQuery(details).attr('data-name');
+  var providerdescription = jQuery(details).attr('data-orgDesc');
   var providershortdesc = jQuery(details).attr('data-shortdesc');
   var programName = jQuery(details).attr('data-programName');
   var population = jQuery(details).attr('data-population');
@@ -886,6 +898,7 @@ jQuery("#programPageUrl").css("opacity", "0.2");
  }
 
   jQuery('#providernamefill').text(providername);
+  jQuery('#providerdescriptionfill').text(providerdescription);
   jQuery('#providershortdescfill').html(providershortdesc);
   jQuery('#programName').html(programName);
   jQuery('#population').html(population);
