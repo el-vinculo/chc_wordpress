@@ -638,7 +638,7 @@ if(!empty($practices)){ ?>
          echo $providername;
        ?></p>
         
-        <h4>Organizationnn Description</h4>
+        <h4>Organization Description</h4>
         <p id='providerdescriptionfill'><?php $providerdescription =  $practices["0"]['OrganizationName']["OrgDescription"]["0"]["Text"];
          echo $providerdescription;
        ?></p>
