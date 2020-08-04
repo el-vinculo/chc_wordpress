@@ -387,7 +387,9 @@ get_header();
           <option value="Behavioral" <?php if(!empty($_POST['services_type']) && (in_array('Behavioral', $_POST['services_type']))){ echo "selected"; } ?>>Behavioral</option>
           <option value="CaseManagement" <?php if(!empty($_POST['services_type']) && (in_array('CaseManagement',$_POST['services_type']))){ echo "selected"; } ?>>CaseManagement</option>
           <option value="Clothing" <?php if(!empty($_POST['services_type']) && (in_array('Clothing',$_POST['services_type']))){ echo "selected"; } ?>>Clothing</option>
+          <option value="COVID19" <?php if(!empty($_POST['services_type']) && (in_array('COVID19',$_POST['services_type']))){ echo "selected"; } ?>>COVID19</option>
           <option value="DayCare" <?php if(!empty($_POST['services_type']) && (in_array('DayCare',$_POST['services_type']))){ echo "selected"; } ?>>DayCare</option>
+          <option value="Dental" <?php if(!empty($_POST['services_type']) && (in_array('Dental',$_POST['services_type']))){ echo "selected"; } ?>>Dental</option>
           <option value="Disabled" <?php if(!empty($_POST['services_type']) && (in_array('Disabled',$_POST['services_type']))){ echo "selected"; } ?>>Disabled</option>
           <option value="Education" <?php if(!empty($_POST['services_type']) && (in_array('Education',$_POST['services_type']))){ echo "selected"; } ?>>Education</option>
           <option value="Emergency" <?php if(!empty($_POST['services_type']) && (in_array('Emergency',$_POST['services_type']))){ echo "selected"; } ?>>Emergency</option>
@@ -400,6 +402,8 @@ get_header();
           <option value="Identification" <?php if(!empty($_POST['services_type']) && (in_array('Identification', $_POST['services_type']))){ echo "selected"; } ?>>Identification</option>
           <option value="IndependentLiving" <?php if(!empty($_POST['services_type']) && (in_array('IndependentLiving', $_POST['services_type']))){ echo "selected"; } ?>>IndependentLiving</option>
           <option value="Legal" <?php if(!empty($_POST['services_type']) && (in_array('Legal', $_POST['services_type']))){ echo "selected"; } ?>>Legal</option>
+          <option value="Lists & Guides" <?php if(!empty($_POST['services_type']) && (in_array('Lists & Guides',$_POST['services_type']))){ echo "selected"; } ?>>Lists & Guides</option>
+
           <option value="Medical" <?php if(!empty($_POST['services_type']) && (in_array('Medical', $_POST['services_type']))){ echo "selected"; } ?>>Medical</option>
           <option value="Research" <?php if(!empty($_POST['services_type']) && (in_array('Research', $_POST['services_type']))){ echo "selected"; } ?>>Research</option>
           <option value="Resources" <?php if(!empty($_POST['services_type']) && (in_array('Resources', $_POST['services_type']))){ echo "selected"; } ?>>Resources</option>
@@ -408,7 +412,7 @@ get_header();
           <option value="Transportation" <?php if(!empty($_POST['services_type']) && (in_array('Transportation', $_POST['services_type']))){ echo "selected"; } ?>>Transportation</option>
           <option value="Veterans" <?php if(!empty($_POST['services_type']) && (in_array('Veterans', $_POST['services_type']))){ echo "selected"; } ?>>Veterans</option>
           <option value="Victim" <?php if(!empty($_POST['services_type']) && (in_array('Victim', $_POST['services_type']))){ echo "selected"; } ?>>Victim</option>
-
+          <option value="Vision" <?php if(!empty($_POST['services_type']) && (in_array('Vision',$_POST['services_type']))){ echo "selected"; } ?>>Vision</option>
         </select>
       </th>
       <th scope="col">
@@ -690,10 +694,10 @@ if(!empty($practices)){ ?>
          foreach($practices["0"]['Programs'] as $key=>$val){
           $arr=explode("_",$key);
           if($arr[0]=="S" && $val=="TRUE"){
-            $services .= $arr[1]." ,";
+            $services .= $arr[1].", ";
           }
           if($arr[0]=="P" && $val=="TRUE"){
-            $popolations.=$arr[1]." ,";
+            $popolations.=$arr[1].", ";
           }
 
          }
@@ -713,12 +717,11 @@ if(!empty($practices)){ ?>
       <p id='populationDesc'><?php echo $populationDesc; ?></p>
          <h4>Services </h4>
       <p id='services'><?php echo rtrim($services, ','); ?></p>
-
+       
        <h4>Service Area Description</h4>
        <p id='serviceAreaDesc'><?php echo $serviceAreaDesc; ?></p>
         <h4>Tags </h4>
-      <p id="servicesTags"><?php echo $servicesTags; ?></p>
-
+      <p id="servicesTags"><? php echo $servicesTags; ?></p>
        <h3 style="margin-bottom: 0px;">Address</h3>
 	<?php /*print_r($practices)*/ ?>
     <ul class="nav nav-set" id="mainOffice">
