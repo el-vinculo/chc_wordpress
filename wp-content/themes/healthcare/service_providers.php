@@ -492,10 +492,10 @@ if(!empty($practices)){ ?>
          foreach($practicesvalue['Programs'] as $key=>$val){
           $arr=explode("_",$key);
           if($arr[0]=="S" && $val=="TRUE"){
-            $services .= $arr[1]." ,";
+            $services .= $arr[1].", ";
           }
           if($arr[0]=="P" && $val=="TRUE"){
-            $popolations.=$arr[1]." ,";
+            $popolations.=$arr[1].", ";
           }
 
          }
@@ -525,15 +525,18 @@ if(!empty($practices)){ ?>
               }
 
               $mainOffice = rtrim($mainOffice1, ',');
-             $addressRaw.='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
-
+             //$addressRaw.='<li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li> <br>';
+              
             foreach($val['POCs'] as $pockey=>$pocval){
 
               $officePhone= $pocval['poc']['OfficePhone'];
               $OfficeEmail= $pocval['poc']['Email'];
               $contactName= $pocval['poc']['Name'];
 
-              $addressRaw.='<li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
+              $addressRaw.='<li  > <i class="fa location-name"></i><strong>'.$val['LocationName'].'</strong></li>
+              <li  > <i class="fa web-page"></i>'.$val['Webpage'].'</li>
+              <li  > <i class="fa fa-map-marker"></i>'.$mainOffice.'</li>
+              <li id="contactName"> <i class="fa fa-user"></i>'.$contactName.'</li>
               <li id="officePhone"> <a href="tel:'.$officePhone.'"><i class="fa fa-phone"></i>'.$officePhone.'</a></li>
               <li id="OfficeEmail"><a href="mailto:'.$OfficeEmail.'"><i class="fa fa-envelope"></i>'.$OfficeEmail.'</a></li>';
 
@@ -721,8 +724,8 @@ if(!empty($practices)){ ?>
        <h4>Service Area Description</h4>
        <p id='serviceAreaDesc'><?php echo $serviceAreaDesc; ?></p>
         <h4>Tags </h4>
-      <p id="servicesTags"><? php echo $servicesTags; ?></p>
-       <h3 style="margin-bottom: 0px;">Address</h3>
+      <p id="servicesTags"><?php echo $servicesTags; ?></p>
+      <h3 style="margin-bottom: 0px;">Address</h3>
 	<?php /*print_r($practices)*/ ?>
     <ul class="nav nav-set" id="mainOffice">
      <?php
@@ -757,8 +760,6 @@ if(!empty($practices)){ ?>
 
 
 	
-              <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
-
               <?php foreach($val['POCs'] as $pockey=>$pocval){
               $officePhone= $pocval['poc']['OfficePhone'];
               $OfficeEmail= $pocval['poc']['Email'];
