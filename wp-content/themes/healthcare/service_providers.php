@@ -332,12 +332,19 @@ if(isset($_SESSION['userdata'])){
     }
 	//echo "<pre>";
       //print_r($serachData);exit;
+          //echo print_r($serachData);
 	  $practicesdata = serviceproviderslist($serachData);
+         // echo "<pre>";
+          //print_r($practicesdata);die;
+          //echo print_r($practicesdata);
 	  if(!empty($practicesdata['status'] == 'ok')){
 	  	 $practices = $practicesdata['provider_list'];
       //echo "<pre>";
       // print_r($practices); 
-	  }else{
+	  }elseif(strpos($practicesdata['message'], 'Endpoint') !== false){
+            $error = 0;
+            $msg   = 'Error ! Please try again.';
+          }else{
 	  	$error = 0;
 	    $msg   = 'Error ! Some thing went wrong';
 	  }
@@ -406,7 +413,11 @@ get_header();
 
           <option value="Medical" <?php if(!empty($_POST['services_type']) && (in_array('Medical', $_POST['services_type']))){ echo "selected"; } ?>>Medical</option>
           <option value="Research" <?php if(!empty($_POST['services_type']) && (in_array('Research', $_POST['services_type']))){ echo "selected"; } ?>>Research</option>
-          <option value="Resources" <?php if(!empty($_POST['services_type']) && (in_array('Resources', $_POST['services_type']))){ echo "selected"; } ?>>Resources</option>
+		 
+		 
+		  <option value="Referrals(quick)" <?php if(!empty($_POST['services_type']) && (in_array('Referrals(quick)', $_POST['services_type']))){ echo "selected"; } ?>>Referrals (quick)</option>
+		  
+         <!--<option value="Resources" <?php if(!empty($_POST['services_type']) && (in_array('Resources', $_POST['services_type']))){ echo "selected"; } ?>>Resources</option>-->
           <option value="Respite" <?php if(!empty($_POST['services_type']) && (in_array('Respite', $_POST['services_type']))){ echo "selected"; } ?>>Respite</option>
           <option value="Senior" <?php if(!empty($_POST['services_type']) && (in_array('Senior', $_POST['services_type']))){ echo "selected"; } ?>>Senior</option>
           <option value="Transportation" <?php if(!empty($_POST['services_type']) && (in_array('Transportation', $_POST['services_type']))){ echo "selected"; } ?>>Transportation</option>
@@ -635,7 +646,8 @@ if(!empty($practices)){ ?>
 
 
          ?>
-    <h4>Provider Description</h4>
+    <h4>Provider Description</h4> 
+	 <button type="button " data-toggle="modal" data-target="#inviteModal" class="custom-btn btn-primary button-all" style="margin-left:409px;margin-top:-33px;">Invite New Provide</button>
     <div class="border pt-set">
       <div class="row">
         <div class="col-sm-9">
@@ -655,7 +667,9 @@ if(!empty($practices)){ ?>
 
        <div class="text-right col-sm-3 ">
          <div  style="padding-right: 10px;">
-      <button type="button " class="custom-btn btn-primary button-all"> Add Task</button>
+      <!--<button type="button " class="custom-btn btn-primary button-all"> Add Task</button>-->
+	  
+	 
 </div>
    
        </div>
@@ -757,8 +771,9 @@ if(!empty($practices)){ ?>
               ?>
 
 
-
-
+              <li  > <i class="fa location-name"></i><strong><?php echo $val['LocationName']; ?></strong></li>
+              <li  > <i class="fa web-page"></i><?php echo $val['Webpage']; ?> </li>
+              <li id="mainOffice"> <i class="fa fa-map-marker "></i> <?php echo $mainOffice; ?></li>
 	
               <?php foreach($val['POCs'] as $pockey=>$pocval){
               $officePhone= $pocval['poc']['OfficePhone'];
@@ -801,18 +816,213 @@ if(!empty($practices)){ ?>
   </div>
 </div>
 
+
+<!-- End of invite modal -->
+
+<?php }else{ if (strpos($practicesdata['message'], 'Endpoint') !== false) { ?>
+<div class="row">
+<div class="col-md-12"><span><center><strong><p style="color: red">Please try again.</p></strong></center></span></div>
+</div>
 <?php }else{ ?>
 <div class="row">
 <div class="col-md-12"><span><center><strong><p style="color: red">No Record found for this search</p></strong></center></span></div>
 </div>
-<?php } ?>
+<?php }} ?>
 
 	  </div>
     </div>
+	
+	<!-- Invite Modal-->
+<div id="inviteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="inviteClose" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Invite Organization</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="response"></div>
+
+        <form id="inviteOrgForm">
+               <?php //echo '<pre>'; print_r($_SESSION); ?>
+			   <div class="row">
+              <div class="col-md-6">
+               <label>Homepage URL</label>
+               <div>
+			 
+                   <input type="text" class="form-control" placeholder="Homepage URL" name="homepage_url" id="homepage_url" value=""  required>
+                </div>
+                  <div id="homepage_url_error" style="color:red;">                 
+                </div>
+              </div>
+			
+            </div>
+            <br/>
+			<a href="javascript:void(0)"  onclick="addRow()" class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add additional field</a></br><br>
+  <div class="input_fields_referal_additional">
+                                        
+				</div>
+			
+              <!--<div class="row">
+              <div class="col-md-6">
+               <label>Name</label>
+               <div>-->
+			     <input type="hidden"  name="email" id="email" value="<?php echo $_SESSION['emailaddress']?>"  required readonly>
+			   <input type="hidden" name="user_id" id="user_id">
+                   <input type="hidden" class="form-control" placeholder="Organization Name" name="org_name" id="org_name" value="" readonly required>
+                <!--</div>
+                    <div id="org_name_error" style="color:red;">
+                </div>
+              </div>
+               
+            </div>
+         <br/>
+            <div class="row">
+              <div class="col-md-6">
+               <label>Application URL</label>
+                   <input type="text" class="form-control" placeholder="Organization URL" name="application_url " readonly id="application_url" value="" disabled="disabled" required>
+              </div>
+			  <div id="application_url_error" style="color:red;">                 
+                </div>
+          
+            </div>
+
+            <br/>
+             <div class="row">
+              <div class="col-md-6">
+               <label>Email</label>
+
+                  <input type="text" class="form-control" placeholder="Email" name="org_email " id="org_email"  value="" required>
+              </div>
+			  <div id="org_email_error" style="color:red;">                 
+                </div>
+              
+            </div>
+            <br/>
+ -->
+            <br/>
+                <input type="hidden" class="form-control" name="task_id_for_invite" id="task_id_for_invite" value="">
+            <input name="ref-update" onclick="inviteNewOrg()" id="invite-org" type="button" class="btn-primary" value="Submit">
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="transfermdelclosebutton" class="btn-primary button-all" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <?php get_footer(); ?>
 
 <script type="text/javascript">
+
+
+function addRow()
+{
+	
+	var max_fields      = 40; 
+	var wrapper         = jQuery(".input_fields_referal_additional");    
+	var x = 1; 
+
+	if(x < max_fields){ 
+	  var name1 = "additional[]";
+	  var name2 = "additionalkeys[]";
+		var divviid = "additionaldiv"+x;
+		var placeholdertext = "additional field "+x;
+		//jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+		jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value=''  ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+		x++; 
+	}
+   
+}
+
+
+var ajax_url = "<?php echo '/ajax.php'; ?>";
+
+function inviteOrg(){
+
+    var task_id  = document.getElementById("task_id_for_invite").value;
+    var name  = document.getElementById("org_name").value;
+    var email  = document.getElementById("org_email").value;
+    var application_url   = document.getElementById("application_url").value;
+    var homepage_url = document.getElementById("homepage_url").value;
+	
+	if(name == '' || email =='' ||  application_url =='' || homepage_url=='' ){
+		jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Please fill all required fields.</div>');
+		return false;
+	}
+
+	
+	else{
+		//$('#invite-org').removeAttr("disabled");
+       jQuery.ajax({
+            type: 'post',
+            url: ajax_url,        
+            data: {'task_id':task_id,'name':name,'email':email,'application_url':application_url,'homepage_url':homepage_url, funtion:'inviteOrg'},
+            success: function (res) {
+              //alert(res);
+              //exit;
+              console.log(res);
+              var trimStr = jQuery.trim(res);
+              if(trimStr == '11'){
+                jQuery('.response').html('<div class="alert  alert-success alert-dismissible">Successfully Invited</div>');
+                $('#inviteOrgForm' ).each(function(){
+                    this.reset();
+                 });        
+              }else{
+                jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Error ! Please try again</div>');
+              }
+              
+            }
+          });
+	}
+
+}
+
+function inviteNewOrg()
+{
+	var email  = document.getElementById("email").value;
+	
+    var org_url  = document.getElementById("homepage_url").value;
+    var org_name   = document.getElementById("org_name").value;
+    
+	//alert(email); alert(org_url); alert(org_name);
+	if(email =='' ||  org_url =='' || org_name=='' ){
+		jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Please fill all required fields.</div>');
+		return false;
+	}
+
+	
+	else{
+		//$('#invite-org').removeAttr("disabled");
+       jQuery.ajax({
+            type: 'post',
+            url: ajax_url,        
+            data: {'email':email,'org_url':org_url,'org_name':org_name,funtion:'inviteNewOrg'},
+            success: function (res) {
+             // alert(res);
+              //exit;
+              //console.log(res); return false;
+              var trimStr = jQuery.trim(res);
+              if(trimStr == '11'){
+                jQuery('.response').html('<div class="alert  alert-success alert-dismissible">Invitation Created</div>');
+                $('#inviteOrgForm' ).each(function(){
+                    this.reset();
+                 });        
+              }else{
+                jQuery('.response').html('<div class="alert  alert-danger alert-dismissible">Error ! Please try again</div>');
+              }
+              
+            }
+          });
+	}
+}
 
 $('#location_type').on('change', function() {
 	if(this.value == 'Virtual'){
@@ -829,6 +1039,19 @@ $('#location_type').on('change', function() {
 });
  
 $( document ).ready(function() {
+	
+	//invite popup
+	var org_name = $('#providernamefill').text();
+	
+    jQuery('#org_name').val(org_name);
+    var hrefval = $('#homePageUrl').attr('href');
+	
+   // jQuery('#homepage_url').val(hrefval);
+ 
+	var org_name = $('#org_name').val();
+  $("#application_url").val(org_name+".commonhealthcore.org");
+  
+  
     if($( "#location_type option:selected" ).text() == 'Virtual'){
 		$('#location').val('');
 		$( "#location" ).prop( "disabled", true );
@@ -838,9 +1061,13 @@ $( document ).ready(function() {
 	}
 });
 
-var ajax_url = "<?php echo '/ajax.php'; ?>";
+
 
 function showdetails(details) {
+	//debugger;
+	
+	
+	
   var providername = jQuery(details).attr('data-name');
   var providerdescription = jQuery(details).attr('data-orgDesc');
   var providershortdesc = jQuery(details).attr('data-shortdesc');
@@ -855,12 +1082,21 @@ function showdetails(details) {
   var contactPage = jQuery(details).attr('data-contactPage');
   var homePageUrl = jQuery(details).attr('data-homePageUrl');
   var programPageUrl = jQuery(details).attr('data-programPageUrl');
-  if(quickLink==''){
+  
+  //invite popup
+  jQuery('#org_name').val(providername);
+  
+  
+   if(quickLink==''){
+	 
     jQuery("#quickLink").removeAttr("href");
 	jQuery("#quickLink").css("opacity", "0.2");
+	
    } else{
+	
     jQuery("#quickLink").attr("href", quickLink);
-	  jQuery("#contactPage").removeAttr("style");
+	jQuery("#quickLink").css("opacity", "1");
+	  //jQuery("#contactPage").removeAttr("style");
   }
 
   if(contactPage==''){
@@ -912,6 +1148,12 @@ jQuery("#programPageUrl").css("opacity", "0.2");
   jQuery('#servicesTags').html(servicesTags);
   jQuery('#mainOffice').html('<i class="fa fa-map-marker"></i> '+mainOffice);
   
+  //invite popup
+  //jQuery('#org_name').val(providername);
+  //jQuery('#homepage_url').val(homePageUrl);
+  
+
+
 
 }
 

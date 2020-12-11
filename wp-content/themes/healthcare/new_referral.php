@@ -241,6 +241,10 @@ i.fa.fa-envelope {
  * @subpackage healthcare
 */
 
+function stripslashes_array($array)
+{ 
+	return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
+}
 
 $error = 0;
 $success = 0;
@@ -306,7 +310,8 @@ if(isset($_SESSION['userdata'])){
     
     /* ------------ Save Patient Details --------------------- */
 	if(!empty($_POST['submit'])){
-       $dataArray = $_POST;
+       //$dataArray = $_POST;
+$dataArray = stripslashes_array($_POST);
        $updateDeatils = savePatinets($dataArray,$email);
        if($updateDeatils['status'] == 'ok'){
        	 $patient_id = base64_encode($updateDeatils['patient_id']);
@@ -522,7 +527,7 @@ get_header();
             <div class="form-group lebel-set">
               <label for="pwd">Date of Birth: <span style="color: red">*</span></label>
               <div class='input-group date' >
-                    <input type='text' id='datetimepicker1' name="date_of_birth" autocomplete="off" class="form-control" id="datedatepicker"    placeholder="Date of Birth" value="<?php echo isset($patientsDeatils['date_of_birth'])? $patientsDeatils['date_of_birth'] :''; ?>" required="required" />
+                    <input type='text' id='datetimepicker1' readonly name="date_of_birth" autocomplete="off" class="form-control" id="datedatepicker"    placeholder="Date of Birth" value="<?php echo isset($patientsDeatils['date_of_birth'])? $patientsDeatils['date_of_birth'] :''; ?>" required="required" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -1283,7 +1288,7 @@ get_header();
                                 <td><?php echo $clientvalue['name']; ?></td>
                                 <td><?php echo $clientvalue['speciality']; ?></td>
                                 <td><?php echo $clientvalue['agreement_type']; ?></td>
-                                <td><?php  if($clientvalue['agreement_signed'] == 1){ echo "Ture";}else{ echo ""; }; ?></td>
+                                <td><?php  if($clientvalue['agreement_signed'] == 1){ echo "True";}else{ echo ""; }; ?></td>
                                 <td><a href="javascript:void(0)" id="<?php echo $clientvalue['name']; ?>" data-title="<?php echo $clientvalue['id']; ?>" onclick="transferclient(this.id,this.value)">Send</a></td>
                             </tr> 
                             <?php } } ?>   

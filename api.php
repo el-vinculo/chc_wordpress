@@ -1,5 +1,8 @@
 <?php
-
+function stripslashes_array($array)
+{ 
+	return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
+}
 function aboutUs($email,$authToken)
 {
 	   $post = ['email' => $email];
@@ -392,6 +395,7 @@ function updatePatientDetails($detaildata,$patient_id,$email)
 {
         //echo "<pre>";
       //print_r($detaildata); die;
+		$$detaildata = stripslashes_array($detaildata);
        $userauth = $_SESSION['userdata']['authentication_token'];
        $first_name = ucfirst($detaildata['first_name']);
        $last_name  = $detaildata['last_name'];
@@ -433,6 +437,8 @@ function updatePatientDetails($detaildata,$patient_id,$email)
 	      
        }
 
+ // echo '<pre>'; print_r($post); die;
+
 	   $datastring = json_encode($post);
 	   //echo $datastring; die; 
 	   $curl_handle=curl_init();
@@ -462,7 +468,7 @@ function updatePatientDetails($detaildata,$patient_id,$email)
 
 function updateReferral($referraldata,$referral_id,$email)
 {
-        
+       $$referraldata = stripslashes_array($referraldata);
        $userauth      = $_SESSION['userdata']['authentication_token'];
        $referral_name = $referraldata['ref_name'];
        $due_date      = $referraldata['ref_due_date'];
@@ -470,22 +476,42 @@ function updateReferral($referraldata,$referral_id,$email)
        $source        = $referraldata['ref_source'];
        $referral_description     = $referraldata['ref_desc'];
        $follow_up_date     = $referraldata['follow_up_date'];
-       
+	   $ref_note  = $referraldata['ref_note'];
+	 //  $ref_additional_fields = stripslashes_array($referraldata['ref_additional_fields']);
+	 $ref_additional_fields = $referraldata['ref_additional_fields'];
 
+       
+// echo '<pre>'; print_r($ref_additional_fields);die;
 	   //$headers = array();
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
-       
-	   $post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'follow_up_date'=>$follow_up_date); 
-	   $curl_handle=curl_init();
-      //print_r($post);die;
+
+		if(!empty($ref_additional_fields))
+		{
+        //$post = $ref_additional_fields;
+	$post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'follow_up_date'=>$follow_up_date,'ref_note'=>$ref_note, 'ref_additional_fields' => json_encode($ref_additional_fields)); 
+		}
+		else{
+			$post = array('referral_id'=>$referral_id,'email'=>$email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'follow_up_date'=>$follow_up_date,'ref_note'=>$ref_note); 
+		}
+
+		//$arr2 = (json_encode$ref_additional_fields);
+
+		//$datastring=array_merge($post,$ref_additional_fields);
+  
+      //$datastring = json_encode($post);
+		//	echo  var_dump(json_decode($datastring,true));;die;
+		// print_r(json_decode($datastring,true));die;
+		$curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'rfl_update');
-	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
-	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, "POST");
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+
 	   $buffer = curl_exec($curl_handle);
+	  // print_r($buffer);
 	   curl_close($curl_handle);
 	   if (empty($buffer)){
 	      print "Nothing returned from url.<p>";
@@ -500,12 +526,37 @@ function updateReferral($referraldata,$referral_id,$email)
 
 function savePatientReferral($postData,$patient_id,$patient_email)
 {
+	$postData = stripslashes_array($postData);
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
        $referral_name = $postData['referral_name'];
-       $due_date      = $postData['due_date'];
+     //  $due_date      = $postData['due_date'];
        $urgency       = $postData['urgency'];
        $source        = $postData['source'];
-       $referral_description     = $postData['referral_description'];
+       $referral_description     = $postData['description'];
+	   $ref_note = $postData['ref_note'];
+	  
+	  
+	   $followup_date = $postData['followup_date'];
+	   
+	   //$additional_fields    = !empty($postData['additional'])?$detaildata['additional']:'';
+        //$additional_keys    = !empty($postData['additionalkeys'])?$detaildata['additionalkeys']:'';
+		
+		$additional_fields    =  $postData['additional'];
+		$additional_keys   = $postData['additionalkeys'];
+ 
+ 
+       if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
+          $additionalfields = array_filter($additional_fields);
+          $additionalkeys = array_filter($additional_keys);
+          	if(is_array($additionalkeys) && is_array($additionalfields)){
+          		$additional_fields_array = array_combine($additionalkeys, $additionalfields);
+          	}
+         
+       }else{
+       	$additional_fields_array = '';
+       }
+	   
+	  
        if(!empty($postData['tasks'])){
        	  $tasks     = array();
           foreach ($postData['tasks'] as $taskkey => $taskvalue) {
@@ -519,8 +570,14 @@ function savePatientReferral($postData,$patient_id,$patient_email)
        }else{
        	  $tasks     = "";
        }
-
-       $post = array('patient_id'=>$patient_id,'email'=>$patient_email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'task'=>$tasks); 
+		if(!empty($additional_fields_array))
+		{
+			$post = array('patient_id'=>$patient_id,'email'=>$patient_email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'task'=>$tasks,'ref_note'=>$ref_note,'follow_up_date'=>$followup_date,'ref_additional_fields'=>json_encode($additional_fields_array)); 
+		}
+		else{
+$post = array('patient_id'=>$patient_id,'email'=>$patient_email,'referral_name'=>$referral_name,'due_date'=>$due_date,'urgency'=>$urgency,'source'=>$source,'referral_description'=>$referral_description,'task'=>$tasks,'ref_note'=>$ref_note,'follow_up_date'=>$followup_date); 
+		}
+// echo '<pre>'; print_r($post);die;
 	   $datastring =  json_encode($post); 
        //echo $datastring; die; 
        $headuserauth = "Authorization: user-token ".$userauth;
@@ -552,16 +609,39 @@ function savePatientReferral($postData,$patient_id,$patient_email)
 }
 
 function saveReferralTask($postData,$patient_id,$patient_email,$documents)
-{
+{  
+//echo '<pre>'; print_r($postData);
+		
+		$postData = stripslashes_array($postData);
+		//echo '<pre>'; print_r($postData);
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
+	   $task_type       = $postData['task_type']; 
        $solution_id = $postData['solution_id'];
        $referral_id = $postData['referral_id'];
-       $task_type       = $postData['task_type']; 
+       
        $task_status        = $postData['task_status'];
        $task_owner        = $postData['task_owner'];
        $provider        = $postData['provider'];
        $task_description     = $postData['task_description'];
-       $task_deadline      = date('Y-m-d' ,strtotime($postData['task_deadline']));
+	   $task_additional_fields = $postData['task_additional_fields'];
+	   $task_note = $postData['task_note'];
+      // $task_deadline      = date('Y-m-d' ,strtotime($postData['task_deadline']));
+	  
+	  $additional_fields    = !empty($postData['additional'])?$postData['additional']:'';
+        $additional_keys    = !empty($postData['additionalkeys'])?$postData['additionalkeys']:'';
+		//$additional_fields    = $postData['additional'];
+		//$additional_keys  $postData['additionalkeys'];
+       if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
+          $additionalfields = array_filter($additional_fields);
+          $additionalkeys = array_filter($additional_keys);
+          	if(is_array($additionalkeys) && is_array($additionalfields)){
+          		$additional_fields_array = array_combine($additionalkeys, $additionalfields);
+          	}
+         
+       }else{
+       	$additional_fields_array = '';
+       }
+	   
 
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
@@ -577,10 +657,18 @@ function saveReferralTask($postData,$patient_id,$patient_email,$documents)
        	  
        	}
        }
-	  
-       
-	   $post = array('solution_id'=>$solution_id,'referral_id'=>$referral_id,'email'=>$patient_email,'task_type'=>$task_type,'task_status'=>$task_status,'task_owner'=>$task_owner,'provider'=>$provider,'task_description'=>$task_description,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument); 
-	   //$datastring =  json_encode($post); die;
+
+       if(!empty($additional_fields_array))
+		{ 
+	   $post = array('solution_id'=>$solution_id,'referral_id'=>$referral_id,'email'=>$patient_email,'task_type'=>$task_type,'task_status'=>$task_status,'task_owner'=>$task_owner,'provider'=>$provider,'task_description'=>$task_description,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument,'task_additional_fields'=>json_encode($additional_fields_array),'task_note'=>$task_note); 
+	   }
+		else{
+			 
+		$post = array('solution_id'=>$solution_id,'referral_id'=>$referral_id,'email'=>$patient_email,'task_type'=>$task_type,'task_status'=>$task_status,'task_owner'=>$task_owner,'provider'=>$provider,'task_description'=>$task_description,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument,'task_note'=>$task_note); 
+		}
+		
+		//echo '<pre>'; print_r($post);die;
+		
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'tsk_create');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -588,6 +676,7 @@ function saveReferralTask($postData,$patient_id,$patient_email,$documents)
 	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
 	   $buffer = curl_exec($curl_handle); 
+//echo $buffer;die;
 	   curl_close($curl_handle);
 	   if (empty($buffer)){
 	      print "Nothing returned from url.<p>";
@@ -630,6 +719,7 @@ function messagesList($patient_id,$taskid,$email){
 
 function savePatinets($patientData,$email){
 	
+		$patientData = stripslashes_array($patientData);
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
        $first_name = ucfirst($patientData['first_name']);
        $last_name       = $patientData['last_name']; 
@@ -700,6 +790,7 @@ function savePatinets($patientData,$email){
 }
 
 function updateuserprofile($profiledata){
+	$$profiledata =  stripslashes_array($profiledata);
 	   $userauth      = $_SESSION['userdata']['authentication_token'];
        $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
@@ -947,7 +1038,7 @@ function serviceproviderslist($search){
 
 function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
 {
-
+	$referralTaskdata = stripslashes_array($referralTaskdata);
        $userauth      = $_SESSION['userdata']['authentication_token'];
        $task_type = $referralTaskdata['task_type'];
        $task_description      = $referralTaskdata['task_description'];
@@ -955,6 +1046,7 @@ function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
        $task_provider        = $referralTaskdata['task_provider'];
        $task_owner     = $referralTaskdata['task_owner'];
        $task_deadline     = $referralTaskdata['task_deadline'];
+	   $task_note = $referralTaskdata['task_note'];
        
        if(!empty($documents)){
        	 if(!empty($documents['tmp_name']) && !empty($documents['name'])){
@@ -966,19 +1058,41 @@ function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
        	  
        	}
        }
+ 
 
+	$additional_fields    = !empty($_POST['additional'])?$_POST['additional']:'';
+        $additional_keys    = !empty($_POST['additionalkeys'])?$_POST['additionalkeys']:'';
 
-
-
+       if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
+          $additionalfields = array_filter($additional_fields);
+          $additionalkeys = array_filter($additional_keys);
+          	if(is_array($additionalkeys) && is_array($additionalfields)){
+          		$additional_fields_array = array_combine($additionalkeys, $additionalfields);
+          	}
+         
+       }else{
+       	$additional_fields_array = '';
+       }
+	   unset($referralTaskdata['additionalkeys']);
+	    unset($referralTaskdata['additional']);
+	
+ //echo '<pre>'; print_r($referralTaskdata);die;
+	  
 	   //$headers = array();
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
        
+if(!empty($additional_fields_array))
+{
 
-	   $post = array('task_id'=>$task_id,'email'=>$email,'task_type'=>$task_type,'task_description'=>$task_description,'task_status'=>$task_status,'provider'=>$task_provider,'task_owner'=>$task_owner,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument); 
-       
-       
+	   $post = array('task_id'=>$task_id,'email'=>$email,'task_type'=>$task_type,'task_description'=>$task_description,'task_status'=>$task_status,'provider'=>$task_provider,'task_owner'=>$task_owner,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument,'task_note'=>$task_note,'task_additional_fields'=>json_encode($additional_fields_array)); 
+}
+else
+{
+ $post = array('task_id'=>$task_id,'email'=>$email,'task_type'=>$task_type,'task_description'=>$task_description,'task_status'=>$task_status,'provider'=>$task_provider,'task_owner'=>$task_owner,'task_deadline'=>$task_deadline,'patient_document'=>$patientdocument,'task_note'=>$task_note); 
+}
+       //echo '<pre>'; print_r($post);die;
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'tsk_update');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
@@ -986,6 +1100,7 @@ function updateReferralTask($referralTaskdata,$task_id,$email,$documents)
 	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
 	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
 	   $buffer = curl_exec($curl_handle);
+//echo $buffer;die;
 	   curl_close($curl_handle);
 	   if (empty($buffer)){
 	      print "Nothing returned from url.<p>";
@@ -2007,10 +2122,41 @@ function inviteOrganization($name,$email,$application_url,$task_id,$homepage_url
 	   $headers['Content-length'] = '0';
        $headers['Content-type'] = 'application/json';
 	   $headers['Authorization'] = 'user-token: '.$userauth;
-	   $post = array('task_id'=>$task_id,'user_email'=>$email,'name'=>$name,'application_url'=>$application_url,'email'=>$_SESSION['userdata']['email']); 
+	  
+	 $post = array('task_id'=>$task_id,'user_email'=>$email,'name'=>$name,'application_url'=>$application_url,'email'=>$_SESSION['userdata']['email']); 
        
 	   $curl_handle=curl_init();
 	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'org_invite');
+	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
+	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);
+	   curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+	   $buffer = curl_exec($curl_handle);
+	   curl_close($curl_handle);
+	   if (empty($buffer)){
+	      print "Nothing returned from url.<p>";
+	   }
+	   else{
+	  	  if(!empty($buffer)){
+	  	  	$result = json_decode(json_encode(json_decode($buffer)), true);
+	  	  	return $result;
+	  	  }
+	   }
+}
+
+function invite_new_provider($email,$org_url,$org_name)
+{
+
+       $userauth = $_SESSION['userdata']['authentication_token'];
+	   $headers['Content-length'] = '0';
+       $headers['Content-type'] = 'application/json';
+	   $headers['Authorization'] = 'user-token: '.$userauth;
+	  
+	 $post = array('email'=>$email,'org_url'=>$org_url,'org_name'=>$org_name); 
+	 
+       
+	   $curl_handle=curl_init();
+	   curl_setopt($curl_handle,CURLOPT_URL,API_URL.'invite_new_provider');
 	   curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
 	   curl_setopt($curl_handle, CURLOPT_POST ,true);	  
 	   curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $post);

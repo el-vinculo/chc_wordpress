@@ -5,6 +5,10 @@ error_reporting(1);
 require_once('wp-config.php');
 require_once('api.php');
 //
+/*function stripslashes_array($array)
+{ 
+	return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
+}*/
 
 $function_name=$_POST['funtion'];
 
@@ -88,7 +92,6 @@ function referraltasks(){
 		}else{
 			$taskList = array();
 		}
-
 		$taskHtml = taskHtmlTable($taskList,$referral_id);
 		echo  $taskHtml;
 	}
@@ -168,7 +171,8 @@ function taskHtmlTable($taskList,$referral_id)
 			   else{
 				   $html.="<button class='btn-primary button-all disable-grey' disabled ><img src='".get_template_directory_uri()."/images/revert.png'></button>";			   
 			   }
-			   
+			   $html .="<textarea style='display:none;' id='task_additional-".$taskvalue['task_id']."'>". json_encode($taskvalue['task_additional_fields'])."</textarea>";
+			   $html .="<input type='hidden' value='".$taskvalue['task_note']."' id='tasknote-".$taskvalue['task_id']."'>";
 			   $html.=  "</td></tr>";
             } }else {
 
@@ -182,9 +186,35 @@ function taskHtmlTable($taskList,$referral_id)
 function updatePatientReferrals(){
     $error = 0;
     if(!empty($_POST)){
+		
+		//$referraldata = stripslashes_array($_POST);
         $referraldata = $_POST;
+
+		//echo '<pre>'; print_r($referraldata);die;
         $referral_id  = $_POST['ref_id'];
+		$ref_additional_fields  = $_POST['ref_additional_fields'];
         $email   = $_SESSION['userdata']['email'];
+		
+		$additional_fields    = !empty($_POST['additional'])?$_POST['additional']:'';
+        $additional_keys    = !empty($_POST['additionalkeys'])?$_POST['additionalkeys']:'';
+
+       if((!empty($additional_fields) & is_array($additional_fields)) && (!empty($additional_keys) & is_array($additional_keys))){
+          $additionalfields = array_filter($additional_fields);
+          $additionalkeys = array_filter($additional_keys);
+          	if(is_array($additionalkeys) && is_array($additionalfields)){
+          		$additional_fields_array = array_combine($additionalkeys, $additionalfields);
+          	}
+         
+       }else{
+       	$additional_fields_array = '';
+       }
+	   
+	   $referraldata['ref_additional_fields'] = $additional_fields_array;
+	   
+	   unset($referraldata['additionalkeys']);
+	    unset($referraldata['additional']);
+	  // echo '<pre>'; print_r($referraldata);die;
+	   
         $update = updateReferral($referraldata,$referral_id,$email);
         if(!empty($update)){
             if($update['status'] == 'ok'){
@@ -526,7 +556,8 @@ function commListHtml($commList){
 function sendmeassagetosender(){
     $error = 0;
     if(!empty($_POST)){
-        $communicationdata = $_POST;
+        //$communicationdata = $_POST;
+		$communicationdata = stripslashes_array($_POST);
         $email   = $_SESSION['userdata']['email'];
         $patient_id = $communicationdata['patient_id'];
         $save = msgsend($communicationdata,$patient_id,$email);
@@ -696,13 +727,12 @@ function updatePatientReferralTask(){
      print_r($_FILES); die;*/
     $error = 0;
     if(!empty($_POST)){
-      //echo "<pre>";
-
-     // print_r($_POST);
-      //print_r($_FILES); die;
-        $referralTaskdata = $_POST;
+     $referralTaskdata = stripslashes_array($_POST);	
+      //  $referralTaskdata = $_POST;
         $task_id  = $_POST['task_id'];
         $email   = $_SESSION['userdata']['email'];
+		
+		//echo "<pre>"; print_r($referralTaskdata);die;
         $update = updateReferralTask($referralTaskdata,$task_id,$email);
         if(!empty($update)){
             if($update['status'] == 'ok'){
@@ -725,6 +755,7 @@ function updatePatientReferralTask(){
 function inviteOrg(){
     $error = 0;
     if(!empty($_POST)){
+		//echo '<pre>'; print_r($_POST); die;
         $task_id  = $_POST['task_id'];
         $email   = $_POST['email'];
         $name   = $_POST['name'];
@@ -749,6 +780,32 @@ function inviteOrg(){
     return $error;
 }
 
+
+function inviteNewOrg(){
+    $error = 0;
+    if(!empty($_POST)){
+		//echo '<pre>'; print_r($_POST); die;
+        $email  = $_POST['email'];
+        $org_url   = $_POST['org_url'];
+        $org_name   = $_POST['org_name'];
+        $invite = invite_new_provider($email,$org_url,$org_name);
+        if(!empty($invite)){
+            if($invite['status'] == 'ok'){
+                $error = '11';
+            }else{
+                $error = 1;
+            }
+        }else{
+            $error = 3;
+        }
+    }else{
+
+        $error = 2;
+        echo "gofalse"; die;
+    }
+
+    return $error;
+}
 function selectserviceprovider(){
     if(!empty($_POST)){
         $serachData = $_POST;
@@ -837,7 +894,7 @@ function rejectreferralbyclient()
 function providerListHtml($practices,$id){
 //echo '<pre>';print_r($practices);die;
     if(!empty($practices)){
-    $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results</h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
+    $html = "<div class='row'><div class='border col-md-6 col-sm-12'><h4>Search Results <b>{".count($practices)."}</b></h4><div class='border row'><div class='col-sm-12'><div style='height: 370px; overflow-y: scroll;'><table class='margin-bt'><thead><tr><th></th><th></th></tr>";
     if(!empty($practices)){
      foreach ($practices as $practiceskey => $practicesvalue) {
      $name =  $practicesvalue['OrganizationName']["OrganizationName"]["0"]["Text"];
@@ -949,14 +1006,16 @@ function providerListHtml($practices,$id){
 
     $html.= "<tr>
     <td><b>Organization Name: </b> ".$name." <br><b>Program Name: </b>".$programName."<br><br></td>
-<td><button type='button' data-name='".$name."' data-shortdesc='".$shortdesc."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-serviceAreaDesc='".$serviceAreaDesc."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
+<td><button type='button' data-name='".$name."' data-shortdesc='".htmlentities($shortdesc)."' data-programName='".$programName."' data-populationDesc='".$populationDesc."' data-servicesTags='".$servicesTags."' data-serviceAreaDesc='".$serviceAreaDesc."' data-population='".rtrim($popolations, ',')."' data-services='".rtrim($services, ',')."' data-mainOffice='".htmlentities($addressRaw)."' data-quickLink='".$quickLink."' data-contactPage='".$contactPage."' data-homePageUrl='".$homePageUrl."' data-programPageUrl='".$programPageUrl."' style=' display: block; padding: 10px; text-align: center; color: #fff; line-height: 21px; margin-right: 10px;' onclick='showdetails(this)' class='custom-btn btn-primary button-all'> Show Detail</button></td>
     </tr>";
     }}
     $html.= "</thead></table></div></div><div class='col-sm-12'> </div></div></div><div class='border col-md-6 col-sm-12 pt-set'>
 <div class='row'><div class='col-md-9'>
+
 <h4>Organization Name</h4><p id='providernamefill'>".$name."</p></div>
 
-    <div class='text-right col-md-3'><button type='button' id='".$id."'  class='custom-btn btn-primary button-all'  onclick='assignprovider(this.id)'> Add Task</button></div>
+    <div class='text-right col-md-3'>
+	<button type='button' id='".$id."'  class='custom-btn btn-primary button-all'  onclick='assignprovider(this.id)'> Add Task</button>
     </div>
 
     <div class='provider-content'>";

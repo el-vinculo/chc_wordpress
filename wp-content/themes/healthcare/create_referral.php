@@ -9,7 +9,19 @@
 color: #43b02a!important;
 }
 
-
+.date-create {
+    position: relative;
+}
+.create-date{
+	position:absolute;
+	top:0;
+	right:0px;
+	bottom:0;
+}
+.create-date span {
+    right: 8px;
+    top: 3px;
+}
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -84,134 +96,159 @@ get_header();
 ?>
 <div class="container-fluid space">
 	<div class="container blogs">
-	<div class="col-md-12 rightside">
-	    <div class="post-73 page type-page status-publish hentry">	
-			<div class="row post-area">
-	            <div class="post-73 page type-page status-publish hentry">
-					<div class="col-md-12 border">
-				        <div class="line"></div>
-				            <?php if($error == 0){ ?>
-				                    <div class="post_title"><h3><?php echo $patientsDeatils['first_name']." ".$patientsDeatils['last_name']; ?>
+		<div class="col-md-12 rightside">
+			<div class="post-73 page type-page status-publish hentry">	
+				<div class="row post-area">
+					<div class="post-73 page type-page status-publish hentry">
+						<div class="col-md-12 border">
+							<div class="line"></div>
+								<?php if($error == 0){ ?>
+									<div class="post_title">
+										<h3><?php echo $patientsDeatils['first_name']." ".$patientsDeatils['last_name']; ?>
 								
 
-							</h3></div>
-							<div class="post_title"><h3>Create Referral</h3></div>
-				            <div class="post-tags"></div>
-				            <div class="post_content">
-				                    <?php  $actionurl = site_url().'/patients/patient-details?pid='.base64_encode(base64_decode($_GET['pid'])); ?>
-				                    <form role="form" method="post"  action="<?php echo $actionurl; ?>">
-				 			        	    <div class="container" style="max-width:600px;margin:60px auto;">
-				 			        	    <h4>Referral ></h4>
-				 			        	    </br></br>
-	
-	   <div class="form-group">
-	     <div class="row">
-		    <div class="col-md-12">
-		        <div class="col-md-6">
-				  <div class="form-group">
-				    <label for="email">Referral Name:</label>
-				    <input type="text" class="form-control" id="referral_name" name="referral_name" placeholder="Referral Name" required="required">
-				  </div>
-				</div>  
-				<div class="col-md-6">
-				  <div class="form-group">
-				    <label for="pwd">Referral Resource:</label>
-				    <select name="source" id="source" class="form-control">
-	                   <option value="EHR">EHR</option>
-	                   <option value="EDR">EDR</option>
-	                   <option value="ExtCC">ExtCC</option>
-	                   <option value="Internal">Internal</option>
-	                   <option value="Self">Self</option>
-                    </select>
-				  </div>
-				</div>
-			
-			 </div>
-		 </div>
-	   </div>
-	   <div class="form-group">
-	    
-			<div class="row">
-			    <div class="col-md-12">
-			        <div class="col-md-6">
-					  <div class="form-group">
-					    <label for="email">Urgency:</label>
-					    <select name="urgency" id="urgency" class="form-control">
-					    <option value="Critical">Critical</option>
-		                   <option value="High">High</option>
-		                   
-		                   <option value="Moderate">Moderate</option>
-		                   <option value="Low">Low</option>
-                        </select>
-					  </div>
-					</div>  
-					<div class="col-md-6">
-					  <div class="form-group">
-					    <label for="pwd">Deadline:</label>
-					    <div class='input-group date' >
-                    <input type='text' name="due_date" class="form-control datepicker" id="due_date"    placeholder="Deadline"  />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-					    
-					  </div>
-					</div>
-				
-				 </div>
-			</div>
-	   </div>
-
-	   
-       <div class="container" style="max-width:600px;margin:60px auto;">
-        <div class="form-group">
-	    
-			<div class="row">
-			    <div class="col-md-12">
-			        
-					  <div class="form-group">
-					    <label for="email">Referral Description:</label>
-					    <textarea name="referral_description" placeholder="Write a referral description..." class="form-control" rows="5" cols="75"></textarea>
-					  </div>
-					
-				
-				 </div>
-			</div>
-	   </div>                            
-	   </div> 
-	   <div style="display:none" id="coountry">
-                <?php foreach ($owners as $value) { ?>
-                 <option value='<?php echo ucfirst($value); ?>'><?php echo ucfirst($value); ?></option> 
-            <?php } ?>
-            </div>
-
-        <div style="display:none" id="tskstatus">
-            <?php foreach ($taskstatus as $value) { ?>
-                 <option value='<?php echo ucfirst($value); ?>'><?php echo ucfirst($value); ?></option> 
-            <?php } ?>
-        </div>                           
-	    
-	     <button type="submit" name="save2" value="ref-save" class="btn-primary">Save</button>
-	</form>
-
-
-						  			<?php }else{ ?>
-									<div class="alert alert-danger alert-dismissible">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									<strong><?php echo $msg; ?></strong> 
+										</h3>
 									</div>
+									<div class="post_title"><h3>Create Referral</h3></div>
+									<div class="post-tags"></div>
+									<div class="post_content">
+										<?php  $actionurl = site_url().'/patients/patient-details?pid='.base64_encode(base64_decode($_GET['pid'])); ?>
+										<form role="form" method="post"  action="<?php echo $actionurl; ?>">
+											<div class="container" style="max-width:600px;margin:60px auto;">
+											<h4>Referral ></h4>
+											</br></br>
 
-									    
-                                    <?php } ?>
-                            </div>
+											   <div class="form-group">
+												 <div class="row">
+													<div class="col-md-12">
+														<div class="col-md-6">
+														  <div class="form-group">
+															<label for="email">Referral Name:</label>
+															<input type="text" class="form-control" id="referral_name" name="referral_name" placeholder="Referral Name" required="required">
+														  </div>
+														</div>  
+														<div class="col-md-6">
+														  <div class="form-group">
+															<label for="pwd">Referral Source:</label>
+															<select name="source" id="source" class="form-control">
+															   <option value="EHR">EHR</option>
+															   <option value="EDR">EDR</option>
+															   <option value="ExtCC">ExtCC</option>
+															   <option value="Internal">Internal</option>
+															   <option value="Self">Self</option>
+															</select>
+														  </div>
+														</div>
+													
+													 </div>
+												 </div>
+											   </div>
+											   <div class="form-group">
+												
+													<div class="row">
+														<div class="col-md-12">
+															<div class="col-md-6">
+															  <div class="form-group">
+																<label for="email">Urgency:</label>
+																<select name="urgency" id="urgency" class="form-control">
+																<option value="Critical">Critical</option>
+																   <option value="High">High</option>
+																   
+																   <option value="Moderate">Moderate</option>
+																   <option value="Low">Low</option>
+																</select>
+															  </div>
+															</div>  
+															<!--<div class="col-md-6">
+															  <div class="form-group">
+																<label for="pwd">Deadline:</label>
+																<div class='input-group date' >
+															<input type='text' name="due_date" class="form-control datepicker" id="due_date"  readonly  placeholder="Deadline"  />
+															<span class="input-group-addon">
+																<span class="glyphicon glyphicon-calendar"></span>
+															</span>
+														</div>
+																
+															  </div>
+															</div>-->
+															  <div class="col-md-6">
+															   <label>Follow Up Date</label>
+															   <div  class="date-create">
+																	<input type="text" class="form-control" placeholder="Follow Up Date" name="followup_date" readonly id="ref_followup_date"  />
+																	<span class="input-group-addon input-cl create-date">
+																		<span class="glyphicon glyphicon-calendar"></span>
+																	</span>
+																</div>
+															 </div>
+														
+														 </div>
+													</div>
+											   </div>
+											    
+			
+		   
+											   <div class="container" style="max-width:600px;margin:0px auto;">
+												<div class="form-group">
+												
+													<div class="row">
+														<!--<div class="col-md-12">
+															
+															  <div class="form-group">
+																<label for="email">Referral Description:</label>
+																<textarea name="referral_description" placeholder="Write a referral description..." class="form-control" rows="5" cols="75"></textarea>
+															  </div>
+															
+														
+														 </div>-->
+														  <div class="col-md-6">
+															  <label>Description</label>
+															   <textarea name="description" id="ref_desc" class="form-control" rows="5"  placeholder="Description..."></textarea>
+														  </div>
+
+														<div class="col-md-6">
+														  <label>Notes</label>
+														   <textarea name="ref_note" id="ref_note" class="form-control" rows="5"  placeholder="Notes..."></textarea>
+														  </div>
+													</div>
+											   </div>                            
+											   </div> 
+											    <a href="javascript:void(0)"  onclick="addRow()" class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add additional field</a></br><br>
+												 <div class="input_fields_referal_additional">
+                                        
+												</div>
+											   <?php /*<div style="display:none" id="coountry">
+													<?php foreach ($owners as $value) { ?>
+														 <option value='<?php echo ucfirst($value); ?>'><?php echo ucfirst($value); ?></option> 
+													<?php } ?>
+												</div>
+
+												<div style="display:none" id="tskstatus">
+													<?php foreach ($taskstatus as $value) { ?>
+														 <option value='<?php echo ucfirst($value); ?>'><?php echo ucfirst($value); ?></option> 
+													<?php } ?>
+												</div>   */?>                        
+			
+												<button type="submit" name="save2" value="ref-save" class="btn-primary">Save</button>
+										</form>
+
+
+										<?php }else{ ?>
+										<div class="alert alert-danger alert-dismissible">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										<strong><?php echo $msg; ?></strong> 
+										</div>
+
+											
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>				
 					</div>
-	            </div>
-            </div>				
-        </div>
-	</div>
-	<?php //get_sidebar(); ?>
-	</div>
-</div>
+				</div>
+			<?php //get_sidebar(); ?>
+			</div>
+		</div>
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:1190px;">
@@ -476,6 +513,23 @@ function showview(type){
   
 }
 
+function addRow()
+{
+	
+	var max_fields      = 40; 
+	var wrapper         = jQuery(".input_fields_referal_additional");    
+	var x = 1; 
 
+	if(x < max_fields){ 
+	  var name1 = "additional[]";
+            var name2 = "additionalkeys[]";
+		var divviid = "additionaldiv"+x;
+		var placeholdertext = "additional field "+x;
+		//jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+		jQuery(wrapper).append("<div id='"+divviid+"' class='form-group'><div class='row'><div class='col-md-12'><div class='col-md-10'><input type='text' name='"+name2+"' placeholder='Additional Field' class='form-control' value=''  ></div><div class='col-md-10'><input type='text' name='"+name1+"' class='form-control' placeholder='Additional Value' value=''  ></div></div></div><button class='btn-danger remove_field' id='remove-additionaldiv"+x+"' onclick='removeobstr(this.id)' type='button' title='Remove'><i class='fa fa-minus-circle'></i></button></div>"); //add input box
+		x++; 
+	}
+   
+}
   </script>
 
