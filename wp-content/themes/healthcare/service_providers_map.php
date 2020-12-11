@@ -168,7 +168,7 @@ get_header();
 					<div class="col-md-12 border">
 				        <div class="line"></div>
 							<div class="post_title"><h3>Practices</h3></div>
-              <div class="post_title pull-right"><h3><a href="<?php echo site_url().'/practises/service-providers';?>" "><i class="fa fa-map" aria-hidden="true"></i></a>|<a href="<?php echo site_url().'/practises';?>"><i class="fa fa-bars" aria-hidden="true"></i></a></h3></div>
+              <div class="post_title pull-right"><h3><a href="<?php echo site_url().'/practises/service-providers';?>" "><i class="fa fa-map" aria-hidden="true"></i></a>|<a href="<?php echo site_url().'/provider';?>"><i class="fa fa-bars" aria-hidden="true"></i></a></h3></div>
 
 				            <div class="post-tags"></div>
 				            <div class="post-tags"></div>

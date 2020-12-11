@@ -115,7 +115,7 @@ get_header();
 				</div>  
 				<div class="col-md-6">
 				  <div class="form-group">
-				    <label for="pwd">Referral Resource:</label>
+				    <label for="pwd">Referral Source:</label>
 				    <select name="source" id="source" class="form-control">
 	                   <option value="EHR">EHR</option>
 	                   <option value="EDR">EDR</option>
